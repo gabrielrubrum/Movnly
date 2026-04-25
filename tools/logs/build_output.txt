@@ -1,0 +1,37 @@
+
+> nexride@0.1.0 build
+> next build
+
+Ôû▓ Next.js 16.2.1 (Turbopack)
+- Environments: .env.local
+
+  Creating an optimized production build ...
+
+> Build error occurred
+Error: Turbopack build failed with 2 errors:
+./src/app/cliente/page.tsx:1:20
+You're importing a module that depends on `useEffect` into a React Server Component module. This API is only available in Client Components. To fix, mark the file (or its parent) with the `"use client"` directive.
+    Learn more: https://nextjs.org/docs/app/api-reference/directives/use-client
+> 1 | import { useState, useEffect } from "react";
+    |                    ^^^^^^^^^
+  2 | import Link from "next/link";
+  3 | import { useBookings } from "@/hooks/useBookings";
+  4 | import { useSocket } from "@/hooks/useSocket";
+
+Ecmascript file had an error
+
+
+./src/app/cliente/page.tsx:1:10
+You're importing a module that depends on `useState` into a React Server Component module. This API is only available in Client Components. To fix, mark the file (or its parent) with the `"use client"` directive.
+    Learn more: https://nextjs.org/docs/app/api-reference/directives/use-client
+> 1 | import { useState, useEffect } from "react";
+    |          ^^^^^^^^
+  2 | import Link from "next/link";
+  3 | import { useBookings } from "@/hooks/useBookings";
+  4 | import { useSocket } from "@/hooks/useSocket";
+
+Ecmascript file had an error
+
+
+    at <unknown> (./src/app/cliente/page.tsx:1:20)
+    at <unknown> (./src/app/cliente/page.tsx:1:10)

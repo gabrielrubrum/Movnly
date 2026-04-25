@@ -1,0 +1,32 @@
+
+> nexride@0.1.0 build
+> next build
+
+Ôû▓ Next.js 16.2.1 (Turbopack)
+- Environments: .env.local
+
+  Creating an optimized production build ...
+
+> Build error occurred
+Error: Turbopack build failed with 1 errors:
+./src/components/home/VehicleCategories.tsx:32:17
+Expected '</', got 'jsx text'
+  30 |             {t("categories.title1")} <br />
+  31 |             <span className="text-serif italic font-medium text-white/40">{t("categories.t...
+> 32 |           </h2 >
+     |                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 33 |           <motion.p
+     | ^^^^^^^^^^
+  34 |             initial={{ opacity: 0, y: 20 }}
+  35 |             whileInView={{ opacity: 1, y: 0 }}
+  36 |             transition={{ delay: 0.1 }}
+
+Parsing ecmascript source code failed
+
+Import trace:
+  Server Component:
+    ./src/components/home/VehicleCategories.tsx
+    ./src/app/page.tsx
+
+
+    at <unknown> (./src/components/home/VehicleCategories.tsx:32:17)

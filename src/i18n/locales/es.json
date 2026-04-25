@@ -1,0 +1,857 @@
+{
+  "meta": {
+    "title": "NexRide — Su Conductor Privado en Lisboa",
+    "description": "Transporte ejecutivo y transfers privados. Conductores profesionales, coches nuevos y precios fijos en Lisboa."
+  },
+  "nav": {
+    "services": "Servicios",
+    "categories": "Nuestra Flota",
+    "routes": "Destinos",
+    "forCompanies": "Empresas",
+    "forHotels": "Hoteles",
+    "signIn": "Entrar",
+    "bookNow": "Reservar",
+    "allServices": "Ver Todos"
+  },
+  "navbar": {
+    "services": "Servicios",
+    "howItWorks": "Cómo Funciona",
+    "fleet": "Flota",
+    "partners": "Socios",
+    "clientArea": "Panel del Cliente"
+  },
+  "services_list": {
+    "airport": {
+      "label": "Aeropuerto",
+      "desc": "Transfers directos del Aeropuerto de Lisboa"
+    },
+    "hotels": {
+      "label": "Hoteles y Resorts",
+      "desc": "Transporte dedicado para sus huéspedes"
+    },
+    "corporate": {
+      "label": "Ejecutivo",
+      "desc": "Transporte de prestigio para empresas",
+      "full_desc": "Logística empresarial de alto nivel para reuniones e desplazamientos oficiales. Garantizamos puntualidad absoluta."
+    },
+    "groups": {
+      "label": "Grupos y Familias",
+      "desc": "Vans ejecutivas de 7 y 8 plazas",
+      "full_desc": "Soluciones versátiles para grupos con toda la seguridad y el confort que su grupo merece."
+    },
+    "citytour": {
+      "label": "Tours Privados",
+      "desc": "Sintra, Cascais y mucho más con conductor local"
+    }
+  },
+  "categories_list": {
+    "smart": {
+      "name": "Sedán Economy",
+      "tagline": "Práctico y Confortable",
+      "desc": "La elección ideal para sus desplazamientos urbanos. Coches modernos con conductores profesionales.",
+      "price": "22.50",
+      "badge": "MEJOR VALOR",
+      "examples": "Toyota Prius, VW Passat o similar",
+      "features": [
+        "Meet & Greet incluido",
+        "Wi-Fi de Cortesía",
+        "Aire Acondicionado",
+        "Agua a Bordo"
+      ]
+    },
+    "comfort": {
+      "name": "Sedán Ejecutivo",
+      "tagline": "Estándar de Excelencia",
+      "desc": "Viaje con más prestigio y elegancia. Ideal para compromisos de negocios o recepción de clientes.",
+      "price": "28",
+      "badge": "MÁS SOLICITADO",
+      "examples": "Mercedes Clase E, BMW Serie 5 o similar",
+      "features": [
+        "Meet & Greet incluido",
+        "Tapicería de Piel",
+        "Silencio Absoluto",
+        "Cargador de Dispositivos"
+      ]
+    },
+    "group": {
+      "name": "Van Ejecutiva XL",
+      "tagline": "Confort para Grupos",
+      "desc": "Perfecto para comitivas o familias con mucho equipaje. Confort total para todos los pasajeros.",
+      "price": "35",
+      "badge": "IDEAL PARA GRUPOS",
+      "examples": "Mercedes Clase V, VW Multivan o similar",
+      "features": [
+        "Meet & Greet incluido",
+        "Configuración de Reunión",
+        "Hasta 7 pasajeros",
+        "Capacidad de Equipaje XL"
+      ]
+    },
+    "executive": {
+      "name": "Primera Clase / VIP",
+      "tagline": "La Experiencia Suprema",
+      "desc": "El tope de nuestra flota. Vehículos de lujo con el servicio de chófer particular más exclusivo de Lisboa.",
+      "price": "39.50",
+      "badge": "SERIE DE LUJO",
+      "examples": "Mercedes Clase S LWB, BMW Serie 7 o similar",
+      "features": [
+        "Meet & Greet en Terminal",
+        "Chófer Particular",
+        "Bienvenida Personalizada",
+        "Amenities de Prestigio"
+      ]
+    }
+  },
+  "hero": {
+    "pill": "Conductores Profesionales 24/7 en Lisboa",
+    "learnMore": "Elija su Coche",
+    "headline1": "Su conductor particular",
+    "headline2": "en Lisboa.",
+    "sub": "NexRide ha llegado para simplificar su forma de moverse. Coches nuevos, precios fijos y conductores profesionales listos para llevarle a cualquier lugar.",
+    "trust": {
+      "drivers": "Conductores Profesionales",
+      "rating": "4.9 · Valoraciones Reales",
+      "instant": "Confirmación Inmediata"
+    },
+    "popularRoutes": "Rutas Frecuentes:",
+    "routes": [
+      "Aeropuerto → Centro de Lisboa",
+      "Lisboa → Cascais / Estoril",
+      "Lisboa → Sintra (Villa)",
+      "Lisboa → Oporto"
+    ],
+    "discover": "Ver Precios y Reservar",
+    "stats": {
+      "trips": {
+        "value": "25.000+",
+        "label": "Servicios Finalizados"
+      },
+      "rating": {
+        "value": "4.9★",
+        "label": "Valoración Media"
+      },
+      "punctuality": {
+        "value": "99,9%",
+        "label": "Puntualidad"
+      },
+      "support": {
+        "value": "24/7",
+        "label": "Apoyo Permanente"
+      }
+    }
+  },
+  "trust": {
+    "badge": "¿Por qué elegirnos?",
+    "headline1": "Su Seguridad,",
+    "headline2": "Sin Compromisos.",
+    "sub": "Seguimos estrictas normas de seguridad e higiene para que su única preocupación sea disfrutar del viaje.",
+    "pureSecurity": "Seguridad Total",
+    "zeroCompromise": "Cero Fallos",
+    "regulatoryTitle": "Certificados y Seguros",
+    "stats": {
+      "trips": {
+        "value": "50K+",
+        "label": "Viajes"
+      },
+      "rating": {
+        "value": "4.9★",
+        "label": "Nota"
+      },
+      "punctual": {
+        "value": "99,9%",
+        "label": "Puntualidad"
+      },
+      "drivers": {
+        "value": "100+",
+        "label": "Equipo"
+      }
+    },
+    "pillars": [
+      {
+        "title": "Selección Rigurosa",
+        "desc": "Nuestros conductores pasan por pruebas de conducción y actitud para garantizar el mejor servicio."
+      },
+      {
+        "title": "Discreción Total",
+        "desc": "Su privacidad es nuestra prioridad. Viajes silenciosos y seguros."
+      },
+      {
+        "title": "Apoyo 24 Horas",
+        "desc": "Tenemos un equipo listo para ayudarle en cualquier momento, de día o de noche."
+      }
+    ],
+    "compliance": [
+      "Licencia RNAAT",
+      "Seguros con Cobertura Total",
+      "Higienización Garantizada",
+      "Facturación Transparente"
+    ]
+  },
+  "howItWorks": {
+    "sectionBadge": "Paso a Paso",
+    "safetyTitle": "Confirmación Inmediata",
+    "safetyDesc": "En cuanto reserva, recibe todos los datos del conductor y del vehículo.",
+    "concierge": "Apoyo",
+    "priorityReady": "Siempre Listo",
+    "ops247": "24/7",
+    "liveOps": "Seguimiento 24h",
+    "items": [
+      {
+        "label": "Reserva en 1 minuto"
+      },
+      {
+        "label": "Soporte Vía Chat"
+      },
+      {
+        "label": "Cancelación Fácil"
+      }
+    ],
+    "steps": [
+      {
+        "title": "Indique el Destino",
+        "desc": "Díganos dónde está y a dónde quiere ir. Nuestro sistema calcula el mejor precio."
+      },
+      {
+        "title": "Elija Coche",
+        "desc": "Tenemos sedanes, furgonetas y coches de lujo. Elija el que mejor se adapte a usted."
+      },
+      {
+        "title": "Disfrute del Viaje",
+        "desc": "Acompañe a su conductor en tiempo real y relájese en un coche limpio y cómodo."
+      }
+    ]
+  },
+  "booking": {
+    "oneWay": "Solo Ida",
+    "roundTrip": "Ida y Vuelta",
+    "origin": "Punto de Partida",
+    "destination": "Destino Final",
+    "originPlaceholder": "¿Dónde inicia su viaje?",
+    "destinationPlaceholder": "¿Cuál es su destino?",
+    "date": "Fecha",
+    "time": "Hora",
+    "returnDate": "Fecha de Vuelta",
+    "returnTime": "Hora de Vuelta",
+    "passengers": "Pasajeros",
+    "luggage": "Maletas",
+    "save5": "DESCUENTO EN VUELTA (-5%)",
+    "passengersUpper": "PASAJEROS",
+    "luggageUpper": "MALETAS",
+    "viewPrices": "Ver Precios",
+    "flightPlaceholder": "Nº de Vuelo (para seguimiento)",
+    "meetingPoint": "Punto de Encuentro",
+    "meetingPointBadge": "Estándar NexRide",
+    "meetingPointTitle": "Llegada Sin Estrés",
+    "meetingPointDesc": "Su conductor estará en el lugar acordado con identificación clara para una partida rápida.",
+    "selectVehicle": "Elegir Vehículo",
+    "summary": "Resumen del Viaje",
+    "total": "Valor Total",
+    "personalDetails": "Sus Datos",
+    "payment": "Pago",
+    "originNotSet": "Seleccione el lugar de partida",
+    "destinationNotSet": "Seleccione el destino",
+    "locations": [
+      "Aeropuerto de Lisboa (Terminal 1)",
+      "Centro de Lisboa (Avenida de la Libertad)",
+      "Cascais / Estoril",
+      "Sintra (Villa)",
+      "Torre de Belém",
+      "Parque de las Naciones",
+      "Setúbal / Arrábida",
+      "Algarve (Conexiones Directas)",
+      "Oporto (Centro)",
+      "Alentejo (Tours de Vino)"
+    ]
+  },
+  "categories": {
+    "sectionBadge": "Nuestra Flota",
+    "title1": "Elija su",
+    "title2": "Nivel de Confort.",
+    "sub": "Desde viajes económicos a coches de lujo, tenemos el vehículo ideal para cada momento.",
+    "viewDetails": "Detalles",
+    "select": "Seleccionar Vehículo",
+    "perTrip": "por viaje",
+    "guarantee": "Certificado de Excelencia",
+    "guaranteeDesc": "Vehículos rigurosamente inspeccionados",
+    "compare": "Ver Rutas",
+    "startingFrom": "A partir de",
+    "bookNow": "Reservar Ahora",
+    "passengers": "{count} Pasajeros",
+    "luggage": "{count} Maletas",
+    "driver": "Conductor Privado",
+    "space": "Espacio Higienizado",
+    "choiceTitle": "Su Elección Importa",
+    "choiceDesc": "Todos los vehículos de nuestra flota se mantienen bajo los más altos estándares de calidad europeos."
+  },
+  "whyChooseUs": {
+    "badge": "Lo que nos define",
+    "title1": "Cuidamos",
+    "title2": "cada",
+    "title3": "Detalle.",
+    "ritual": "El Cuidado",
+    "welcome": "en la Recepción.",
+    "standard": "Calidad de Servicio",
+    "zeroWait": "No le hacemos esperar",
+    "location": "Ubicación Estratégica",
+    "hub": "Hub Lisboa (P19)",
+    "sub": "Transformamos el simple transporte en una experiencia agradable, donde cada detalle está pensado para su bienestar.",
+    "trustBadges": [
+      "Conductores Uniformados",
+      "Coches Impecables",
+      "Soporte Prioritario"
+    ]
+  },
+  "bookingFlow": {
+    "steps": {
+      "details": "Itinerario",
+      "vehicle": "Coche",
+      "extras": "Servicios",
+      "payment": "Confirmar"
+    },
+    "stepVehicle": {
+      "title": "Elija su categoría",
+      "sub": "El coche ideal para su viaje",
+      "selectedClass": "Categoría Elegida",
+      "totalReturn": "Total Ida y Vuelta",
+      "estimated": "Valor Estimado",
+      "back": "Ajustar Ruta",
+      "next": "Continuar",
+      "pax": "Pax",
+      "bags": "Maletas"
+    },
+    "summary": {
+      "title": "Confirmar Datos",
+      "subtitle": "Revise que todo esté correcto",
+      "selectedClass": "Vehículo Elegido",
+      "origin": "Partida",
+      "destination": "Llegada",
+      "notDefined": "Por definir",
+      "pickup": "Ida",
+      "return": "Vuelta",
+      "baseRate": "Tarifa Base",
+      "exclusiveAmenities": "Servicios Exclusivos",
+      "oneWay": "Solo Ida",
+      "roundTrip": "Ida y Vuelta",
+      "extras": "Servicios Extra",
+      "discount": "Descuento Vuelta (-5%)",
+      "totalAmount": "Valor Total",
+      "vatIncluded": "IVA INCLUIDO",
+      "secureProtocol": "Seguridad de Nivel Premium",
+      "disclaimer": "Precios finales con tasas y peajes incluidos.",
+      "meetGreetIncl": "Recibimiento Incluido",
+      "freeCancel": "Cancelación Gratis"
+    },
+    "payment": {
+      "title": "Finalizar Reserva",
+      "sub": "Pago Seguro",
+      "encrypted": "Conexión Encriptada",
+      "authRequired": "Autenticación Necesaria",
+      "authDesc": "Entre en su cuenta para confirmar esta reserva.",
+      "profile": "Perfil de Cliente",
+      "personal": "Datos Personales",
+      "signOut": "Salir",
+      "passengerName": "Nombre del Pasajero",
+      "email": "E-mail de Contacto",
+      "phone": "Móvil",
+      "notes": "Instrucciones Especiales (Opcional)",
+      "transaction": "Método de Pago",
+      "cardNumber": "Número de Tarjeta",
+      "expiry": "Validez",
+      "cvc": "CVC",
+      "mbway": "Número MB WAY",
+      "processing": "Validando pago...",
+      "terms": "Términos de Servicio",
+      "confirm": "Confirmar Reserva",
+      "verify": "Validar Datos",
+      "notesPlaceholder": "Ej: Silla de bebé, maletas extra, etc.",
+      "expiryPlaceholder": "MM/AA"
+    },
+    "extras": {
+      "baby_seat": "Silla de Bebé",
+      "booster": "Asiento de Niño",
+      "meet_greet": "Recepción VIP (Meet & Greet)",
+      "name_board": "Placa con Nombre",
+      "water": "Set de Agua Extra",
+      "wifi": "Hotspot Wi-Fi Dedicado",
+      "extra_stop": "Parada en Tránsito",
+      "extra_wait": "Tiempo de Espera Extra"
+    },
+    "stepExtras": {
+      "title": "Servicios Adicionales",
+      "sub": "Personalice su viaje como prefiera",
+      "recommendation": "Sugerencia NexRide",
+      "mgTitle": "Recepción en Terminal",
+      "mgDesc": "El conductor le espera con una placa personalizada.",
+      "exclusiveService": "Servicio Dedicado",
+      "selected": "Activado",
+      "add": "Añadir al Viaje",
+      "noExtras": "Seguir sin extras",
+      "back": "Volver",
+      "next": "Ir al Pago"
+    }
+  },
+  "confirmation": {
+    "badge": "Viaje Programado",
+    "title": "¡Todo está confirmado!",
+    "sentTo": "Enviamos los detalles a",
+    "reference": "Nº Reserva",
+    "statusConfirmed": "Confirmada",
+    "pickup": "Partida",
+    "dropoff": "Llegada",
+    "date": "Fecha",
+    "time": "Hora",
+    "category": "Vehículo",
+    "passenger": "Pasajero",
+    "totalPaid": "Total Pagado",
+    "nextStepsTitle": "¿Qué ocurre ahora?",
+    "step1": "Recibirá un e-mail con el resumen de la reserva.",
+    "step2": "24h antes, enviamos los datos del conductor y del coche.",
+    "step3": "Puede seguir la llegada del conductor en tiempo real.",
+    "viewDashboard": "Mis Viajes",
+    "downloadPdf": "Guardar PDF",
+    "share": "Compartir Detalles",
+    "changeSomething": "¿Necesita cambiar algo?",
+    "callUs": "Línea Directa",
+    "customerArea": "Panel del Cliente"
+  },
+  "auth": {
+    "titleRedefined": "Su Viaje, Su Gestión.",
+    "desc": "Acceda a su cuenta para gestionar reservas, consultar facturas y hablar con su conductor.",
+    "fleetManagement": "Gestión de Flota Activa",
+    "welcomeBack": "Bienvenido de nuevo",
+    "createAccount": "Crear Cuenta de Cliente",
+    "loginSubtitle": "Introduzca sus datos para acceder.",
+    "registerSubtitle": "Regístrese para beneficios exclusivos.",
+    "fullName": "Nombre Completo",
+    "emailAddress": "E-mail",
+    "password": "Senha",
+    "forgotPasswordLink": "¿Olvidó su contraseña?",
+    "signIn": "Entrar en Cuenta",
+    "register": "Registrar Ahora",
+    "noAccount": "¿Aún no é cliente?",
+    "hasAccount": "¿Ya tiene cuenta?",
+    "applyAccess": "Quiero ser Cliente",
+    "signInHere": "Inicie sesión aquí",
+    "fleetLogin": "Acceso a Conductores",
+    "backToPlatform": "Volver al sitio",
+    "forgotPassword": {
+      "title": "Recuperar Acceso",
+      "desc": "Introduzca su correo electrónico para recibir un código.",
+      "emailLabel": "Correo electrónico",
+      "emailPlaceholder": "ej: juan.perez@email.com",
+      "submit": "Enviar Código",
+      "successTitle": "Correo Enviado",
+      "successDesc": "Hemos enviado las instrucciones a {email}.",
+      "resetButton": "Definir Contraseña"
+    }
+  },
+  "dashboard": {
+    "welcomeBack": "Bienvenido de nuevo,",
+    "authRequired": "Autenticación Necesaria",
+    "authDesc": "Este panel está reservado solo para clientes registrados.",
+    "authenticate": "Iniciar Sesión",
+    "portalTitle": "Área de Cliente",
+    "portalSub": "Sus reservas e itinerarios.",
+    "reserveConcierge": "Nueva Reserva",
+    "completedJourneys": "Viajes Concluidos",
+    "totalInvested": "Total Gastado",
+    "chauffeurRating": "Valoración Media",
+    "upcomingJourney": "Próximo Viaje",
+    "pendingItineraries": "Viajes Programados",
+    "viewPortfolio": "Ver Historial",
+    "noPending": "No tiene viajes programados en este momento",
+    "scheduleNext": "Reserve aquí su próximo viaje",
+    "recentItineraries": "Actividad Reciente",
+    "noCompleted": "Aún no ha concluido viajes con nosotros",
+    "viewFullLedger": "Ver Historial Completo",
+    "quickActions": "Acciones Rápidas",
+    "newReservation": "Reservar Ahora",
+    "duplicateTrip": "Repetir Viaje",
+    "billingProfiles": "Datos de Facturación",
+    "privateConcierge": "Soporte Chat Directo",
+    "status": {
+      "pending_payment": "Esperando pago",
+      "confirmed": "Programada",
+      "driver_assigned": "Conductor Asignado",
+      "driver_en_route": "En camino",
+      "driver_arrived": "En el lugar",
+      "in_progress": "En curso",
+      "completed": "Concluida",
+      "cancelled": "Cancelada",
+      "no_show": "No se presentó"
+    },
+    "card": {
+      "at": "a las",
+      "flight": "Vuelo",
+      "monitoringActive": "Activo",
+      "viewDetails": "Ver Más",
+      "changeFlight": "Ajustar Vuelo",
+      "cancel": "Cancelar",
+      "rateTrip": "Evaluar Viaje",
+      "cancelConfirm": "¿Está seguro de que desea cancelar esta reserva?",
+      "extrasCount": "{count} servicio extra",
+      "extrasCountPlural": "{count} servicios extras"
+    },
+    "payment": {
+      "title": "Métodos de Pago",
+      "desc": "Gestione sus tarjetas y datos de facturación con seguridad.",
+      "noMethods": "Sin tarjetas guardadas.",
+      "default": "Principal",
+      "makeDefault": "Hacer Principal",
+      "addNew": "Nueva Tarjeta",
+      "cardNumber": "Número de Tarjeta",
+      "expiry": "Validez",
+      "cvv": "CVV",
+      "cancel": "Cancelar",
+      "saveCard": "Guardar Tarjeta",
+      "addNewMethod": "Añadir Método",
+      "corporateBilling": "Facturación Mensual",
+      "corporateDesc": "¿Su empresa viaja con frecuencia? Pida facturación mensual consolidada.",
+      "applyNow": "Pedir Acceso Business"
+    }
+  },
+  "b2b": {
+    "badge_pill": "Alianzas Corporativas",
+    "headline1": "Soluciones para",
+    "headline2": "Su Negocio.",
+    "subtitle": "Programas pensados para facilitar la movilidad de clientes y equipos.",
+    "cta_link": "Más información sobre alianzas",
+    "corp_badge": "NexRide Business",
+    "corp_exclusive": "Servicio Profesional",
+    "corp_desc": "Acceso prioritario a la flota y facturación mensual para su organización.",
+    "features": [
+      {
+        "title": "Para Hoteles",
+        "desc": "Integración total para la recepción con facturación directa al hotel."
+      },
+      {
+        "title": "Para Empresas",
+        "desc": "Transporte ejecutivo con los más altos estándares de puntualidad."
+      },
+      {
+        "title": "Agencias de Viajes",
+        "desc": "Comisiones y garantía de servicio para sus clientes VIP."
+      },
+      {
+        "title": "Eventos y Congresos",
+        "desc": "Gestión completa de transporte para eventos, summits y fiestas."
+      }
+    ],
+    "segments": {
+      "hotels": {
+        "badge": "Hoteles y Resorts",
+        "title": "NexRide Hospitality",
+        "desc": "Eleve la experiencia de sus huéspedes con un socio de transporte de confianza.",
+        "features": [
+          "Portal de Reserva Dedicado",
+          "Pago Mensual Consolidado",
+          "Prioridad Total 24h"
+        ],
+        "cta_card_title": "Alianza Hoteles",
+        "cta_card_desc": "Ofrezca transporte de calidad a sus huéspedes con total facilidad.",
+        "cta": "Saber Más"
+      },
+      "corporate": {
+        "badge": "Empresas",
+        "title": "Ejecutivo Business",
+        "desc": "Movilidad corporativa enfocada en la productividad y bienestar de los empleados.",
+        "features": [
+          "Gestor de Cuenta Privado",
+          "Informes de Gastos Detallados",
+          "Factura Única Mensal"
+        ],
+        "cta_card_title": "Cuenta Business",
+        "cta_card_desc": "Gestión centralizada de todas las necesidades de transporte de su equipo.",
+        "cta": "Hablar con Gestor"
+      },
+      "agencies": {
+        "badge": "Agencias de Viajes",
+        "title": "Socio de Viajes",
+        "desc": "Garantía de servicio impecable para sus pasajeros más exigentes.",
+        "features": [
+          "Panel de Agente Privado",
+          "Pago de Comisiones Ágil",
+          "Soporte Prioritario VIP"
+        ],
+        "cta_card_title": "Red de Agentes",
+        "cta_card_desc": "Sea un socio oficial y garantice la satisfacción de su cliente.",
+        "cta": "Entrar en la Red"
+      }
+    }
+  },
+  "routes_section": {
+    "badge": "Destinos Principales",
+    "headline": "Nuestras Conexiones",
+    "title1": "Rutas Más",
+    "title2": "Solicitadas.",
+    "sub": "Conexiones directas y cómodas por todo el territorio nacional.",
+    "exploreAll": "Ver todas as rotas",
+    "viewAll": "Explorar Rutas",
+    "status": "Operativo",
+    "durationLabel": "Tiempo Estimado",
+    "fromLabel": "Origen",
+    "transfer": "Transfer",
+    "items": [
+      {
+        "from": "Aeropuerto de Lisboa",
+        "to": "Centro de Lisboa",
+        "duration": "25 min",
+        "price": "35"
+      },
+      {
+        "from": "Aeropuerto de Lisboa",
+        "to": "Cascais",
+        "duration": "45 min",
+        "price": "31"
+      },
+      {
+        "from": "Aeropuerto de Lisboa",
+        "to": "Sintra",
+        "duration": "50 min",
+        "price": "70"
+      },
+      {
+        "from": "Aeropuerto de Lisboa",
+        "to": "Algarve",
+        "duration": "2h 30min",
+        "price": "220"
+      }
+    ]
+  },
+  "tours_section": {
+    "badge": "Tours Privados",
+    "title1": "Portugal,",
+    "title2": "a su ritmo.",
+    "sub": "Rutas exclusivas a bordo de vehículos de lujo. Conductor guía bilingüe, itinerario a medida.",
+    "viewAll": "Ver todos los tours",
+    "from": "desde",
+    "bookNow": "Reservar ahora",
+    "customTitle": "¿Itinerario personalizado?",
+    "customDesc": "Creamos el tour ideal para su grupo, celebración o evento."
+  },
+  "testimonials": {
+    "sectionBadge": "Lo que dicen los clientes",
+    "title1": "La Voz de la",
+    "title2": "Experiencia.",
+    "sub": "La confianza de ejecutivos y viajeros de todo el mundo.",
+    "socialProof": [
+      "Referencia en Transporte Lisboa",
+      "98% Clientes Satisfechos",
+      "Líder en Puntualidad 2024"
+    ],
+    "items": [
+      {
+        "name": "Sarah Mitchell",
+        "role": "Viajera Ejecutiva",
+        "country": "Reino Unido",
+        "avatar": "SM",
+        "text": "Servicio absolutamente impecable. Mi chófer me estaba esperando con una placa personalizada, el coche era excelente y el viaje fue muy tranquilo."
+      },
+      {
+        "name": "Eng. Ricardo Silva",
+        "role": "Director Comercial",
+        "country": "Portugal",
+        "avatar": "RS",
+        "text": "Uso NexRide para todos mis viajes de negocios en Lisboa. Puntualidad británica y vehículos de alto nivel en cada trayecto."
+      },
+      {
+        "name": "Maria Fontes",
+        "role": "Consultora",
+        "country": "Portugal",
+        "avatar": "MF",
+        "text": "Reservé en menos de un minuto y recibí confirmación inmediata. El conductor llegó con antelación y fue muy atento con el equipaje."
+      }
+    ]
+  },
+  "cta": {
+    "pill": "¿Listo para partir?",
+    "headline1": "Reserve su",
+    "headline2": "próximo viaje.",
+    "sub": "El mejor servicio de transporte y conductor particular en Lisboa. Coches nuevos, precios fijos y compromiso con su tiempo.",
+    "bookNow": "RESERVAR AHORA",
+    "callNow": "Atención al Cliente: +351 21 000 0000",
+    "microcopy": [
+      "Cancelación Gratuita",
+      "Pago Seguro",
+      "Soporte 24/7"
+    ]
+  },
+  "footer": {
+    "tagline": "El mejor servicio de transporte y conductor particular en Lisboa.",
+    "newsletter": {
+      "badge": "Boletín",
+      "title": "Novedades y <gold>Ofertas</gold>",
+      "sub": "Suscríbase para recibir las últimas noticias sobre rutas y servicios exclusivos en Lisboa.",
+      "placeholder": "Su e-mail...",
+      "button": "Suscribirse",
+      "privacy": "Sus datos están protegidos."
+    },
+    "copyright": "© {year} NexRide. Todos los derechos reservados.",
+    "cols": {
+      "services": {
+        "title": "Servicios",
+        "links": [
+          "Aeropuerto",
+          "Ejecutivos",
+          "Eventos",
+          "Tours Privados"
+        ]
+      },
+      "company": {
+        "title": "Empresa",
+        "links": [
+          "Sobre Nosotros",
+          "La Flota",
+          "Carreras",
+          "Blog"
+        ]
+      },
+      "partners": {
+        "title": "Socios",
+        "links": [
+          "Hoteles",
+          "Agencias",
+          "Afiliados"
+        ]
+      },
+      "support": {
+        "title": "Ayuda",
+        "links": [
+          "Contactos",
+          "Privacidad",
+          "Términos",
+          "FAQ"
+        ]
+      }
+    },
+    "legal": [
+      "Privacidad",
+      "Términos",
+      "Cookies"
+    ],
+    "motto": "Su viaje en buenas manos."
+  },
+  "ui": {
+    "datepicker": {
+      "placeholder": "dd/mm/aaaa",
+      "placeholder_time": "HH:MM",
+      "months": [
+        "Enero",
+        "Febrero",
+        "Marzo",
+        "Abril",
+        "Mayo",
+        "Junio",
+        "Julio",
+        "Agosto",
+        "Septiembre",
+        "Octubre",
+        "Noviembre",
+        "Diciembre"
+      ],
+      "days": [
+        "Lun",
+        "Mar",
+        "Mié",
+        "Jue",
+        "Vie",
+        "Sáb",
+        "Dom"
+      ]
+    },
+    "timepicker": {
+      "hour": "Hora",
+      "minute": "Minuto"
+    }
+  },
+  "routes_list": [
+    {
+      "from": "Aeropuerto de Lisboa",
+      "to": "Centro de Lisboa"
+    },
+    {
+      "from": "Aeropuerto de Lisboa",
+      "to": "Cascais"
+    },
+    {
+      "from": "Aeropuerto de Lisboa",
+      "to": "Sintra"
+    },
+    {
+      "from": "Aeropuerto de Lisboa",
+      "to": "Setúbal"
+    },
+    {
+      "from": "Centro de Lisboa",
+      "to": "Óbidos"
+    },
+    {
+      "from": "Aeropuerto de Lisboa",
+      "to": "Algarve"
+    }
+  ],
+  "testimonials_list": [
+    {
+      "role": "Viajero frecuente",
+      "country": "Reino Unido",
+      "text": "Servicio absolutamente impecable. El conductor me estaba esperando con una placa personalizada, el coche era lujoso y el viaje fue perfecto.",
+      "route": "Aeropuerto → Cascais"
+    },
+    {
+      "role": "Director Comercial",
+      "country": "España",
+      "text": "Uso NEXRIDE para todos mis viajes de negocios en Lisboa. Puntualidad perfecta, vehículos impecables y la plataforma es muy intuitiva.",
+      "route": "Aeropuerto → Parque de las Naciones"
+    },
+    {
+      "role": "Turistas",
+      "country": "Alemania",
+      "text": "Viajamos con 2 niños y mucho equipaje. El conductor fue extremadamente atento y el servicio superó todas las expectativas.",
+      "route": "Aeropuerto → Sintra"
+    }
+  ],
+  "tours_list": {
+    "sintra-palaces": {
+      "title": "Sintra Palaciega",
+      "sub": "Palacio Nacional · Pena · Regaleira",
+      "tag": "Más Popular",
+      "desc": "La ruta clásica por los palacios de Sintra. Salida de Lisboa al amanecer, paradas en los tres palacios históricos y regreso al anochecer."
+    },
+    "alentejo-wine": {
+      "title": "Alentejo & Bodegas",
+      "sub": "Évora · Herdades · Inmersión en el Vino",
+      "tag": "Experiencia Premium",
+      "desc": "Évora Patrimonio de la UNESCO, visita a bodegas premiadas y cata de vinos del Alentejo acompañada de aperitivos regionales."
+    },
+    "douro-valley": {
+      "title": "Valle del Duero",
+      "sub": "Oporto · Viñedos en Terrazas · Crucero",
+      "tag": "Exclusivo",
+      "desc": "Viaje al Valle del Duero con crucero fluvial, visita a quintas históricas y cata de vino de Oporto en su origen."
+    },
+    "obidos-nazare": {
+      "title": "Óbidos y Nazaré",
+      "sub": "Villa Medieval · Olas Gigantes · Costa",
+      "tag": "Aventura Portuguesa",
+      "desc": "La villa medieval de Óbidos intacta desde el siglo XIII, seguida de la villa de pescadores de Nazaré y la icónica Praia do Norte con sus olas gigantes."
+    },
+    "algarve-private": {
+      "title": "Faros del Algarve",
+      "sub": "Sagres · Costa Vicentina · Albufeira",
+      "tag": "Escape al Sur",
+      "desc": "Descubra el paraíso del sur de Europa. Tome el sol en las playas más hermosas y sienta la brisa en los dramáticos acantilados del Cabo de San Vicente."
+    },
+    "setubal-arrabida": {
+      "title": "Arrábida Exclusiva",
+      "sub": "Sierra y Mar · Azeitão · Vinos y Playas",
+      "tag": "Fuga a la Naturaleza",
+      "desc": "Relájese por las montañas de la Serra da Arrábida hasta bañarse en aguas cristalinas inolvidables, con el refinamiento de una cata premium de Moscatel de Setúbal."
+    },
+    "summer-tour": {
+      "title": "Tour de Verano: Costa de Estoril",
+      "sub": "Cascais · Boca do Inferno · Cabo da Roca",
+      "tag": "Premium de Verano",
+      "desc": "Un inolvidable viaje soleado por el fin del mundo europeo occidental y por las aristocráticas villas balnearias de la Riviera de Lisboa y el Casino de Estoril."
+    }
+  }
+}
