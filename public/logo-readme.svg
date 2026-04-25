@@ -1,0 +1,8 @@
+<svg width="300" height="80" viewBox="0 0 300 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="300" height="80" fill="#07070A"/>
+  <!-- NX monogram -->
+  <path d="M20 60V20L40 50M20 20H30L80 60H70L20 20Z" fill="#C5A059"/>
+  <path d="M80 20V60L60 50M80 60H70L20 20H30L80 60Z" fill="#C5A059"/>
+  <!-- NEXRICE text -->
+  <text x="100" y="50" font-family="Arial, sans-serif" font-weight="800" font-size="28" fill="white" letter-spacing="8">NEXRICE</text>
+</svg>
