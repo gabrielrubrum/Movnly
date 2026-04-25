@@ -4,8 +4,6 @@
 
 <br/><br/>
 
-<img src="https://github.com/gabrielrubrum/nexrice/blob/main/public/logo-readme.svg?raw=true" height="80" alt="NEXRICE" />
-
 <br/><br/>
 
 **Private Chauffeur · Lisboa & Cascais**
