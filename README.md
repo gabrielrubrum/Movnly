@@ -1,6 +1,6 @@
 <div align="center">
 
-<img src="https://raw.githubusercontent.com/gabrielrubrum/nexrice/main/public/preview.png" width="100%" alt="NexRice" />
+<img src="https://github.com/gabrielrubrum/nexrice/blob/main/public/preview.png?raw=true" width="100%" alt="NexRice" />
 
 <br/><br/>
 
