@@ -1,0 +1,141 @@
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["driverAdapters"]
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id                 String         @id @default(uuid())
+  email              String         @unique
+  password           String
+  name               String
+  role               String         @default("PASSENGER")
+  stripeCustomerId   String?        @unique
+  isEmailVerified    Boolean        @default(false)
+  verificationToken  String?
+  resetToken         String?
+  resetTokenExpires  DateTime?
+  twoFactorSecret    String?
+  isTwoFactorEnabled Boolean        @default(false)
+  tokenVersion       Int            @default(0)
+  phone              String?
+  createdAt          DateTime       @default(now())
+  updatedAt          DateTime       @updatedAt
+  auditLogs          AuditLog[]
+  assignedBookings   Booking[]      @relation("DriverBookings")
+  bookings           Booking[]
+  chatMessages       ChatMessage[]
+  driverProfile      DriverProfile?
+}
+
+model DriverProfile {
+  id              String   @id @default(uuid())
+  userId          String   @unique
+  license         String
+  status          String   @default("OFFLINE")
+  stripeAccountId String?  @unique
+  bankName        String?
+  iban            String?
+  vehicleId       String?
+  isVerified      Boolean  @default(false)
+  idDocument      String?
+  drivingLicense  String?
+  vehicleDocs     String?
+  vehicle         Vehicle? @relation(fields: [vehicleId], references: [id])
+  user            User     @relation(fields: [userId], references: [id])
+}
+
+model Vehicle {
+  id       String          @id @default(uuid())
+  model    String
+  plate    String          @unique
+  type     String
+  capacity Int
+  drivers  DriverProfile[]
+}
+
+model Booking {
+  id              String        @id @default(uuid())
+  passengerId     String
+  from            String
+  to              String
+  pickupTime      DateTime
+  category        String        @default("smart")
+  status          String        @default("PENDING")
+  price           Float?
+  paymentIntentId String?       @unique
+  paymentStatus   String        @default("UNPAID")
+  platformFee     Float?
+  driverAmount    Float?
+  passengers      Int?
+  luggage         Int?
+  flightNumber    String?
+  pin             String?
+  pinAttempts     Int           @default(0)
+  lockedUntil     DateTime?
+  tripStartedAt   DateTime?
+  driverId        String?
+  createdAt       DateTime      @default(now())
+  updatedAt       DateTime      @updatedAt
+  driver          User?         @relation("DriverBookings", fields: [driverId], references: [id])
+  passenger       User          @relation(fields: [passengerId], references: [id])
+  transactions    Transaction[]
+  auditLogs       AuditLog[]
+  chatMessages    ChatMessage[]
+}
+
+model Transaction {
+  id        String   @id @default(uuid())
+  bookingId String
+  amount    Float
+  type      String
+  status    String
+  provider    String   @default("STRIPE")
+  isDistributed Boolean @default(false)
+  availableAt DateTime?
+  createdAt DateTime @default(now())
+  booking   Booking  @relation(fields: [bookingId], references: [id])
+}
+
+model AuditLog {
+  id        String   @id @default(uuid())
+  userId    String?
+  bookingId String?
+  action    String
+  resource  String?
+  metadata  String?
+  ipAddress String?
+  userAgent String?
+  createdAt DateTime @default(now())
+  user      User?    @relation(fields: [userId], references: [id])
+  booking   Booking? @relation(fields: [bookingId], references: [id])
+}
+
+model ChatMessage {
+  id        String   @id @default(uuid())
+  bookingId String
+  senderId  String
+  content   String
+  createdAt DateTime @default(now())
+  
+  booking   Booking @relation(fields: [bookingId], references: [id])
+  sender    User    @relation(fields: [senderId], references: [id])
+}
+
+model Tour {
+  id          String   @id @default(uuid())
+  title       String
+  description String
+  price       Float
+  duration    String
+  image       String?
+  location    String
+  isFeatured  Boolean  @default(false)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
