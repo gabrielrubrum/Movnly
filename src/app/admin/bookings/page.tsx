@@ -4,11 +4,11 @@ import { useBookings } from "@/hooks/useBookings";
 import { BookingStatusBadge } from "@/components/booking/BookingStatusBadge";
 import { formatCurrency } from "@/lib/utils";
 import { type BookingStatus } from "@/lib/types";
-import { Search, Filter, MoreHorizontal, Loader2 } from "lucide-react";
+import { Search, Loader2, ChevronRight } from "lucide-react";
 import { useState } from "react";
 import Link from "next/link";
 
-const ALL_STATUSES: BookingStatus[] = ["confirmed", "driver_assigned", "driver_en_route", "in_progress", "completed", "cancelled"];
+const STATUSES: BookingStatus[] = ["confirmed", "driver_assigned", "driver_en_route", "in_progress", "completed", "cancelled"];
 
 export default function AdminBookingsPage() {
   const { bookings, loading } = useBookings();
@@ -16,35 +16,34 @@ export default function AdminBookingsPage() {
   const [statusFilter, setStatusFilter] = useState<BookingStatus | "all">("all");
 
   const filtered = bookings.filter((b) => {
-    const matchSearch = !search || [b.reference, b.origin, b.destination, b.passenger.name].some((v) =>
-      v.toLowerCase().includes(search.toLowerCase())
-    );
+    const matchSearch = !search || [b.reference, b.origin, b.destination, b.passenger.name]
+      .some(v => v.toLowerCase().includes(search.toLowerCase()));
     const matchStatus = statusFilter === "all" || b.status === statusFilter;
     return matchSearch && matchStatus;
   });
 
-  if (loading) return <div className="flex items-center justify-center h-64"><Loader2 className="w-8 h-8 text-indigo-400 animate-spin" /></div>;
+  if (loading) return (
+    <div className="flex items-center justify-center h-64">
+      <Loader2 className="w-8 h-8 text-brand-gold animate-spin" />
+    </div>
+  );
 
   return (
-    <div className="relative px-6 md:px-8 xl:px-12 py-8 max-w-[2000px] mx-auto space-y-10 min-h-screen w-full">
-      {/* Ambient Premium Glows */}
-      <div className="absolute top-0 right-1/4 w-[800px] h-[400px] bg-brand-500/10 blur-[120px] rounded-full pointer-events-none -z-10 mix-blend-screen" />
+    <div className="space-y-6">
 
-      <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
-        <div>
-          <h1 className="text-3xl font-black text-white tracking-tight italic">Gestão de Reservas</h1>
-          <p className="text-white/40 text-sm mt-1">Acompanhamento detalhado de todas as viagens e logística da frota.</p>
-        </div>
-        <Link href="/book" className="nx-btn nx-btn-primary">Nova reserva</Link>
+      {/* Header */}
+      <div>
+        <h1 className="text-3xl font-extralight text-white italic tracking-tighter">Reservas</h1>
+        <p className="text-white/30 text-sm mt-1">{bookings.length} reservas no sistema</p>
       </div>
 
-      {/* Filters */}
-      <div className="flex flex-wrap items-center gap-4 bg-surface-1/50 border border-white/[0.05] p-5 rounded-3xl shadow-2xl backdrop-blur-xl">
-        <div className="relative flex-1 min-w-[250px] lg:max-w-md">
-          <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-white/30 pointer-events-none" />
+      {/* Search + Filters */}
+      <div className="flex flex-col sm:flex-row gap-3">
+        <div className="relative flex-1 max-w-sm">
+          <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-white/25 pointer-events-none" />
           <input
-            className="nx-input pl-10 !py-2.5"
-            placeholder="Pesquisar por referência, nome, trajeto..."
+            className="w-full bg-white/[0.04] border border-white/[0.08] rounded-xl pl-10 pr-4 py-2.5 text-sm text-white placeholder-white/25 focus:outline-none focus:border-brand-gold/30 transition-colors"
+            placeholder="Pesquisar reserva, passageiro..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
           />
@@ -52,16 +51,24 @@ export default function AdminBookingsPage() {
         <div className="flex items-center gap-2 flex-wrap">
           <button
             onClick={() => setStatusFilter("all")}
-            className={`px-4 py-2 text-xs font-bold rounded-xl transition-all ${statusFilter === "all" ? "bg-white/10 text-white border border-white/20" : "text-white/40 hover:bg-white/5 border border-transparent"}`}
+            className={`px-3 py-2 text-[10px] font-black rounded-xl uppercase tracking-widest transition-all ${
+              statusFilter === "all"
+                ? "bg-brand-gold text-black"
+                : "text-white/40 hover:text-white bg-white/[0.03] border border-white/[0.06]"
+            }`}
           >
             Todas ({bookings.length})
           </button>
-          {ALL_STATUSES.map((s) => {
-            const count = bookings.filter((b) => b.status === s).length;
+          {STATUSES.map((s) => {
+            const count = bookings.filter(b => b.status === s).length;
             if (!count) return null;
             return (
               <button key={s} onClick={() => setStatusFilter(s)}
-                className={`px-4 py-2 text-[0.65rem] uppercase font-black tracking-widest rounded-xl transition-all ${statusFilter === s ? "bg-brand-500/20 text-brand-300 border border-brand-500/30" : "text-white/40 hover:bg-white/5 border border-transparent"}`}
+                className={`px-3 py-2 text-[10px] font-black rounded-xl uppercase tracking-widest transition-all ${
+                  statusFilter === s
+                    ? "bg-brand-gold text-black"
+                    : "text-white/40 hover:text-white bg-white/[0.03] border border-white/[0.06]"
+                }`}
               >
                 {s.replace(/_/g, " ")} ({count})
               </button>
@@ -71,67 +78,84 @@ export default function AdminBookingsPage() {
       </div>
 
       {/* Table */}
-      <div className="flex flex-col gap-3">
-        {/* Headers */}
-        <div className="hidden lg:grid grid-cols-[1fr_2fr_1.5fr_1fr_1fr_1fr_auto] gap-4 px-8 py-3 text-[0.65rem] font-bold text-white/30 uppercase tracking-[0.2em]">
-          <div>ID Reserva</div>
-          <div>Dados do Passageiro</div>
+      <div className="rounded-2xl overflow-hidden" style={{ background: "rgba(255,255,255,0.02)", border: "1px solid rgba(255,255,255,0.06)" }}>
+
+        {/* Header row */}
+        <div className="hidden lg:grid grid-cols-[120px_1fr_1.5fr_140px_120px_100px_80px] gap-4 px-6 py-3 text-[9px] font-black text-white/25 uppercase tracking-widest" style={{ borderBottom: "1px solid rgba(255,255,255,0.05)" }}>
+          <div>Referência</div>
+          <div>Passageiro</div>
           <div>Trajeto</div>
           <div>Estado</div>
           <div>Horário</div>
-          <div>Valor Total</div>
+          <div>Valor</div>
           <div></div>
         </div>
 
         {filtered.length === 0 ? (
-          <div className="p-20 flex flex-col items-center justify-center text-center bg-white/[0.02] border border-white/[0.05] rounded-[2rem] shadow-inner">
-            <span className="text-white/50 font-bold mb-2">Nenhuma reserva encontrada para estes filtros.</span>
+          <div className="flex flex-col items-center py-20 gap-3">
+            <Search className="w-10 h-10 text-white/5" />
+            <p className="text-white/20 text-sm italic">Nenhuma reserva encontrada.</p>
           </div>
-        ) : (
-          filtered.map((b) => (
-            <div key={b.id} className="group grid grid-cols-1 lg:grid-cols-[1fr_2fr_1.5fr_1fr_1fr_1fr_auto] items-center gap-4 px-8 py-5 bg-gradient-to-r from-white/[0.03] to-white/[0.01] hover:from-white/[0.05] hover:to-white/[0.02] border border-white/[0.05] hover:border-white/10 shadow-lg shadow-black/50 rounded-2xl transition-all backdrop-blur-md">
-
-              <div className="flex items-center">
-                <div className="inline-flex items-center gap-2.5 px-3 py-1.5 rounded-xl bg-black/40 border border-white/5 shadow-inner">
-                  <span className="text-xs font-mono font-bold text-white/80">{b.reference}</span>
-                </div>
+        ) : filtered.map((b, i) => {
+          const isActive = b.status === 'on_route' || b.status === 'confirmed';
+          const isDone = b.status === 'completed';
+          return (
+            <div key={b.id}
+              className="grid grid-cols-1 lg:grid-cols-[120px_1fr_1.5fr_140px_120px_100px_80px] items-center gap-4 px-6 py-4 hover:bg-white/[0.025] transition-all group"
+              style={{ borderBottom: i < filtered.length - 1 ? "1px solid rgba(255,255,255,0.04)" : "none" }}
+            >
+              {/* Ref */}
+              <div className="flex items-center gap-2">
+                <div className="w-1 h-8 rounded-full flex-shrink-0"
+                  style={{ background: isActive ? "rgba(212,175,55,0.6)" : isDone ? "rgba(52,211,153,0.6)" : "rgba(255,255,255,0.1)" }} />
+                <span className="text-xs font-mono font-bold text-white/60 group-hover:text-white/80 transition-colors">{b.reference}</span>
               </div>
 
-              <div className="flex flex-col justify-center">
-                <p className="text-[0.95rem] font-bold text-white/90">{b.passenger.name}</p>
-                <div className="flex items-center gap-2 mt-1">
-                  <span className="text-xs text-white/40">{b.passenger.email}</span>
-                </div>
+              {/* Passageiro */}
+              <div>
+                <p className="text-sm font-semibold text-white/80 group-hover:text-white transition-colors">{b.passenger.name}</p>
+                <p className="text-[9px] text-white/30 mt-0.5">{b.passenger.email}</p>
               </div>
 
-              <div className="flex flex-col justify-center">
-                <p className="text-sm font-bold text-white/80 truncate tracking-tight">{b.origin} <span className="text-white/20 mx-1.5 font-normal">→</span> {b.destination}</p>
+              {/* Trajeto */}
+              <div>
+                <p className="text-sm text-white/70 truncate">
+                  {b.origin.split(",")[0]}
+                  <span className="text-white/25 mx-1.5 text-xs">→</span>
+                  {b.destination.split(",")[0]}
+                </p>
+                <span className="text-[8px] font-black uppercase px-1.5 py-0.5 rounded mt-1 inline-block" style={{ background: "rgba(212,175,55,0.08)", color: "rgba(212,175,55,0.6)" }}>{b.category}</span>
               </div>
 
-              <div className="flex items-center">
+              {/* Status */}
+              <div>
                 <BookingStatusBadge status={b.status} />
               </div>
 
-              <div className="flex flex-col justify-center">
-                <span className="text-[0.9rem] font-bold text-white/90">{b.pickupTime}</span>
-                <span className="text-[0.65rem] font-semibold tracking-widest text-white/40 mt-0.5 uppercase">{b.pickupDate}</span>
+              {/* Horário */}
+              <div>
+                <p className="text-sm font-semibold text-white/70">{b.pickupTime}</p>
+                <p className="text-[9px] text-white/30 mt-0.5">{b.pickupDate}</p>
               </div>
 
-              <div className="flex flex-col justify-center">
-                <span className="text-[1.1rem] font-black text-white tracking-tight">{formatCurrency(b.totalPrice)}</span>
+              {/* Valor */}
+              <div>
+                <span className="text-sm font-bold text-white tabular-nums">{formatCurrency(b.totalPrice)}</span>
               </div>
 
-              <div className="flex items-center justify-end">
-                <Link href={`/admin/bookings/${b.id}`} className="text-[0.7rem] uppercase tracking-widest text-brand-400 font-black hover:text-brand-300 py-2 transition-colors">
-                  Detalhes
+              {/* Ação */}
+              <div className="flex justify-end">
+                <Link href={`/admin/bookings/${b.id}`}
+                  className="flex items-center gap-1 text-[9px] font-black text-white/25 hover:text-brand-gold uppercase tracking-widest transition-colors">
+                  Ver <ChevronRight className="w-3 h-3" />
                 </Link>
               </div>
             </div>
-          ))
-        )}
+          );
+        })}
       </div>
 
-      <p className="text-[0.65rem] font-mono tracking-widest text-white/25 text-right">{filtered.length} reserva{filtered.length !== 1 ? "s" : ""} ativa{filtered.length !== 1 ? "s" : ""}</p>
+      <p className="text-[9px] font-mono text-white/20 text-right">{filtered.length} resultado{filtered.length !== 1 ? "s" : ""}</p>
     </div>
   );
 }
