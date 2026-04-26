@@ -58,7 +58,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
         </div>
 
         {/* ── Sidebar Desktop ─────────────────────────────────── */}
-        <aside className="hidden lg:flex flex-col w-64 fixed inset-y-0 left-0 z-50 bg-[#07070A] border-r border-white/[0.06]">
+        <aside className="hidden lg:flex flex-col w-64 fixed inset-y-0 left-0 z-50 bg-[#0A0A0F] border-r border-white/[0.08]">
 
           {/* Logo */}
           <div className="flex items-center gap-3 px-6 h-16 border-b border-white/[0.06]">
@@ -73,7 +73,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
           <nav className="flex-1 px-3 py-4 overflow-y-auto space-y-6">
             {NAV.map((group) => (
               <div key={group.section}>
-                <p className="text-[9px] font-black text-white/20 uppercase tracking-[0.4em] px-3 mb-2">{group.section}</p>
+                <p className="text-[9px] font-black text-white/35 uppercase tracking-[0.4em] px-3 mb-2">{group.section}</p>
                 <div className="space-y-0.5">
                   {group.items.map(({ href, label, icon: Icon, exact }) => {
                     const active = isActive(href, exact);
@@ -84,15 +84,15 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
                         className={cn(
                           "flex items-center gap-3 px-3 py-2.5 rounded-xl text-[11px] font-bold uppercase tracking-[0.1em] transition-all duration-150 group",
                           active
-                            ? "bg-brand-gold text-black"
-                            : "text-white/40 hover:text-white hover:bg-white/[0.05]"
+                            ? "bg-brand-gold text-black shadow-[0_4px_12px_rgba(212,175,55,0.3)]"
+                            : "text-white/60 hover:text-white hover:bg-white/[0.06]"
                         )}
                       >
                         <div className={cn(
                           "w-7 h-7 rounded-lg flex items-center justify-center flex-shrink-0 transition-all duration-150",
                           active
                             ? "bg-black/15 text-black"
-                            : "bg-white/5 text-white/25 group-hover:bg-brand-gold/10 group-hover:text-brand-gold"
+                            : "bg-white/8 text-white/40 group-hover:bg-brand-gold/10 group-hover:text-brand-gold"
                         )}>
                           <Icon className="w-3.5 h-3.5" />
                         </div>
