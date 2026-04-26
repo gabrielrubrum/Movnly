@@ -1,4 +1,7 @@
-"use client";
+const fs = require('fs');
+const path = require('path');
+
+const content = `"use client";
 
 import { useState, useEffect } from "react";
 import axios from "axios";
@@ -22,7 +25,7 @@ export default function AdminDashboard() {
 
   useEffect(() => {
     if (!token) return;
-    axios.get(`${API_URL}/audit?take=20`, { headers: { Authorization: `Bearer ${token}` } })
+    axios.get(\`\${API_URL}/audit?take=20\`, { headers: { Authorization: \`Bearer \${token}\` } })
       .then(r => { const d = r.data; setAuditLogs(Array.isArray(d) ? d : d?.logs || []); })
       .catch(() => {});
   }, [token, API_URL]);
@@ -144,7 +147,7 @@ export default function AdminDashboard() {
               const isActive = b.status === 'on_route' || b.status === 'confirmed';
               const isDone = b.status === 'completed';
               return (
-                <Link key={b.id} href={`/admin/bookings/${b.id}`}
+                <Link key={b.id} href={\`/admin/bookings/\${b.id}\`}
                   className="flex items-center gap-4 px-6 py-4 hover:bg-white/[0.03] transition-all group"
                   style={{ borderBottom: i < 7 ? "1px solid rgba(255,255,255,0.04)" : "none" }}
                 >
@@ -262,7 +265,7 @@ export default function AdminDashboard() {
                     </div>
                   </div>
                   <div className="h-1 rounded-full overflow-hidden" style={{ background: "rgba(255,255,255,0.06)" }}>
-                    <motion.div initial={{ width: 0 }} animate={{ width: `${pct}%` }} transition={{ duration: 1.2, delay: 0.5 + i * 0.15 }}
+                    <motion.div initial={{ width: 0 }} animate={{ width: \`\${pct}%\` }} transition={{ duration: 1.2, delay: 0.5 + i * 0.15 }}
                       className="h-full rounded-full"
                       style={gold ? { background: "linear-gradient(90deg, #D4AF37, #C5A028)", boxShadow: "0 0 6px rgba(212,175,55,0.5)" } : { background: "rgba(255,255,255,0.18)" }}
                     />
@@ -324,7 +327,7 @@ export default function AdminDashboard() {
                 const isDriver = log.action?.includes("DRIVER");
                 const isStatus = log.action?.includes("STATUS");
                 const dotColor = isLogin ? "#34D399" : isDriver ? "#D4AF37" : isStatus ? "#60A5FA" : "rgba(255,255,255,0.2)";
-                const actionLabel = log.action?.replace(/_/g, " ").toLowerCase().replace(/w/g, l => l.toUpperCase());
+                const actionLabel = log.action?.replace(/_/g, " ").toLowerCase().replace(/\b\w/g, l => l.toUpperCase());
                 return (
                   <div key={i} className="flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-white/[0.025] transition-all">
                     <div className="w-1.5 h-1.5 rounded-full flex-shrink-0 mt-0.5" style={{ background: dotColor }} />
@@ -346,3 +349,7 @@ export default function AdminDashboard() {
     </div>
   );
 }
+`;
+
+fs.writeFileSync(path.join(__dirname, '..', 'src', 'app', 'admin', 'page.tsx'), content, 'utf8');
+console.log('Written, length:', content.length);
