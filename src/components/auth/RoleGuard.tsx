@@ -15,38 +15,50 @@ export function RoleGuard({ children, allowedRoles, redirectTo = "/login" }: Rol
     const { user, token } = useAuthStore();
     const router = useRouter();
     const pathname = usePathname();
-    const [isAuthorized, setIsAuthorized] = useState(false);
+    const [status, setStatus] = useState<"loading" | "authorized" | "unauthorized">("loading");
 
     useEffect(() => {
-        // 1. Check Autentication
-        if (!token || !user) {
-            router.push(`${redirectTo}?redirect=${pathname}`);
-            return;
-        }
+        // Aguardar hidratação do zustand (localStorage)
+        const timer = setTimeout(() => {
+            if (!token || !user) {
+                router.push(`${redirectTo}?redirect=${encodeURIComponent(pathname)}`);
+                setStatus("unauthorized");
+                return;
+            }
 
-        // 2. Check Authorization (Strict Fortress Logic)
-        if (!allowedRoles.includes(user.role)) {
-            // Unauthorized access attempt - Hard redirect to their respective dashboard or generic error
-            const target = user.role === 'DRIVER' ? '/driver' : '/dashboard';
-            router.push(target);
-            return;
-        }
+            if (!allowedRoles.includes(user.role)) {
+                const roleRedirects: Record<string, string> = {
+                    'DRIVER': '/motorista',
+                    'PASSENGER': '/dashboard',
+                    'ADMIN': '/admin',
+                    'MANAGER': '/admin',
+                    'OPERATOR': '/admin',
+                    'ACCOUNTANT': '/admin',
+                };
+                router.push(roleRedirects[user.role] || '/dashboard');
+                setStatus("unauthorized");
+                return;
+            }
 
-        setIsAuthorized(true);
+            setStatus("authorized");
+        }, 50); // pequeno delay para garantir hidratação
+
+        return () => clearTimeout(timer);
     }, [user, token, router, pathname, allowedRoles, redirectTo]);
 
-    if (!isAuthorized) {
+    if (status === "loading") {
         return (
-            <div className="min-h-screen bg-[#030303] flex flex-col items-center justify-center p-6 text-center">
-                <div className="relative mb-8">
-                    <Loader2 className="w-16 h-16 text-brand-gold animate-spin opacity-20" />
-                    <ShieldAlert className="absolute inset-0 m-auto w-6 h-6 text-brand-gold animate-pulse" />
+            <div className="min-h-screen bg-[#030303] flex flex-col items-center justify-center">
+                <div className="relative mb-6">
+                    <Loader2 className="w-12 h-12 text-brand-gold animate-spin opacity-20" />
+                    <ShieldAlert className="absolute inset-0 m-auto w-5 h-5 text-brand-gold animate-pulse" />
                 </div>
-                <h2 className="text-white text-xl font-bold uppercase tracking-[0.3em] mb-2 font-sans italic">Autenticação Segura</h2>
-                <p className="text-white/20 text-[10px] uppercase tracking-[0.5em] font-black">Protocolo de Acesso NexRice Private</p>
+                <p className="text-white/20 text-[10px] uppercase tracking-[0.5em] font-black">A verificar acesso...</p>
             </div>
         );
     }
+
+    if (status === "unauthorized") return null;
 
     return <>{children}</>;
 }

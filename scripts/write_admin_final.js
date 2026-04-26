@@ -1,4 +1,7 @@
-"use client";
+const fs = require('fs');
+const path = require('path');
+
+const content = `"use client";
 
 import { useState, useEffect } from "react";
 import axios from "axios";
@@ -22,7 +25,7 @@ export default function AdminDashboard() {
 
   useEffect(() => {
     if (!token) return;
-    axios.get(`${API_URL}/audit?take=20`, { headers: { Authorization: `Bearer ${token}` } })
+    axios.get(\`\${API_URL}/audit?take=20\`, { headers: { Authorization: \`Bearer \${token}\` } })
       .then(r => { const d = r.data; setAuditLogs(Array.isArray(d) ? d : d?.logs || []); })
       .catch(() => {});
   }, [token, API_URL]);
@@ -141,7 +144,7 @@ export default function AdminDashboard() {
           </div>
           <div className="p-4 space-y-2">
             {bookings.slice(0, 7).map((b) => (
-              <Link key={b.id} href={`/admin/bookings/${b.id}`}
+              <Link key={b.id} href={\`/admin/bookings/\${b.id}\`}
                 className="flex items-center gap-4 p-4 rounded-2xl border border-white/[0.04] hover:border-brand-gold/20 hover:bg-white/[0.03] transition-all group"
               >
                 <div className="w-12 h-12 rounded-2xl flex items-center justify-center flex-shrink-0 group-hover:scale-105 transition-transform"
@@ -246,7 +249,7 @@ export default function AdminDashboard() {
                     </div>
                   </div>
                   <div className="h-1.5 rounded-full overflow-hidden bg-white/[0.05]">
-                    <motion.div initial={{ width: 0 }} animate={{ width: `${pct}%` }} transition={{ duration: 1.2, delay: 0.5 + i * 0.15 }}
+                    <motion.div initial={{ width: 0 }} animate={{ width: \`\${pct}%\` }} transition={{ duration: 1.2, delay: 0.5 + i * 0.15 }}
                       className="h-full rounded-full"
                       style={gold ? { background: "linear-gradient(90deg, #D4AF37 0%, #C5A028 100%)", boxShadow: "0 0 8px rgba(212,175,55,0.4)" } : { background: "rgba(255,255,255,0.12)" }}
                     />
@@ -332,3 +335,7 @@ export default function AdminDashboard() {
     </div>
   );
 }
+`;
+
+fs.writeFileSync(path.join(__dirname, '..', 'src', 'app', 'admin', 'page.tsx'), content, 'utf8');
+console.log('Written, length:', content.length);

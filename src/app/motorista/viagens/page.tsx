@@ -17,7 +17,9 @@ export default function ViagensPage() {
     const { live, upcoming, loading } = useBookings();
     const [activeChatId, setActiveChatId] = useState<string | null>(null);
 
-    const allMissions = [...live, ...upcoming];
+    const allMissions = [...live, ...upcoming].filter(
+        (m, index, self) => index === self.findIndex(x => x.id === m.id)
+    );
 
     if (loading) {
         return (

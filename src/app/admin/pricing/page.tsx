@@ -21,7 +21,7 @@ export default function PricingPage() {
                         Otimização de Tarifas
                     </div>
                     <h1 className="text-3xl font-black text-white tracking-tighter italic">Estratégia de Preços</h1>
-                    <p className="text-white/40 text-sm mt-1">Gestão de receitas por categoria e protocolo de multiplicadores dinâmicos.</p>
+                    <p className="text-white/40 text-sm mt-1">Gestão de preços por categoria e multiplicadores dinâmicos.</p>
                 </div>
 
                 <div className="flex items-center gap-3">

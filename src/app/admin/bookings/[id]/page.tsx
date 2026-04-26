@@ -19,7 +19,7 @@ export default function AdminBookingDetailPage({ params }: { params: Promise<{ i
     return (
         <div className="px-6 md:px-12 py-10 max-w-[1200px] mx-auto space-y-10">
             <Link href="/admin/bookings" className="flex items-center gap-3 text-[10px] font-black uppercase tracking-[0.3em] text-white/40 hover:text-white transition-colors w-max">
-                <ArrowLeft className="w-4 h-4" /> Back to Ledger
+                <ArrowLeft className="w-4 h-4" /> Voltar às Reservas
             </Link>
 
             <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-6">
@@ -62,7 +62,7 @@ export default function AdminBookingDetailPage({ params }: { params: Promise<{ i
 
                     <div className="p-8 bg-[#0C0C11] border border-white/5 rounded-3xl shadow-xl flex justify-between items-center">
                         <div>
-                            <p className="text-[10px] font-black uppercase tracking-[0.3em] text-white/30 mb-1">Financial Ledger</p>
+                            <p className="text-[10px] font-black uppercase tracking-[0.3em] text-white/30 mb-1">Resumo Financeiro</p>
                             <p className="text-sm font-bold text-white">Payment Status: <span className="text-brand-gold">{booking.paymentStatus?.toUpperCase() || 'UNKNOWN'}</span></p>
                         </div>
                         <div className="text-right">

@@ -51,7 +51,7 @@ export default function SettingsPage() {
                         </section>
 
                         <section className="pt-8 border-t border-white/[0.05]">
-                            <h3 className="text-lg font-black text-white mb-6">Operational Hours</h3>
+                            <h3 className="text-lg font-black text-white mb-6">Horário de Operação</h3>
                             <div className="flex items-center justify-between p-4 bg-white/5 border border-white/10 rounded-2xl">
                                 <div>
                                     <p className="text-sm font-bold text-white">24/7 Availability</p>

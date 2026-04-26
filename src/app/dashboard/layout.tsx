@@ -34,7 +34,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
     }, [pathname]);
 
     return (
-        <RoleGuard allowedRoles={['PASSENGER', 'ADMIN']}>
+        <RoleGuard allowedRoles={['PASSENGER']}>
             <div className="min-h-screen bg-[#030303] text-white selection:bg-brand-gold/20 selection:text-brand-gold overflow-hidden">
       
       {/* Background Ambience */}
@@ -61,7 +61,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
                 NEXRICE
               </span>
               <span className="text-[7px] font-black text-brand-gold uppercase tracking-[0.6em] mt-1.5 opacity-60">
-                Elite Private
+                Elite · Chauffeur
               </span>
             </div>
           </Link>
@@ -83,29 +83,33 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
         )}
 
         {/* Navigation Protocol */}
-        <nav className="flex-1 p-6 space-y-2 overflow-y-auto custom-scrollbar">
-          <div className="text-[10px] font-black text-white/10 uppercase tracking-[0.4em] mb-6 px-4">Menu de Navegação</div>
+        <nav className="flex-1 p-6 space-y-1 overflow-y-auto custom-scrollbar">
+          <div className="text-[10px] font-black text-white/10 uppercase tracking-[0.4em] mb-6 px-4">Navegação</div>
           {NAV.map(({ href, label, icon: Icon }) => {
-            const active = pathname === href || pathname.startsWith(href + "/");
+            const active = href === '/dashboard'
+              ? pathname === '/dashboard'
+              : pathname === href || pathname.startsWith(href + "/");
             return (
               <Link
                 key={href}
                 href={href}
                 className={cn(
-                  "flex items-center gap-4 px-5 py-3.5 rounded-2xl text-[11px] font-black uppercase tracking-[0.2em] transition-all duration-300 relative group",
+                  "flex items-center gap-4 px-4 py-3.5 rounded-2xl text-[11px] font-black uppercase tracking-[0.15em] transition-all duration-200 relative group",
                   active
-                    ? "bg-brand-gold text-black shadow-[0_10px_30px_-10px_rgba(212,175,55,0.4)]"
-                    : "text-white/30 hover:text-white hover:bg-white/[0.03]"
+                    ? "bg-brand-gold text-black shadow-[0_8px_24px_-8px_rgba(212,175,55,0.5)]"
+                    : "text-white/30 hover:text-white hover:bg-white/[0.05]"
                 )}
               >
-                <Icon className={cn("w-4 h-4 transition-colors", active ? "text-black" : "text-white/20 group-hover:text-brand-gold")} />
-                {label}
-                {active && (
-                  <motion.div 
-                    layoutId="nav-active"
-                    className="absolute right-4 w-1.5 h-1.5 rounded-full bg-black/40" 
-                  />
-                )}
+                <div className={cn(
+                  "w-8 h-8 rounded-xl flex items-center justify-center flex-shrink-0 transition-all duration-200",
+                  active
+                    ? "bg-black/10 text-black"
+                    : "bg-white/5 text-white/20 group-hover:bg-brand-gold/10 group-hover:text-brand-gold"
+                )}>
+                  <Icon className="w-4 h-4" />
+                </div>
+                <span>{label}</span>
+                {active && <div className="absolute right-4 w-1.5 h-1.5 rounded-full bg-black/30" />}
               </Link>
             );
           })}
@@ -114,14 +118,14 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
         {/* Footer Sidebar */}
         <div className="p-6 border-t border-white/5 space-y-4">
           <LanguageSwitcher variant="navbar" />
-          <Link href="/book" className="flex items-center justify-center gap-3 w-full py-4 bg-white/5 border border-white/10 rounded-2xl text-[10px] font-black uppercase tracking-[0.3em] text-white hover:bg-brand-gold hover:text-black hover:border-brand-gold transition-all duration-500">
-            <Plus className="w-4 h-4" /> Nova Reserva
+          <Link href="/book" className="flex items-center justify-center gap-3 w-full py-4 bg-white/5 border border-white/10 rounded-2xl text-[10px] font-black uppercase tracking-[0.3em] text-white hover:bg-brand-gold hover:text-black hover:border-brand-gold transition-all duration-300 group">
+            <Plus className="w-4 h-4 group-hover:rotate-90 transition-transform duration-300" /> Nova Reserva
           </Link>
           <button 
             onClick={() => logout()}
-            className="flex items-center gap-3 w-full px-5 py-3 rounded-2xl text-[10px] font-black uppercase tracking-[0.3em] text-white/20 hover:text-red-500 hover:bg-red-500/5 transition-all"
+            className="flex items-center gap-3 w-full px-5 py-3 rounded-2xl text-[10px] font-black uppercase tracking-[0.3em] text-white/20 hover:text-red-400 hover:bg-red-500/5 transition-all group"
           >
-            <LogOut className="w-4 h-4" /> Sair
+            <LogOut className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-300" /> Sair
           </button>
         </div>
       </aside>

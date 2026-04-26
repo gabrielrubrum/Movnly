@@ -89,7 +89,11 @@ function LoginForm() {
         }
         setAuth(data.user, data.access_token);
         toast.success("Login efetuado com sucesso.");
-        router.push(redirect);
+        // Redirecionar baseado no role
+        const roleRedirect = data.user?.role === 'DRIVER' ? '/motorista'
+          : data.user?.role === 'ADMIN' || data.user?.role === 'MANAGER' ? '/admin'
+          : redirect;
+        router.push(roleRedirect);
       } else {
         setTab("login");
         setForm({ ...form, password: "" });
@@ -337,6 +341,8 @@ function LoginForm() {
           </button>
           
           <div className="w-px h-6 bg-white/10" />
+
+          <Link
             href="/driver/login" 
             className="flex items-center gap-3 px-6 py-3 rounded-xl hover:bg-brand-gold transition-all duration-500 group/driver"
           >

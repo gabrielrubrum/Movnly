@@ -56,7 +56,7 @@ export default function PaymentMethodsPage() {
                 <div className="space-y-4">
                     <div className="flex items-center gap-3 px-3 py-1 bg-brand-gold/10 border border-brand-gold/20 rounded-full w-max">
                         <ShieldCheck className="w-3.5 h-3.5 text-brand-gold" />
-                        <span className="text-[9px] font-black text-brand-gold uppercase tracking-[0.2em]">Pagamentos Blindados</span>
+                        <span className="text-[9px] font-black text-brand-gold uppercase tracking-[0.2em]">Pagamentos Seguros</span>
                     </div>
                     <h1 className="text-5xl font-extralight text-white italic tracking-tighter leading-none">
                         Gestão de <span className="not-italic font-light text-brand-gold ml-3">Faturação</span>
