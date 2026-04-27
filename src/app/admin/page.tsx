@@ -16,7 +16,7 @@ export default function AdminDashboard() {
   const { adminStats, loading: financesLoading } = useFinances();
   const user = useAuthStore(s => s.user);
   const { token } = useAuthStore();
-  const [auditLogs, setAuditLogs] = useState([]);
+  const [auditLogs, setAuditLogs] = useState<any[]>([]);
   const loading = bookingsLoading || financesLoading;
   const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3002";
 
@@ -277,7 +277,7 @@ export default function AdminDashboard() {
                 const isDriver = log.action?.includes("DRIVER");
                 const isStatus = log.action?.includes("STATUS");
                 const color = isLogin ? "#34D399" : isDriver ? "#D4AF37" : isStatus ? "#60A5FA" : "rgba(255,255,255,0.2)";
-                const label = log.action?.replace(/_/g, " ").toLowerCase().replace(/w/g, l => l.toUpperCase());
+                const label = (log.action || "").replace(/_/g, " ");
                 return (
                   <div key={i} className="flex items-center gap-2.5 px-3 py-2 rounded-lg hover:bg-white/[0.02] transition-all">
                     <div className="w-1.5 h-1.5 rounded-full flex-shrink-0" style={{ background: color }} />

@@ -135,7 +135,7 @@ export function useBookings() {
     },
     cancel: async (id: string) => {
       try {
-        await api.post(`/bookings/${id}/cancel`);
+        await api.patch(`/bookings/${id}/status`, { status: "CANCELLED" });
         refresh();
         toast.success("Operação Concluída", { description: "A reserva foi cancelada no sistema." });
       } catch (err: any) {

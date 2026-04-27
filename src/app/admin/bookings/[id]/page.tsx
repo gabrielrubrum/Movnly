@@ -17,6 +17,9 @@ export default function AdminBookingDetailPage({ params }: { params: Promise<{ i
   const booking = useBooking(resolvedParams.id);
   const { updateStatus, drivers, assignDriver } = useBookings();
   const [selectedDriverId, setSelectedDriverId] = useState("");
+  const [pinInput, setPinInput] = useState("");
+  const [showPinModal, setShowPinModal] = useState(false);
+  const [pinError, setPinError] = useState("");
 
   if (!booking) return (
     <div className="flex items-center justify-center min-h-[60vh]">
@@ -29,6 +32,7 @@ export default function AdminBookingDetailPage({ params }: { params: Promise<{ i
   const isPaid = booking.paymentStatus === "paid" || (booking.paymentStatus as string) === "PAID";
 
   return (
+    <>
     <div className="max-w-[1100px] mx-auto space-y-6">
 
       {/* Back + Header */}
@@ -283,11 +287,7 @@ export default function AdminBookingDetailPage({ params }: { params: Promise<{ i
                 Marcar Em Rota
               </button>
               <button
-                onClick={() => {
-                  if (confirm("Confirmar conclusão da viagem? O pagamento ao motorista será processado automaticamente.")) {
-                    updateStatus(booking.id, "completed");
-                  }
-                }}
+                onClick={() => { setShowPinModal(true); setPinInput(""); setPinError(""); }}
                 className="w-full py-3.5 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all flex items-center justify-center gap-2 text-emerald-400 hover:bg-emerald-500/20"
                 style={{ background: "rgba(52,211,153,0.08)", border: "1px solid rgba(52,211,153,0.2)" }}
               >
@@ -315,5 +315,61 @@ export default function AdminBookingDetailPage({ params }: { params: Promise<{ i
         </div>
       </div>
     </div>
+
+      {/* PIN Modal */}
+      {showPinModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4" style={{ background: "rgba(0,0,0,0.7)", backdropFilter: "blur(8px)" }}>
+          <motion.div initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.2 }}
+            className="w-full max-w-sm rounded-2xl p-6 space-y-5"
+            style={{ background: "#0A0A0F", border: "1px solid rgba(52,211,153,0.2)" }}>
+            <div className="text-center">
+              <div className="w-12 h-12 rounded-2xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center mx-auto mb-3">
+                <CheckCircle2 className="w-6 h-6 text-emerald-400" />
+              </div>
+              <h3 className="text-lg font-bold text-white">Confirmar Conclusão</h3>
+              <p className="text-[11px] text-white/40 mt-1">Insere o PIN de 6 dígitos do passageiro para concluir a viagem</p>
+            </div>
+            <div>
+              <input
+                type="text"
+                maxLength={6}
+                placeholder="000000"
+                value={pinInput}
+                onChange={e => { setPinInput(e.target.value.replace(/\D/g, "")); setPinError(""); }}
+                className="w-full text-center text-2xl font-mono font-bold tracking-[0.5em] py-4 rounded-xl outline-none transition-colors"
+                style={{ background: "rgba(255,255,255,0.04)", border: pinError ? "1px solid rgba(248,113,113,0.5)" : "1px solid rgba(255,255,255,0.08)", color: "#fff" }}
+                autoFocus
+              />
+              {pinError && <p className="text-[10px] text-red-400 text-center mt-2">{pinError}</p>}
+            </div>
+            <div className="flex gap-2">
+              <button
+                onClick={() => setShowPinModal(false)}
+                className="flex-1 py-3 rounded-xl text-[10px] font-black uppercase tracking-widest text-white/40 hover:text-white transition-colors"
+                style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.07)" }}
+              >
+                Cancelar
+              </button>
+              <button
+                onClick={async () => {
+                  if (pinInput.length !== 6) { setPinError("PIN deve ter 6 dígitos"); return; }
+                  try {
+                    await updateStatus(booking.id, "completed", pinInput);
+                    setShowPinModal(false);
+                  } catch {
+                    setPinError("PIN incorreto. Tenta novamente.");
+                  }
+                }}
+                disabled={pinInput.length !== 6}
+                className="flex-1 py-3 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all disabled:opacity-40 text-black"
+                style={{ background: "#34D399" }}
+              >
+                Confirmar
+              </button>
+            </div>
+          </motion.div>
+        </div>
+      )}
+    </>
   );
 }
