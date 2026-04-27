@@ -54,7 +54,7 @@ export default function DriversPage() {
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h1 className="text-3xl font-extralight text-white italic tracking-tighter">Motoristas</h1>
+          <h1 className="text-3xl font-extralight text-white font-serif italic tracking-tighter">Motoristas</h1>
           <p className="text-white/30 text-sm mt-1">{drivers.length} registados · {online} disponíveis</p>
         </div>
         <div className="flex items-center gap-2 px-4 py-2 rounded-full bg-emerald-500/5 border border-emerald-500/15 w-fit">

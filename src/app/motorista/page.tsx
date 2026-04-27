@@ -107,7 +107,7 @@ export default function MotoristaDashboard() {
             <Target className="w-3.5 h-3.5 text-brand-gold" />
             <span className="text-[9px] font-black text-brand-gold uppercase tracking-[0.3em]">Painel do Motorista</span>
           </div>
-          <h1 className="text-4xl sm:text-5xl font-extralight text-white italic tracking-tighter leading-none">
+          <h1 className="text-4xl sm:text-5xl font-extralight text-white font-serif italic tracking-tighter leading-none">
             Bem-vindo, <span className="not-italic font-light text-brand-gold">Ricardo</span>
           </h1>
         </div>

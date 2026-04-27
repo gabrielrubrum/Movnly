@@ -21,7 +21,7 @@ export default function ProfilePage() {
             <User className="w-3.5 h-3.5 text-brand-gold" />
             <span className="text-[9px] font-black text-brand-gold uppercase tracking-[0.2em]">Status de Membro</span>
           </div>
-          <h1 className="text-5xl font-extralight text-white italic tracking-tighter leading-none">
+          <h1 className="text-5xl font-extralight text-white font-serif italic tracking-tighter leading-none">
             Perfil de <span className="not-italic font-light text-brand-gold ml-3">Membro</span>
           </h1>
           <p className="text-white/30 text-lg font-light italic">Gerencie suas credenciais e preferências de serviço executivo.</p>

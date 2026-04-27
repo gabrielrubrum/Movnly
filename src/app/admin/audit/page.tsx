@@ -50,7 +50,7 @@ export default function AuditPage() {
     <div className="space-y-6">
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h1 className="text-3xl font-extralight text-white italic tracking-tighter">Auditoria</h1>
+          <h1 className="text-3xl font-extralight text-white font-serif italic tracking-tighter">Auditoria</h1>
           <p className="text-white/30 text-sm mt-1">{total} eventos registados</p>
         </div>
         {warnings > 0 && (
