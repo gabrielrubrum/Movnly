@@ -1,9 +1,10 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Search, Shield, Mail, Calendar, Loader2, Users } from "lucide-react";
+import { Search, Shield, Mail, Calendar, Loader2, Users, Plus, X } from "lucide-react";
 import { useAuthStore } from "@/lib/auth-store";
 import { cn } from "@/lib/utils";
+import { toast } from "sonner";
 
 const ROLES: Record<string, { label: string; color: string }> = {
   ADMIN: { label: "Admin", color: "bg-brand-gold text-black" },
@@ -17,10 +18,14 @@ export default function StaffPage() {
   const [staff, setStaff] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState("");
+  const [showForm, setShowForm] = useState(false);
+  const [creating, setCreating] = useState(false);
+  const [form, setForm] = useState({ name: "", email: "", password: "", role: "OPERATOR" });
+  const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3002";
 
   const fetchStaff = async () => {
     try {
-      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || "http://localhost:3002"}/admin/staff`, {
+      const res = await fetch(`${API_URL}/admin/staff`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       setStaff(await res.json());
@@ -28,8 +33,35 @@ export default function StaffPage() {
     finally { setLoading(false); }
   };
 
+  const createStaff = async () => {
+    if (!form.name || !form.email || !form.password) {
+      toast.error("Preenche todos os campos obrigatórios.");
+      return;
+    }
+    setCreating(true);
+    try {
+      const res = await fetch(`${API_URL}/admin/staff/create`, {
+        method: "POST",
+        headers: { Authorization: `Bearer ${token}`, "Content-Type": "application/json" },
+        body: JSON.stringify(form)
+      });
+      if (!res.ok) {
+        const err = await res.json();
+        throw new Error(err.message || "Erro ao criar membro.");
+      }
+      toast.success("Membro da equipa criado com sucesso.");
+      setShowForm(false);
+      setForm({ name: "", email: "", password: "", role: "OPERATOR" });
+      fetchStaff();
+    } catch (e: any) {
+      toast.error(e.message || "Erro ao criar membro.");
+    } finally {
+      setCreating(false);
+    }
+  };
+
   const updateRole = async (userId: string, role: string) => {
-    await fetch(`${process.env.NEXT_PUBLIC_API_URL || "http://localhost:3002"}/admin/users/${userId}/role`, {
+    await fetch(`${API_URL}/admin/users/${userId}/role`, {
       method: "PATCH",
       headers: { Authorization: `Bearer ${token}`, "Content-Type": "application/json" },
       body: JSON.stringify({ role })
@@ -46,10 +78,76 @@ export default function StaffPage() {
 
   return (
     <div className="space-y-6">
-      <div>
-        <h1 className="text-3xl font-bold text-white tracking-tight">Equipa</h1>
-        <p className="text-white/30 text-sm mt-1">{staff.length} membros da equipa</p>
+      <div className="flex items-center justify-between">
+        <div>
+          <h1 className="text-3xl font-bold text-white tracking-tight">Equipa</h1>
+          <p className="text-white/30 text-sm mt-1">{staff.length} membros da equipa</p>
+        </div>
+        <button
+          onClick={() => setShowForm(true)}
+          className="flex items-center gap-2 px-4 py-2 rounded-xl bg-brand-gold text-black text-[10px] font-black uppercase tracking-widest hover:bg-white transition-all"
+        >
+          <Plus className="w-3.5 h-3.5" /> Novo Membro
+        </button>
       </div>
+
+      {/* Modal criar membro */}
+      {showForm && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4" style={{ background: "rgba(0,0,0,0.7)", backdropFilter: "blur(8px)" }}>
+          <div className="w-full max-w-md rounded-2xl p-6 space-y-4" style={{ background: "#0A0A0F", border: "1px solid rgba(255,255,255,0.1)" }}>
+            <div className="flex items-center justify-between">
+              <h3 className="text-lg font-bold text-white">Novo Membro da Equipa</h3>
+              <button onClick={() => setShowForm(false)} className="text-white/30 hover:text-white transition-colors">
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+            <div className="space-y-3">
+              {[
+                { label: "Nome completo *", key: "name", placeholder: "João Silva" },
+                { label: "Email *", key: "email", placeholder: "joao@nexrice.com", type: "email" },
+                { label: "Password *", key: "password", placeholder: "Mínimo 8 caracteres", type: "password" },
+              ].map(({ label, key, placeholder, type }) => (
+                <div key={key}>
+                  <label className="text-[9px] font-black text-white/40 uppercase tracking-widest block mb-1">{label}</label>
+                  <input
+                    type={type || "text"}
+                    placeholder={placeholder}
+                    value={(form as any)[key]}
+                    onChange={e => setForm(f => ({ ...f, [key]: e.target.value }))}
+                    className="w-full px-4 py-2.5 rounded-xl text-sm text-white outline-none transition-colors"
+                    style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.08)" }}
+                  />
+                </div>
+              ))}
+              <div>
+                <label className="text-[9px] font-black text-white/40 uppercase tracking-widest block mb-1">Cargo *</label>
+                <select
+                  value={form.role}
+                  onChange={e => setForm(f => ({ ...f, role: e.target.value }))}
+                  className="w-full px-4 py-2.5 rounded-xl text-sm text-white outline-none transition-colors"
+                  style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.08)" }}
+                >
+                  {Object.entries(ROLES).filter(([r]) => r !== "ADMIN").map(([r, cfg]) => (
+                    <option key={r} value={r} className="bg-[#0A0A0F]">{cfg.label}</option>
+                  ))}
+                </select>
+              </div>
+            </div>
+            <div className="flex gap-2 pt-2">
+              <button onClick={() => setShowForm(false)}
+                className="flex-1 py-3 rounded-xl text-[10px] font-black uppercase tracking-widest text-white/40 hover:text-white transition-colors"
+                style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.07)" }}>
+                Cancelar
+              </button>
+              <button onClick={createStaff} disabled={creating}
+                className="flex-1 py-3 rounded-xl text-[10px] font-black uppercase tracking-widest text-black disabled:opacity-50 transition-all"
+                style={{ background: "#D4AF37" }}>
+                {creating ? "A criar..." : "Criar Membro"}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Role cards */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">

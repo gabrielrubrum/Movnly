@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { Search, Loader2, UserCheck, Car, CreditCard, Building2, Shield, ChevronRight } from "lucide-react";
+import { Search, Loader2, UserCheck, Car, CreditCard, Building2, Shield, Plus, X } from "lucide-react";
 import axios from "axios";
 import { useAuthStore } from "@/lib/auth-store";
 import { toast } from "sonner";
@@ -12,6 +12,9 @@ export default function DriversPage() {
   const [search, setSearch] = useState("");
   const [drivers, setDrivers] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
+  const [showForm, setShowForm] = useState(false);
+  const [creating, setCreating] = useState(false);
+  const [form, setForm] = useState({ name: "", email: "", password: "", license: "" });
   const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3002";
 
   const fetchDrivers = async () => {
@@ -24,6 +27,27 @@ export default function DriversPage() {
       toast.error("Erro ao carregar motoristas.");
     } finally {
       setLoading(false);
+    }
+  };
+
+  const createDriver = async () => {
+    if (!form.name || !form.email || !form.password) {
+      toast.error("Preenche todos os campos obrigatórios.");
+      return;
+    }
+    setCreating(true);
+    try {
+      await axios.post(`${API_URL}/admin/drivers/create`, form, {
+        headers: { Authorization: `Bearer ${token}` }
+      });
+      toast.success("Motorista criado com sucesso.");
+      setShowForm(false);
+      setForm({ name: "", email: "", password: "", license: "" });
+      fetchDrivers();
+    } catch (e: any) {
+      toast.error(e.response?.data?.message || "Erro ao criar motorista.");
+    } finally {
+      setCreating(false);
     }
   };
 
@@ -57,11 +81,65 @@ export default function DriversPage() {
           <h1 className="text-3xl font-bold text-white tracking-tight">Motoristas</h1>
           <p className="text-white/30 text-sm mt-1">{drivers.length} registados · {online} disponíveis</p>
         </div>
-        <div className="flex items-center gap-2 px-4 py-2 rounded-full bg-emerald-500/5 border border-emerald-500/15 w-fit">
-          <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
-          <span className="text-[10px] font-bold text-emerald-400 uppercase tracking-widest">{online} online</span>
+        <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2 px-4 py-2 rounded-full bg-emerald-500/5 border border-emerald-500/15 w-fit">
+            <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+            <span className="text-[10px] font-bold text-emerald-400 uppercase tracking-widest">{online} online</span>
+          </div>
+          <button
+            onClick={() => setShowForm(true)}
+            className="flex items-center gap-2 px-4 py-2 rounded-xl bg-brand-gold text-black text-[10px] font-black uppercase tracking-widest hover:bg-white transition-all"
+          >
+            <Plus className="w-3.5 h-3.5" /> Novo Motorista
+          </button>
         </div>
       </div>
+
+      {/* Modal criar motorista */}
+      {showForm && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4" style={{ background: "rgba(0,0,0,0.7)", backdropFilter: "blur(8px)" }}>
+          <div className="w-full max-w-md rounded-2xl p-6 space-y-4" style={{ background: "#0A0A0F", border: "1px solid rgba(212,175,55,0.2)" }}>
+            <div className="flex items-center justify-between">
+              <h3 className="text-lg font-bold text-white">Novo Motorista</h3>
+              <button onClick={() => setShowForm(false)} className="text-white/30 hover:text-white transition-colors">
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+            <div className="space-y-3">
+              {[
+                { label: "Nome completo *", key: "name", placeholder: "Ricardo M. Santos" },
+                { label: "Email *", key: "email", placeholder: "motorista@nexrice.com", type: "email" },
+                { label: "Password *", key: "password", placeholder: "Mínimo 8 caracteres", type: "password" },
+                { label: "Licença de condução", key: "license", placeholder: "LX-PRIME-2026" },
+              ].map(({ label, key, placeholder, type }) => (
+                <div key={key}>
+                  <label className="text-[9px] font-black text-white/40 uppercase tracking-widest block mb-1">{label}</label>
+                  <input
+                    type={type || "text"}
+                    placeholder={placeholder}
+                    value={(form as any)[key]}
+                    onChange={e => setForm(f => ({ ...f, [key]: e.target.value }))}
+                    className="w-full px-4 py-2.5 rounded-xl text-sm text-white outline-none transition-colors"
+                    style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.08)" }}
+                  />
+                </div>
+              ))}
+            </div>
+            <div className="flex gap-2 pt-2">
+              <button onClick={() => setShowForm(false)}
+                className="flex-1 py-3 rounded-xl text-[10px] font-black uppercase tracking-widest text-white/40 hover:text-white transition-colors"
+                style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.07)" }}>
+                Cancelar
+              </button>
+              <button onClick={createDriver} disabled={creating}
+                className="flex-1 py-3 rounded-xl text-[10px] font-black uppercase tracking-widest text-black disabled:opacity-50 transition-all"
+                style={{ background: "#D4AF37" }}>
+                {creating ? "A criar..." : "Criar Motorista"}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Search */}
       <div className="relative max-w-sm">
