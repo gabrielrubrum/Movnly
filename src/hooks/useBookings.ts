@@ -94,8 +94,8 @@ export function useBookings() {
   useEffect(() => {
     refresh();
 
-    // Auto-refresh every 30 seconds for demo "live" effect
-    const interval = setInterval(refresh, 30000);
+    // Auto-refresh every 60 seconds
+    const interval = setInterval(refresh, 60000);
     return () => clearInterval(interval);
   }, [refresh]);
 
