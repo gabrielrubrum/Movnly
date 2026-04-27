@@ -3,8 +3,19 @@
 import { useState, useEffect, useCallback } from "react";
 import api from "@/lib/api";
 import { useAuthStore } from "@/lib/auth-store";
-import { type Booking, type BookingStatus } from "@/lib/types"; // Updated to use centralized types
+import { type Booking, type BookingStatus } from "@/lib/types";
 import { toast } from "sonner";
+import { io, Socket } from "socket.io-client";
+
+// Singleton socket
+let _socket: Socket | null = null;
+function getSocket() {
+  if (!_socket) {
+    const url = (process.env.NEXT_PUBLIC_API_URL || "http://localhost:3002").replace(/\/api$/, "");
+    _socket = io(url, { path: "/socket.io/", transports: ["websocket", "polling"] });
+  }
+  return _socket;
+}
 
 // Helper to map backend Prisma Booking to frontend Booking
 const mapBackendToFrontend = (dbBooking: any): Booking => {
@@ -94,9 +105,21 @@ export function useBookings() {
   useEffect(() => {
     refresh();
 
-    // Auto-refresh every 60 seconds
+    // Auto-refresh every 60 seconds (fallback)
     const interval = setInterval(refresh, 60000);
-    return () => clearInterval(interval);
+
+    // WebSocket: atualização em tempo real
+    const socket = getSocket();
+    const handleBookingUpdate = () => { refresh(); };
+    const handleNewRide = () => { refresh(); };
+    socket.on("booking_update", handleBookingUpdate);
+    socket.on("new_ride_available", handleNewRide);
+
+    return () => {
+      clearInterval(interval);
+      socket.off("booking_update", handleBookingUpdate);
+      socket.off("new_ride_available", handleNewRide);
+    };
   }, [refresh]);
 
   return {
