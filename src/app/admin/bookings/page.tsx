@@ -8,7 +8,18 @@ import { Search, Loader2, ChevronRight } from "lucide-react";
 import { useState } from "react";
 import Link from "next/link";
 
-const STATUSES: BookingStatus[] = ["confirmed", "driver_assigned", "driver_en_route", "in_progress", "completed", "cancelled"];
+const STATUS_LABELS: Record<string, string> = {
+  pending: "Pendente",
+  confirmed: "Confirmada",
+  on_route: "Em Rota",
+  driver_assigned: "Motorista Atribuído",
+  driver_en_route: "A Caminho",
+  in_progress: "Em Curso",
+  completed: "Concluída",
+  cancelled: "Cancelada",
+};
+
+const STATUSES: BookingStatus[] = ["pending", "confirmed", "on_route", "driver_assigned", "driver_en_route", "in_progress", "completed", "cancelled"];
 
 export default function AdminBookingsPage() {
   const { bookings, loading } = useBookings();
@@ -70,7 +81,7 @@ export default function AdminBookingsPage() {
                     : "text-white/40 hover:text-white bg-white/[0.03] border border-white/[0.06]"
                 }`}
               >
-                {s.replace(/_/g, " ")} ({count})
+                {STATUS_LABELS[s] || s.replace(/_/g, " ")} ({count})
               </button>
             );
           })}

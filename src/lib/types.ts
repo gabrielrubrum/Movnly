@@ -4,6 +4,7 @@
  */
 
 export type BookingStatus =
+  | "pending"
   | "pending_payment"
   | "confirmed"
   | "driver_assigned"
