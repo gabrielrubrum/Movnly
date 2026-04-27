@@ -12,8 +12,8 @@ export default function PaymentsPage() {
 
   const loading = financesLoading || bookingsLoading;
 
-  const paid = bookings.filter(b => b.paymentStatus === "paid" || b.paymentStatus === "PAID");
-  const pending = bookings.filter(b => b.paymentStatus !== "paid" && b.paymentStatus !== "PAID" && b.status !== "cancelled");
+  const paid = bookings.filter(b => b.paymentStatus === "paid" || (b.paymentStatus as string) === "PAID");
+  const pending = bookings.filter(b => b.paymentStatus !== "paid" && (b.paymentStatus as string) !== "PAID" && b.status !== "cancelled");
 
   if (loading) return (
     <div className="flex items-center justify-center h-64">
@@ -74,6 +74,51 @@ export default function PaymentsPage() {
               <span className={cn("text-sm font-bold tabular-nums w-20 text-right", gold ? "text-brand-gold" : "text-white/50")}>{formatCurrency(value)}</span>
             </div>
           ))}
+        </div>
+      </div>
+
+      {/* Ganhos por motorista */}
+      <div className="rounded-2xl overflow-hidden" style={{ background: "rgba(255,255,255,0.02)", border: "1px solid rgba(255,255,255,0.06)" }}>
+        <div className="px-6 py-4" style={{ borderBottom: "1px solid rgba(255,255,255,0.05)" }}>
+          <h2 className="text-sm font-bold text-white">Ganhos por Motorista</h2>
+          <p className="text-[9px] text-white/30 mt-0.5">Valor acumulado por viagens concluídas</p>
+        </div>
+        <div>
+          {bookings
+            .filter(b => b.driver && b.status === "completed")
+            .reduce((acc: any[], b) => {
+              const existing = acc.find(x => x.driverId === b.driver?.id);
+              if (existing) {
+                existing.total += b.driverAmount || 0;
+                existing.trips += 1;
+              } else {
+                acc.push({ driverId: b.driver?.id, name: b.driver?.name, total: b.driverAmount || 0, trips: 1 });
+              }
+              return acc;
+            }, [])
+            .sort((a, b) => b.total - a.total)
+            .map((d, i, arr) => (
+              <div key={d.driverId} className="flex items-center gap-4 px-6 py-4 hover:bg-white/[0.025] transition-all"
+                style={{ borderBottom: i < arr.length - 1 ? "1px solid rgba(255,255,255,0.04)" : "none" }}>
+                <div className="w-9 h-9 rounded-xl flex items-center justify-center text-brand-gold font-black text-sm flex-shrink-0"
+                  style={{ background: "rgba(212,175,55,0.1)", border: "1px solid rgba(212,175,55,0.15)" }}>
+                  {d.name?.[0]?.toUpperCase()}
+                </div>
+                <div className="flex-1 min-w-0">
+                  <p className="text-sm font-semibold text-white/80">{d.name}</p>
+                  <p className="text-[9px] text-white/30 mt-0.5">{d.trips} viagem{d.trips !== 1 ? "s" : ""} concluída{d.trips !== 1 ? "s" : ""}</p>
+                </div>
+                <div className="text-right">
+                  <p className="text-sm font-bold text-brand-gold tabular-nums">{formatCurrency(d.total)}</p>
+                  <p className="text-[8px] text-white/25 mt-0.5">ganho acumulado</p>
+                </div>
+              </div>
+            ))}
+          {bookings.filter(b => b.driver && b.status === "completed").length === 0 && (
+            <div className="flex flex-col items-center py-10 gap-2">
+              <p className="text-white/20 text-xs italic">Sem viagens concluídas ainda.</p>
+            </div>
+          )}
         </div>
       </div>
 

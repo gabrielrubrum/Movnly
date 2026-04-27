@@ -3,7 +3,7 @@
 import { useFinances } from "@/hooks/useFinances";
 import { useBookings } from "@/hooks/useBookings";
 import { formatCurrency } from "@/lib/utils";
-import { TrendingUp, DollarSign, Car, Activity, Loader2, ArrowUpRight } from "lucide-react";
+import { TrendingUp, DollarSign, Car, Activity, Loader2, ArrowUpRight, Download } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { motion } from "framer-motion";
 
@@ -24,11 +24,43 @@ export default function AnalyticsPage() {
   const completed = bookings.filter(b => b.status === "completed").length;
   const avgTicket = completed > 0 ? (adminStats?.totalRevenue || 0) / completed : 0;
 
+  const exportCSV = () => {
+    const rows = [
+      ["Referência", "Passageiro", "Origem", "Destino", "Data", "Categoria", "Preço Total", "Ganho Motorista", "Taxa Plataforma", "Status"],
+      ...bookings.map(b => [
+        b.reference,
+        b.passenger?.name || "",
+        b.origin,
+        b.destination,
+        b.pickupDate,
+        b.category,
+        b.totalPrice,
+        b.driverAmount || 0,
+        b.platformFee || 0,
+        b.status,
+      ])
+    ];
+    const csv = rows.map(r => r.map(v => `"${v}"`).join(",")).join("\n");
+    const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = `nexrice-relatorio-${new Date().toISOString().split("T")[0]}.csv`;
+    a.click();
+    URL.revokeObjectURL(url);
+  };
+
   return (
     <div className="space-y-6">
-      <div>
-        <h1 className="text-3xl font-extralight text-white italic tracking-tighter">Relatórios</h1>
-        <p className="text-white/30 text-sm mt-1">Análise de performance e métricas operacionais</p>
+      <div className="flex items-center justify-between">
+        <div>
+          <h1 className="text-3xl font-extralight text-white italic tracking-tighter">Relatórios</h1>
+          <p className="text-white/30 text-sm mt-1">Análise de performance e métricas operacionais</p>
+        </div>
+        <button onClick={exportCSV}
+          className="flex items-center gap-2 px-4 py-2 rounded-xl bg-brand-gold/10 border border-brand-gold/20 text-[10px] font-black text-brand-gold hover:bg-brand-gold hover:text-black uppercase tracking-widest transition-all">
+          <Download className="w-3.5 h-3.5" /> Exportar CSV
+        </button>
       </div>
 
       {/* KPIs */}
