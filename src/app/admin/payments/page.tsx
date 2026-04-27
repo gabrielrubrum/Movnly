@@ -25,7 +25,7 @@ export default function PaymentsPage() {
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-3xl font-extralight text-white font-serif italic tracking-tighter">Pagamentos</h1>
+          <h1 className="text-3xl font-bold text-white tracking-tight">Pagamentos</h1>
           <p className="text-white/30 text-sm mt-1">Gestão financeira e transações</p>
         </div>
         <button className="flex items-center gap-2 px-4 py-2 rounded-xl bg-white/[0.04] border border-white/[0.08] text-[10px] font-black text-white/40 hover:text-white uppercase tracking-widest transition-all">

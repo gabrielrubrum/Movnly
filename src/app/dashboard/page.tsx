@@ -48,8 +48,8 @@ export default function DashboardPage() {
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-6">
         <div>
           <span className="text-[9px] font-black text-brand-gold uppercase tracking-[0.4em] block mb-3">Painel do Cliente</span>
-          <h1 className="text-4xl sm:text-5xl font-extralight text-white font-serif italic tracking-tighter leading-none">
-            Olá, <span className="not-italic font-light text-brand-gold">{user?.name?.split(" ")[0]}</span>
+          <h1 className="text-4xl sm:text-5xl font-bold text-white tracking-tight leading-none">
+            Olá, <span className="text-brand-gold">{user?.name?.split(" ")[0]}</span>
           </h1>
           <p className="text-white/30 text-sm font-light italic mt-2">Que bom tê-lo de volta.</p>
         </div>

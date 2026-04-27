@@ -50,7 +50,7 @@ export default function BookingDetailsPage() {
                             <span className="text-[10px] font-black uppercase tracking-[0.5em] text-brand-gold">Voucher de Viagem</span>
                             <BookingStatusBadge status={booking.status} />
                         </div>
-                        <h1 className="text-6xl md:text-7xl font-extralight text-white font-serif italic tracking-tighter leading-none">
+                        <h1 className="text-6xl md:text-7xl font-bold text-white tracking-tight leading-none">
                             #{booking.reference}
                         </h1>
                     </div>

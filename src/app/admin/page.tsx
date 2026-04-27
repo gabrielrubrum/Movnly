@@ -48,8 +48,8 @@ export default function AdminDashboard() {
           <p className="text-[9px] font-black text-brand-gold/60 uppercase tracking-[0.4em] mb-2">
             {new Date().toLocaleDateString("pt-PT", { weekday: "long", day: "numeric", month: "long" })}
           </p>
-          <h1 className="text-4xl font-extralight text-white font-serif italic tracking-tighter">
-            Olá, <span className="not-italic font-semibold text-brand-gold">{user?.name?.split(" ")[0]}</span>
+          <h1 className="text-4xl font-bold text-white tracking-tight">
+            Olá, <span className="text-brand-gold">{user?.name?.split(" ")[0]}</span>
           </h1>
         </div>
         <div className="flex items-center gap-2 px-4 py-2 rounded-full bg-emerald-500/8 border border-emerald-500/20 w-fit">

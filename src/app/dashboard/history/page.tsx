@@ -25,8 +25,8 @@ export default function HistoryPage() {
       <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 border-b border-white/5 pb-10">
         <div className="flex flex-col">
           <span className="text-[10px] font-black uppercase tracking-[0.5em] text-brand-gold mb-4 block">Arquivo de Viagens</span>
-          <h1 className="text-6xl font-extralight text-white font-serif italic tracking-tighter leading-none">
-            Histórico <span className="not-italic font-light text-brand-gold ml-3">Completo</span>
+          <h1 className="text-6xl font-bold text-white tracking-tight leading-none">
+            Histórico <span className="text-brand-gold ml-3">Completo</span>
           </h1>
           <p className="text-white/30 text-lg font-light italic mt-6">Consulte as suas experiências passadas e faturas liquidadas.</p>
         </div>

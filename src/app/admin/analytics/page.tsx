@@ -63,7 +63,7 @@ export default function AnalyticsPage() {
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-3xl font-extralight text-white font-serif italic tracking-tighter">Relatórios</h1>
+          <h1 className="text-3xl font-bold text-white tracking-tight">Relatórios</h1>
           <p className="text-white/30 text-sm mt-1">Análise de performance e métricas operacionais</p>
         </div>
         <button onClick={exportCSV} className="flex items-center gap-2 px-4 py-2 rounded-xl bg-brand-gold/10 border border-brand-gold/20 text-[10px] font-black text-brand-gold hover:bg-brand-gold hover:text-black uppercase tracking-widest transition-all">

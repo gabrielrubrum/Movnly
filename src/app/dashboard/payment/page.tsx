@@ -58,8 +58,8 @@ export default function PaymentMethodsPage() {
                         <ShieldCheck className="w-3.5 h-3.5 text-brand-gold" />
                         <span className="text-[9px] font-black text-brand-gold uppercase tracking-[0.2em]">Pagamentos Seguros</span>
                     </div>
-                    <h1 className="text-5xl font-extralight text-white font-serif italic tracking-tighter leading-none">
-                        Gestão de <span className="not-italic font-light text-brand-gold ml-3">Faturação</span>
+                    <h1 className="text-5xl font-bold text-white tracking-tight leading-none">
+                        Gestão de <span className="text-brand-gold ml-3">Faturação</span>
                     </h1>
                     <p className="text-white/30 text-lg font-light italic">Seus métodos de pagamento são encriptados e processados com segurança máxima.</p>
                 </div>
