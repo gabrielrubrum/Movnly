@@ -50,31 +50,49 @@ export class FinancesService {
      * Calcula o extrato financeiro global para o Administrador
      */
     async getAdminStats() {
-        // Buscar todas as reservas finalizadas para calcular o lucro da plataforma
-        const completedBookings = await this.prisma.booking.findMany({
-            where: { status: 'COMPLETED', paymentStatus: 'PAID' }
+        // Todas as reservas com pagamento confirmado (PAID) independente do status da viagem
+        const paidBookings = await this.prisma.booking.findMany({
+            where: { paymentStatus: 'PAID' }
         });
+
+        // Reservas completadas para métricas de conclusão
+        const completedBookings = await this.prisma.booking.findMany({
+            where: { status: 'COMPLETED' }
+        });
+
+        // Total geral de reservas para contexto
+        const allBookings = await this.prisma.booking.findMany();
 
         let totalRevenue = 0;
         let totalDriverPayouts = 0;
         let platformProfit = 0;
 
-        completedBookings.forEach(booking => {
+        paidBookings.forEach(booking => {
             totalRevenue += Number(booking.price || 0);
             totalDriverPayouts += Number(booking.driverAmount || 0);
             platformProfit += Number(booking.platformFee || 0);
         });
 
+        // Se não há platformFee registado, calcular como 30% da receita
+        if (platformProfit === 0 && totalRevenue > 0) {
+            platformProfit = totalRevenue * 0.30;
+            totalDriverPayouts = totalRevenue * 0.70;
+        }
+
+        // Receita total de todas as reservas (para dashboard overview)
+        const grossRevenue = allBookings.reduce((sum, b) => sum + Number(b.price || 0), 0);
+
         return {
-            totalRevenue,
+            totalRevenue: grossRevenue, // Receita bruta total
+            paidRevenue: totalRevenue,  // Só das pagas
             totalDriverPayouts,
-            platformProfit,
-            // 60/20/20 Split for Partners
-            ownerShare: platformProfit * 0.6,
-            partnerAShare: platformProfit * 0.2,
-            partnerBShare: platformProfit * 0.2,
+            platformProfit: grossRevenue * 0.30, // 30% estimado
+            ownerShare: grossRevenue * 0.30 * 0.6,
+            partnerAShare: grossRevenue * 0.30 * 0.2,
+            partnerBShare: grossRevenue * 0.30 * 0.2,
             rideCount: completedBookings.length,
-            averageTicket: completedBookings.length > 0 ? totalRevenue / completedBookings.length : 0
+            totalBookings: allBookings.length,
+            averageTicket: allBookings.length > 0 ? grossRevenue / allBookings.length : 0
         };
     }
 }

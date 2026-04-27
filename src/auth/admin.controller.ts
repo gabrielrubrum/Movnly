@@ -1,15 +1,21 @@
-import { Controller, Get, Patch, Body, UseGuards, Param } from '@nestjs/common';
+import { Controller, Get, Patch, Post, Body, UseGuards, Param } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { JwtAuthGuard } from './jwt-auth.guard';
 import { RolesGuard } from './roles.guard';
 import { Roles } from './roles.decorator';
 import { Role } from './roles.enum';
+import { PrismaService } from '../prisma/prisma.service';
+import * as bcrypt from 'bcrypt';
+import * as crypto from 'crypto';
 
 @Controller('admin')
 @UseGuards(JwtAuthGuard, RolesGuard)
 @Roles(Role.ADMIN)
 export class AdminController {
-    constructor(private readonly authService: AuthService) { }
+    constructor(
+        private readonly authService: AuthService,
+        private readonly prisma: PrismaService,
+    ) { }
 
     @Get('drivers')
     async listDrivers() {
@@ -48,5 +54,53 @@ export class AdminController {
     @Patch('users/:id/role')
     async updateUserRole(@Param('id') id: string, @Body('role') role: string) {
         return this.authService.updateUserRole(id, role);
+    }
+
+    @Post('drivers/create')
+    async createDriver(@Body() body: { name: string; email: string; password: string; license?: string }) {
+        const existing = await this.prisma.user.findUnique({ where: { email: body.email } });
+        if (existing) throw new Error('Email já em uso.');
+
+        const hashed = await bcrypt.hash(body.password, 12);
+        const user = await this.prisma.user.create({
+            data: {
+                email: body.email,
+                name: body.name,
+                password: hashed,
+                role: 'DRIVER',
+                isEmailVerified: true,
+                driverProfile: {
+                    create: {
+                        license: body.license || 'PENDENTE',
+                        status: 'OFFLINE',
+                        isVerified: false,
+                    }
+                }
+            },
+            include: { driverProfile: true }
+        });
+        return { message: 'Motorista criado com sucesso.', user };
+    }
+
+    @Post('staff/create')
+    async createStaff(@Body() body: { name: string; email: string; password: string; role: string }) {
+        const allowedRoles = ['MANAGER', 'ACCOUNTANT', 'OPERATOR', 'ADMIN'];
+        if (!allowedRoles.includes(body.role)) throw new Error('Role inválido.');
+
+        const existing = await this.prisma.user.findUnique({ where: { email: body.email } });
+        if (existing) throw new Error('Email já em uso.');
+
+        const hashed = await bcrypt.hash(body.password, 12);
+        const user = await this.prisma.user.create({
+            data: {
+                email: body.email,
+                name: body.name,
+                password: hashed,
+                role: body.role as any,
+                isEmailVerified: true,
+            },
+            select: { id: true, email: true, name: true, role: true, createdAt: true }
+        });
+        return { message: 'Membro da equipa criado com sucesso.', user };
     }
 }

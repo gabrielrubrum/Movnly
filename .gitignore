@@ -1,24 +1,30 @@
-node_modules
-dist
+# ─── Dependencies ────────────────────────────────────────────
+node_modules/
 
-# Environment
+# ─── Build ───────────────────────────────────────────────────
+dist/
+
+# ─── Environment Variables (NUNCA commitar) ──────────────────
 .env
-.env.production
+.env.*
+!.env.example
 
-# Database (dev only)
+# ─── Database (dev only) ─────────────────────────────────────
 prisma/dev.db
 prisma/dev.db-journal
+prisma/*.db
 
-# Logs
+# ─── Logs ────────────────────────────────────────────────────
 logs/
 *.log
 
-# Coverage
+# ─── Coverage ────────────────────────────────────────────────
 coverage/
 
-# Debug scripts (não vão para produção)
+# ─── TypeScript ──────────────────────────────────────────────
+*.tsbuildinfo
+
+# ─── Debug Scripts ───────────────────────────────────────────
 scripts/seed_db.js
 scripts/check_users.js
-
-# Build info
-*.tsbuildinfo
+scripts/test-earnings.js
