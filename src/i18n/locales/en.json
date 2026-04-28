@@ -1,6 +1,6 @@
 {
   "meta": {
-    "title": "NexRide — Your Private Driver in Lisbon",
+    "title": "NexRice — Your Private Driver in Lisbon",
     "description": "Executive transport and private transfers. Professional drivers, new cars, and fixed prices in Lisbon."
   },
   "nav": {
@@ -125,7 +125,7 @@
     "learnMore": "Choose your Car",
     "headline1": "Your private driver",
     "headline2": "in Lisbon.",
-    "sub": "NexRide is here to simplify how you move. New cars, fixed prices, and professional drivers ready to take you anywhere.",
+    "sub": "NexRice is here to simplify how you move. New cars, fixed prices, and professional drivers ready to take you anywhere.",
     "trust": {
       "drivers": "Professional Drivers",
       "rating": "4.9 · Real Reviews",
@@ -262,7 +262,7 @@
     "flightPlaceholder": "Flight No (e.g. TP123)",
     "airlinePlaceholder": "e.g. TAP, Emirates...",
     "meetingPoint": "Meeting Point",
-    "meetingPointBadge": "NexRide Guarantee",
+    "meetingPointBadge": "NexRice Guarantee",
     "meetingPointTitle": "Stress-Free Arrival",
     "meetingPointDesc": "Your driver will be at the agreed location with clear identification for a quick departure.",
     "selectVehicle": "Choose Vehicle",
@@ -417,7 +417,7 @@
     "stepExtras": {
       "title": "Additional Services",
       "sub": "Customize your trip as you prefer",
-      "recommendation": "NexRide Suggestion",
+      "recommendation": "NexRice Suggestion",
       "mgTitle": "Terminal Reception",
       "mgDesc": "The driver waits for you with a personalized sign.",
       "exclusiveService": "Dedicated Service",
@@ -554,7 +554,7 @@
     "headline2": "Your Business.",
     "subtitle": "Programs designed to facilitate mobility for clients and teams.",
     "cta_link": "Learn more about partnerships",
-    "corp_badge": "NexRide Business",
+    "corp_badge": "NexRice Business",
     "corp_exclusive": "Professional Service",
     "corp_desc": "Priority fleet access and monthly billing for your organization.",
     "features": [
@@ -578,7 +578,7 @@
     "segments": {
       "hotels": {
         "badge": "Hotels & Resorts",
-        "title": "NexRide Hospitality",
+        "title": "NexRice Hospitality",
         "subtitle1": "Excellence in",
         "subtitle2": "Hospitality.",
         "desc": "Elevate your guests' experience with a trusted transport partner and premium fleet.",
@@ -646,7 +646,7 @@
           "tax_label": "Tax Deductible"
         },
         "final_cta_title": "Take your company to the next level.",
-        "final_cta_desc": "Hundreds of companies trust NexRide to transport their most valuable assets: people."
+        "final_cta_desc": "Hundreds of companies trust NexRice to transport their most valuable assets: people."
       },
       "agencies": {
         "badge": "Travel Agencies",
@@ -787,7 +787,7 @@
         "role": "Sales Director",
         "country": "Portugal",
         "avatar": "RS",
-        "text": "I use NexRide for all my business travel in Lisbon. British-style punctuality and high-end vehicles every time."
+        "text": "I use NexRice for all my business travel in Lisbon. British-style punctuality and high-end vehicles every time."
       },
       {
         "name": "Maria Fontes",
@@ -821,7 +821,7 @@
       "button": "Subscribe",
       "privacy": "Your data is safe with us."
     },
-    "copyright": "© {year} NexRide. All rights reserved.",
+    "copyright": "© {year} NexRice. All rights reserved.",
     "cols": {
       "services": {
         "title": "Services",
@@ -935,7 +935,7 @@
     {
       "role": "Sales Director",
       "country": "Spain",
-      "text": "I use NEXRIDE for all my business trips in Lisbon. Perfect punctuality, flawless vehicles and the booking platform is the most intuitive I've ever used.",
+      "text": "I use NexRice for all my business trips in Lisbon. Perfect punctuality, flawless vehicles and the booking platform is the most intuitive I've ever used.",
       "route": "Airport → Nations Park"
     },
     {
@@ -992,12 +992,12 @@
   "legal": {
     "privacy": {
       "title": "Privacy Guidelines",
-      "badge": "NexRide Real Compliance",
+      "badge": "NexRice Real Compliance",
       "lastUpdated": "Audited on: April 14, 2026",
       "sections": [
         {
           "title": "Responsible Data Usage",
-          "content": "NexRide collects only the data strictly necessary for the safe execution of your journey: name, contact phone number for coordination with the driver, and billing data processed via certified banking channels."
+          "content": "NexRice collects only the data strictly necessary for the safe execution of your journey: name, contact phone number for coordination with the driver, and billing data processed via certified banking channels."
         },
         {
           "title": "Banking Security & Encryption",
@@ -1015,12 +1015,12 @@
     },
     "terms": {
       "title": "Terms of Service",
-      "badge": "NexRide Transparency",
+      "badge": "NexRice Transparency",
       "lastUpdated": "Updated on: April 14, 2026",
       "sections": [
         {
           "title": "Nature of Agreement",
-          "content": "By using NexRide, you are hiring a professional transport brokerage service. We guarantee that all drivers in our network possess the legal licenses required by Portuguese legislation (RNAAT/TVDE)."
+          "content": "By using NexRice, you are hiring a professional transport brokerage service. We guarantee that all drivers in our network possess the legal licenses required by Portuguese legislation (RNAAT/TVDE)."
         },
         {
           "title": "Conduct & Responsibilities",

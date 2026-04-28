@@ -1,6 +1,6 @@
 {
   "meta": {
-    "title": "NexRide — Seu Motorista Particular em Lisboa",
+    "title": "NexRice — Seu Motorista Particular em Lisboa",
     "description": "Transporte executivo e transferes privados. Motoristas profissionais, carros novos e preços fixos em Lisboa."
   },
   "nav": {
@@ -115,7 +115,7 @@
     "learnMore": "Escolha o seu Carro",
     "headline1": "O seu motorista particular",
     "headline2": "em Lisboa.",
-    "sub": "A NexRide chegou para simplificar a sua forma de se mover. Carros novos, preços fixos e motoristas profissionais prontos para o levar a qualquer lugar.",
+    "sub": "A NexRice chegou para simplificar a sua forma de se mover. Carros novos, preços fixos e motoristas profissionais prontos para o levar a qualquer lugar.",
     "trust": {
       "drivers": "Motoristas Profissionais",
       "rating": "4.9 · Avaliações Reais",
@@ -252,7 +252,7 @@
     "flightPlaceholder": "Nº do Voo (ex: TP123)",
     "airlinePlaceholder": "Ex: TAP, Emirates...",
     "meetingPoint": "Ponto de Encontro",
-    "meetingPointBadge": "Garantia NexRide",
+    "meetingPointBadge": "Garantia NexRice",
     "meetingPointTitle": "Chegada Sem Stress",
     "meetingPointDesc": "O seu motorista estará no local combinado com identificação clara para uma partida rápida.",
     "selectVehicle": "Escolher Veículo",
@@ -413,7 +413,7 @@
     "stepExtras": {
       "title": "Serviços Adicionais",
       "sub": "Personalize a sua viagem como preferir",
-      "recommendation": "Sugestão NexRide",
+      "recommendation": "Sugestão NexRice",
       "mgTitle": "Recepção no Terminal",
       "mgDesc": "O motorista espera por si com uma placa personalizada.",
       "exclusiveService": "Serviço Dedicado",
@@ -550,7 +550,7 @@
     "headline2": "Seu Negócio.",
     "subtitle": "Programas pensados para facilitar a mobilidade de clientes e equipas.",
     "cta_link": "Saiba mais sobre parcerias",
-    "corp_badge": "NexRide Business",
+    "corp_badge": "NexRice Business",
     "corp_exclusive": "Serviço Profissional",
     "corp_desc": "Acesso prioritário à frota e faturação mensal para a sua organização.",
     "features": [
@@ -574,7 +574,7 @@
     "segments": {
       "hotels": {
         "badge": "Hotéis e Resorts",
-        "title": "NexRide Hospitality",
+        "title": "NexRice Hospitality",
         "subtitle1": "Excelência em",
         "subtitle2": "Hospitalidade.",
         "desc": "Eleve a experiência dos seus hóspedes com um parceiro de transporte de confiança e frota premium.",
@@ -642,7 +642,7 @@
           "tax_label": "Deductível IVA"
         },
         "final_cta_title": "Leve a sua empresa ao próximo nível.",
-        "final_cta_desc": "Centenas de empresas confiam na NexRide para transportar os seus ativos mais valiosos: as pessoas."
+        "final_cta_desc": "Centenas de empresas confiam na NexRice para transportar os seus ativos mais valiosos: as pessoas."
       },
       "agencies": {
         "badge": "Agências de Viagens",
@@ -778,7 +778,7 @@
         "role": "Diretor Comercial",
         "country": "Portugal",
         "avatar": "RS",
-        "text": "Utilizo a NexRide para todas as minhas deslocações de negócios em Lisboa. Pontualidade britânica e veículos de alto nível."
+        "text": "Utilizo a NexRice para todas as minhas deslocações de negócios em Lisboa. Pontualidade britânica e veículos de alto nível."
       },
       {
         "name": "Maria Fontes",
@@ -812,7 +812,7 @@
       "button": "Subscrever",
       "privacy": "Os seus dados estão protegidos."
     },
-    "copyright": "© {year} NexRide. Todos os direitos reservados.",
+    "copyright": "© {year} NexRice. Todos os direitos reservados.",
     "cols": {
       "services": {
         "title": "Serviços",
@@ -926,7 +926,7 @@
     {
       "role": "Diretor Comercial",
       "country": "Espanha",
-      "text": "Uso o NEXRIDE para todas as minhas viagens de negócios em Lisboa. Pontualidade perfeita, veículos impecáveis e a plataforma de reserva é a mais intuitiva que já usei.",
+      "text": "Uso o NexRice para todas as minhas viagens de negócios em Lisboa. Pontualidade perfeita, veículos impecáveis e a plataforma de reserva é a mais intuitiva que já usei.",
       "route": "Aeroporto → Parque das Nações"
     },
     {
@@ -978,6 +978,67 @@
       "sub": "Cascais · Boca do Inferno · Cabo da Roca",
       "tag": "Premium de Verão",
       "desc": "Uma jornada soalheira inesquecível pelo fim do mundo europeu ocidental e pelas vilas balneares aristocráticas da Riviera de Lisboa e Casino Estoril."
+    }
+  },
+  "driver_portal": {
+    "login": {
+      "title": "Entrar como Motorista",
+      "subtitle": "Aceda ao seu painel de trabalho",
+      "google": "Continuar com Google",
+      "or": "ou",
+      "email": "Email",
+      "password": "Password",
+      "forgot": "Esqueceu a password?",
+      "submit": "Entrar",
+      "noAccount": "Não tem conta?",
+      "register": "Registar como motorista",
+      "badge": "Portal do Motorista",
+      "stat1": "Suporte",
+      "stat2": "Pagamento",
+      "stat3": "Transparência",
+      "tagline1": "A sua plataforma",
+      "tagline2": "de trabalho"
+    },
+    "dashboard": {
+      "title": "Painel do Motorista",
+      "available": "Disponível",
+      "offline": "Offline",
+      "totalEarnings": "Ganhos Totais",
+      "available_balance": "Disponível",
+      "rating": "Rating",
+      "acceptance": "Aceitação",
+      "activeTrip": "Viagem em Curso",
+      "noActiveTrip": "Sem viagem ativa",
+      "waitingAssignment": "Aguardando atribuição",
+      "marketplace": "Corridas Disponíveis",
+      "noMarketplace": "Sem corridas no marketplace",
+      "thisWeek": "Esta Semana",
+      "withdraw": "Sacar",
+      "online": "Online",
+      "cancellations": "Cancelamentos",
+      "startRoute": "Iniciar Rota",
+      "confirmArrival": "Confirmar Chegada",
+      "startTrip": "Iniciar Viagem",
+      "finalize": "Finalizar",
+      "accept": "Aceitar",
+      "pickup": "Recolha",
+      "destination": "Destino",
+      "earning": "Ganho",
+      "steps": ["Confirmado", "A Caminho", "Chegou", "Em Curso", "Concluído"],
+      "pinModal": {
+        "title": "Validar Finalização",
+        "subtitle": "PIN de 6 dígitos do passageiro",
+        "confirm": "Confirmar"
+      }
+    },
+    "nav": {
+      "dashboard": "Painel Principal",
+      "trips": "Minhas Viagens",
+      "history": "Arquivo",
+      "earnings": "Rendimentos",
+      "ratings": "Feedback",
+      "settings": "Configurações",
+      "logout": "Sair"
     }
   },
   "legal": {

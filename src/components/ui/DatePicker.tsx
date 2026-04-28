@@ -79,7 +79,7 @@ export function DatePicker({ value, onChange, minDate, variant = "default" }: { 
 
             {open && (
                 <div
-                    data-nexride-calendar
+                    data-nexrice-calendar
                     className="absolute top-[calc(100%+16px)] left-1/2 -translate-x-1/2 md:left-0 md:translate-x-0 w-[340px] !bg-[#07070A] !opacity-100 rounded-[32px] border border-white/20 shadow-[0_40px_80px_rgba(0,0,0,0.9)] p-8 z-[100] animate-luxury-reveal"
                 >
                     <div className="flex items-center justify-between mb-4">

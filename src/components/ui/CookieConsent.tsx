@@ -8,19 +8,19 @@ export function CookieConsent() {
     const [isVisible, setIsVisible] = useState(false);
 
     useEffect(() => {
-        const consent = localStorage.getItem("nexride_cookies_accepted");
+        const consent = localStorage.getItem("nexrice_cookies_accepted");
         if (!consent) {
             setIsVisible(true);
         }
     }, []);
 
     const accept = () => {
-        localStorage.setItem("nexride_cookies_accepted", "true");
+        localStorage.setItem("nexrice_cookies_accepted", "true");
         setIsVisible(false);
     };
 
     const decline = () => {
-        localStorage.setItem("nexride_cookies_accepted", "false");
+        localStorage.setItem("nexrice_cookies_accepted", "false");
         setIsVisible(false);
     };
 

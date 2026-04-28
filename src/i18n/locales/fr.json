@@ -1,6 +1,6 @@
 {
   "meta": {
-    "title": "NexRide — Votre Chauffeur Privé à Lisbonne",
+    "title": "NexRice — Votre Chauffeur Privé à Lisbonne",
     "description": "Transport exécutif et transferts privés. Chauffeurs professionnels, voitures neuves et prix fixes à Lisbonne."
   },
   "nav": {
@@ -101,7 +101,7 @@
     "learnMore": "Choisissez votre Voiture",
     "headline1": "Votre chauffeur particulier",
     "headline2": "à Lisbonne.",
-    "sub": "NexRide est là pour simplifier vos déplacements. Voitures neuves, prix fixes et chauffeurs professionnels prêts à vous emmener partout.",
+    "sub": "NexRice est là pour simplifier vos déplacements. Voitures neuves, prix fixes et chauffeurs professionnels prêts à vous emmener partout.",
     "trust": {
       "drivers": "Chauffeurs Professionnels",
       "rating": "4.9 · Avis Réels",
@@ -234,7 +234,7 @@
     "viewPrices": "Voir les Prix",
     "flightPlaceholder": "N° de Vol (pour suivi)",
     "meetingPoint": "Point de Rencontre",
-    "meetingPointBadge": "Standard NexRide",
+    "meetingPointBadge": "Standard NexRice",
     "meetingPointTitle": "Arrivée sans Stress",
     "meetingPointDesc": "Votre chauffeur sera au lieu convenu avec une identification claire pour un départ rapide.",
     "selectVehicle": "Choisir Véhicule",
@@ -370,7 +370,7 @@
     "stepExtras": {
       "title": "Services Additionnels",
       "sub": "Personnalisez votre voyage selon vos envies",
-      "recommendation": "Suggestion NexRide",
+      "recommendation": "Suggestion NexRice",
       "mgTitle": "Accueil au Terminal",
       "mgDesc": "Le chauffeur vous attend avec une pancarte personnalisée.",
       "exclusiveService": "Service Dédié",
@@ -507,7 +507,7 @@
     "headline2": "votre Business.",
     "subtitle": "Programmes pensés pour faciliter la mobilité de vos clients et équipes.",
     "cta_link": "En savoir plus sur les partenariats",
-    "corp_badge": "NexRide Business",
+    "corp_badge": "NexRice Business",
     "corp_exclusive": "Service Professionnel",
     "corp_desc": "Accès prioritaire à la flotte et facturation mensuelle.",
     "features": [
@@ -531,7 +531,7 @@
     "segments": {
       "hotels": {
         "badge": "Hôtels et Resorts",
-        "title": "NexRide Hospitality",
+        "title": "NexRice Hospitality",
         "desc": "Élevez l'expérience de vos clients avec un partenaire de transport de confiance.",
         "features": [
           "Portail Dédié",
@@ -565,7 +565,7 @@
           "Support VIP"
         ],
         "cta_card_title": "Réseau Agents",
-        "cta_card_desc": "Devenez partenaire officiel NexRide.",
+        "cta_card_desc": "Devenez partenaire officiel NexRice.",
         "cta": "Rejoindre"
       }
     }
@@ -642,7 +642,7 @@
         "role": "Directeur Commercial",
         "country": "Espagne",
         "avatar": "MF",
-        "text": "J'utilise NEXRIDE pour tous mes voyages d'affaires à Lisbonne. Ponctualité parfaite, véhicules impeccables et la plateforme est très intuitive."
+        "text": "J'utilise NexRice pour tous mes voyages d'affaires à Lisbonne. Ponctualité parfaite, véhicules impeccables et la plateforme est très intuitive."
       },
       {
         "name": "Isabelle Dupont",
@@ -676,7 +676,7 @@
       "button": "S'abonner",
       "privacy": "Vos données sont protégées."
     },
-    "copyright": "© {year} NexRide. Tous droits réservés.",
+    "copyright": "© {year} NexRice. Tous droits réservés.",
     "cols": {
       "services": {
         "title": "Services",
@@ -790,7 +790,7 @@
     {
       "role": "Directeur Commercial",
       "country": "Espagne",
-      "text": "J'utilise NEXRIDE pour tous mes voyages d'affaires à Lisbonne. Ponctualité parfaite, véhicules impeccables et plateforme très intuitive.",
+      "text": "J'utilise NexRice pour tous mes voyages d'affaires à Lisbonne. Ponctualité parfaite, véhicules impeccables et plateforme très intuitive.",
       "route": "Aéroport → Parc des Nations"
     },
     {

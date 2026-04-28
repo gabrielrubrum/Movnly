@@ -45,7 +45,7 @@ export default function SettingsPage() {
                                 </div>
                                 <div>
                                     <label className="text-[0.6rem] text-white/30 font-black uppercase tracking-widest mb-2 block">Support Email</label>
-                                    <input type="email" defaultValue="support@nexride.pt" className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:ring-1 focus:ring-brand-500" />
+                                    <input type="email" defaultValue="support@nexrice.com" className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:ring-1 focus:ring-brand-500" />
                                 </div>
                             </div>
                         </section>
