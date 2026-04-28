@@ -152,12 +152,13 @@ export function BookingSteps() {
   const initPaymentIntent = async (forceEmail?: string, forceName?: string) => {
     setLoading(true);
     try {
+      const { getFraudHeaders } = await import('@/lib/fraud-signals');
       const res = await api.post(`/payments/create-intent`, {
         ...form,
         email: forceEmail || form.email,
         name: forceName || form.name,
         amount: total,
-      });
+      }, { headers: getFraudHeaders() });
 
       if (res.data.clientSecret) {
         setClientSecret(res.data.clientSecret);
