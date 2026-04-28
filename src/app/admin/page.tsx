@@ -1,4 +1,4 @@
-"use client";
+"use client"; // v2
 
 import { useState, useEffect } from "react";
 import axios from "axios";
@@ -197,7 +197,7 @@ export default function AdminDashboard() {
                 </div>
                 <div>
                   <h3 className="text-sm font-bold text-white">Em Curso</h3>
-                  <p className="text-[9px] text-brand-gold/30 uppercase tracking-widest font-black">Tempo real</p>
+                  <p className="text-[9px] text-brand-gold/30 uppercase tracking-widest font-black">Ao vivo</p>
                 </div>
               </div>
               <div className="w-10 h-10 rounded-2xl bg-brand-gold/10 border border-brand-gold/15 flex items-center justify-center">

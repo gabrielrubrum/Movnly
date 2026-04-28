@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { Plane, Clock, RefreshCw, AlertCircle, ShieldCheck, ArrowRight, Globe, Zap, MapPin, CheckCircle2 } from "lucide-react";
+import { Plane, Clock, RefreshCw, ShieldCheck, Globe, MapPin } from "lucide-react";
 import { useAuthStore } from "@/lib/auth-store";
 import { cn } from "@/lib/utils";
 import { motion } from "framer-motion";
@@ -72,52 +72,22 @@ export default function FlightsPage() {
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
           <p className="text-[9px] font-black text-brand-gold/50 uppercase tracking-[0.4em] mb-1 flex items-center gap-1.5">
-            <Globe className="w-3 h-3" /> Aeroporto de Lisboa · LIS
+            <Globe className="w-3 h-3" /> Lisboa · LIS
           </p>
-          <h1 className="text-3xl font-bold text-white tracking-tight">Monitorização de Voos</h1>
-          <p className="text-white/30 text-sm mt-1">Chegadas em tempo real · Coordenação de transfers</p>
+          <h1 className="text-3xl font-bold text-white tracking-tight">Voos</h1>
+          <p className="text-white/30 text-sm mt-1">Chegadas · {new Date().toLocaleDateString("pt-PT", { weekday: "long", day: "numeric", month: "long" })}</p>
         </div>
         <div className="flex items-center gap-3">
           <div className="flex items-center gap-2 px-4 py-2 rounded-full bg-emerald-500/5 border border-emerald-500/15">
             <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
             <span className="text-[10px] font-bold text-emerald-400 uppercase tracking-widest">
-              Sync {lastSync.toLocaleTimeString("pt-PT", { hour: "2-digit", minute: "2-digit" })}
+              {lastSync.toLocaleTimeString("pt-PT", { hour: "2-digit", minute: "2-digit" })}
             </span>
           </div>
           <button onClick={() => fetchFlights()}
-            className={cn("w-9 h-9 rounded-xl flex items-center justify-center transition-all",
-              "bg-white/[0.04] border border-white/[0.08] text-white/40 hover:text-white hover:bg-white/[0.08]"
-            )}>
+            className="w-9 h-9 rounded-xl flex items-center justify-center bg-white/[0.04] border border-white/[0.08] text-white/40 hover:text-white hover:bg-white/[0.08] transition-all">
             <RefreshCw className={cn("w-4 h-4", syncing && "animate-spin")} />
           </button>
-        </div>
-      </div>
-
-      {/* Como funciona */}
-      <div className="rounded-2xl p-5" style={{ background: "rgba(212,175,55,0.04)", border: "1px solid rgba(212,175,55,0.12)" }}>
-        <div className="flex items-start gap-3">
-          <div className="w-8 h-8 rounded-xl bg-brand-gold/10 border border-brand-gold/15 flex items-center justify-center flex-shrink-0 mt-0.5">
-            <Zap className="w-4 h-4 text-brand-gold" />
-          </div>
-          <div>
-            <p className="text-sm font-bold text-white mb-1">Como funciona o sistema de voos</p>
-            <p className="text-[11px] text-white/45 leading-relaxed">
-              Quando um cliente faz uma reserva com número de voo (ex: TP1350), o sistema monitoriza automaticamente o voo.
-              Se o voo atrasar, o motorista é notificado em tempo real via WebSocket e o pickup é ajustado.
-              Os voos com reserva NexRice aparecem destacados a dourado.
-            </p>
-            <div className="flex flex-wrap gap-3 mt-3">
-              {[
-                { icon: CheckCircle2, text: "Monitorização automática", color: "text-emerald-400" },
-                { icon: Zap, text: "Notificação em tempo real", color: "text-brand-gold" },
-                { icon: Clock, text: "Ajuste automático de pickup", color: "text-blue-400" },
-              ].map(({ icon: Icon, text, color }) => (
-                <div key={text} className="flex items-center gap-1.5 text-[10px] font-bold text-white/40">
-                  <Icon className={cn("w-3 h-3", color)} /> {text}
-                </div>
-              ))}
-            </div>
-          </div>
         </div>
       </div>
 
@@ -232,7 +202,7 @@ export default function FlightsPage() {
       </div>
 
       <p className="text-[9px] text-white/20 text-center">
-        Dados simulados · Em produção integra com AviationStack API para dados reais em tempo real
+        Atualização automática a cada 30 segundos
       </p>
     </div>
   );
