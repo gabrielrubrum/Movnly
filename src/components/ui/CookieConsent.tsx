@@ -10,8 +10,7 @@ export function CookieConsent() {
     useEffect(() => {
         const consent = localStorage.getItem("nexride_cookies_accepted");
         if (!consent) {
-            const timer = setTimeout(() => setIsVisible(true), 2000);
-            return () => clearTimeout(timer);
+            setIsVisible(true);
         }
     }, []);
 
