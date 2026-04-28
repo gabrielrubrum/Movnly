@@ -155,27 +155,40 @@ export default function ToursPage() {
                 {/* Custom Tour CTA */}
                 <section className="nx-container pb-40">
                     <motion.div
-                        whileInView={{ opacity: 1, scale: 1 }}
-                        initial={{ opacity: 0, scale: 0.98 }}
-                        className="glass-bento-premium rounded-[64px] p-12 md:p-32 text-center relative overflow-hidden"
+                        whileInView={{ opacity: 1, y: 0 }}
+                        initial={{ opacity: 0, y: 20 }}
+                        transition={{ duration: 0.8 }}
+                        className="relative rounded-[48px] overflow-hidden"
+                        style={{ background: "linear-gradient(135deg, #0D0B06 0%, #0A0A0F 60%, #060A0D 100%)", border: "1px solid rgba(212,175,55,0.15)" }}
                     >
-                        <div className="absolute top-0 right-1/4 w-[600px] h-[600px] bg-brand-gold/5 blur-[150px] rounded-full pointer-events-none animate-glow-pulse" />
+                        <div className="absolute inset-0 pointer-events-none">
+                            <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-brand-gold/8 blur-[120px] rounded-full -translate-y-1/2 translate-x-1/4" />
+                            <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-brand-gold/5 blur-[100px] rounded-full translate-y-1/2 -translate-x-1/4" />
+                        </div>
 
-                        <span className="text-brand-gold text-[10px] uppercase tracking-[0.5em] font-medium mb-10 block">Bespoke Journeys</span>
-                        <h2 className="text-5xl md:text-8xl font-bold text-white tracking-tight mb-10 leading-[1.1]">
-                            {t("tours_section.customTitle").split("?")[0]}<br />
-                            <span className="text-serif italic font-medium text-white/30">{t("tours_section.customTitle").includes("?") ? "?" : ""}</span>
-                        </h2>
-                        <p className="text-white/40 max-w-2xl mx-auto mb-16 text-xl leading-relaxed font-light italic font-serif">
-                            {t("tours_section.customDesc")}
-                        </p>
-                        <div className="flex flex-col sm:flex-row gap-8 justify-center relative z-10">
-                            <Link href="/book" className="bg-brand-gold text-black h-18 px-16 rounded-full font-bold uppercase text-[11px] tracking-[0.3em] hover:scale-105 transition-all flex items-center justify-center gap-4 shadow-xl">
-                                {t("tours_section.bookNow")} <ChevronRight className="w-5 h-5" />
-                            </Link>
-                            <a href="tel:+351210000000" className="h-18 px-12 rounded-full font-bold uppercase text-[11px] tracking-[0.2em] border border-white/10 flex items-center justify-center text-white/40 hover:text-white hover:bg-white/5 transition-all group">
-                                <span className="group-hover:text-brand-gold transition-colors">{t("cta.callNow")}</span>
-                            </a>
+                        <div className="relative z-10 p-12 md:p-20 text-center">
+                            <span className="inline-block px-4 py-1.5 rounded-full bg-brand-gold/10 border border-brand-gold/20 text-brand-gold text-[10px] font-black uppercase tracking-[0.4em] mb-8">
+                                Roteiro Personalizado
+                            </span>
+                            <h2 className="text-4xl md:text-6xl font-bold text-white tracking-tight mb-6 leading-tight">
+                                Criamos a viagem
+                                <span className="block text-brand-gold">perfeita para si</span>
+                            </h2>
+                            <p className="text-white/45 max-w-xl mx-auto mb-12 text-lg leading-relaxed font-sans">
+                                Grupos, celebrações, eventos corporativos ou simplesmente uma experiência diferente. Diga-nos o que precisa.
+                            </p>
+                            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                                <Link href="/reservar"
+                                    className="inline-flex items-center justify-center gap-3 px-10 py-4 rounded-2xl font-bold uppercase text-[11px] tracking-[0.3em] text-black transition-all hover:scale-105 hover:bg-white"
+                                    style={{ background: "#D4AF37" }}>
+                                    Reservar Agora <ChevronRight className="w-4 h-4" />
+                                </Link>
+                                <a href="tel:+351210000000"
+                                    className="inline-flex items-center justify-center gap-3 px-10 py-4 rounded-2xl font-bold uppercase text-[11px] tracking-[0.3em] text-white/50 hover:text-white transition-all"
+                                    style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.08)" }}>
+                                    +351 21 000 0000
+                                </a>
+                            </div>
                         </div>
                     </motion.div>
                 </section>
