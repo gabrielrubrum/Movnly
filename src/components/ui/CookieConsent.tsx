@@ -1,13 +1,11 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { X, ShieldCheck } from "lucide-react";
-import { cn } from "@/lib/utils";
-import { useI18n } from "@/i18n/context";
+import { X, Cookie } from "lucide-react";
+import Link from "next/link";
 
 export function CookieConsent() {
     const [isVisible, setIsVisible] = useState(false);
-    const { t } = useI18n();
 
     useEffect(() => {
         const consent = localStorage.getItem("nexride_cookies_accepted");
@@ -22,48 +20,51 @@ export function CookieConsent() {
         setIsVisible(false);
     };
 
+    const decline = () => {
+        localStorage.setItem("nexride_cookies_accepted", "false");
+        setIsVisible(false);
+    };
+
     if (!isVisible) return null;
 
     return (
-        <div className="fixed bottom-8 left-8 right-8 md:left-auto md:w-[480px] z-[500] animate-luxury-reveal">
-            <div className="glass-concierge luxury-card p-10 border-white/10 relative overflow-hidden group">
-                <div className="absolute top-0 left-0 w-1 h-full bg-brand-gold/40 group-hover:bg-brand-gold transition-colors duration-700" />
+        <div className="fixed bottom-6 left-6 right-6 md:left-auto md:right-6 md:w-[420px] z-[500]"
+            style={{ animation: "fadeInUp 0.4s ease" }}>
+            <div className="rounded-2xl p-6 relative overflow-hidden"
+                style={{ background: "#0A0A0F", border: "1px solid rgba(212,175,55,0.2)", boxShadow: "0 20px 60px rgba(0,0,0,0.6)" }}>
 
-                <div className="flex items-start gap-6">
-                    <div className="w-14 h-14 rounded-full bg-brand-gold/5 flex items-center justify-center border border-brand-gold/10 flex-shrink-0">
-                        <ShieldCheck className="w-6 h-6 text-brand-gold" />
+                <div className="absolute top-0 left-0 w-full h-px" style={{ background: "linear-gradient(90deg, transparent, rgba(212,175,55,0.4), transparent)" }} />
+
+                <div className="flex items-start gap-4 mb-5">
+                    <div className="w-10 h-10 rounded-xl bg-brand-gold/10 border border-brand-gold/15 flex items-center justify-center flex-shrink-0">
+                        <Cookie className="w-4.5 h-4.5 text-brand-gold" />
                     </div>
-
-                    <div className="space-y-4">
-                        <h4 className="text-sm font-black uppercase tracking-[0.3em] text-white">Privacidade & Cookies</h4>
-                        <p className="text-[13px] text-white/40 leading-relaxed font-sans">
-                            Utilizamos cookies para personalizar a sua experiência de reserva e garantir a segurança das suas transações. Ao continuar, concorda com a nossa política.
+                    <div className="flex-1 min-w-0">
+                        <h4 className="text-sm font-bold text-white mb-1">Cookies e Privacidade</h4>
+                        <p className="text-[12px] text-white/40 leading-relaxed">
+                            Usamos cookies para melhorar a sua experiência e garantir a segurança das transações.{" "}
+                            <Link href="/privacidade" className="text-brand-gold hover:underline">Saber mais</Link>
                         </p>
-
-                        <div className="flex items-center gap-4 pt-4">
-                            <button
-                                onClick={accept}
-                                className="px-8 py-4 bg-brand-gold text-black rounded-xl text-[10px] font-black uppercase tracking-widest hover:bg-white transition-all duration-500 shadow-[0_10px_30px_rgba(212,175,55,0.15)]"
-                            >
-                                Aceitar Tudo
-                            </button>
-                            <button
-                                onClick={() => setIsVisible(false)}
-                                className="px-6 py-4 text-[10px] font-black uppercase tracking-widest text-white/30 hover:text-white transition-colors"
-                            >
-                                Recusar
-                            </button>
-                        </div>
                     </div>
+                    <button onClick={decline} className="text-white/20 hover:text-white transition-colors flex-shrink-0">
+                        <X className="w-4 h-4" />
+                    </button>
                 </div>
 
-                <button
-                    onClick={() => setIsVisible(false)}
-                    className="absolute top-8 right-8 text-white/20 hover:text-white transition-colors"
-                >
-                    <X className="w-4 h-4" />
-                </button>
+                <div className="flex gap-3">
+                    <button onClick={accept}
+                        className="flex-1 py-2.5 rounded-xl text-[11px] font-black uppercase tracking-widest text-black transition-all hover:bg-white"
+                        style={{ background: "#D4AF37" }}>
+                        Aceitar
+                    </button>
+                    <button onClick={decline}
+                        className="flex-1 py-2.5 rounded-xl text-[11px] font-black uppercase tracking-widest text-white/40 hover:text-white transition-all"
+                        style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.07)" }}>
+                        Recusar
+                    </button>
+                </div>
             </div>
+            <style>{`@keyframes fadeInUp { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }`}</style>
         </div>
     );
 }
