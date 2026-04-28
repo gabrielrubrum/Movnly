@@ -168,7 +168,7 @@ export default function MotoristaLayout({ children }: { children: React.ReactNod
                     key={href}
                     href={href}
                     className={cn(
-                      "flex items-center gap-6 p-6 rounded-[32px] text-lg font-light italic tracking-tight transition-all",
+                      "flex items-center gap-6 p-6 rounded-[32px] text-lg font-light tracking-tight transition-all",
                       pathname === href ? "bg-brand-gold text-black" : "text-white/40 border border-white/5"
                     )}
                   >

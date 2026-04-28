@@ -84,10 +84,10 @@ export default function HistoricoPage() {
 
                 <div className="flex flex-col md:flex-row md:items-end justify-between gap-8">
                     <div className="space-y-4">
-                        <h1 className="text-white text-6xl font-extralight tracking-tighter italic leading-none">
+                        <h1 className="text-white text-6xl font-bold tracking-tight leading-none">
                             Meu {" "}<span className="text-brand-gold not-italic font-light">Histórico</span>
                         </h1>
-                        <p className="text-white/30 text-lg font-light italic max-w-md">
+                        <p className="text-white/30 text-lg font-light max-w-md">
                             Registo institucional de todas as viagens concluídas no ecossistema NexRice.
                         </p>
                     </div>
@@ -161,7 +161,7 @@ export default function HistoricoPage() {
                             <div className="text-center space-y-1">
                                 <div className="flex items-center justify-center gap-1 text-brand-gold">
                                     <Star className="w-3 h-3 fill-brand-gold" />
-                                    <span className="text-sm font-light italic">5.0</span>
+                                    <span className="text-sm font-light">5.0</span>
                                 </div>
                                 <p className="text-[8px] font-black text-white/10 uppercase tracking-widest">Avaliação</p>
                             </div>

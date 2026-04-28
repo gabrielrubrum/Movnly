@@ -43,10 +43,10 @@ export default function ViagensPage() {
 
                 <div className="flex flex-col md:flex-row md:items-end justify-between gap-8">
                     <div className="space-y-4">
-                        <h1 className="text-white text-6xl font-extralight tracking-tighter italic leading-none">
+                        <h1 className="text-white text-6xl font-bold tracking-tight leading-none">
                             Minhas <span className="text-brand-gold not-italic font-light">Viagens</span>
                         </h1>
-                        <p className="text-white/30 text-lg font-light italic max-w-md">
+                        <p className="text-white/30 text-lg font-light max-w-md">
                             Gestão de atribuições atuais e planeamento das suas próximas vigaens.
                         </p>
                     </div>

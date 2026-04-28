@@ -236,7 +236,7 @@ export default function MotoristaDashboard() {
           ) : (
             <div className="rounded-3xl bg-white/[0.01] border border-dashed border-white/10 p-16 text-center">
               <Navigation className="w-12 h-12 text-white/5 mx-auto mb-4" />
-              <p className="text-white/20 font-light italic text-lg">Sem viagem ativa</p>
+              <p className="text-white/20 font-light text-lg">Sem viagem ativa</p>
               <p className="text-[9px] text-white/10 uppercase tracking-widest font-black mt-2">Aguardando atribuição</p>
             </div>
           )}

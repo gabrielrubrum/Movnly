@@ -47,10 +47,10 @@ export default function GanhosPage() {
 
                 <div className="flex flex-col xl:flex-row xl:items-end justify-between gap-12">
                     <div className="space-y-4">
-                        <h1 className="text-white text-6xl font-extralight tracking-tighter italic leading-none">
+                        <h1 className="text-white text-6xl font-bold tracking-tight leading-none">
                             Meus {" "}<span className="text-brand-gold not-italic font-light">Ganhos</span>
                         </h1>
-                        <p className="text-white/30 text-lg font-light italic max-w-md">
+                        <p className="text-white/30 text-lg font-light max-w-md">
                             Acompanhamento detalhado da sua produtividade e transparência de rendimentos.
                         </p>
                     </div>
@@ -62,7 +62,7 @@ export default function GanhosPage() {
                             
                             <div className="px-10 py-6 text-white flex flex-col items-end z-10 flex-1">
                                 <span className="text-[9px] font-black uppercase tracking-[0.4em] text-brand-gold relative">Levantamento Disp.</span>
-                                <span className="text-4xl font-light italic tracking-tighter relative mt-1 text-white">{formatCurrency(totalNet)}</span>
+                                <span className="text-4xl font-light tracking-tighter relative mt-1 text-white">{formatCurrency(totalNet)}</span>
                             </div>
                             
                             <button 
@@ -93,7 +93,7 @@ export default function GanhosPage() {
                         
                         <div className="px-10 py-6 rounded-[32px] bg-white/[0.02] border border-white/5 text-white/40 flex flex-col items-end relative overflow-hidden group min-w-[240px]">
                             <span className="text-[9px] font-black uppercase tracking-[0.4em] text-white/30 relative z-10">Retido (Regra 20d)</span>
-                            <span className="text-4xl font-light italic tracking-tighter relative z-10 mt-1 text-white">{formatCurrency(pendingNet)}</span>
+                            <span className="text-4xl font-light tracking-tighter relative z-10 mt-1 text-white">{formatCurrency(pendingNet)}</span>
                         </div>
                     </div>
                 </div>

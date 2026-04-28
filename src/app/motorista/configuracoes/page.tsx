@@ -97,10 +97,10 @@ export default function ConfiguracoesPage() {
         <main className="py-12 md:py-16 lg:py-24 relative z-10 w-full px-6 sm:px-10 lg:px-16 2xl:px-24">
             <div className="w-full flex-1 max-w-[1400px] space-y-24 animate-luxury-reveal mx-auto">
                 <div className="space-y-4">
-                    <h1 className="text-white text-6xl font-extralight tracking-tighter italic leading-none">
+                    <h1 className="text-white text-6xl font-bold tracking-tight leading-none">
                         Meus {" "}<span className="text-brand-gold not-italic font-light">Dados</span>
                     </h1>
-                    <p className="text-white/30 text-lg font-light italic max-w-md">
+                    <p className="text-white/30 text-lg font-light max-w-md">
                         Faça a gestão das suas informações pessoais, do seu veículo e da conta para onde os seus ganhos são enviados.
                     </p>
                 </div>
