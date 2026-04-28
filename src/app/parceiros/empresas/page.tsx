@@ -205,6 +205,86 @@ export default function EmpresasPage() {
 
       </main>
 
+      {/* Modal — Solicitar Proposta */}
+      {showModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4" style={{ background: "rgba(0,0,0,0.85)" }}
+          onClick={e => { if (e.target === e.currentTarget) setShowModal(false); }}>
+          <motion.div initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.25 }}
+            className="w-full max-w-lg rounded-3xl p-8 relative"
+            style={{ background: "#0D0B06", border: "1px solid rgba(212,175,55,0.2)" }}>
+            <button onClick={() => setShowModal(false)}
+              className="absolute top-5 right-5 text-white/25 hover:text-white transition-colors">
+              <X className="w-5 h-5" />
+            </button>
+
+            {sent ? (
+              <div className="text-center py-8">
+                <CheckCircle2 className="w-12 h-12 text-brand-gold mx-auto mb-4" />
+                <h3 className="text-xl font-bold text-white mb-2">Proposta enviada</h3>
+                <p className="text-sm text-white/40">Vamos entrar em contacto em menos de 2 horas.</p>
+                <button onClick={() => { setShowModal(false); setSent(false); setForm({ nome: "", empresa: "", email: "", telefone: "", mensagem: "" }); }}
+                  className="mt-6 px-6 py-2.5 rounded-xl text-[10px] font-black uppercase tracking-widest text-black"
+                  style={{ background: "#D4AF37" }}>
+                  Fechar
+                </button>
+              </div>
+            ) : (
+              <>
+                <div className="mb-6">
+                  <span className="text-[9px] font-black text-brand-gold/50 uppercase tracking-[0.4em] block mb-2">Empresas</span>
+                  <h3 className="text-2xl font-bold text-white">Solicitar Proposta</h3>
+                  <p className="text-sm text-white/35 mt-1">Preencha os dados e recebe uma proposta personalizada.</p>
+                </div>
+                <form onSubmit={handleSubmit} className="space-y-4">
+                  <div className="grid grid-cols-2 gap-4">
+                    <div>
+                      <label className="text-[9px] font-black text-white/30 uppercase tracking-widest block mb-1.5">Nome</label>
+                      <input required value={form.nome} onChange={e => setForm(f => ({ ...f, nome: e.target.value }))}
+                        placeholder="João Silva"
+                        className="w-full px-4 py-3 rounded-xl text-sm text-white outline-none placeholder-white/15"
+                        style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.08)" }} />
+                    </div>
+                    <div>
+                      <label className="text-[9px] font-black text-white/30 uppercase tracking-widest block mb-1.5">Empresa</label>
+                      <input required value={form.empresa} onChange={e => setForm(f => ({ ...f, empresa: e.target.value }))}
+                        placeholder="Empresa Lda."
+                        className="w-full px-4 py-3 rounded-xl text-sm text-white outline-none placeholder-white/15"
+                        style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.08)" }} />
+                    </div>
+                  </div>
+                  <div>
+                    <label className="text-[9px] font-black text-white/30 uppercase tracking-widest block mb-1.5">Email</label>
+                    <input required type="email" value={form.email} onChange={e => setForm(f => ({ ...f, email: e.target.value }))}
+                      placeholder="joao@empresa.pt"
+                      className="w-full px-4 py-3 rounded-xl text-sm text-white outline-none placeholder-white/15"
+                      style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.08)" }} />
+                  </div>
+                  <div>
+                    <label className="text-[9px] font-black text-white/30 uppercase tracking-widest block mb-1.5">Telefone</label>
+                    <input value={form.telefone} onChange={e => setForm(f => ({ ...f, telefone: e.target.value }))}
+                      placeholder="+351 9XX XXX XXX"
+                      className="w-full px-4 py-3 rounded-xl text-sm text-white outline-none placeholder-white/15"
+                      style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.08)" }} />
+                  </div>
+                  <div>
+                    <label className="text-[9px] font-black text-white/30 uppercase tracking-widest block mb-1.5">Mensagem (opcional)</label>
+                    <textarea rows={3} value={form.mensagem} onChange={e => setForm(f => ({ ...f, mensagem: e.target.value }))}
+                      placeholder="Descreva as necessidades da sua empresa..."
+                      className="w-full px-4 py-3 rounded-xl text-sm text-white outline-none placeholder-white/15 resize-none"
+                      style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.08)" }} />
+                  </div>
+                  <button type="submit" disabled={sending}
+                    className="w-full py-3.5 rounded-xl font-bold text-[11px] uppercase tracking-widest text-black transition-all hover:bg-white disabled:opacity-50 flex items-center justify-center gap-2"
+                    style={{ background: "#D4AF37" }}>
+                    {sending ? <span className="animate-pulse">A enviar...</span> : <><Send className="w-4 h-4" /> Enviar Proposta</>}
+                  </button>
+                </form>
+              </>
+            )}
+          </motion.div>
+        </div>
+      )}
+
       <Footer />
     </div>
   );
