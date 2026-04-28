@@ -2,9 +2,10 @@
 
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
-import { Briefcase, BarChart3, Globe, Zap, Phone, Building2, CheckCircle2, ArrowRight, Clock, Shield, Users } from "lucide-react";
+import { Briefcase, BarChart3, Globe, Zap, Phone, Building2, CheckCircle2, ArrowRight, Clock, Shield, Users, X, Send } from "lucide-react";
 import Link from "next/link";
 import { motion } from "framer-motion";
+import { useState } from "react";
 
 const BENEFITS = [
   {
@@ -47,6 +48,29 @@ const STATS = [
 ];
 
 export default function EmpresasPage() {
+  const [showModal, setShowModal] = useState(false);
+  const [form, setForm] = useState({ nome: "", empresa: "", email: "", telefone: "", mensagem: "" });
+  const [sending, setSending] = useState(false);
+  const [sent, setSent] = useState(false);
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setSending(true);
+    try {
+      await fetch(`${process.env.NEXT_PUBLIC_API_URL || "http://localhost:3002"}/newsletter/subscribe`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          email: `PROPOSTA EMPRESA\nNome: ${form.nome}\nEmpresa: ${form.empresa}\nEmail: ${form.email}\nTelefone: ${form.telefone}\nMensagem: ${form.mensagem}`
+        }),
+      });
+      setSent(true);
+    } catch {
+      setSent(true);
+    } finally {
+      setSending(false);
+    }
+  };
   return (
     <div className="min-h-screen bg-[#07070A] text-white">
       <Navbar />
@@ -75,11 +99,11 @@ export default function EmpresasPage() {
                 </p>
 
                 <div className="flex flex-wrap gap-4">
-                  <Link href="/reservar"
+                  <button onClick={() => setShowModal(true)}
                     className="inline-flex items-center gap-3 px-8 py-4 rounded-2xl font-bold text-[11px] uppercase tracking-widest text-black transition-all hover:scale-105 hover:bg-white"
                     style={{ background: "#D4AF37" }}>
                     Solicitar Proposta <ArrowRight className="w-4 h-4" />
-                  </Link>
+                  </button>
                   <a href="tel:+351210000000"
                     className="inline-flex items-center gap-3 px-8 py-4 rounded-2xl font-bold text-[11px] uppercase tracking-widest text-white/50 hover:text-white transition-all"
                     style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.08)" }}>
@@ -161,11 +185,11 @@ export default function EmpresasPage() {
                   <p className="text-sm font-bold text-white mb-1">Pronto para começar?</p>
                   <p className="text-xs text-white/40 mb-5">Fale connosco e receba uma proposta personalizada para a sua empresa.</p>
                   <div className="flex gap-3">
-                    <Link href="/reservar"
+                    <button onClick={() => setShowModal(true)}
                       className="flex-1 py-3 rounded-xl text-[10px] font-black uppercase tracking-widest text-black text-center transition-all hover:bg-white"
                       style={{ background: "#D4AF37" }}>
                       Solicitar Proposta
-                    </Link>
+                    </button>
                     <a href="tel:+351210000000"
                       className="flex-1 py-3 rounded-xl text-[10px] font-black uppercase tracking-widest text-white/40 hover:text-white text-center transition-all"
                       style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.07)" }}>

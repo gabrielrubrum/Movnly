@@ -2,16 +2,37 @@
 
 import Link from "next/link";
 import { useI18n } from "@/i18n/context";
+import { useState } from "react";
 import {
   ShieldCheck, Globe, Users, MessageSquare, Shield,
   ArrowRight, Mail,
-  MapPin, Phone, MessageCircle
+  MapPin, Phone, MessageCircle, CheckCircle2
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 export function Footer() {
   const { t, tArray } = useI18n();
   const year = new Date().getFullYear();
+  const [email, setEmail] = useState("");
+  const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
+
+  const handleSubscribe = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!email || !email.includes("@")) return;
+    setStatus("loading");
+    try {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || "http://localhost:3002"}/newsletter/subscribe`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email }),
+      });
+      const data = await res.json();
+      setStatus(data.success ? "success" : "error");
+      if (data.success) setEmail("");
+    } catch {
+      setStatus("error");
+    }
+  };
 
   return (
     <footer className="relative bg-[#050508] pt-32 pb-12 border-t border-white/[0.03] overflow-hidden">
@@ -47,16 +68,33 @@ export function Footer() {
               </p>
             </div>
             <div className="relative">
-              <div className="flex bg-black/40 rounded-2xl border border-white/5 p-2 focus-within:border-brand-gold/30 transition-all">
-                <input
-                  type="email"
-                  placeholder={t("footer.newsletter.placeholder")}
-                  className="bg-transparent border-none focus:ring-0 text-white text-sm px-6 flex-1 font-medium"
-                />
-                <button className="bg-brand-gold hover:bg-white text-black px-8 py-4 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all shadow-[0_10px_20px_-5px_rgba(212,175,55,0.3)]">
-                  {t("footer.newsletter.button")}
-                </button>
-              </div>
+              {status === "success" ? (
+                <div className="flex items-center gap-3 p-5 rounded-2xl" style={{ background: "rgba(52,211,153,0.08)", border: "1px solid rgba(52,211,153,0.2)" }}>
+                  <CheckCircle2 className="w-5 h-5 text-emerald-400 flex-shrink-0" />
+                  <p className="text-sm font-bold text-emerald-400">Subscrito com sucesso! Vai receber as nossas novidades.</p>
+                </div>
+              ) : (
+                <form onSubmit={handleSubscribe}>
+                  <div className="flex bg-black/40 rounded-2xl border border-white/5 p-2 focus-within:border-brand-gold/30 transition-all">
+                    <input
+                      type="email"
+                      value={email}
+                      onChange={e => setEmail(e.target.value)}
+                      placeholder={t("footer.newsletter.placeholder")}
+                      className="bg-transparent border-none focus:ring-0 text-white text-sm px-6 flex-1 font-medium outline-none"
+                      required
+                    />
+                    <button
+                      type="submit"
+                      disabled={status === "loading"}
+                      className="bg-brand-gold hover:bg-white text-black px-8 py-4 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all shadow-[0_10px_20px_-5px_rgba(212,175,55,0.3)] disabled:opacity-60"
+                    >
+                      {status === "loading" ? "..." : t("footer.newsletter.button")}
+                    </button>
+                  </div>
+                  {status === "error" && <p className="mt-2 text-xs text-red-400">Erro ao subscrever. Tenta novamente.</p>}
+                </form>
+              )}
               <p className="mt-4 text-[9px] text-white/10 uppercase tracking-[0.2em] font-black w-full text-center lg:text-left">
                 🔒 {t("footer.newsletter.privacy")}
               </p>
