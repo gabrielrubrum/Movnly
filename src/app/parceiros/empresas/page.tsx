@@ -2,178 +2,186 @@
 
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
-import { useI18n } from "@/i18n/context";
-import { Briefcase, Check, ArrowRight, Phone, Shield, BarChart3, Globe, Zap, ChevronRight, Building2, Star } from "lucide-react";
+import { Briefcase, BarChart3, Globe, Zap, Phone, Building2, CheckCircle2, ArrowRight, Clock, Shield, Users } from "lucide-react";
 import Link from "next/link";
 import { motion } from "framer-motion";
 
+const BENEFITS = [
+  {
+    icon: BarChart3,
+    title: "Faturação Centralizada",
+    desc: "Uma única fatura mensal para todas as viagens da empresa. Relatórios detalhados por departamento, colaborador ou projeto.",
+  },
+  {
+    icon: Zap,
+    title: "Reserva em 60 Segundos",
+    desc: "Portal dedicado para gestores. Reserva imediata ou agendada, com confirmação instantânea e PIN de segurança.",
+  },
+  {
+    icon: Globe,
+    title: "Cobertura Nacional",
+    desc: "Aeroportos, hotéis, reuniões e eventos em todo o território português. Frota executiva sempre disponível.",
+  },
+  {
+    icon: Shield,
+    title: "Motoristas Verificados",
+    desc: "Todos os motoristas têm alvará TVDE, seguro profissional e formação em protocolo executivo.",
+  },
+  {
+    icon: Clock,
+    title: "Disponível 24/7",
+    desc: "Serviço disponível a qualquer hora, incluindo fins de semana e feriados. Suporte dedicado para empresas.",
+  },
+  {
+    icon: Users,
+    title: "Gestão de Equipa",
+    desc: "Adicione colaboradores, defina limites de despesa e aprove viagens diretamente no painel de gestão.",
+  },
+];
+
+const STATS = [
+  { value: "< 2min", label: "Tempo de resposta" },
+  { value: "100%", label: "Motoristas certificados" },
+  { value: "24/7", label: "Suporte dedicado" },
+  { value: "0€", label: "Taxa de adesão" },
+];
+
 export default function EmpresasPage() {
-    const { t } = useI18n();
+  return (
+    <div className="min-h-screen bg-[#07070A] text-white">
+      <Navbar />
 
-    // Map benefits from i18n
-    const benefitIcons = [BarChart3, Zap, Globe];
-    const benefitKeys = ["0", "1", "2"];
-    
-    const benefits = benefitKeys.map((key, i) => {
-        const benefitData = t(`b2b.segments.corporate.benefits.${key}`) as any;
-        return {
-            ...benefitData,
-            icon: benefitIcons[i],
-            size: i === 2 ? "large" : "medium",
-            image: i === 2 ? "/assets/images/services/corporate-exec.png" : undefined
-        };
-    });
+      <main className="overflow-hidden">
 
-    return (
-        <div className="min-h-screen bg-luxury-mesh text-white selection:bg-brand-gold/30">
-            <Navbar />
+        {/* Hero */}
+        <section className="relative pt-40 pb-24 overflow-hidden">
+          <div className="absolute top-0 right-0 w-[700px] h-[700px] bg-brand-gold/6 blur-[140px] rounded-full pointer-events-none" />
+          <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-brand-gold/4 blur-[120px] rounded-full pointer-events-none" />
 
-            <main className="overflow-hidden">
-                {/* Elite Corporate Hero */}
-                <section className="relative pt-40 pb-24 overflow-hidden border-b border-white/5">
-                    <div className="absolute top-0 right-0 w-[800px] h-[800px] bg-brand-gold/5 blur-[140px] rounded-full pointer-events-none animate-glow-pulse" />
+          <div className="max-w-7xl mx-auto px-6 relative z-10">
+            <div className="grid lg:grid-cols-2 gap-16 items-center">
+              <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8 }}>
+                <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-brand-gold/10 border border-brand-gold/20 text-brand-gold text-[10px] font-black uppercase tracking-[0.4em] mb-8">
+                  <Building2 className="w-3.5 h-3.5" /> Soluções para Empresas
+                </div>
 
-                    <div className="nx-container relative z-10">
-                        <div className="grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
-                            <motion.div
-                                initial={{ opacity: 0, x: -40 }}
-                                animate={{ opacity: 1, x: 0 }}
-                                transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
-                            >
-                                <motion.div
-                                    initial={{ opacity: 0, y: 10 }}
-                                    animate={{ opacity: 1, y: 0 }}
-                                    transition={{ delay: 0.5 }}
-                                    className="inline-flex items-center gap-3 px-6 py-2 rounded-full border border-brand-gold/20 bg-brand-gold/5 text-brand-gold text-[10px] font-black uppercase tracking-[0.4em] mb-10"
-                                >
-                                    <Building2 className="w-3.5 h-3.5" /> {t("b2b.segments.corporate.badge")}
-                                </motion.div>
+                <h1 className="text-5xl md:text-7xl font-bold leading-tight tracking-tight mb-6">
+                  Transporte executivo
+                  <span className="block text-brand-gold">para a sua empresa</span>
+                </h1>
 
-                                <h1 className="text-6xl md:text-8xl font-bold leading-[1.1] mb-8">
-                                    {t("b2b.segments.corporate.subtitle1")}<br />
-                                    <span className="font-bold text-brand-gold">{t("b2b.segments.corporate.subtitle2")}</span>
-                                </h1>
+                <p className="text-lg text-white/45 mb-10 max-w-lg leading-relaxed">
+                  Frota premium, motoristas profissionais e faturação simplificada. Tudo o que a sua empresa precisa para gerir deslocações executivas.
+                </p>
 
-                                <p className="text-lg md:text-xl text-white/50 mb-12 max-w-xl leading-relaxed font-light">
-                                    {t("b2b.segments.corporate.desc")}
-                                </p>
+                <div className="flex flex-wrap gap-4">
+                  <Link href="/reservar"
+                    className="inline-flex items-center gap-3 px-8 py-4 rounded-2xl font-bold text-[11px] uppercase tracking-widest text-black transition-all hover:scale-105 hover:bg-white"
+                    style={{ background: "#D4AF37" }}>
+                    Solicitar Proposta <ArrowRight className="w-4 h-4" />
+                  </Link>
+                  <a href="tel:+351210000000"
+                    className="inline-flex items-center gap-3 px-8 py-4 rounded-2xl font-bold text-[11px] uppercase tracking-widest text-white/50 hover:text-white transition-all"
+                    style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.08)" }}>
+                    <Phone className="w-4 h-4" /> +351 21 000 0000
+                  </a>
+                </div>
+              </motion.div>
 
-                                <div className="flex flex-wrap gap-8 items-center">
-                                    <button className="bg-brand-gold text-black px-12 py-5 rounded-full text-xs font-bold uppercase tracking-[0.2em] hover:scale-105 transition-all shadow-xl">
-                                        {t("b2b.segments.corporate.cta")}
-                                    </button>
-                                    <Link href="/book" className="text-[10px] font-bold uppercase tracking-[0.3em] text-white/40 hover:text-brand-gold transition-colors flex items-center gap-3 border-b border-white/10 pb-2">
-                                        {t("categories.compare")} <ArrowRight className="w-4 h-4" />
-                                    </Link>
-                                </div>
-                            </motion.div>
+              {/* Stats */}
+              <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, delay: 0.15 }}
+                className="grid grid-cols-2 gap-4">
+                {STATS.map((s, i) => (
+                  <div key={i} className="rounded-2xl p-6 text-center"
+                    style={{ background: i === 0 ? "linear-gradient(135deg, #110E05, #0A0A0F)" : "rgba(255,255,255,0.025)", border: i === 0 ? "1px solid rgba(212,175,55,0.2)" : "1px solid rgba(255,255,255,0.06)" }}>
+                    <p className={`text-3xl font-bold mb-1 ${i === 0 ? "text-brand-gold" : "text-white"}`}>{s.value}</p>
+                    <p className="text-[9px] font-black text-white/30 uppercase tracking-widest">{s.label}</p>
+                  </div>
+                ))}
+              </motion.div>
+            </div>
+          </div>
+        </section>
 
-                            <motion.div
-                                initial={{ opacity: 0, scale: 0.95 }}
-                                animate={{ opacity: 1, scale: 1 }}
-                                transition={{ duration: 1.5, ease: [0.16, 1, 0.3, 1] }}
-                                className="relative rounded-[56px] overflow-hidden aspect-square luxury-card group/hero"
-                            >
-                                <img
-                                    src="/assets/images/services/corporate-exec.png"
-                                    className="w-full h-full object-cover grayscale-[20%] group-hover/hero:grayscale-0 group-hover/hero:scale-110 transition-all duration-[2s]"
-                                    alt="Corporate Fleet"
-                                />
-                                <div className="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent" />
-                                <div className="absolute inset-0 bg-brand-gold/5 transition-opacity group-hover/hero:opacity-0" />
-                            </motion.div>
-                        </div>
+        {/* Benefits */}
+        <section className="max-w-7xl mx-auto px-6 py-24">
+          <div className="mb-16">
+            <span className="text-[9px] font-black text-brand-gold/50 uppercase tracking-[0.4em] block mb-3">O que incluímos</span>
+            <h2 className="text-4xl md:text-5xl font-bold text-white tracking-tight">
+              Tudo o que a sua empresa precisa
+            </h2>
+          </div>
+
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
+            {BENEFITS.map((b, i) => (
+              <motion.div key={i}
+                initial={{ opacity: 0, y: 12 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.07 }}
+                className="rounded-2xl p-6 transition-all hover:border-white/10 group"
+                style={{ background: "rgba(255,255,255,0.025)", border: "1px solid rgba(255,255,255,0.06)" }}>
+                <div className="w-11 h-11 rounded-xl bg-brand-gold/10 border border-brand-gold/15 flex items-center justify-center mb-5 group-hover:bg-brand-gold/15 transition-all">
+                  <b.icon className="w-5 h-5 text-brand-gold" />
+                </div>
+                <h3 className="text-base font-bold text-white mb-2">{b.title}</h3>
+                <p className="text-sm text-white/45 leading-relaxed">{b.desc}</p>
+              </motion.div>
+            ))}
+          </div>
+        </section>
+
+        {/* Como funciona */}
+        <section className="max-w-7xl mx-auto px-6 py-16">
+          <div className="rounded-3xl p-10 md:p-16 relative overflow-hidden"
+            style={{ background: "linear-gradient(135deg, #0D0B06 0%, #0A0A0F 60%, #060A0D 100%)", border: "1px solid rgba(212,175,55,0.15)" }}>
+            <div className="absolute top-0 right-0 w-[400px] h-[400px] bg-brand-gold/8 blur-[100px] rounded-full pointer-events-none" />
+
+            <div className="relative z-10 grid lg:grid-cols-2 gap-12 items-center">
+              <div>
+                <span className="text-[9px] font-black text-brand-gold/50 uppercase tracking-[0.4em] block mb-4">Como funciona</span>
+                <h2 className="text-3xl md:text-4xl font-bold text-white tracking-tight mb-6">
+                  Simples de implementar,
+                  <span className="block text-brand-gold">fácil de gerir</span>
+                </h2>
+                <div className="space-y-4">
+                  {[
+                    "Criamos a conta da sua empresa em 24 horas",
+                    "Adicionamos os colaboradores autorizados",
+                    "Reservas imediatas via portal ou app",
+                    "Fatura mensal consolidada com relatório",
+                  ].map((item, i) => (
+                    <div key={i} className="flex items-center gap-3">
+                      <CheckCircle2 className="w-4 h-4 text-brand-gold flex-shrink-0" />
+                      <span className="text-sm text-white/60">{item}</span>
                     </div>
-                </section>
+                  ))}
+                </div>
+              </div>
 
-                {/* Bento Benefits Grid */}
-                <section className="nx-container py-32">
-                    <div className="mb-24">
-                        <span className="text-brand-gold text-[10px] uppercase tracking-[0.5em] font-medium mb-6 block">Corporate Exclusive</span>
-                        <h2 className="text-5xl md:text-7xl font-bold tracking-tight">
-                            {t("b2b.segments.corporate.bento_title").split(" ").slice(0, 2).join(" ")}<br />
-                            <span className="text-serif italic font-medium text-white/40">{t("b2b.segments.corporate.bento_desc")}</span>
-                        </h2>
-                    </div>
+              <div className="space-y-4">
+                <div className="rounded-2xl p-6" style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.06)" }}>
+                  <p className="text-sm font-bold text-white mb-1">Pronto para começar?</p>
+                  <p className="text-xs text-white/40 mb-5">Fale connosco e receba uma proposta personalizada para a sua empresa.</p>
+                  <div className="flex gap-3">
+                    <Link href="/reservar"
+                      className="flex-1 py-3 rounded-xl text-[10px] font-black uppercase tracking-widest text-black text-center transition-all hover:bg-white"
+                      style={{ background: "#D4AF37" }}>
+                      Solicitar Proposta
+                    </Link>
+                    <a href="tel:+351210000000"
+                      className="flex-1 py-3 rounded-xl text-[10px] font-black uppercase tracking-widest text-white/40 hover:text-white text-center transition-all"
+                      style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.07)" }}>
+                      Ligar Agora
+                    </a>
+                  </div>
+                </div>
+                <p className="text-[10px] text-white/25 text-center">Sem compromisso. Resposta em menos de 2 horas.</p>
+              </div>
+            </div>
+          </div>
+        </section>
 
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                        {benefits.map((benefit, i) => (
-                            <motion.div
-                                key={benefit.title}
-                                initial={{ opacity: 0, y: 30 }}
-                                whileInView={{ opacity: 1, y: 0 }}
-                                transition={{ delay: i * 0.1 }}
-                                className={`group relative rounded-[48px] luxury-card p-12 overflow-hidden ${benefit.size === "large" ? "md:col-span-2 flex flex-col md:flex-row gap-12" : "flex flex-col"
-                                    }`}
-                            >
-                                {benefit.image && (
-                                    <div className="absolute inset-0 z-0 opacity-10 group-hover:opacity-20 transition-opacity">
-                                        <img src={benefit.image} className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-[3s]" alt="" />
-                                    </div>
-                                )}
+      </main>
 
-                                <div className="relative z-10 flex-1">
-                                    <div className="w-16 h-16 rounded-2xl bg-brand-gold/10 border border-brand-gold/20 flex items-center justify-center mb-10 shadow-glow">
-                                        <benefit.icon className="w-8 h-8 text-brand-gold" />
-                                    </div>
-                                    <h3 className="text-3xl font-bold mb-4 tracking-tighter group-hover:text-brand-gold transition-colors">{benefit.title}</h3>
-                                    <p className="text-white/40 text-lg leading-relaxed max-w-[280px] font-light italic font-serif">
-                                        {benefit.desc}
-                                    </p>
-                                </div>
-
-                                {benefit.size === "large" && (
-                                    <div className="relative z-10 flex-1 flex flex-col justify-center border-t md:border-t-0 md:border-l border-white/10 pt-10 md:pt-0 md:pl-12">
-                                        <div className="grid grid-cols-2 gap-8">
-                                            <div className="space-y-1">
-                                                <p className="text-3xl font-bold text-white tracking-tighter">{t("b2b.segments.corporate.stats.response")}</p>
-                                                <p className="text-[9px] uppercase tracking-[0.3em] text-white/30 font-bold">{t("b2b.segments.corporate.stats.response_label")}</p>
-                                            </div>
-                                            <div className="space-y-1">
-                                                <p className="text-3xl font-bold text-white tracking-tighter">{t("b2b.segments.corporate.stats.tax")}</p>
-                                                <p className="text-[9px] uppercase tracking-[0.3em] text-white/30 font-bold">{t("b2b.segments.corporate.stats.tax_label")}</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                )}
-                            </motion.div>
-                        ))}
-                    </div>
-                </section>
-
-                {/* Final Call to Action V2 */}
-                <section className="nx-container pb-40">
-                    <motion.div
-                        whileInView={{ opacity: 1, scale: 1 }}
-                        initial={{ opacity: 0, scale: 0.98 }}
-                        className="glass-bento-premium rounded-[64px] p-12 md:p-32 flex flex-col md:flex-row items-center justify-between gap-16 relative overflow-hidden"
-                    >
-                        <div className="absolute -top-24 left-1/2 -translate-x-1/2 w-[600px] h-[600px] bg-brand-gold/5 blur-[150px] rounded-full animate-glow-pulse" />
-
-                        <div className="space-y-8 max-w-2xl relative z-10">
-                            <h2 className="text-5xl md:text-7xl font-bold tracking-tight leading-[1.1]">
-                                {t("b2b.segments.corporate.final_cta_title").split("ao")[0]}<br />
-                                <span className="text-serif italic font-medium text-white/40">ao {t("b2b.segments.corporate.final_cta_title").split("ao")[1]}</span>
-                            </h2>
-                            <p className="text-white/50 text-xl leading-relaxed font-light">
-                                {t("b2b.segments.corporate.final_cta_desc")}
-                            </p>
-                        </div>
-
-                        <div className="flex flex-col sm:flex-row gap-8 w-full md:w-auto relative z-10">
-                            <button className="h-16 px-16 rounded-full bg-brand-gold text-black font-bold text-[10px] uppercase tracking-[0.3em] hover:scale-105 transition-all shadow-xl">
-                                {t("b2b.segments.corporate.cta")}
-                            </button>
-                            <a href="tel:+351210000000" className="h-16 px-12 rounded-full border border-white/10 flex items-center justify-center gap-4 text-white/30 hover:text-white transition-all group">
-                                <Phone className="w-5 h-5 text-brand-gold/60 group-hover:text-brand-gold transition-colors" />
-                                <span className="text-[10px] font-bold uppercase tracking-[0.2em]">{t("cta.callNow").includes(":") ? t("cta.callNow").split(":")[1].trim() : t("cta.callNow")}</span>
-                            </a>
-                        </div>
-                    </motion.div>
-                </section>
-            </main>
-
-            <Footer />
-        </div>
-    );
+      <Footer />
+    </div>
+  );
 }
