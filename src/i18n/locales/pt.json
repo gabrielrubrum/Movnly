@@ -982,48 +982,48 @@
   },
   "legal": {
     "privacy": {
-      "title": "Diretrizes de Privacidade",
-      "badge": "NexRide Real Compliance",
-      "lastUpdated": "Auditado em: 14 de Abril de 2026",
+      "title": "Política de Privacidade",
+      "badge": "Proteção de Dados",
+      "lastUpdated": "Última atualização: 27 de Abril de 2026",
       "sections": [
         {
-          "title": "Uso Responsável de Dados",
-          "content": "A NexRide recolhe apenas os dados estritamente necessários para a execução segura da sua viagem: nome, contacto telefónico para coordenação com o motorista e dados de faturação processados via canais bancários certificados."
+          "title": "Dados que Recolhemos",
+          "content": "A NexRice recolhe o nome completo, endereço de email, número de telefone e dados de pagamento para processar as suas reservas. Os dados de localização são usados exclusivamente durante a viagem para coordenação com o motorista e são eliminados após a conclusão do serviço."
         },
         {
-          "title": "Segurança Bancária e Criptografia",
-          "content": "Todas as transações financeiras são processadas através da Stripe, um dos líderes mundiais em segurança de pagamentos, garantindo que os seus dados de cartão nunca residem nos nossos servidores."
+          "title": "Pagamentos e Segurança",
+          "content": "Todos os pagamentos são processados pela Stripe, certificada PCI DSS nível 1. Os dados do seu cartão nunca são armazenados nos nossos servidores. A NexRice utiliza encriptação SSL em todas as comunicações."
         },
         {
-          "title": "Gestão de Localização",
-          "content": "A localização do veículo é monitorizada exclusivamente durante o decorrer do serviço para garantir a segurança do passageiro e a eficiência da rota, sendo estes dados eliminados após o período legal de retenção."
+          "title": "Partilha de Dados",
+          "content": "Os seus dados pessoais não são vendidos nem partilhados com terceiros para fins comerciais. Partilhamos apenas o nome e contacto com o motorista atribuído à sua viagem, exclusivamente para coordenação do serviço."
         },
         {
-          "title": "Seus Direitos (RGPD)",
-          "content": "Como utilizador, tem o direito pleno de aceder, retificar ou solicitar a eliminação definitiva dos seus dados. O nosso compromisso é a transparência total sobre como a sua informação nos ajuda a servi-lo melhor."
+          "title": "Os Seus Direitos (RGPD)",
+          "content": "Tem direito a aceder, corrigir ou eliminar os seus dados a qualquer momento. Para exercer estes direitos, contacte-nos em privacidade@nexrice.com. Respondemos em até 72 horas. Pode também solicitar a portabilidade dos seus dados ou opor-se ao seu tratamento."
         }
       ]
     },
     "terms": {
-      "title": "Termos de Serviço",
-      "badge": "Transparência NexRide",
-      "lastUpdated": "Atualizado em: 14 de Abril de 2026",
+      "title": "Termos e Condições",
+      "badge": "Condições de Uso",
+      "lastUpdated": "Última atualização: 27 de Abril de 2026",
       "sections": [
         {
-          "title": "Natureza do Acordo",
-          "content": "Ao utilizar a NexRide, está a contratar um serviço de intermediação de transporte profissional. Garantimos que todos os motoristas na nossa rede possuem os licenciamentos legais exigidos pela legislação portuguesa (RNAAT/TVDE)."
+          "title": "O Serviço NexRice",
+          "content": "A NexRice é uma plataforma de transfers e transporte executivo em Portugal. Todos os motoristas são profissionais licenciados com alvará TVDE/RNAAT válido. Ao reservar, está a contratar um serviço de transporte privado com preço fixo, sem surpresas no final da viagem."
         },
         {
-          "title": "Condutas e Responsabilidades",
-          "content": "Comprometemo-nos a prestar um serviço pontual e seguro. Em contrapartida, solicitamos que o utilizador mantenha uma conduta respeitosa e forneça dados de voo precisos para transferes de aeroporto."
+          "title": "Reservas e Pagamentos",
+          "content": "As reservas são confirmadas após o pagamento. O preço apresentado é final e inclui todas as taxas. Para transferes de aeroporto, o motorista aguarda até 60 minutos após o horário de aterragem previsto sem custo adicional. Atrasos de voo são monitorizados automaticamente."
         },
         {
-          "title": "Flexibilidade e Cancelamentos",
-          "content": "Entendemos que os planos mudam. Oferecemos cancelamento gratuito até 24h antes da viagem. Cancelamentos tardios poderão estar sujeitos a taxas administrativas para compensar a disponibilidade do motorista."
+          "title": "Cancelamentos e Reembolsos",
+          "content": "Cancelamento gratuito até 24 horas antes da viagem — reembolso total em 5 a 10 dias úteis. Cancelamento entre 2 e 24 horas — reembolso de 50%. Cancelamento com menos de 2 horas ou não comparência — sem reembolso. Em caso de falha do motorista, o reembolso é total e imediato."
         },
         {
-          "title": "Resolução de Conflitos",
-          "content": "Qualquer imprevisto será tratado com prioridade máxima pela nossa equipa de apoio. Privilegiamos sempre a resolução amigável e direta através do nosso centro de suporte 24/7."
+          "title": "Responsabilidades",
+          "content": "A NexRice não se responsabiliza por atrasos causados por condições de tráfego imprevisíveis, condições meteorológicas extremas ou greves. O passageiro é responsável por fornecer dados de voo corretos. Bagagem danificada durante o transporte deve ser reportada no prazo de 24 horas."
         }
       ]
     }
