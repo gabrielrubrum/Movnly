@@ -6,25 +6,26 @@ import { LanguageSwitcher } from "@/components/ui/LanguageSwitcher";
 import { cn } from "@/lib/utils";
 import {
   LayoutDashboard, Calendar, Clock, Star,
-  DollarSign, Settings, LogOut, Navigation,
-  ChevronRight, User, ShieldCheck, Menu, X, Zap
+  DollarSign, LogOut, Menu, X, MessageSquare
 } from "lucide-react";
 import { useState, useEffect } from "react";
 import { useAuthStore } from "@/lib/auth-store";
 import { motion, AnimatePresence } from "framer-motion";
 import { RoleGuard } from "@/components/auth/RoleGuard";
+import { BookingChat } from "@/components/chat/BookingChat";
 
 const navItems = [
   { href: "/motorista", label: "Painel Principal", icon: LayoutDashboard },
   { href: "/motorista/viagens", label: "Minhas Viagens", icon: Calendar },
   { href: "/motorista/historico", label: "Arquivo", icon: Clock },
   { href: "/motorista/ganhos", label: "Rendimentos", icon: DollarSign },
-  { href: "/motorista/avaliacoes", label: "Feedback", icon: Star },
+  { href: "/motorista/avaliacoes", label: "Avaliações", icon: Star },
 ];
 
 export default function MotoristaLayout({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [showChat, setShowChat] = useState(false);
   const user = useAuthStore(s => s.user);
 
   useEffect(() => {
@@ -90,7 +91,7 @@ export default function MotoristaLayout({ children }: { children: React.ReactNod
           {navItems.map(({ href, label, icon: Icon }) => {
             const active = href === '/motorista'
               ? pathname === '/motorista'
-              : pathname === href || pathname.startsWith(href + "/");
+              : pathname === href;
             return (
               <Link
                 key={href}
@@ -118,16 +119,41 @@ export default function MotoristaLayout({ children }: { children: React.ReactNod
         </nav>
 
         {/* Footer Sidebar */}
-        <div className="p-6 border-t border-white/5 space-y-4">
+        <div className="p-6 border-t border-white/5 space-y-3">
           <LanguageSwitcher variant="navbar" />
-          <button className="flex items-center justify-center gap-3 w-full py-4 bg-brand-gold/5 border border-brand-gold/10 rounded-2xl text-[10px] font-black uppercase tracking-[0.3em] text-brand-gold hover:bg-brand-gold hover:text-black transition-all duration-500">
-             Suporte e Ajuda
+
+          {/* Chat button */}
+          <button
+            onClick={() => setShowChat(true)}
+            className="flex items-center gap-3 w-full px-4 py-3.5 rounded-2xl text-[10px] font-black uppercase tracking-[0.2em] text-white/50 hover:text-white bg-white/[0.02] border border-white/5 hover:bg-brand-gold/10 hover:border-brand-gold/20 hover:text-brand-gold transition-all"
+          >
+            <div className="w-8 h-8 rounded-xl bg-white/5 flex items-center justify-center flex-shrink-0">
+              <MessageSquare className="w-4 h-4" />
+            </div>
+            Chat com Passageiro
           </button>
-          <button className="flex items-center gap-3 w-full px-5 py-3 rounded-2xl text-[10px] font-black uppercase tracking-[0.3em] text-white/20 hover:text-red-500 hover:bg-red-500/5 transition-all">
+
+          <button className="flex items-center justify-center gap-3 w-full py-3.5 bg-brand-gold/5 border border-brand-gold/10 rounded-2xl text-[10px] font-black uppercase tracking-[0.3em] text-brand-gold hover:bg-brand-gold hover:text-black transition-all duration-300">
+            Suporte e Ajuda
+          </button>
+          <button
+            onClick={() => useAuthStore.getState().logout()}
+            className="flex items-center gap-3 w-full px-5 py-3 rounded-2xl text-[10px] font-black uppercase tracking-[0.3em] text-white/20 hover:text-red-400 hover:bg-red-500/5 transition-all"
+          >
             <LogOut className="w-4 h-4" /> Sair da Conta
           </button>
         </div>
       </aside>
+
+      {/* Chat global — acessível de qualquer página do motorista */}
+      {showChat && (
+        <BookingChat
+          bookingId="support"
+          isOpen={showChat}
+          onClose={() => setShowChat(false)}
+          title="Chat com Passageiro"
+        />
+      )}
 
       {/* Main Content Arena */}
       <div className="flex-1 lg:ml-72 min-h-screen relative z-10">
