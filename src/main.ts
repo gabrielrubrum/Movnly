@@ -74,7 +74,6 @@ async function bootstrap() {
     ? [
         process.env.FRONTEND_URL || 'https://nexrice.com',
         'https://www.nexrice.com',
-        'https://nexrice.vercel.app',
       ]
     : true;
 
