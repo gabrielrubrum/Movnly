@@ -1,21 +1,26 @@
 "use client";
 
 import { motion } from "framer-motion";
-import {
-    Star, MessageSquare, ShieldCheck,
-    TrendingUp, Award, ThumbsUp,
-    CheckCircle2, Activity
-} from "lucide-react";
+import { Star, MessageSquare, ShieldCheck, TrendingUp, Award, Loader2 } from "lucide-react";
 import { cn } from "@/lib/utils";
-
-const FEEDBACK = [
-    { id: 1, name: "António Costa", rating: 5, comment: "Serviço impecável. Veículo em estado de concurso e motorista extremamente profissional e discreto.", date: "Hoje" },
-    { id: 2, name: "Maria Santos", rating: 5, comment: "Melhor serviço de transfer em Lisboa. Pontualidade e cortesia exemplares.", date: "Ontem" },
-    { id: 3, name: "Francisca Silva", rating: 4, comment: "Viagem muito confortável. Pequeno atraso no trânsito mas o motorista avisou com antecedência.", date: "Há 2 dias" },
-    { id: 4, name: "Ricardo Pereira", rating: 5, comment: "Serviço de excelência. Tudo cumprido com o máximo profissionalismo.", date: "Há 3 dias" },
-];
+import { useRatings } from "@/hooks/useRatings";
+import { formatDistanceToNow } from "date-fns";
+import { ptBR } from "date-fns/locale";
 
 export default function AvaliacoesPage() {
+    const { data, loading } = useRatings();
+
+    if (loading) return (
+        <div className="min-h-[60vh] flex items-center justify-center">
+            <Loader2 className="w-8 h-8 text-brand-gold animate-spin" />
+        </div>
+    );
+
+    const avg = data?.avg || 0;
+    const total = data?.total || 0;
+    const dist = data?.distribution || [5, 4, 3, 2, 1].map(s => ({ score: s, count: 0 }));
+    const ratings = data?.ratings || [];
+
     return (
         <div className="space-y-8">
 
@@ -27,76 +32,111 @@ export default function AvaliacoesPage() {
                         <span className="text-[9px] font-black text-brand-gold uppercase tracking-[0.35em]">Reputação Certificada</span>
                     </div>
                     <h1 className="text-4xl font-bold text-white tracking-tight">Avaliações</h1>
-                    <p className="text-white/30 text-sm mt-1.5">Feedback dos seus passageiros</p>
+                    <p className="text-white/30 text-sm mt-1.5">{total} avaliações de passageiros</p>
                 </div>
-                <div className="flex items-center gap-3 p-4 rounded-2xl bg-[#0C0C11] border border-white/[0.06] self-start">
-                    <div className="w-12 h-12 rounded-2xl bg-brand-gold flex items-center justify-center text-black">
-                        <Award className="w-6 h-6" />
-                    </div>
-                    <div>
-                        <p className="text-[9px] font-black text-white/25 uppercase tracking-widest">Nível</p>
-                        <p className="text-sm font-bold text-white">Diamante · Top 1%</p>
-                    </div>
-                </div>
-            </div>
-
-            {/* Score + metrics */}
-            <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
-                {/* Big score */}
-                <div className="sm:col-span-2 lg:col-span-1 p-6 rounded-3xl bg-[#0C0C11] border border-brand-gold/20 text-center">
-                    <p className="text-6xl font-bold text-brand-gold">4.98</p>
-                    <div className="flex items-center justify-center gap-1 mt-2 mb-1">
-                        {[...Array(5)].map((_, i) => <Star key={i} className="w-3.5 h-3.5 fill-brand-gold text-brand-gold" />)}
-                    </div>
-                    <p className="text-[9px] font-black text-white/25 uppercase tracking-widest">Índice Global</p>
-                </div>
-
-                {[
-                    { label: "Cortesia", value: "100%", icon: ThumbsUp, color: "emerald" },
-                    { label: "Pontualidade", value: "99.8%", icon: Activity, color: "gold" },
-                    { label: "Higienização", value: "100%", icon: CheckCircle2, color: "emerald" },
-                ].map(({ label, value, icon: Icon, color }) => (
-                    <div key={label} className="p-6 rounded-3xl bg-[#0C0C11] border border-white/[0.06] flex flex-col justify-between">
-                        <div className={cn(
-                            "w-10 h-10 rounded-xl flex items-center justify-center mb-4",
-                            color === "emerald" ? "bg-emerald-500/10 text-emerald-400" : "bg-brand-gold/10 text-brand-gold"
-                        )}>
-                            <Icon className="w-5 h-5" />
+                {avg >= 4.5 && (
+                    <div className="flex items-center gap-3 p-4 rounded-2xl bg-[#0C0C11] border border-white/[0.06] self-start">
+                        <div className="w-12 h-12 rounded-2xl bg-brand-gold flex items-center justify-center text-black">
+                            <Award className="w-6 h-6" />
                         </div>
                         <div>
-                            <p className="text-2xl font-bold text-white">{value}</p>
-                            <p className="text-[9px] font-black text-white/25 uppercase tracking-widest mt-1">{label}</p>
+                            <p className="text-[9px] font-black text-white/25 uppercase tracking-widest">Nível</p>
+                            <p className="text-sm font-bold text-white">Diamante · Top 1%</p>
                         </div>
                     </div>
-                ))}
+                )}
             </div>
 
-            {/* Feedback list */}
+            {/* Score + distribution */}
+            <div className="grid sm:grid-cols-2 gap-4">
+                {/* Big score */}
+                <div className="p-8 rounded-3xl bg-[#0C0C11] border border-brand-gold/20 flex items-center gap-8">
+                    <div className="text-center">
+                        <p className="text-7xl font-bold text-brand-gold leading-none">{avg > 0 ? avg.toFixed(1) : "—"}</p>
+                        <div className="flex items-center justify-center gap-0.5 mt-2">
+                            {[1, 2, 3, 4, 5].map(i => (
+                                <Star key={i} className={cn("w-4 h-4", i <= Math.round(avg) ? "fill-brand-gold text-brand-gold" : "text-white/10")} />
+                            ))}
+                        </div>
+                        <p className="text-[9px] font-black text-white/25 uppercase tracking-widest mt-2">{total} avaliações</p>
+                    </div>
+                    <div className="flex-1 space-y-2">
+                        {dist.map(({ score, count }) => (
+                            <div key={score} className="flex items-center gap-2">
+                                <span className="text-[9px] font-black text-white/30 w-3">{score}</span>
+                                <Star className="w-3 h-3 text-brand-gold/40 flex-shrink-0" />
+                                <div className="flex-1 h-1.5 rounded-full bg-white/5 overflow-hidden">
+                                    <div
+                                        className="h-full bg-brand-gold/60 rounded-full transition-all duration-700"
+                                        style={{ width: total > 0 ? `${(count / total) * 100}%` : '0%' }}
+                                    />
+                                </div>
+                                <span className="text-[9px] font-black text-white/20 w-4 text-right">{count}</span>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+
+                {/* Metrics */}
+                <div className="grid grid-cols-2 gap-4">
+                    {[
+                        { label: "Média Geral", value: avg > 0 ? `${avg.toFixed(1)} ★` : "—", color: "gold" },
+                        { label: "Total", value: String(total), color: "white" },
+                        { label: "5 Estrelas", value: String(dist.find(d => d.score === 5)?.count || 0), color: "emerald" },
+                        { label: "Abaixo de 4", value: String(dist.filter(d => d.score < 4).reduce((s, d) => s + d.count, 0)), color: "white" },
+                    ].map(({ label, value, color }) => (
+                        <div key={label} className="p-5 rounded-2xl bg-[#0C0C11] border border-white/[0.06] flex flex-col justify-between">
+                            <p className="text-[9px] font-black text-white/25 uppercase tracking-widest">{label}</p>
+                            <p className={cn("text-2xl font-bold mt-2",
+                                color === "gold" ? "text-brand-gold" :
+                                color === "emerald" ? "text-emerald-400" : "text-white"
+                            )}>{value}</p>
+                        </div>
+                    ))}
+                </div>
+            </div>
+
+            {/* Ratings list */}
             <div className="space-y-4">
-                <h2 className="text-sm font-black text-white/40 uppercase tracking-widest">Feedback Recente</h2>
-                {FEEDBACK.map((f, idx) => (
-                    <motion.div key={f.id}
-                        initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: idx * 0.07 }}
+                <h2 className="text-sm font-black text-white/40 uppercase tracking-widest">Feedback dos Passageiros</h2>
+
+                {ratings.length === 0 ? (
+                    <div className="py-20 text-center rounded-3xl bg-white/[0.01] border border-dashed border-white/5">
+                        <Star className="w-10 h-10 text-white/5 mx-auto mb-4" />
+                        <p className="text-white/25 font-bold">Sem avaliações ainda</p>
+                        <p className="text-[9px] text-white/10 uppercase tracking-widest font-black mt-2">As avaliações aparecem após viagens concluídas</p>
+                    </div>
+                ) : ratings.map((r, idx) => (
+                    <motion.div key={r.id}
+                        initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: idx * 0.06 }}
                         className="p-6 rounded-3xl bg-[#0C0C11] border border-white/[0.06] hover:border-white/10 transition-all group">
                         <div className="flex flex-col sm:flex-row gap-5">
-                            <div className="sm:w-48 flex-shrink-0">
+                            <div className="sm:w-44 flex-shrink-0">
                                 <div className="flex items-center gap-3 mb-2">
-                                    <div className="w-10 h-10 rounded-xl bg-white/5 flex items-center justify-center text-white/30 font-bold group-hover:bg-brand-gold group-hover:text-black transition-all">
-                                        {f.name[0]}
+                                    <div className="w-10 h-10 rounded-xl bg-white/5 flex items-center justify-center text-white/40 font-bold group-hover:bg-brand-gold group-hover:text-black transition-all">
+                                        {r.booking.passenger.name[0].toUpperCase()}
                                     </div>
                                     <div>
-                                        <p className="text-sm font-bold text-white">{f.name}</p>
-                                        <p className="text-[9px] font-black text-white/20 uppercase tracking-widest">{f.date}</p>
+                                        <p className="text-sm font-bold text-white">{r.booking.passenger.name}</p>
+                                        <p className="text-[9px] font-black text-white/20 uppercase tracking-widest">
+                                            {formatDistanceToNow(new Date(r.createdAt), { addSuffix: true, locale: ptBR })}
+                                        </p>
                                     </div>
                                 </div>
                                 <div className="flex items-center gap-0.5">
-                                    {[...Array(f.rating)].map((_, i) => <Star key={i} className="w-3 h-3 fill-brand-gold text-brand-gold" />)}
-                                    {[...Array(5 - f.rating)].map((_, i) => <Star key={i} className="w-3 h-3 text-white/10" />)}
+                                    {[1, 2, 3, 4, 5].map(i => (
+                                        <Star key={i} className={cn("w-3 h-3", i <= r.score ? "fill-brand-gold text-brand-gold" : "text-white/10")} />
+                                    ))}
                                 </div>
+                                <p className="text-[9px] text-white/20 mt-2 truncate">{r.booking.from.split(',')[0]} → {r.booking.to.split(',')[0]}</p>
                             </div>
                             <div className="flex-1 flex items-start gap-3">
                                 <MessageSquare className="w-4 h-4 text-white/10 flex-shrink-0 mt-0.5" />
-                                <p className="text-sm text-white/50 leading-relaxed">"{f.comment}"</p>
+                                {r.comment ? (
+                                    <p className="text-sm text-white/50 leading-relaxed">"{r.comment}"</p>
+                                ) : (
+                                    <p className="text-sm text-white/20">Sem comentário</p>
+                                )}
                             </div>
                         </div>
                     </motion.div>
