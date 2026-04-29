@@ -166,8 +166,8 @@ export default function MotoristaDashboard() {
         <div className="flex items-center gap-3 self-start">
           {/* Notification bell */}
           <button
-            onClick={() => setShowNotifications(true)}
-            className="relative w-12 h-12 rounded-2xl bg-white/5 border border-white/8 flex items-center justify-center text-white/40 hover:text-white hover:bg-white/8 transition-all"
+            onClick={() => setShowNotifications(v => !v)}
+            className="relative w-12 h-12 rounded-2xl bg-white/5 border border-white/[0.08] flex items-center justify-center text-white/50 hover:text-white hover:bg-white/10 transition-all"
           >
             {pendingRides.length > 0 ? (
               <BellRing className="w-5 h-5 text-brand-gold animate-pulse" />
@@ -175,7 +175,7 @@ export default function MotoristaDashboard() {
               <Bell className="w-5 h-5" />
             )}
             {pendingRides.length > 0 && (
-              <span className="absolute -top-1 -right-1 w-5 h-5 bg-brand-gold text-black text-[9px] font-black rounded-full flex items-center justify-center">
+              <span className="absolute -top-1.5 -right-1.5 w-5 h-5 bg-brand-gold text-black text-[9px] font-black rounded-full flex items-center justify-center">
                 {pendingRides.length}
               </span>
             )}
@@ -504,20 +504,20 @@ export default function MotoristaDashboard() {
       {/* ── Notifications Panel ────────────────────────────────── */}
       <AnimatePresence>
         {showNotifications && (
-          <div className="fixed inset-0 z-[90] flex items-end sm:items-center justify-end pointer-events-none">
+          <div className="fixed inset-0 z-[200] flex items-stretch sm:items-center justify-end">
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               onClick={() => setShowNotifications(false)}
-              className="absolute inset-0 bg-black/60 backdrop-blur-sm pointer-events-auto"
+              className="absolute inset-0 bg-black/70 backdrop-blur-sm"
             />
             <motion.div
-              initial={{ opacity: 0, x: 60 }}
+              initial={{ opacity: 0, x: "100%" }}
               animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: 60 }}
-              transition={{ type: "spring", damping: 25, stiffness: 300 }}
-              className="relative z-10 w-full sm:w-[420px] h-full sm:h-auto sm:max-h-[85vh] bg-[#0A0A0F] border-l sm:border border-white/10 sm:rounded-3xl sm:m-4 flex flex-col overflow-hidden pointer-events-auto"
+              exit={{ opacity: 0, x: "100%" }}
+              transition={{ type: "spring", damping: 28, stiffness: 300 }}
+              className="relative z-10 w-full sm:w-[400px] h-full bg-[#0A0A0F] border-l border-white/10 flex flex-col overflow-hidden"
             >
               {/* Header */}
               <div className="flex items-center justify-between p-6 border-b border-white/5">
@@ -632,6 +632,18 @@ export default function MotoristaDashboard() {
         />
       )}
 
+      {/* ── Floating chat button (sem viagem ativa) ────────────── */}
+      {!activeTrip && !activeChatId && (
+        <div className="fixed bottom-8 right-8 z-[150]">
+          <button
+            onClick={() => toast.info("Sem viagem ativa", { description: "O chat fica disponível quando tiveres uma viagem em curso." })}
+            className="w-14 h-14 rounded-2xl bg-[#0C0C11] border border-white/10 flex items-center justify-center text-white/30 hover:border-brand-gold/30 hover:text-brand-gold transition-all shadow-xl"
+            title="Chat com passageiro"
+          >
+            <MessageSquare className="w-6 h-6" />
+          </button>
+        </div>
+      )}
       {/* ── PIN Modal ──────────────────────────────────────────── */}
       <AnimatePresence>
         {showPinModal && (

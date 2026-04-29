@@ -44,7 +44,7 @@ export function BookingChat({ bookingId, isOpen, onClose, title = "Central de Co
 
     return (
         <AnimatePresence>
-            <div className="fixed inset-0 z-[100] flex items-end justify-end pointer-events-none p-0 md:p-8">
+            <div className="fixed inset-0 z-[300] flex items-end justify-end pointer-events-none p-0 md:p-8">
                 {/* Backdrop overlay (mobile only) */}
                 <motion.div 
                     initial={{ opacity: 0 }}
