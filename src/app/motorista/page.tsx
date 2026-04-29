@@ -7,7 +7,8 @@ import {
   Loader2, ShieldCheck, Zap, Target,
   Clock, Navigation, TrendingUp, Wallet,
   MapPin, ArrowRight, Users, BarChart3,
-  CircleDot, CheckCheck, Route, Timer
+  CircleDot, CheckCheck, Route, MessageSquare,
+  Bell, X, BellRing
 } from "lucide-react";
 import { useBookings } from "@/hooks/useBookings";
 import { useFinances } from "@/hooks/useFinances";
@@ -17,12 +18,16 @@ import { toast } from "sonner";
 import { cn } from "@/lib/utils";
 import { motion, AnimatePresence } from "framer-motion";
 import { EarningsChart } from "@/components/driver/EarningsChart";
+import { BookingChat } from "@/components/chat/BookingChat";
 
 export default function MotoristaDashboard() {
   const { loading: bookingsLoading, updateStatus, acceptBooking, marketplace, live } = useBookings();
   const { driverStats, loading: financesLoading } = useFinances();
   const [status, setStatus] = useState<"available" | "offline">("available");
   const [statusLoading, setStatusLoading] = useState(false);
+  const [activeChatId, setActiveChatId] = useState<string | null>(null);
+  const [showNotifications, setShowNotifications] = useState(false);
+  const [pendingRides, setPendingRides] = useState<any[]>([]);
 
   const toggleStatus = async () => {
     const next = status === "available" ? "offline" : "available";
@@ -43,6 +48,7 @@ export default function MotoristaDashboard() {
       setStatusLoading(false);
     }
   };
+
   const [pin, setPin] = useState("");
   const [showPinModal, setShowPinModal] = useState(false);
   const [updating, setUpdating] = useState(false);
@@ -53,9 +59,21 @@ export default function MotoristaDashboard() {
   useEffect(() => {
     if (!socket) return;
     socket.on("new_ride_available", (data: any) => {
-      toast.info("Nova Corrida Disponível", {
+      // Adicionar à lista de notificações pendentes
+      setPendingRides(prev => {
+        const exists = prev.find(r => r.id === data.id);
+        if (exists) return prev;
+        return [data, ...prev].slice(0, 10); // max 10
+      });
+      setShowNotifications(true);
+      // Toast de alerta sonoro visual
+      toast.info("🚗 Nova corrida disponível!", {
         description: `${data.from?.split(',')[0]} → ${data.to?.split(',')[0]} · €${data.price}`,
-        duration: 10000,
+        duration: 8000,
+        action: {
+          label: "Ver",
+          onClick: () => setShowNotifications(true),
+        },
       });
     });
     return () => { socket.off("new_ride_available"); };
@@ -145,22 +163,41 @@ export default function MotoristaDashboard() {
           </h1>
           <p className="text-white/30 text-sm mt-2 font-medium">Quarta-feira, 29 de Abril · Lisboa</p>
         </div>
-        <button
-          onClick={toggleStatus}
-          disabled={statusLoading}
-          className={cn(
-            "flex items-center gap-3 px-6 py-3.5 rounded-2xl text-[11px] font-black uppercase tracking-widest border transition-all self-start disabled:opacity-60",
-            status === "available"
-              ? "bg-emerald-500/10 border-emerald-500/25 text-emerald-400 hover:bg-emerald-500/20"
-              : "bg-white/5 border-white/10 text-white/30 hover:bg-white/10"
-          )}
-        >
-          {statusLoading
-            ? <Loader2 className="w-3.5 h-3.5 animate-spin" />
-            : <span className={cn("w-2 h-2 rounded-full", status === "available" ? "bg-emerald-500 animate-pulse" : "bg-white/20")} />
-          }
-          {status === "available" ? "Disponível" : "Offline"}
-        </button>
+        <div className="flex items-center gap-3 self-start">
+          {/* Notification bell */}
+          <button
+            onClick={() => setShowNotifications(true)}
+            className="relative w-12 h-12 rounded-2xl bg-white/5 border border-white/8 flex items-center justify-center text-white/40 hover:text-white hover:bg-white/8 transition-all"
+          >
+            {pendingRides.length > 0 ? (
+              <BellRing className="w-5 h-5 text-brand-gold animate-pulse" />
+            ) : (
+              <Bell className="w-5 h-5" />
+            )}
+            {pendingRides.length > 0 && (
+              <span className="absolute -top-1 -right-1 w-5 h-5 bg-brand-gold text-black text-[9px] font-black rounded-full flex items-center justify-center">
+                {pendingRides.length}
+              </span>
+            )}
+          </button>
+
+          <button
+            onClick={toggleStatus}
+            disabled={statusLoading}
+            className={cn(
+              "flex items-center gap-3 px-6 py-3.5 rounded-2xl text-[11px] font-black uppercase tracking-widest border transition-all disabled:opacity-60",
+              status === "available"
+                ? "bg-emerald-500/10 border-emerald-500/25 text-emerald-400 hover:bg-emerald-500/20"
+                : "bg-white/5 border-white/10 text-white/30 hover:bg-white/10"
+            )}
+          >
+            {statusLoading
+              ? <Loader2 className="w-3.5 h-3.5 animate-spin" />
+              : <span className={cn("w-2 h-2 rounded-full", status === "available" ? "bg-emerald-500 animate-pulse" : "bg-white/20")} />
+            }
+            {status === "available" ? "Disponível" : "Offline"}
+          </button>
+        </div>
       </div>
 
       {/* ── Stats Row ──────────────────────────────────────────── */}
@@ -286,6 +323,13 @@ export default function MotoristaDashboard() {
                   {updating ? <Loader2 className="w-5 h-5 animate-spin" /> : (
                     <><CheckCircle className="w-4 h-4" />{nextActionLabel}</>
                   )}
+                </button>
+                <button
+                  onClick={() => setActiveChatId(activeTrip.id)}
+                  className="w-14 h-14 rounded-2xl bg-brand-gold/10 border border-brand-gold/20 flex items-center justify-center text-brand-gold hover:bg-brand-gold hover:text-black transition-all"
+                  title="Chat com passageiro"
+                >
+                  <MessageSquare className="w-5 h-5" />
                 </button>
                 <a
                   href={`tel:${activeTrip.passenger?.phone || ''}`}
@@ -456,6 +500,137 @@ export default function MotoristaDashboard() {
 
         </div>
       </div>
+
+      {/* ── Notifications Panel ────────────────────────────────── */}
+      <AnimatePresence>
+        {showNotifications && (
+          <div className="fixed inset-0 z-[90] flex items-end sm:items-center justify-end pointer-events-none">
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={() => setShowNotifications(false)}
+              className="absolute inset-0 bg-black/60 backdrop-blur-sm pointer-events-auto"
+            />
+            <motion.div
+              initial={{ opacity: 0, x: 60 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: 60 }}
+              transition={{ type: "spring", damping: 25, stiffness: 300 }}
+              className="relative z-10 w-full sm:w-[420px] h-full sm:h-auto sm:max-h-[85vh] bg-[#0A0A0F] border-l sm:border border-white/10 sm:rounded-3xl sm:m-4 flex flex-col overflow-hidden pointer-events-auto"
+            >
+              {/* Header */}
+              <div className="flex items-center justify-between p-6 border-b border-white/5">
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 rounded-2xl bg-brand-gold/10 border border-brand-gold/20 flex items-center justify-center text-brand-gold">
+                    <BellRing className="w-5 h-5" />
+                  </div>
+                  <div>
+                    <h3 className="text-sm font-bold text-white">Corridas Disponíveis</h3>
+                    <p className="text-[9px] font-black text-white/25 uppercase tracking-widest">{marketplace.length + pendingRides.length} no total</p>
+                  </div>
+                </div>
+                <button onClick={() => setShowNotifications(false)}
+                  className="w-9 h-9 rounded-xl bg-white/5 flex items-center justify-center text-white/30 hover:text-white transition-all">
+                  <X className="w-4 h-4" />
+                </button>
+              </div>
+
+              {/* Rides list */}
+              <div className="flex-1 overflow-y-auto p-4 space-y-3">
+                {/* Pending from socket (real-time) */}
+                {pendingRides.map((ride, i) => (
+                  <motion.div key={ride.id || i}
+                    initial={{ opacity: 0, y: -8 }} animate={{ opacity: 1, y: 0 }}
+                    className="p-4 rounded-2xl border border-brand-gold/25 bg-brand-gold/5 relative">
+                    <div className="absolute top-3 right-3">
+                      <span className="text-[8px] font-black text-brand-gold uppercase tracking-widest px-2 py-0.5 bg-brand-gold/10 rounded-full">Novo</span>
+                    </div>
+                    <div className="flex items-start gap-3 mb-3">
+                      <div className="w-9 h-9 rounded-xl bg-brand-gold/10 flex items-center justify-center text-brand-gold flex-shrink-0">
+                        <Car className="w-4 h-4" />
+                      </div>
+                      <div className="flex-1 min-w-0 pr-12">
+                        <p className="text-sm font-bold text-white truncate">{ride.from?.split(',')[0]}</p>
+                        <div className="flex items-center gap-1.5 mt-0.5">
+                          <ArrowRight className="w-3 h-3 text-white/20" />
+                          <p className="text-sm text-white/50 truncate">{ride.to?.split(',')[0]}</p>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="flex items-center justify-between">
+                      <p className="text-xl font-bold text-brand-gold">€{ride.price}</p>
+                      <button
+                        onClick={async () => {
+                          if (ride.id) {
+                            setAcceptingId(ride.id);
+                            try {
+                              await acceptBooking(ride.id);
+                              toast.success("Corrida aceite!");
+                              setPendingRides(prev => prev.filter(r => r.id !== ride.id));
+                            } catch { toast.error("Erro ao aceitar."); }
+                            finally { setAcceptingId(null); }
+                          }
+                        }}
+                        disabled={acceptingId === ride.id}
+                        className="px-5 py-2 bg-brand-gold text-black text-[10px] font-black uppercase tracking-widest rounded-xl hover:bg-white transition-all disabled:opacity-50"
+                      >
+                        {acceptingId === ride.id ? <Loader2 className="w-4 h-4 animate-spin" /> : "Aceitar"}
+                      </button>
+                    </div>
+                  </motion.div>
+                ))}
+
+                {/* Marketplace rides */}
+                {marketplace.map((m, i) => (
+                  <div key={m.id} className="p-4 rounded-2xl bg-white/[0.03] border border-white/[0.06]">
+                    <div className="flex items-start gap-3 mb-3">
+                      <div className="w-9 h-9 rounded-xl bg-white/5 flex items-center justify-center text-white/30 flex-shrink-0">
+                        <Car className="w-4 h-4" />
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <p className="text-sm font-bold text-white truncate">{m.origin.split(',')[0]}</p>
+                        <div className="flex items-center gap-1.5 mt-0.5">
+                          <ArrowRight className="w-3 h-3 text-white/20" />
+                          <p className="text-sm text-white/50 truncate">{m.destination.split(',')[0]}</p>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="flex items-center justify-between">
+                      <p className="text-xl font-bold text-white">{formatCurrency(m.driverAmount || 0)}</p>
+                      <button
+                        onClick={() => handleAccept(m.id)}
+                        disabled={acceptingId === m.id}
+                        className="px-5 py-2 bg-white/8 border border-white/10 text-white/60 text-[10px] font-black uppercase tracking-widest rounded-xl hover:bg-brand-gold hover:text-black hover:border-brand-gold transition-all disabled:opacity-50"
+                      >
+                        {acceptingId === m.id ? <Loader2 className="w-4 h-4 animate-spin" /> : "Aceitar"}
+                      </button>
+                    </div>
+                  </div>
+                ))}
+
+                {marketplace.length === 0 && pendingRides.length === 0 && (
+                  <div className="py-16 text-center">
+                    <Bell className="w-10 h-10 text-white/5 mx-auto mb-4" />
+                    <p className="text-white/25 font-bold text-sm">Sem corridas disponíveis</p>
+                    <p className="text-[9px] text-white/10 uppercase tracking-widest font-black mt-2">As notificações aparecem aqui em tempo real</p>
+                  </div>
+                )}
+              </div>
+            </motion.div>
+          </div>
+        )}
+      </AnimatePresence>
+
+      {/* ── Chat ───────────────────────────────────────────────── */}
+      {activeChatId && (
+        <BookingChat
+          bookingId={activeChatId}
+          isOpen={!!activeChatId}
+          onClose={() => setActiveChatId(null)}
+          title="Chat com Passageiro"
+        />
+      )}
 
       {/* ── PIN Modal ──────────────────────────────────────────── */}
       <AnimatePresence>
