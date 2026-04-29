@@ -41,8 +41,8 @@ export const metadata: Metadata = {
   authors: [{ name: "NEXRICE ELITE" }],
   metadataBase: new URL("https://nexrice.com"),
   icons: {
-    icon: "/logo-premium.png",
-    apple: "/logo-premium.png",
+    icon: "/logo-mark2.svg",
+    apple: "/logo-mark2.svg",
   },
   alternates: {
     canonical: "/",
@@ -55,7 +55,7 @@ export const metadata: Metadata = {
     siteName: "NEXRICE ELITE",
     images: [
       {
-        url: "/logo-premium.png",
+        url: "/preview.png",
         width: 1200,
         height: 1200,
         alt: "NexRice Elite — Luxury Chauffeur Service Portugal",
@@ -68,7 +68,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "NEXRICE — Premium Chauffeur Service",
     description: "Your journey starts with elite precision. Premium transfers in Lisbon & across Portugal.",
-    images: ["/logo-premium.png"],
+    images: ["/preview.png"],
   },
   robots: { index: true, follow: true },
 };
