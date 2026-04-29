@@ -12,6 +12,7 @@ import {
 import { useBookings } from "@/hooks/useBookings";
 import { useFinances } from "@/hooks/useFinances";
 import { useSocket } from "@/hooks/useSocket";
+import { useAuthStore } from "@/lib/auth-store";
 import { toast } from "sonner";
 import { cn } from "@/lib/utils";
 import { motion, AnimatePresence } from "framer-motion";
@@ -21,6 +22,27 @@ export default function MotoristaDashboard() {
   const { loading: bookingsLoading, updateStatus, acceptBooking, marketplace, live } = useBookings();
   const { driverStats, loading: financesLoading } = useFinances();
   const [status, setStatus] = useState<"available" | "offline">("available");
+  const [statusLoading, setStatusLoading] = useState(false);
+
+  const toggleStatus = async () => {
+    const next = status === "available" ? "offline" : "available";
+    setStatusLoading(true);
+    try {
+      const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3002";
+      const { token } = useAuthStore.getState();
+      await fetch(`${API_URL}/driver/status`, {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
+        body: JSON.stringify({ status: next === "available" ? "ONLINE" : "OFFLINE" }),
+      });
+      setStatus(next);
+      toast.success(next === "available" ? "Estás disponível para corridas" : "Ficaste offline");
+    } catch {
+      toast.error("Erro ao atualizar estado.");
+    } finally {
+      setStatusLoading(false);
+    }
+  };
   const [pin, setPin] = useState("");
   const [showPinModal, setShowPinModal] = useState(false);
   const [updating, setUpdating] = useState(false);
@@ -124,15 +146,19 @@ export default function MotoristaDashboard() {
           <p className="text-white/30 text-sm mt-2 font-medium">Quarta-feira, 29 de Abril · Lisboa</p>
         </div>
         <button
-          onClick={() => setStatus(s => s === "available" ? "offline" : "available")}
+          onClick={toggleStatus}
+          disabled={statusLoading}
           className={cn(
-            "flex items-center gap-3 px-6 py-3.5 rounded-2xl text-[11px] font-black uppercase tracking-widest border transition-all self-start",
+            "flex items-center gap-3 px-6 py-3.5 rounded-2xl text-[11px] font-black uppercase tracking-widest border transition-all self-start disabled:opacity-60",
             status === "available"
               ? "bg-emerald-500/10 border-emerald-500/25 text-emerald-400 hover:bg-emerald-500/20"
               : "bg-white/5 border-white/10 text-white/30 hover:bg-white/10"
           )}
         >
-          <span className={cn("w-2 h-2 rounded-full", status === "available" ? "bg-emerald-500 animate-pulse" : "bg-white/20")} />
+          {statusLoading
+            ? <Loader2 className="w-3.5 h-3.5 animate-spin" />
+            : <span className={cn("w-2 h-2 rounded-full", status === "available" ? "bg-emerald-500 animate-pulse" : "bg-white/20")} />
+          }
           {status === "available" ? "Disponível" : "Offline"}
         </button>
       </div>
