@@ -99,14 +99,14 @@ export default function MotoristaLayout({ children }: { children: React.ReactNod
                   "flex items-center gap-4 px-4 py-3.5 rounded-2xl text-[11px] font-black uppercase tracking-[0.15em] transition-all duration-200 relative group",
                   active
                     ? "bg-brand-gold text-black shadow-[0_8px_24px_-8px_rgba(212,175,55,0.5)]"
-                    : "text-white/30 hover:text-white hover:bg-white/[0.05]"
+                    : "text-white/60 hover:text-white hover:bg-white/[0.06]"
                 )}
               >
                 <div className={cn(
                   "w-8 h-8 rounded-xl flex items-center justify-center flex-shrink-0 transition-all duration-200",
                   active
                     ? "bg-black/10 text-black"
-                    : "bg-white/5 text-white/20 group-hover:bg-brand-gold/10 group-hover:text-brand-gold"
+                    : "bg-white/5 text-white/40 group-hover:bg-brand-gold/10 group-hover:text-brand-gold"
                 )}>
                   <Icon className="w-4 h-4" />
                 </div>
