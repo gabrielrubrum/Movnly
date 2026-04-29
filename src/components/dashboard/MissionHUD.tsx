@@ -1,12 +1,13 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { 
   Car, MapPin, Navigation, Clock, ShieldCheck, 
-  Activity, ArrowRight, User, Phone, Zap 
+  Activity, ArrowRight, User, Phone, Zap, MessageSquare
 } from "lucide-react";
 import { cn, formatCurrency } from "@/lib/utils";
+import { BookingChat } from "@/components/chat/BookingChat";
 
 interface MissionHUDProps {
   booking: {
@@ -34,6 +35,7 @@ const STATUS_CONFIG: Record<string, { label: string; sub: string; icon: any; col
 
 export function MissionHUD({ booking }: MissionHUDProps) {
   const config = STATUS_CONFIG[booking.status] || STATUS_CONFIG.PENDING;
+  const [showChat, setShowChat] = useState(false);
 
   return (
     <motion.div
@@ -144,8 +146,12 @@ export function MissionHUD({ booking }: MissionHUDProps) {
                   >
                     <Phone className="w-4 h-4" /> Contactar
                   </a>
-                  <button className="w-14 h-14 rounded-2xl bg-white/5 border border-white/10 text-white/40 flex items-center justify-center hover:text-white transition-all">
-                    <Activity className="w-5 h-5" />
+                  <button
+                    onClick={() => setShowChat(true)}
+                    className="w-14 h-14 rounded-2xl bg-brand-gold/10 border border-brand-gold/20 text-brand-gold flex items-center justify-center hover:bg-brand-gold hover:text-black transition-all"
+                    title="Chat com motorista"
+                  >
+                    <MessageSquare className="w-5 h-5" />
                   </button>
                 </div>
               </motion.div>
@@ -153,6 +159,15 @@ export function MissionHUD({ booking }: MissionHUDProps) {
            </AnimatePresence>
         </div>
       </div>
+
+      {showChat && (
+        <BookingChat
+          bookingId={booking.id}
+          isOpen={showChat}
+          onClose={() => setShowChat(false)}
+          title="Chat com o Motorista"
+        />
+      )}
     </motion.div>
   );
 }

@@ -26,7 +26,17 @@ export default function DashboardPage() {
 
   useEffect(() => {
     if (!socket) return;
-    socket.on("booking_update", () => { refresh(); toast.info("Reserva atualizada"); });
+    socket.on("booking_update", (data: any) => {
+      refresh();
+      if (data.status === 'DRIVER_ACCEPTED') {
+        toast.success("Motorista a caminho!", {
+          description: `${data.driverName} aceitou a sua corrida.`,
+          duration: 8000,
+        });
+      } else {
+        toast.info("Reserva atualizada");
+      }
+    });
     socket.on("payment_update", () => { refresh(); toast.success("Pagamento confirmado"); });
     return () => { socket.off("booking_update"); socket.off("payment_update"); };
   }, [socket, refresh]);
