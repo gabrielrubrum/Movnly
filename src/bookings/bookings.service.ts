@@ -319,6 +319,13 @@ export class BookingsService {
         // Notify Passenger (Driver already knows they accepted)
         await this.mailService.sendAssignmentEmail(booking.passenger.email, 'PASSENGER', details);
 
+        // Real-time: notifica o passageiro que o motorista aceitou
+        this.eventsGateway.emitBookingUpdate(bookingId, 'DRIVER_ACCEPTED', {
+            driverId,
+            driverName: driver.name,
+            bookingId,
+        });
+
         // Security: Audit the driver acceptance
         await this.prisma.auditLog.create({
             data: {

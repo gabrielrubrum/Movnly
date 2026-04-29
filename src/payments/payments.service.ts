@@ -28,7 +28,7 @@ export class PaymentsService {
         }
     }
 
-    async createPaymentIntent(data: any) {
+    async createPaymentIntent(data: any, fraudSignals?: any) {
         this.logger.debug(`Create Intent Data: ${JSON.stringify(data)}`);
         const { bookingId, email: rawEmail, name: rawName, from, to, date, time, amount, category } = data;
 
@@ -96,6 +96,11 @@ export class PaymentsService {
 
         if (!this.stripe) {
             this.logger.warn(`MOCK FALLBACK for booking ${booking.id}`);
+            // Em dev, emitir notificação imediatamente (simula webhook)
+            setTimeout(() => {
+                this.eventsGateway.emitNewRideAvailable(booking);
+                this.eventsGateway.emitPaymentStatus(booking.id, 'PAID');
+            }, 2000);
             return {
                 clientSecret: 'pi_mock_secret_' + Math.random().toString(36).substring(7),
                 paymentIntentId: 'pi_mock_' + booking.id,
@@ -116,6 +121,13 @@ export class PaymentsService {
                 driverAmount: driverAmountInCents.toString(),
                 passengerName: (booking.passenger as any).name,
                 surgeReasons: finances.appliedSurges.join(', '),
+                // Stripe Radar — fraud signals
+                client_ip: fraudSignals?.ip || 'unknown',
+                user_agent: (fraudSignals?.userAgent || '').substring(0, 200),
+                browser_fingerprint: fraudSignals?.fingerprint || 'none',
+                risk_score: String(fraudSignals?.riskScore || 0),
+                risk_signals: (fraudSignals?.riskSignals || []).join(', '),
+                client_country: fraudSignals?.country || 'unknown',
             },
         });
 
