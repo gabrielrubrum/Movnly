@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Star, MessageSquare, ShieldCheck, Award, Loader2, Search, X } from "lucide-react";
+import { Star, MessageSquare, Award, Loader2, Search, X } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useRatings } from "@/hooks/useRatings";
 import { formatDistanceToNow } from "date-fns";
@@ -42,10 +42,6 @@ export default function AvaliacoesPage() {
             {/* Header */}
             <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-6">
                 <div>
-                    <div className="flex items-center gap-2 mb-3">
-                        <ShieldCheck className="w-3.5 h-3.5 text-brand-gold" />
-                        <span className="text-[9px] font-black text-brand-gold uppercase tracking-[0.35em]">Reputação Certificada</span>
-                    </div>
                     <h1 className="text-4xl font-bold text-white tracking-tight">Avaliações</h1>
                     <p className="text-white/30 text-sm mt-1.5">{total} avaliações de passageiros</p>
                 </div>

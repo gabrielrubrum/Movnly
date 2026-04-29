@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion";
 import { useState, useMemo } from "react";
-import { Clock, Search, MapPin, Star, Download, ArrowRight, ShieldCheck } from "lucide-react";
+import { Clock, Search, Star, Download, ArrowRight } from "lucide-react";
 import { useBookings } from "@/hooks/useBookings";
 import { formatCurrency } from "@/lib/utils";
 
@@ -57,10 +57,6 @@ export default function HistoricoPage() {
             {/* Header */}
             <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-6">
                 <div>
-                    <div className="flex items-center gap-2 mb-3">
-                        <ShieldCheck className="w-3.5 h-3.5 text-brand-gold" />
-                        <span className="text-[9px] font-black text-brand-gold uppercase tracking-[0.35em]">Arquivo Operacional</span>
-                    </div>
                     <h1 className="text-4xl font-bold text-white tracking-tight">Histórico</h1>
                     <p className="text-white/30 text-sm mt-1.5">Registo de todas as viagens concluídas</p>
                 </div>

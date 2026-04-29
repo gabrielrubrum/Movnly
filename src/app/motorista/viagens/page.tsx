@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Calendar, Navigation, Search, ShieldCheck, ArrowRight, MessageSquare, X } from "lucide-react";
+import { Calendar, Navigation, Search, ArrowRight, MessageSquare, X } from "lucide-react";
 import { useBookings } from "@/hooks/useBookings";
 import { cn } from "@/lib/utils";
 import { BookingChat } from "@/components/chat/BookingChat";
@@ -48,10 +48,6 @@ export default function ViagensPage() {
     return (
         <div className="space-y-8">
             <div>
-                <div className="flex items-center gap-2 mb-3">
-                    <ShieldCheck className="w-3.5 h-3.5 text-brand-gold" />
-                    <span className="text-[9px] font-black text-brand-gold uppercase tracking-[0.35em]">Operações em Tempo Real</span>
-                </div>
                 <h1 className="text-4xl font-bold text-white tracking-tight">Minhas Viagens</h1>
                 <p className="text-white/30 text-sm mt-1.5">{allMissions.length} viagem(ns) encontrada(s)</p>
             </div>

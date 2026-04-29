@@ -44,10 +44,6 @@ export default function GanhosPage() {
             {/* Header */}
             <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-6">
                 <div>
-                    <div className="flex items-center gap-2 mb-3">
-                        <ShieldCheck className="w-3.5 h-3.5 text-brand-gold" />
-                        <span className="text-[9px] font-black text-brand-gold uppercase tracking-[0.35em]">Extrato Financeiro</span>
-                    </div>
                     <h1 className="text-4xl font-bold text-white tracking-tight">Rendimentos</h1>
                     <p className="text-white/30 text-sm mt-1.5">Acompanhamento detalhado dos seus ganhos</p>
                 </div>
