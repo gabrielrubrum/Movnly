@@ -5,7 +5,6 @@ generator client {
 
 datasource db {
   provider = "sqlite"
-  url      = env("DATABASE_URL")
 }
 
 model User {
@@ -86,6 +85,7 @@ model Booking {
   transactions    Transaction[]
   auditLogs       AuditLog[]
   chatMessages    ChatMessage[]
+  rating          Rating?
 }
 
 model Transaction {
@@ -139,3 +139,14 @@ model Tour {
   updatedAt   DateTime @updatedAt
 }
 
+
+model Rating {
+  id          String   @id @default(uuid())
+  bookingId   String   @unique
+  driverId    String
+  passengerId String
+  score       Int      // 1-5
+  comment     String?
+  createdAt   DateTime @default(now())
+  booking     Booking  @relation(fields: [bookingId], references: [id])
+}
