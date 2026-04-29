@@ -4,8 +4,10 @@ import { useState, useEffect } from "react";
 import { formatCurrency } from "@/lib/utils";
 import {
   Phone, CheckCircle, Star, Car, AlertCircle,
-  Loader2, Activity, ShieldCheck, Zap, Target,
-  Clock, MapPin, ChevronRight, Navigation
+  Loader2, ShieldCheck, Zap, Target,
+  Clock, Navigation, TrendingUp, Wallet,
+  MapPin, ArrowRight, Users, BarChart3,
+  CircleDot, CheckCheck, Route, Timer
 } from "lucide-react";
 import { useBookings } from "@/hooks/useBookings";
 import { useFinances } from "@/hooks/useFinances";
@@ -29,7 +31,7 @@ export default function MotoristaDashboard() {
   useEffect(() => {
     if (!socket) return;
     socket.on("new_ride_available", (data: any) => {
-      toast.info("🚗 Nova Corrida Disponível!", {
+      toast.info("Nova Corrida Disponível", {
         description: `${data.from?.split(',')[0]} → ${data.to?.split(',')[0]} · €${data.price}`,
         duration: 10000,
       });
@@ -41,7 +43,7 @@ export default function MotoristaDashboard() {
   const totalEarnings = driverStats?.totalEarnings || 0;
   const availableEarnings = driverStats?.availableBalance || 0;
 
-  const mockChartData = [
+  const chartData = [
     { day: "SEG", amount: 120 }, { day: "TER", amount: 190 },
     { day: "QUA", amount: 150 }, { day: "QUI", amount: 280 },
     { day: "SEX", amount: 210 }, { day: "SAB", amount: 350 }, { day: "DOM", amount: 220 },
@@ -58,7 +60,16 @@ export default function MotoristaDashboard() {
   };
 
   const currentIndex = activeTrip ? getStatusIndex(activeTrip.status) : 0;
-  const tripSteps = ["Confirmado", "A Caminho", "Chegou", "Em Curso", "Concluído"];
+
+  const tripSteps = [
+    { label: "Confirmado", icon: CheckCircle },
+    { label: "A Caminho", icon: Route },
+    { label: "Chegou", icon: MapPin },
+    { label: "Em Curso", icon: CircleDot },
+    { label: "Concluído", icon: CheckCheck },
+  ];
+
+  const nextActionLabel = ["Iniciar Rota", "Confirmar Chegada", "Iniciar Viagem", "Finalizar Viagem", "Concluído"][currentIndex] || "Avançar";
 
   const handleNextStep = async () => {
     if (!activeTrip) return;
@@ -98,241 +109,321 @@ export default function MotoristaDashboard() {
   );
 
   return (
-    <div className="space-y-8 animate-luxury-reveal">
+    <div className="space-y-8">
 
       {/* ── Header ─────────────────────────────────────────────── */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-6">
+      <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-6">
         <div>
           <div className="flex items-center gap-2 mb-3">
             <Target className="w-3.5 h-3.5 text-brand-gold" />
-            <span className="text-[9px] font-black text-brand-gold uppercase tracking-[0.3em]">Painel do Motorista</span>
+            <span className="text-[9px] font-black text-brand-gold uppercase tracking-[0.35em]">Painel do Motorista</span>
           </div>
           <h1 className="text-4xl sm:text-5xl font-bold text-white tracking-tight leading-none">
             Bem-vindo, <span className="text-brand-gold">Ricardo</span>
           </h1>
+          <p className="text-white/30 text-sm mt-2 font-medium">Quarta-feira, 29 de Abril · Lisboa</p>
         </div>
         <button
           onClick={() => setStatus(s => s === "available" ? "offline" : "available")}
           className={cn(
-            "flex items-center gap-3 px-6 py-3 rounded-2xl text-[11px] font-black uppercase tracking-widest border transition-all",
+            "flex items-center gap-3 px-6 py-3.5 rounded-2xl text-[11px] font-black uppercase tracking-widest border transition-all self-start",
             status === "available"
-              ? "bg-emerald-500/10 border-emerald-500/20 text-emerald-400"
-              : "bg-red-500/10 border-red-500/20 text-red-400"
+              ? "bg-emerald-500/10 border-emerald-500/25 text-emerald-400 hover:bg-emerald-500/20"
+              : "bg-white/5 border-white/10 text-white/30 hover:bg-white/10"
           )}
         >
-          <span className={cn("w-2 h-2 rounded-full", status === "available" ? "bg-emerald-500 animate-pulse" : "bg-red-500")} />
+          <span className={cn("w-2 h-2 rounded-full", status === "available" ? "bg-emerald-500 animate-pulse" : "bg-white/20")} />
           {status === "available" ? "Disponível" : "Offline"}
         </button>
       </div>
 
       {/* ── Stats Row ──────────────────────────────────────────── */}
-      <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
         {[
-          { label: "Ganhos Totais", value: formatCurrency(totalEarnings), icon: TrendingUp, color: "gold" },
-          { label: "Disponível", value: formatCurrency(availableEarnings), icon: Zap, color: "emerald" },
-          { label: "Rating", value: "5.0 ★", icon: Star, color: "gold" },
-          { label: "Aceitação", value: "98%", icon: ShieldCheck, color: "white" },
-        ].map(({ label, value, icon: Icon, color }) => (
-          <div key={label} className="p-5 sm:p-6 rounded-3xl bg-[#0C0C11] border border-white/5 hover:border-brand-gold/20 transition-all duration-300 group relative overflow-hidden cursor-default">
-            <div className="absolute inset-0 bg-gradient-to-br from-brand-gold/0 group-hover:from-brand-gold/[0.03] to-transparent transition-all duration-500" />
+          { label: "Ganhos Totais", value: formatCurrency(totalEarnings), icon: TrendingUp, accent: "gold", sub: "acumulado" },
+          { label: "Para Levantar", value: formatCurrency(availableEarnings), icon: Wallet, accent: "emerald", sub: "disponível" },
+          { label: "Avaliação", value: "5.0", icon: Star, accent: "gold", sub: "★ média" },
+          { label: "Aceitação", value: "98%", icon: ShieldCheck, accent: "blue", sub: "taxa" },
+        ].map(({ label, value, icon: Icon, accent, sub }) => (
+          <motion.div
+            key={label}
+            initial={{ opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="p-6 rounded-3xl bg-[#0C0C11] border border-white/[0.06] hover:border-white/10 transition-all duration-300 group relative overflow-hidden"
+          >
             <div className={cn(
-              "w-9 h-9 rounded-xl flex items-center justify-center mb-4 transition-all duration-300 group-hover:scale-110",
-              color === "gold" ? "bg-brand-gold/10 text-brand-gold group-hover:bg-brand-gold/20" :
-              color === "emerald" ? "bg-emerald-500/10 text-emerald-400 group-hover:bg-emerald-500/20" :
-              "bg-white/5 text-white/30 group-hover:bg-white/10 group-hover:text-white/60"
+              "absolute top-0 right-0 w-32 h-32 rounded-full blur-[60px] opacity-0 group-hover:opacity-100 transition-opacity duration-700 -translate-y-1/2 translate-x-1/2",
+              accent === "gold" ? "bg-brand-gold/15" : accent === "emerald" ? "bg-emerald-500/15" : "bg-blue-500/15"
+            )} />
+            <div className={cn(
+              "w-10 h-10 rounded-2xl flex items-center justify-center mb-5 transition-all duration-300",
+              accent === "gold" ? "bg-brand-gold/10 text-brand-gold" :
+              accent === "emerald" ? "bg-emerald-500/10 text-emerald-400" :
+              "bg-blue-500/10 text-blue-400"
             )}>
-              <Icon className="w-4 h-4" />
+              <Icon className="w-5 h-5" />
             </div>
-            <p className="text-xl sm:text-2xl font-light text-white tracking-tight">{value}</p>
-            <p className="text-[9px] font-black text-white/20 uppercase tracking-widest mt-1">{label}</p>
-          </div>
+            <p className="text-2xl font-bold text-white tracking-tight">{value}</p>
+            <p className="text-[9px] font-black text-white/25 uppercase tracking-widest mt-1">{label}</p>
+            <p className="text-[8px] text-white/15 uppercase tracking-widest mt-0.5">{sub}</p>
+          </motion.div>
         ))}
       </div>
 
-      <div className="grid lg:grid-cols-[1fr_380px] gap-8">
+      {/* ── Main Grid ──────────────────────────────────────────── */}
+      <div className="grid lg:grid-cols-[1fr_360px] gap-8">
 
-        {/* ── Missão Ativa / Marketplace ─────────────────────── */}
-        <div className="space-y-8">
+        {/* ── Left Column ────────────────────────────────────── */}
+        <div className="space-y-6">
 
-          {/* Viagem ativa */}
+          {/* Viagem Ativa */}
           {activeTrip ? (
-            <div className="rounded-3xl bg-[#0A0A0F] border border-brand-gold/20 overflow-hidden">
-              {/* Header da viagem */}
-              <div className="p-6 sm:p-8 border-b border-white/5 flex items-center justify-between">
+            <motion.div
+              initial={{ opacity: 0, y: 8 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="rounded-3xl overflow-hidden border border-brand-gold/20"
+              style={{ background: "linear-gradient(135deg, #0D0B06 0%, #0A0A0F 100%)" }}
+            >
+              {/* Top bar */}
+              <div className="px-8 py-5 border-b border-white/5 flex items-center justify-between">
                 <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-2xl bg-brand-gold/10 flex items-center justify-center">
-                    <Activity className="w-5 h-5 text-brand-gold animate-pulse" />
-                  </div>
-                  <div>
-                    <p className="text-[9px] font-black text-brand-gold uppercase tracking-widest">Viagem em Curso</p>
-                    <p className="text-base font-light text-white italic">{activeTrip.reference}</p>
-                  </div>
+                  <div className="w-2 h-2 rounded-full bg-brand-gold animate-pulse" />
+                  <span className="text-[10px] font-black text-brand-gold uppercase tracking-[0.35em]">Viagem em Curso</span>
                 </div>
-                <div className="text-right">
-                  <p className="text-2xl font-light text-brand-gold">{formatCurrency(activeTrip.driverAmount || 0)}</p>
-                  <p className="text-[8px] text-white/20 uppercase tracking-widest">Ganho</p>
-                </div>
+                <span className="text-[10px] font-black text-white/20 uppercase tracking-widest">#{activeTrip.reference}</span>
               </div>
 
-              {/* Rota */}
-              <div className="p-6 sm:p-8 space-y-4 border-b border-white/5">
-                <div className="flex items-start gap-4">
-                  <div className="w-3 h-3 rounded-full border-2 border-brand-gold mt-1 flex-shrink-0" />
-                  <div>
-                    <p className="text-[9px] text-white/30 uppercase tracking-widest font-black mb-1">Recolha</p>
-                    <p className="text-base font-light text-white">{activeTrip.origin}</p>
+              {/* Route */}
+              <div className="px-8 py-6 border-b border-white/5">
+                <div className="flex items-stretch gap-4">
+                  <div className="flex flex-col items-center gap-1 pt-1">
+                    <div className="w-3 h-3 rounded-full border-2 border-brand-gold" />
+                    <div className="w-px flex-1 bg-gradient-to-b from-brand-gold/40 to-white/10 min-h-[32px]" />
+                    <div className="w-3 h-3 rounded-full bg-white" />
                   </div>
-                </div>
-                <div className="ml-1.5 w-px h-6 bg-white/10" />
-                <div className="flex items-start gap-4">
-                  <div className="w-3 h-3 rounded-full bg-white mt-1 flex-shrink-0" />
-                  <div>
-                    <p className="text-[9px] text-white/30 uppercase tracking-widest font-black mb-1">Destino</p>
-                    <p className="text-base font-light text-white">{activeTrip.destination}</p>
-                  </div>
-                </div>
-              </div>
-
-              {/* Progress */}
-              <div className="p-6 sm:p-8 border-b border-white/5">
-                <div className="flex gap-2">
-                  {tripSteps.map((step, i) => (
-                    <div key={step} className="flex-1 flex flex-col items-center gap-2">
-                      <div className={cn(
-                        "w-full h-1 rounded-full transition-all",
-                        i < currentIndex ? "bg-emerald-500" : i === currentIndex ? "bg-brand-gold" : "bg-white/5"
-                      )} />
-                      <span className={cn(
-                        "text-[7px] font-black uppercase tracking-wider text-center hidden sm:block",
-                        i <= currentIndex ? "text-white/60" : "text-white/10"
-                      )}>{step}</span>
+                  <div className="flex-1 space-y-4">
+                    <div>
+                      <p className="text-[9px] font-black text-white/25 uppercase tracking-widest mb-1">Recolha</p>
+                      <p className="text-base font-bold text-white">{activeTrip.origin}</p>
                     </div>
-                  ))}
+                    <div>
+                      <p className="text-[9px] font-black text-white/25 uppercase tracking-widest mb-1">Destino</p>
+                      <p className="text-base font-bold text-white">{activeTrip.destination}</p>
+                    </div>
+                  </div>
+                  <div className="text-right flex flex-col justify-center">
+                    <p className="text-3xl font-bold text-brand-gold">{formatCurrency(activeTrip.driverAmount || 0)}</p>
+                    <p className="text-[9px] font-black text-white/20 uppercase tracking-widest mt-1">Ganho</p>
+                  </div>
                 </div>
               </div>
 
-              {/* Ações */}
-              <div className="p-6 sm:p-8 flex gap-4">
+              {/* Progress steps */}
+              <div className="px-8 py-5 border-b border-white/5">
+                <div className="flex items-center gap-2">
+                  {tripSteps.map((step, i) => {
+                    const StepIcon = step.icon;
+                    const done = i < currentIndex;
+                    const active = i === currentIndex;
+                    return (
+                      <div key={step.label} className="flex items-center gap-2 flex-1">
+                        <div className="flex flex-col items-center gap-1.5 flex-1">
+                          <div className={cn(
+                            "w-8 h-8 rounded-xl flex items-center justify-center transition-all",
+                            done ? "bg-emerald-500/20 text-emerald-400" :
+                            active ? "bg-brand-gold text-black" :
+                            "bg-white/5 text-white/15"
+                          )}>
+                            <StepIcon className="w-3.5 h-3.5" />
+                          </div>
+                          <span className={cn(
+                            "text-[7px] font-black uppercase tracking-wider text-center hidden sm:block",
+                            done ? "text-emerald-400/60" : active ? "text-brand-gold" : "text-white/10"
+                          )}>{step.label}</span>
+                        </div>
+                        {i < tripSteps.length - 1 && (
+                          <div className={cn("h-px flex-1 mb-4 transition-all", done ? "bg-emerald-500/30" : "bg-white/5")} />
+                        )}
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+
+              {/* Actions */}
+              <div className="px-8 py-6 flex gap-3">
                 <button
                   onClick={handleNextStep}
                   disabled={updating || currentIndex >= 4}
-                  className="flex-1 h-14 bg-brand-gold text-black text-[11px] font-black uppercase tracking-widest rounded-2xl hover:bg-white transition-all flex items-center justify-center gap-3 disabled:opacity-50"
+                  className="flex-1 h-14 bg-brand-gold text-black text-[11px] font-black uppercase tracking-widest rounded-2xl hover:bg-white transition-all flex items-center justify-center gap-3 disabled:opacity-40"
                 >
                   {updating ? <Loader2 className="w-5 h-5 animate-spin" /> : (
-                    <>
-                      <CheckCircle className="w-4 h-4" />
-                      {currentIndex === 0 ? "Iniciar Rota" : currentIndex === 1 ? "Confirmar Chegada" : currentIndex === 2 ? "Iniciar Viagem" : "Finalizar"}
-                    </>
+                    <><CheckCircle className="w-4 h-4" />{nextActionLabel}</>
                   )}
                 </button>
                 <a
                   href={`tel:${activeTrip.passenger?.phone || ''}`}
-                  className="w-14 h-14 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center text-white hover:bg-brand-gold hover:text-black transition-all"
+                  className="w-14 h-14 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center text-white/40 hover:bg-brand-gold hover:text-black hover:border-brand-gold transition-all"
                 >
                   <Phone className="w-5 h-5" />
                 </a>
               </div>
-            </div>
+            </motion.div>
           ) : (
-            <div className="rounded-3xl bg-white/[0.01] border border-dashed border-white/10 p-16 text-center">
-              <Navigation className="w-12 h-12 text-white/5 mx-auto mb-4" />
-              <p className="text-white/20 font-light text-lg">Sem viagem ativa</p>
+            <div className="rounded-3xl border border-dashed border-white/8 p-14 text-center bg-white/[0.01]">
+              <div className="w-16 h-16 rounded-3xl bg-white/[0.03] border border-white/5 flex items-center justify-center mx-auto mb-5">
+                <Navigation className="w-7 h-7 text-white/10" />
+              </div>
+              <p className="text-white/25 font-bold text-base">Sem viagem ativa</p>
               <p className="text-[9px] text-white/10 uppercase tracking-widest font-black mt-2">Aguardando atribuição</p>
             </div>
           )}
 
           {/* Marketplace */}
           <div>
-            <div className="flex items-center justify-between mb-5 px-1">
-              <h2 className="text-lg font-light text-white italic uppercase tracking-tight">Corridas Disponíveis</h2>
-              <span className="text-[9px] font-black text-brand-gold uppercase tracking-widest">{marketplace.length} disponíveis</span>
+            <div className="flex items-center justify-between mb-4 px-1">
+              <div className="flex items-center gap-2">
+                <BarChart3 className="w-4 h-4 text-brand-gold/50" />
+                <h2 className="text-sm font-black text-white uppercase tracking-widest">Corridas Disponíveis</h2>
+              </div>
+              <span className={cn(
+                "text-[9px] font-black uppercase tracking-widest px-3 py-1 rounded-full",
+                marketplace.length > 0 ? "bg-brand-gold/10 text-brand-gold border border-brand-gold/20" : "bg-white/5 text-white/20"
+              )}>
+                {marketplace.length} disponíveis
+              </span>
             </div>
-            <div className="space-y-4">
+
+            <div className="space-y-3">
               {marketplace.length === 0 ? (
                 <div className="p-10 rounded-3xl bg-white/[0.01] border border-dashed border-white/5 text-center">
+                  <Car className="w-8 h-8 text-white/5 mx-auto mb-3" />
                   <p className="text-[9px] text-white/10 uppercase tracking-widest font-black">Sem corridas no marketplace</p>
                 </div>
-              ) : marketplace.map((m) => (
-                <div key={m.id} className="p-5 sm:p-6 rounded-3xl bg-white/[0.02] border border-white/5 hover:border-brand-gold/30 transition-all group">
-                  <div className="flex items-center justify-between gap-4">
-                    <div className="flex items-center gap-4 min-w-0">
-                      <div className="w-12 h-12 rounded-2xl bg-brand-gold/5 flex items-center justify-center text-brand-gold/40 group-hover:bg-brand-gold group-hover:text-black transition-all flex-shrink-0">
-                        <Car className="w-5 h-5" />
+              ) : marketplace.map((m, i) => (
+                <motion.div
+                  key={m.id}
+                  initial={{ opacity: 0, x: -8 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: i * 0.05 }}
+                  className="p-5 rounded-3xl bg-[#0C0C11] border border-white/[0.06] hover:border-brand-gold/25 transition-all group"
+                >
+                  <div className="flex items-center gap-4">
+                    <div className="w-12 h-12 rounded-2xl bg-brand-gold/5 border border-brand-gold/10 flex items-center justify-center text-brand-gold/30 group-hover:bg-brand-gold group-hover:text-black group-hover:border-brand-gold transition-all flex-shrink-0">
+                      <Car className="w-5 h-5" />
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <div className="flex items-center gap-2 mb-1">
+                        <p className="text-sm font-bold text-white truncate">{m.origin.split(',')[0]}</p>
+                        <ArrowRight className="w-3 h-3 text-white/20 flex-shrink-0" />
+                        <p className="text-sm font-bold text-white truncate">{m.destination.split(',')[0]}</p>
                       </div>
-                      <div className="min-w-0">
-                        <p className="text-sm font-light text-white italic truncate">{m.origin.split(',')[0]} → {m.destination.split(',')[0]}</p>
-                        <div className="flex items-center gap-3 mt-1">
-                          <span className="text-[9px] font-black text-white/20 uppercase">{m.pickupTime}</span>
-                          <span className="text-[9px] font-black text-brand-gold/50 uppercase">{m.category}</span>
-                        </div>
+                      <div className="flex items-center gap-3">
+                        <span className="text-[9px] font-black text-white/20 uppercase tracking-wider">{m.pickupTime}</span>
+                        <span className="w-1 h-1 rounded-full bg-white/10" />
+                        <span className="text-[9px] font-black text-brand-gold/40 uppercase tracking-wider">{m.category}</span>
                       </div>
                     </div>
                     <div className="flex items-center gap-4 flex-shrink-0">
                       <div className="text-right">
-                        <p className="text-lg font-light text-brand-gold">{formatCurrency(m.driverAmount || 0)}</p>
-                        <p className="text-[8px] text-white/10 uppercase tracking-widest">Ganho</p>
+                        <p className="text-xl font-bold text-brand-gold">{formatCurrency(m.driverAmount || 0)}</p>
+                        <p className="text-[8px] text-white/15 uppercase tracking-widest font-black">ganho</p>
                       </div>
                       <button
                         onClick={() => handleAccept(m.id)}
                         disabled={acceptingId === m.id}
-                        className="px-5 py-2.5 bg-white/5 border border-white/10 text-white text-[9px] font-black uppercase tracking-widest rounded-xl hover:bg-brand-gold hover:text-black hover:border-brand-gold transition-all disabled:opacity-50"
+                        className="px-5 py-2.5 bg-white/5 border border-white/10 text-white/50 text-[9px] font-black uppercase tracking-widest rounded-xl hover:bg-brand-gold hover:text-black hover:border-brand-gold transition-all disabled:opacity-40"
                       >
                         {acceptingId === m.id ? <Loader2 className="w-4 h-4 animate-spin" /> : "Aceitar"}
                       </button>
+                    </div>
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        {/* ── Right Column ───────────────────────────────────── */}
+        <div className="space-y-5">
+
+          {/* Earnings card */}
+          <div className="rounded-3xl bg-[#0C0C11] border border-white/[0.06] overflow-hidden">
+            <div className="p-6 border-b border-white/5">
+              <div className="flex items-center justify-between mb-1">
+                <p className="text-[9px] font-black text-white/25 uppercase tracking-widest">Esta Semana</p>
+                <div className="w-8 h-8 rounded-xl bg-emerald-500/10 flex items-center justify-center text-emerald-400">
+                  <TrendingUp className="w-4 h-4" />
+                </div>
+              </div>
+              <p className="text-3xl font-bold text-white">{formatCurrency(totalEarnings)}</p>
+            </div>
+            <div className="p-6">
+              <EarningsChart data={chartData} />
+            </div>
+            <div className="px-6 pb-6 flex items-center justify-between">
+              <div>
+                <p className="text-[9px] font-black text-white/20 uppercase tracking-widest mb-1">Para Levantar</p>
+                <p className="text-xl font-bold text-white">{formatCurrency(availableEarnings)}</p>
+              </div>
+              <button className="px-5 py-2.5 rounded-xl bg-brand-gold/10 text-brand-gold text-[9px] font-black uppercase tracking-widest border border-brand-gold/20 hover:bg-brand-gold hover:text-black transition-all">
+                Sacar
+              </button>
+            </div>
+          </div>
+
+          {/* Performance metrics */}
+          <div className="rounded-3xl bg-[#0C0C11] border border-white/[0.06] p-6">
+            <p className="text-[9px] font-black text-white/25 uppercase tracking-widest mb-5">Performance</p>
+            <div className="space-y-4">
+              {[
+                { label: "Taxa de Aceitação", value: "98%", icon: ShieldCheck, color: "emerald", bar: 98 },
+                { label: "Avaliação Média", value: "5.0 ★", icon: Star, color: "gold", bar: 100 },
+                { label: "Tempo Online Hoje", value: "6h 42m", icon: Clock, color: "blue", bar: 70 },
+                { label: "Cancelamentos", value: "0.2%", icon: AlertCircle, color: "white", bar: 2 },
+              ].map(({ label, value, icon: Icon, color, bar }) => (
+                <div key={label} className="flex items-center gap-4">
+                  <div className={cn(
+                    "w-9 h-9 rounded-xl flex items-center justify-center flex-shrink-0",
+                    color === "gold" ? "bg-brand-gold/10 text-brand-gold" :
+                    color === "emerald" ? "bg-emerald-500/10 text-emerald-400" :
+                    color === "blue" ? "bg-blue-500/10 text-blue-400" :
+                    "bg-white/5 text-white/20"
+                  )}>
+                    <Icon className="w-4 h-4" />
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <div className="flex items-center justify-between mb-1.5">
+                      <p className="text-[10px] font-black text-white/40 uppercase tracking-wider">{label}</p>
+                      <p className="text-sm font-bold text-white">{value}</p>
+                    </div>
+                    <div className="h-1 rounded-full bg-white/5 overflow-hidden">
+                      <div
+                        className={cn(
+                          "h-full rounded-full transition-all duration-1000",
+                          color === "gold" ? "bg-brand-gold" :
+                          color === "emerald" ? "bg-emerald-500" :
+                          color === "blue" ? "bg-blue-500" : "bg-white/20"
+                        )}
+                        style={{ width: `${bar}%` }}
+                      />
                     </div>
                   </div>
                 </div>
               ))}
             </div>
           </div>
-        </div>
 
-        {/* ── Sidebar ────────────────────────────────────────── */}
-        <div className="space-y-6">
-
-          {/* Gráfico de ganhos */}
-          <div className="p-6 rounded-3xl bg-[#0F0F14] border border-white/5 space-y-6">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-[9px] font-black text-brand-gold uppercase tracking-widest mb-1">Esta Semana</p>
-                <p className="text-2xl font-light text-white italic">{formatCurrency(totalEarnings)}</p>
-              </div>
-              <div className="w-10 h-10 rounded-2xl bg-emerald-500/10 flex items-center justify-center text-emerald-400">
-                <TrendingUp className="w-5 h-5" />
-              </div>
-            </div>
-            <EarningsChart data={mockChartData} />
-            <div className="pt-4 border-t border-white/5 flex items-center justify-between">
-              <div>
-                <p className="text-lg font-light text-white italic">{formatCurrency(availableEarnings)}</p>
-                <p className="text-[8px] text-white/20 uppercase tracking-widest font-black">Para Levantar</p>
-              </div>
-              <button className="px-4 py-2 rounded-xl bg-brand-gold/10 text-brand-gold text-[9px] font-black uppercase tracking-widest border border-brand-gold/20 hover:bg-brand-gold hover:text-black transition-all">
-                Sacar
-              </button>
-            </div>
-          </div>
-
-          {/* Métricas */}
-          <div className="grid grid-cols-2 gap-4">
+          {/* Quick stats */}
+          <div className="grid grid-cols-2 gap-3">
             {[
-              { label: "Aceitação", value: "98%", icon: ShieldCheck, color: "emerald" },
-              { label: "Rating", value: "5.0 ★", icon: Star, color: "gold" },
-              { label: "Online", value: "6h 42m", icon: Clock, color: "white" },
-              { label: "Cancelamentos", value: "0.2%", icon: AlertCircle, color: "white" },
-            ].map(({ label, value, icon: Icon, color }) => (
-              <div key={label} className="p-5 rounded-2xl bg-white/[0.02] border border-white/5 flex flex-col items-center gap-3 text-center">
-                <div className={cn(
-                  "w-9 h-9 rounded-xl flex items-center justify-center",
-                  color === "gold" ? "bg-brand-gold/10 text-brand-gold" :
-                  color === "emerald" ? "bg-emerald-500/10 text-emerald-400" : "bg-white/5 text-white/20"
-                )}>
-                  <Icon className="w-4 h-4" />
-                </div>
-                <div>
-                  <p className="text-lg font-light text-white italic">{value}</p>
-                  <p className="text-[8px] font-black text-white/20 uppercase tracking-wider mt-0.5">{label}</p>
-                </div>
+              { label: "Viagens Hoje", value: "0", icon: Car },
+              { label: "Passageiros", value: "0", icon: Users },
+            ].map(({ label, value, icon: Icon }) => (
+              <div key={label} className="p-5 rounded-2xl bg-[#0C0C11] border border-white/[0.06] text-center">
+                <Icon className="w-5 h-5 text-white/15 mx-auto mb-3" />
+                <p className="text-2xl font-bold text-white">{value}</p>
+                <p className="text-[8px] font-black text-white/20 uppercase tracking-widest mt-1">{label}</p>
               </div>
             ))}
           </div>
@@ -344,19 +435,32 @@ export default function MotoristaDashboard() {
       <AnimatePresence>
         {showPinModal && (
           <div className="fixed inset-0 z-[100] flex items-center justify-center p-6">
-            <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} onClick={() => setShowPinModal(false)} className="absolute inset-0 bg-black/80 backdrop-blur-xl" />
-            <motion.div initial={{ scale: 0.95, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} exit={{ scale: 0.95, opacity: 0 }} className="w-full max-w-sm bg-[#0A0A0F] border border-white/10 rounded-3xl p-10 relative z-10 text-center">
-              <ShieldCheck className="w-12 h-12 text-brand-gold mx-auto mb-6" />
-              <h3 className="text-2xl font-light text-white italic mb-2">Validar Finalização</h3>
-              <p className="text-white/30 text-sm mb-8">PIN de 6 dígitos do passageiro</p>
+            <motion.div
+              initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
+              onClick={() => setShowPinModal(false)}
+              className="absolute inset-0 bg-black/85 backdrop-blur-xl"
+            />
+            <motion.div
+              initial={{ scale: 0.95, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} exit={{ scale: 0.95, opacity: 0 }}
+              className="w-full max-w-sm bg-[#0A0A0F] border border-white/10 rounded-3xl p-10 relative z-10 text-center"
+            >
+              <div className="w-16 h-16 rounded-3xl bg-brand-gold/10 border border-brand-gold/20 flex items-center justify-center mx-auto mb-6">
+                <ShieldCheck className="w-8 h-8 text-brand-gold" />
+              </div>
+              <h3 className="text-2xl font-bold text-white mb-2">Validar Finalização</h3>
+              <p className="text-white/30 text-sm mb-8">Introduza o PIN de 6 dígitos do passageiro</p>
               <input
                 type="text" maxLength={6} value={pin}
                 onChange={e => setPin(e.target.value.replace(/\D/g, ''))}
-                className="w-full h-20 bg-white/5 border border-white/10 rounded-2xl text-center text-4xl font-extralight tracking-[0.5em] text-brand-gold outline-none focus:border-brand-gold/40 mb-6"
+                className="w-full h-20 bg-white/5 border border-white/10 rounded-2xl text-center text-4xl font-bold tracking-[0.5em] text-brand-gold outline-none focus:border-brand-gold/40 mb-6 transition-all"
                 placeholder="000000" autoFocus
               />
-              <button onClick={handleFinalizeWithPin} disabled={pin.length < 6 || updating} className="w-full py-4 bg-brand-gold text-black text-[11px] font-black uppercase tracking-widest rounded-2xl disabled:opacity-50 hover:bg-white transition-all">
-                {updating ? <Loader2 className="w-5 h-5 animate-spin mx-auto" /> : "Confirmar"}
+              <button
+                onClick={handleFinalizeWithPin}
+                disabled={pin.length < 6 || updating}
+                className="w-full py-4 bg-brand-gold text-black text-[11px] font-black uppercase tracking-widest rounded-2xl disabled:opacity-40 hover:bg-white transition-all"
+              >
+                {updating ? <Loader2 className="w-5 h-5 animate-spin mx-auto" /> : "Confirmar Viagem"}
               </button>
             </motion.div>
           </div>
@@ -365,8 +469,4 @@ export default function MotoristaDashboard() {
 
     </div>
   );
-}
-
-function TrendingUp(props: any) {
-  return <svg {...props} xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18" /><polyline points="17 6 23 6 23 12" /></svg>;
 }
