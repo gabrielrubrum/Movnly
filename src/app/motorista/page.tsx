@@ -79,14 +79,20 @@ export default function MotoristaDashboard() {
     return () => { socket.off("new_ride_available"); };
   }, [socket]);
 
+  const user = useAuthStore(s => s.user);
+  const firstName = user?.name?.split(" ")[0] || "Motorista";
+  const today = new Date().toLocaleDateString('pt-PT', { weekday: 'long', day: 'numeric', month: 'long' });
+  const todayFormatted = today.charAt(0).toUpperCase() + today.slice(1) + " · Lisboa";
+
   const activeTrip = live[0];
   const totalEarnings = driverStats?.totalEarnings || 0;
   const availableEarnings = driverStats?.availableBalance || 0;
 
+  // Chart data — zeros until real weekly data is available from API
   const chartData = [
-    { day: "SEG", amount: 120 }, { day: "TER", amount: 190 },
-    { day: "QUA", amount: 150 }, { day: "QUI", amount: 280 },
-    { day: "SEX", amount: 210 }, { day: "SAB", amount: 350 }, { day: "DOM", amount: 220 },
+    { day: "SEG", amount: 0 }, { day: "TER", amount: 0 },
+    { day: "QUA", amount: 0 }, { day: "QUI", amount: 0 },
+    { day: "SEX", amount: 0 }, { day: "SAB", amount: 0 }, { day: "DOM", amount: 0 },
   ];
 
   const getStatusIndex = (s: string) => {
@@ -159,9 +165,9 @@ export default function MotoristaDashboard() {
             <span className="text-[9px] font-black text-brand-gold uppercase tracking-[0.35em]">Painel do Motorista</span>
           </div>
           <h1 className="text-4xl sm:text-5xl font-bold text-white tracking-tight leading-none">
-            Bem-vindo, <span className="text-brand-gold">Ricardo</span>
+            Bem-vindo, <span className="text-brand-gold">{firstName}</span>
           </h1>
-          <p className="text-white/30 text-sm mt-2 font-medium">Quarta-feira, 29 de Abril · Lisboa</p>
+          <p className="text-white/30 text-sm mt-2 font-medium">{todayFormatted}</p>
         </div>
         <div className="flex items-center gap-3 self-start">
           {/* Notification bell */}
