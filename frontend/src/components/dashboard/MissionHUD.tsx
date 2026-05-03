@@ -22,12 +22,13 @@ interface MissionHUDProps {
       name: string;
       phone: string;
       rating: string | number;
-    }
+    };
+    pin?: string;
   };
 }
 
 const STATUS_CONFIG: Record<string, { label: string; sub: string; icon: any; color: string; progress: number }> = {
-  PENDING: { label: "Aguardando Confirmação", sub: "A nossa equipa está a validar a sua reserva.", icon: Zap, color: "text-amber-400", progress: 10 },
+  PENDING: { label: "Aguardando Confirmação", sub: "A nossa equipe está a validar a sua reserva.", icon: Zap, color: "text-amber-400", progress: 10 },
   CONFIRMED: { label: "Reserva Confirmada", sub: "A sua reserva está garantida. Motorista em processo de atribuição.", icon: ShieldCheck, color: "text-emerald-400", progress: 25 },
   ON_ROUTE: { label: "Motorista a Caminho", sub: "O seu motorista já se encontra em deslocação para o ponto de recolha.", icon: Navigation, color: "text-brand-gold", progress: 50 },
   IN_PROGRESS: { label: "Viagem em Curso", sub: "Serviço ativo. Tenha uma excelente viagem.", icon: Activity, color: "text-brand-gold", progress: 85 },
@@ -51,7 +52,7 @@ export function MissionHUD({ booking }: MissionHUDProps) {
 
       <div className="relative z-10 flex flex-col lg:flex-row gap-12 lg:items-center">
         
-        {/* Left: Tactical Progress Visualization */}
+        {/* Progresso */}
         <div className="lg:w-1/3 flex flex-col items-center justify-center space-y-8 lg:border-r border-white/5 lg:pr-12">
           <div className="relative">
             {/* Pulsing Outer Ring */}
@@ -70,7 +71,7 @@ export function MissionHUD({ booking }: MissionHUDProps) {
             <p className="text-[10px] text-white/30 uppercase tracking-[0.3em] font-black">{config.sub}</p>
           </div>
 
-          {/* Tactical Progress Bar */}
+          {/* Barra de Progresso */}
           <div className="w-full h-1.5 bg-white/5 rounded-full overflow-hidden">
             <motion.div 
               initial={{ width: 0 }}
@@ -81,7 +82,7 @@ export function MissionHUD({ booking }: MissionHUDProps) {
           </div>
         </div>
 
-        {/* Center: Mission Intel (Routes) */}
+        {/* Detalhes do Trajeto */}
         <div className="flex-1 space-y-10 lg:pl-4">
            <div className="grid md:grid-cols-2 gap-10">
               <div className="space-y-6">
@@ -115,7 +116,7 @@ export function MissionHUD({ booking }: MissionHUDProps) {
               </div>
            </div>
 
-           {/* Driver HUD Panel */}
+           {/* Painel do Motorista */}
            <AnimatePresence>
             {booking.driver && (
               <motion.div 
@@ -130,7 +131,7 @@ export function MissionHUD({ booking }: MissionHUDProps) {
                   <div>
                     <h4 className="text-lg font-bold text-white leading-none mb-1">{booking.driver.name}</h4>
                     <div className="flex items-center gap-3">
-                      <span className="text-[9px] font-black text-brand-gold uppercase tracking-[0.2em] italic">Motorista Privado</span>
+                      <span className="text-[9px] font-black text-brand-gold uppercase tracking-[0.2em] italic">Motorista NexRice</span>
                       <div className="w-1 h-1 rounded-full bg-white/20" />
                       <span className="text-[9px] font-bold text-white/40 uppercase tracking-widest flex items-center gap-1.5">
                         <Activity className="w-3 h-3" /> Classificação: {booking.driver.rating || '5.0'}
@@ -157,6 +158,25 @@ export function MissionHUD({ booking }: MissionHUDProps) {
               </motion.div>
             )}
            </AnimatePresence>
+
+           {/* Security PIN Display for Passenger */}
+           <div className="pt-6 border-t border-white/5 flex items-center justify-between">
+              <div className="flex items-center gap-4">
+                 <div className="w-10 h-10 rounded-full bg-brand-gold/10 border border-brand-gold/20 flex items-center justify-center">
+                    <ShieldCheck className="w-5 h-5 text-brand-gold" />
+                 </div>
+                 <div>
+                    <p className="text-[9px] font-black text-white/30 uppercase tracking-[0.2em]">PIN de Segurança</p>
+                    <p className="text-[10px] text-white/50 font-light mt-1">Informe este código ao motorista para iniciar ou finalizar a viagem.</p>
+                 </div>
+              </div>
+              <div className="px-8 py-3 bg-[#0A0A0C] border border-brand-gold/30 rounded-2xl shadow-inner relative group overflow-hidden">
+                 <div className="absolute inset-0 bg-brand-gold/5 opacity-0 group-hover:opacity-100 transition-opacity" />
+                 <span className="text-2xl font-black text-brand-gold tracking-[0.4em] relative z-10">
+                    {booking.pin || "------"}
+                 </span>
+              </div>
+           </div>
         </div>
       </div>
 

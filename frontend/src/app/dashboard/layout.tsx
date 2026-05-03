@@ -7,19 +7,22 @@ import { cn } from "@/lib/utils";
 import {
   LayoutDashboard, Calendar, Clock, CreditCard,
   Star, Bell, Settings, LogOut, User, ChevronRight, Plus,
-  ShieldCheck, Activity, Menu, X
+  ShieldCheck, Activity, Menu, X, MessageSquare
 } from "lucide-react";
 import { useState, useEffect } from "react";
 import { useAuthStore } from "@/lib/auth-store";
 import { motion, AnimatePresence } from "framer-motion";
 import { RoleGuard } from "@/components/auth/RoleGuard";
+import { NotificationBell } from "@/components/ui/NotificationBell";
+import { GlobalSocketHandler } from "@/components/GlobalSocketHandler";
 
 const NAV = [
-    { href: "/dashboard", label: "Painel Principal", icon: LayoutDashboard },
-    { href: "/dashboard/bookings", label: "Minhas Reservas", icon: Calendar },
-    { href: "/dashboard/history", label: "Histórico", icon: Clock },
-    { href: "/dashboard/payment", label: "Pagamentos", icon: CreditCard },
-    { href: "/dashboard/profile", label: "Perfil", icon: User },
+    { href: "/dashboard", label: "Início", icon: LayoutDashboard },
+    { href: "/dashboard/bookings", label: "Próximas Viagens", icon: Calendar },
+    { href: "/dashboard/chat", label: "Mensagens", icon: MessageSquare },
+    { href: "/dashboard/history", label: "Viagens Concluídas", icon: Clock },
+    { href: "/dashboard/payment", label: "Faturas & Pagamentos", icon: CreditCard },
+    { href: "/dashboard/profile", label: "Minha Conta", icon: User },
 ];
 
 export default function DashboardLayout({ children }: { children: React.ReactNode }) {
@@ -35,6 +38,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
 
     return (
         <RoleGuard allowedRoles={['PASSENGER']}>
+            <GlobalSocketHandler />
             <div className="min-h-screen bg-[#030303] text-white selection:bg-brand-gold/20 selection:text-brand-gold overflow-hidden">
       
       {/* Background Ambience */}
@@ -61,7 +65,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
                 NEXRICE
               </span>
               <span className="text-[7px] font-black text-brand-gold uppercase tracking-[0.6em] mt-1.5 opacity-60">
-                Elite · Chauffeur
+                NexRice Transport
               </span>
             </div>
           </Link>
@@ -69,8 +73,8 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
 
         {/* User Intel */}
         {user && (
-          <div className="p-6 border-b border-white/5">
-            <div className="flex items-center gap-4 p-4 rounded-3xl bg-white/[0.02] border border-white/5 hover:bg-white/[0.04] transition-all group">
+          <div className="p-6 border-b border-white/5 flex items-center gap-4">
+            <div className="flex items-center gap-4 p-4 rounded-3xl bg-white/[0.02] border border-white/5 hover:bg-white/[0.04] transition-all group flex-1 min-w-0">
               <div className="w-12 h-12 rounded-2xl bg-brand-gold flex items-center justify-center text-black font-black text-lg shadow-xl shrink-0 group-hover:rotate-3 transition-transform">
                 {user.name.substring(0, 1).toUpperCase()}
               </div>
@@ -79,12 +83,16 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
                 <p className="text-[10px] text-white/20 uppercase tracking-widest font-black truncate">{user.role}</p>
               </div>
             </div>
+            <NotificationBell />
           </div>
         )}
 
-        {/* Navigation Protocol */}
-        <nav className="flex-1 p-6 space-y-1 overflow-y-auto custom-scrollbar">
-          <div className="text-[10px] font-black text-white/10 uppercase tracking-[0.4em] mb-6 px-4">Navegação</div>
+        {/* Navegação */}
+        <nav className="flex-1 p-6 space-y-2 overflow-y-auto custom-scrollbar">
+          <div className="text-[10px] font-black text-white/20 uppercase tracking-[0.4em] mb-8 px-4 flex items-center gap-4">
+            Navegação
+            <div className="flex-1 h-px bg-gradient-to-r from-white/10 to-transparent" />
+          </div>
           {NAV.map(({ href, label, icon: Icon }) => {
             const active = href === '/dashboard'
               ? pathname === '/dashboard'
@@ -94,22 +102,26 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
                 key={href}
                 href={href}
                 className={cn(
-                  "flex items-center gap-4 px-4 py-3.5 rounded-2xl text-[11px] font-black uppercase tracking-[0.15em] transition-all duration-200 relative group",
+                  "flex items-center gap-4 px-4 py-3.5 rounded-[20px] text-[11px] font-black uppercase tracking-[0.15em] transition-all duration-300 relative group overflow-hidden",
                   active
-                    ? "bg-brand-gold text-black shadow-[0_8px_24px_-8px_rgba(212,175,55,0.5)]"
-                    : "text-white/30 hover:text-white hover:bg-white/[0.05]"
+                    ? "bg-brand-gold text-black shadow-[0_0_30px_-5px_rgba(212,175,55,0.3)]"
+                    : "bg-transparent border border-transparent text-white/40 hover:text-white hover:bg-white/[0.02] hover:border-white/5 hover:translate-x-1"
                 )}
               >
+                {active && (
+                    <div className="absolute inset-0 bg-gradient-to-r from-white/20 to-transparent opacity-50" />
+                )}
                 <div className={cn(
-                  "w-8 h-8 rounded-xl flex items-center justify-center flex-shrink-0 transition-all duration-200",
+                  "w-9 h-9 rounded-[14px] flex items-center justify-center flex-shrink-0 transition-all duration-300 relative z-10",
                   active
-                    ? "bg-black/10 text-black"
-                    : "bg-white/5 text-white/20 group-hover:bg-brand-gold/10 group-hover:text-brand-gold"
+                    ? "bg-black/10 text-black shadow-inner"
+                    : "bg-white/5 text-white/30 group-hover:bg-brand-gold/10 group-hover:text-brand-gold group-hover:scale-110"
                 )}>
                   <Icon className="w-4 h-4" />
                 </div>
-                <span>{label}</span>
-                {active && <div className="absolute right-4 w-1.5 h-1.5 rounded-full bg-black/30" />}
+                <span className="relative z-10 flex-1 whitespace-nowrap">{label}</span>
+                {active && <div className="absolute right-5 w-1.5 h-1.5 rounded-full bg-black/40 relative z-10 animate-pulse" />}
+                {!active && <ChevronRight className="w-4 h-4 text-white/10 opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300" />}
               </Link>
             );
           })}
@@ -145,12 +157,15 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
               NEXRICE
             </span>
           </Link>
-          <button 
-            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            className="w-12 h-12 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center text-white"
-          >
-            {isMobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
-          </button>
+          <div className="flex items-center gap-4">
+            <NotificationBell />
+            <button 
+              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+              className="w-12 h-12 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center text-white"
+            >
+              {isMobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+            </button>
+          </div>
         </header>
 
         {/* Mobile Menu Overlay */}

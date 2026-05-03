@@ -26,7 +26,7 @@ export function getFraudHeaders(): Record<string, string> {
       screen.colorDepth,
       new Date().getTimezoneOffset(),
       navigator.hardwareConcurrency || 0,
-      typeof navigator.deviceMemory !== 'undefined' ? (navigator as any).deviceMemory : 0,
+      (navigator as any).deviceMemory || 0,
     ].join('|');
 
     // Hash simples (não criptográfico — só para identificar o browser)

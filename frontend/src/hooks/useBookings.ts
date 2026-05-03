@@ -57,6 +57,7 @@ const mapBackendToFrontend = (dbBooking: any): Booking => {
     auditLogs: dbBooking.auditLogs || [],
     createdAt: dbBooking.createdAt,
     updatedAt: dbBooking.updatedAt,
+    pin: dbBooking.pin,
   };
 };
 
