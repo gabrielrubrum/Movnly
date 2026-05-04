@@ -8,12 +8,12 @@ const adapter = new PrismaBetterSqlite3({ url: dbPath });
 const prisma = new PrismaClient({ adapter });
 
 async function runSuperTest() {
-    console.log("🚀 INICIANDO SUPER TESTE DE FLUXO FINANCEIRO E PIN (NEXRIDE BLINDADO)...\n");
+    console.log("🚀 INICIANDO SUPER TESTE DE FLUXO FINANCEIRO E PIN (NexRice BLINDADO)...\n");
 
     try {
         // 1. Criar Motorista e Passageiro para o teste
         const timestamp = Date.now();
-        const driverEmail = `driver_fin_${timestamp}@nexride.pt`;
+        const driverEmail = `driver_fin_${timestamp}@NexRice.pt`;
         const passengerEmail = `pass_fin_${timestamp}@example.com`;
 
         const driver = await prisma.user.create({

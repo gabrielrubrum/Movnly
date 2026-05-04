@@ -1,7 +1,7 @@
 {
-  "name": "nexride-monorepo",
+  "name": "nexrice-monorepo",
   "version": "1.0.0",
-  "description": "NexRide Monorepo — Frontend (Next.js) + Backend (NestJS)",
+  "description": "NexRice Monorepo — Frontend (Next.js) + Backend (NestJS)",
   "private": true,
   "scripts": {
     "dev": "concurrently \"npm run dev:backend\" \"npm run dev:frontend\"",

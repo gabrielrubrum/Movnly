@@ -1,6 +1,6 @@
 services:
   nginx:
-    container_name: nexride-nginx
+    container_name: nexrice-nginx
     platform: linux/amd64
     image: nginx:latest
     ports:

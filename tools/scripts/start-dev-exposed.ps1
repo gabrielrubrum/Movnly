@@ -1,12 +1,12 @@
 # ================================================
-# NexRide - Script de Inicialização com Ngrok + Nginx
+# NexRice - Script de Inicialização com Ngrok + Nginx
 # Frontend: Next.js  (ngrok → porta 3000)
 # Backend:  NestJS   (nginx → porta 3002)
 # ================================================
 
 Write-Host ""
 Write-Host "  ╔══════════════════════════════════════╗" -ForegroundColor Cyan
-Write-Host "  ║   NexRide Dev — Ngrok + Nginx Mode   ║" -ForegroundColor Cyan
+Write-Host "  ║   NexRice Dev — Ngrok + Nginx Mode   ║" -ForegroundColor Cyan
 Write-Host "  ╚══════════════════════════════════════╝" -ForegroundColor Cyan
 Write-Host ""
 
@@ -92,7 +92,7 @@ try {
     $publicUrl = ($ngrokApi.tunnels | Where-Object { $_.proto -eq "https" }).public_url
     if ($publicUrl) {
         Write-Host "  ╔══════════════════════════════════════════════════╗" -ForegroundColor Green
-        Write-Host "  ║  ✅ NexRide está ONLINE!                         ║" -ForegroundColor Green
+        Write-Host "  ║  ✅ NexRice está ONLINE!                         ║" -ForegroundColor Green
         Write-Host "  ║                                                  ║" -ForegroundColor Green
         Write-Host "  ║  🌍 URL Pública: $publicUrl" -ForegroundColor Green
         Write-Host "  ║  🔧 Backend API: http://localhost/api/           ║" -ForegroundColor Green

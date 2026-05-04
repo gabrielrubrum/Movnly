@@ -245,7 +245,7 @@ export class AuthService {
         if (!user) throw new BadRequestException('User not found');
 
         const secret = authenticator.generateSecret();
-        const otpauthUrl = authenticator.keyuri(user.email, 'NexRide Elite', secret);
+        const otpauthUrl = authenticator.keyuri(user.email, 'NexRice Elite', secret);
 
         await this.prisma.user.update({
             where: { id: userId },
@@ -290,7 +290,7 @@ export class AuthService {
             user = await this.prisma.user.create({
                 data: {
                     email: socialUser.email,
-                    name: socialUser.name || (socialUser.firstName ? `${socialUser.firstName} ${socialUser.lastName || ''}` : 'Utilizador NexRide'),
+                    name: socialUser.name || (socialUser.firstName ? `${socialUser.firstName} ${socialUser.lastName || ''}` : 'Utilizador NexRice'),
                     password: await bcrypt.hash(crypto.randomBytes(32).toString('hex'), 12),
                     isEmailVerified: true,
                     role: 'PASSENGER',

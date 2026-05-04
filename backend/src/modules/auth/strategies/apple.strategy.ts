@@ -32,7 +32,7 @@ export class AppleStrategy extends PassportStrategy(Strategy, 'apple') {
         }
 
         const user = {
-            email: email || 'apple-hidden-email@nexride.pt',
+            email: email || 'apple-hidden-email@NexRice.pt',
             name: name,
             accessToken,
             idToken,

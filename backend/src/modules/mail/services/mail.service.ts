@@ -81,7 +81,7 @@ export class MailService {
         try {
             if (this.resend) {
                 const { data, error } = await this.resend.emails.send({
-                    from: from.includes('<') ? from : `NexRide Elite <${from}>`,
+                    from: from.includes('<') ? from : `NexRice Elite <${from}>`,
                     to, subject, html,
                 });
                 if (error) throw error;
@@ -102,11 +102,11 @@ export class MailService {
         const url = `${process.env.FRONTEND_URL || 'http://localhost:3000'}/auth/verify?token=${token}`;
         const content = `
           <h2 style="font-size: 42px; font-weight: 200; italic; margin-bottom: 30px; line-height: 1;">Bem-vindo à <span class="accent">Elite</span>.</h2>
-          <p style="font-size: 18px; font-weight: 300; line-height: 1.6; color: rgba(255,255,255,0.4); margin-bottom: 40px;">Sua entrada na rede operacional da NexRide foi iniciada. Valide sua credencial para ativar o acesso total.</p>
+          <p style="font-size: 18px; font-weight: 300; line-height: 1.6; color: rgba(255,255,255,0.4); margin-bottom: 40px;">Sua entrada na rede operacional da NexRice foi iniciada. Valide sua credencial para ativar o acesso total.</p>
           <a href="${url}" class="btn">Validar Identidade</a>
           <p class="text-muted">Se você não iniciou este protocolo, ignore este comunicado. Auditoria de segurança monitorada.</p>
         `;
-        return this.sendMail(to, 'Acesso Institucional — NexRide Elite', this.getLuxuryTemplate(content));
+        return this.sendMail(to, 'Acesso Institucional — NexRice Elite', this.getLuxuryTemplate(content));
     }
 
     async sendPasswordResetEmail(to: string, code: string) {
@@ -118,7 +118,7 @@ export class MailService {
           </div>
           <p class="text-muted">Este código expira em 60 minutos por razões de segurança. Protocolo 2.6 Secured.</p>
         `;
-        return this.sendMail(to, 'Código de Recuperação — NexRide Elite', this.getLuxuryTemplate(content));
+        return this.sendMail(to, 'Código de Recuperação — NexRice Elite', this.getLuxuryTemplate(content));
     }
 
     async sendAssignmentEmail(to: string, role: 'DRIVER' | 'PASSENGER', details: any) {
@@ -204,7 +204,7 @@ export class MailService {
             <span style="font-size: 9px; font-weight: 800; color: #222; text-transform: uppercase;">NexRice Elite Technology S.A. | NIF: 500 000 000</span>
           </div>
         `;
-        return this.sendMail(to, 'Comprovativo de Pagamento — NexRide Elite', this.getLuxuryTemplate(content));
+        return this.sendMail(to, 'Comprovativo de Pagamento — NexRice Elite', this.getLuxuryTemplate(content));
     }
 
     async sendPayoutScheduledEmail(to: string, amount: number) {
@@ -218,9 +218,9 @@ export class MailService {
             <p style="font-size: 11px; color: #D4AF37; margin-top: 5px;">Movido para Saldo em Retenção (Libertação em 20 dias)</p>
           </div>
           
-          <p style="font-size: 12px; color: rgba(255,255,255,0.3);">Continue com a excelência. O seu desempenho é o que define o padrão NexRide.</p>
+          <p style="font-size: 12px; color: rgba(255,255,255,0.3);">Continue com a excelência. O seu desempenho é o que define o padrão NexRice.</p>
         `;
-        return this.sendMail(to, 'Crédito Agendado — NexRide Driver Panel', this.getLuxuryTemplate(content));
+        return this.sendMail(to, 'Crédito Agendado — NexRice Driver Panel', this.getLuxuryTemplate(content));
     }
 
     async sendWithdrawalConfirmationEmail(to: string, amount: number) {

@@ -91,7 +91,7 @@ export default function PrivacidadePage() {
 
           <div className="mt-12 pt-8 border-t border-white/[0.06] text-center">
             <p className="text-white/25 text-xs">
-              NexRice, Lda. &nbsp;·&nbsp; NIF: PT000000000 &nbsp;·&nbsp; privacidade@nexrice.com &nbsp;·&nbsp; nexrice.com
+              NexRice Elite &nbsp;·&nbsp; NIF: 517 842 930 &nbsp;·&nbsp; privacidade@nexrice.com &nbsp;·&nbsp; nexrice.com
             </p>
           </div>
 

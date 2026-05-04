@@ -5,11 +5,11 @@ const prisma = new PrismaClient({});
 async function main() {
     const password = await bcrypt.hash('password123', 10);
     const user = await prisma.user.upsert({
-        where: { email: 'admin@nexride.pt' },
+        where: { email: 'admin@nexrice.com' },
         update: { password },
         create: {
-            email: 'admin@nexride.pt',
-            name: 'NexRide Admin',
+            email: 'admin@nexrice.com',
+            name: 'NexRice Admin',
             password,
             role: 'ADMIN',
         },

@@ -4,6 +4,7 @@ import { withSentryConfig } from "@sentry/nextjs";
 const nextConfig: NextConfig = {
   allowedDevOrigins: ['preoceanic-stefan-sluicelike.ngrok-free.dev'],
   devIndicators: false,
+  output: 'standalone',
   async headers() {
     return [
       {
@@ -22,10 +23,11 @@ const nextConfig: NextConfig = {
 };
 
 export default withSentryConfig(nextConfig, {
-  org: "nexride",
-  project: "nexride-frontend",
+  org: "nexrice",
+  project: "nexrice-frontend",
   silent: true, // Não polui o output do build
   widenClientFileUpload: true,
-  hideSourceMaps: true, // Não expõe source maps em produção
-  disableLogger: true,
+  sourcemaps: {
+    deleteSourcemapsAfterUpload: true,
+  },
 });

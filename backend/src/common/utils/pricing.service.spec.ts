@@ -1,6 +1,6 @@
 import { calculateBookingFinances } from './pricing.utils';
 
-describe('Pricing Utility (NexRide)', () => {
+describe('Pricing Utility (NexRice)', () => {
     
     describe('Base Pricing (Lisbon)', () => {
         it('should return correct base price for "smart" in Lisbon', () => {

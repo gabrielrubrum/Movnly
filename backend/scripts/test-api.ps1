@@ -1,5 +1,5 @@
 # ================================================
-# NexRide — Full API Integration Test Script
+# NexRice — Full API Integration Test Script
 # Runs against: http://localhost:3002
 # Usage: .\test-api.ps1
 # ================================================
@@ -42,7 +42,7 @@ function c_json {
 
 Write-Host ""
 Write-Host "  ╔══════════════════════════════════════════╗" -ForegroundColor Cyan
-Write-Host "  ║   NexRide — API Integration Test Suite   ║" -ForegroundColor Cyan
+Write-Host "  ║   NexRice — API Integration Test Suite   ║" -ForegroundColor Cyan
 Write-Host "  ╚══════════════════════════════════════════╝" -ForegroundColor Cyan
 Write-Host ""
 
@@ -57,7 +57,7 @@ Write-Host ""
 
 # ── Unique test credentials ───────────────────────────────────
 $ts = [DateTimeOffset]::UtcNow.ToUnixTimeSeconds()
-$testEmail = "nexride_test_$ts@test.pt"
+$testEmail = "nexrice_test_$ts@test.pt"
 $testPass = "Test@12345!"
 
 # ══════════════════════════════════════════════════════════════
@@ -65,7 +65,7 @@ Write-Host "📋 AUTH TESTS" -ForegroundColor Yellow
 Write-Host "────────────────────────────────────────────────"
 
 # [1] Register new user → 201
-$code = c_code POST "/auth/register" @{ email = $testEmail; name = "NexRide Tester"; password = $testPass }
+$code = c_code POST "/auth/register" @{ email = $testEmail; name = "NexRice Tester"; password = $testPass }
 Check "POST /auth/register — new user → 201" ($code -eq 201) "| Got: $code"
 
 # [2] Register duplicate → 409
@@ -77,9 +77,9 @@ $code = c_code POST "/auth/register" @{ email = "not-an-email"; name = "X"; pass
 Check "POST /auth/register — invalid email → 400" ($code -eq 400) "| Got: $code"
 
 # [4] Login valid → 201 (NestJS @Post default) — single call, extract both status and token
-$loginRaw = curl.exe -s -w "NEXRIDE_STATUS:%{http_code}" -X POST "$BASE/auth/login" -H "Content-Type: application/json" -d ($(@{ email = $testEmail; password = $testPass }) | ConvertTo-Json -Compress)
-$loginBody = ($loginRaw -replace 'NEXRIDE_STATUS:\d+', '').Trim()
-$loginCode = [int]($loginRaw -replace '.*NEXRIDE_STATUS:(\d+)', '$1')
+$loginRaw = curl.exe -s -w "NEXRICE_STATUS:%{http_code}" -X POST "$BASE/auth/login" -H "Content-Type: application/json" -d ($(@{ email = $testEmail; password = $testPass }) | ConvertTo-Json -Compress)
+$loginBody = ($loginRaw -replace 'NEXRICE_STATUS:\d+', '').Trim()
+$loginCode = [int]($loginRaw -replace '.*NEXRICE_STATUS:(\d+)', '$1')
 $loginJson = $loginBody | ConvertFrom-Json -ErrorAction SilentlyContinue
 Check "POST /auth/login — valid credentials → 201" ($loginCode -eq 201) "| Got: $loginCode"
 $TOKEN = $loginJson.access_token
@@ -105,9 +105,9 @@ $bookBody = @{
 
 # [7] Create booking authenticated → 201
 # Single call: get both body and status code
-$bookRaw = curl.exe -s -w "NEXRIDE_STATUS:%{http_code}" -X POST "$BASE/bookings" -H "Content-Type: application/json" -H "Authorization: Bearer $TOKEN" -d ($bookBody | ConvertTo-Json -Compress)
-$bookJsonStr = ($bookRaw -replace 'NEXRIDE_STATUS:\d+', '').Trim()
-$bookCode = [int]($bookRaw -replace '.*NEXRIDE_STATUS:(\d+)', '$1')
+$bookRaw = curl.exe -s -w "NEXRICE_STATUS:%{http_code}" -X POST "$BASE/bookings" -H "Content-Type: application/json" -H "Authorization: Bearer $TOKEN" -d ($bookBody | ConvertTo-Json -Compress)
+$bookJsonStr = ($bookRaw -replace 'NEXRICE_STATUS:\d+', '').Trim()
+$bookCode = [int]($bookRaw -replace '.*NEXRICE_STATUS:(\d+)', '$1')
 $bookResp = $bookJsonStr | ConvertFrom-Json -ErrorAction SilentlyContinue
 Check "POST /bookings — authenticated → 201" ($bookCode -eq 201) "| Got: $bookCode"
 $BOOKING_ID = $bookResp.id
@@ -169,7 +169,7 @@ Write-Host "──────────────────────�
 
 # [17] Create payment intent (mock mode)
 $payRaw = curl.exe -s -X POST "$BASE/payments/create-intent" -H "Content-Type: application/json" -d (@{
-        bookingId = "temp-id-for-demo"; email = $testEmail; name = "NexRide Tester"
+        bookingId = "temp-id-for-demo"; email = $testEmail; name = "NexRice Tester"
         from = "Aeroporto Lisboa"; to = "Hotel Chiado"; date = "2025-08-15"; time = "10:00"
         amount = 55.00; category = "comfort"
     } | ConvertTo-Json -Compress)

@@ -25,7 +25,7 @@ jest.mock('otplib', () => ({
 
 const mockUser = {
     id: 'user-uuid-1',
-    email: 'joao@nexride.pt',
+    email: 'joao@NexRice.pt',
     name: 'João Silva',
     password: 'hashed_password_xyz',
     role: 'PASSENGER',
@@ -90,12 +90,12 @@ describe('AuthService', () => {
             (prisma.user.create as jest.Mock).mockResolvedValue(mockUser);
 
             const result = await service.register({
-                email: 'joao@nexride.pt',
+                email: 'joao@NexRice.pt',
                 name: 'João Silva',
                 password: 'mypassword123',
             });
 
-            expect(prisma.user.findUnique).toHaveBeenCalledWith({ where: { email: 'joao@nexride.pt' } });
+            expect(prisma.user.findUnique).toHaveBeenCalledWith({ where: { email: 'joao@NexRice.pt' } });
             expect(bcrypt.hash).toHaveBeenCalledWith('mypassword123', 12);
             expect(result).toHaveProperty('message');
             expect(result.message).toContain('Registo concluído');
@@ -105,7 +105,7 @@ describe('AuthService', () => {
             (prisma.user.findUnique as jest.Mock).mockResolvedValue(mockUser);
 
             await expect(
-                service.register({ email: 'joao@nexride.pt', name: 'João', password: '12345678' }),
+                service.register({ email: 'joao@NexRice.pt', name: 'João', password: '12345678' }),
             ).rejects.toThrow(ConflictException);
 
             expect(prisma.user.create).not.toHaveBeenCalled();
@@ -118,11 +118,11 @@ describe('AuthService', () => {
             (prisma.user.findUnique as jest.Mock).mockResolvedValue(mockUser);
             (bcrypt.compare as jest.Mock).mockResolvedValue(true);
 
-            const result = await service.login({ email: 'joao@nexride.pt', password: 'mypassword123' });
+            const result = await service.login({ email: 'joao@NexRice.pt', password: 'mypassword123' });
 
             expect(result).toHaveProperty('access_token');
             expect(result.access_token).toBe('jwt_token_mock_abc123');
-            expect(result.user!.email).toBe('joao@nexride.pt');
+            expect(result.user!.email).toBe('joao@NexRice.pt');
             expect(result.user).not.toHaveProperty('password');
         });
 
@@ -130,7 +130,7 @@ describe('AuthService', () => {
             (prisma.user.findUnique as jest.Mock).mockResolvedValue(null);
 
             await expect(
-                service.login({ email: 'ghost@nexride.pt', password: 'any' }),
+                service.login({ email: 'ghost@NexRice.pt', password: 'any' }),
             ).rejects.toThrow(UnauthorizedException);
         });
 
@@ -139,7 +139,7 @@ describe('AuthService', () => {
             (bcrypt.compare as jest.Mock).mockResolvedValue(false);
 
             await expect(
-                service.login({ email: 'joao@nexride.pt', password: 'wrongpassword' }),
+                service.login({ email: 'joao@NexRice.pt', password: 'wrongpassword' }),
             ).rejects.toThrow(UnauthorizedException);
         });
 
@@ -147,7 +147,7 @@ describe('AuthService', () => {
             (prisma.user.findUnique as jest.Mock).mockResolvedValue({ ...mockUser, role: 'ADMIN' });
             (bcrypt.compare as jest.Mock).mockResolvedValue(true);
 
-            await service.login({ email: 'joao@nexride.pt', password: 'mypassword123' });
+            await service.login({ email: 'joao@NexRice.pt', password: 'mypassword123' });
 
             expect(jwtService.sign).toHaveBeenCalledWith(
                 expect.objectContaining({ role: 'ADMIN' }),

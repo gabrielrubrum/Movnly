@@ -12,7 +12,7 @@ const mockBooking = {
     price: 45.50,
     driverAmount: 20.00,
     passenger: { name: 'Vasco da Gama', email: 'vasco@ocean.pt' },
-    driver: { name: 'Chauffeur Elite', email: 'driver@nexride.pt' }
+    driver: { name: 'Chauffeur Elite', email: 'driver@NexRice.pt' }
 };
 
 const mockTransaction = {

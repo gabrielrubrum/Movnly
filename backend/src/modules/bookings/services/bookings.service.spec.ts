@@ -27,7 +27,7 @@ const mockBooking = {
     createdAt: new Date(),
     updatedAt: new Date(),
     transactions: [],
-    passenger: { name: 'João Silva', email: 'joao@nexride.pt' },
+    passenger: { name: 'João Silva', email: 'joao@NexRice.pt' },
 };
 
 describe('BookingsService', () => {
@@ -257,7 +257,7 @@ describe('BookingsService', () => {
     // ─── GET DRIVERS ──────────────────────────────────────────────
     describe('getDrivers()', () => {
         it('should return only DRIVER role users', async () => {
-            const mockDrivers = [{ id: DRIVER_ID, name: 'Carlos Motorista', email: 'carlos@nexride.pt' }];
+            const mockDrivers = [{ id: DRIVER_ID, name: 'Carlos Motorista', email: 'carlos@NexRice.pt' }];
             (prisma.user.findMany as jest.Mock).mockResolvedValue(mockDrivers);
 
             const result = await service.getDrivers();

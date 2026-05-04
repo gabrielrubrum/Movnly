@@ -1,5 +1,5 @@
 /**
- * NexRide - Seed de Produção (PostgreSQL)
+ * NexRice - Seed de Produção (PostgreSQL)
  * Corre DEPOIS de: npx prisma migrate deploy
  * Uso: node scripts/seed_prod.js
  */
