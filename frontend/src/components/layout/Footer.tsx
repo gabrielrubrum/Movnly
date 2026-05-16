@@ -35,7 +35,7 @@ export function Footer() {
   };
 
   return (
-    <footer className="relative bg-[#050508] pt-32 pb-12 border-t border-white/[0.03] overflow-hidden">
+    <footer className="relative bg-[#050507] pt-32 pb-12 border-t border-white/[0.03] overflow-hidden">
 
       {/* Dynamic Background Elements */}
       <div className="absolute top-0 left-1/4 w-[800px] h-[500px] bg-brand-gold/[0.02] blur-[160px] -z-10 rounded-full" />
@@ -47,7 +47,7 @@ export function Footer() {
       <div className="nx-container relative z-10">
 
         {/* Upper Footer: Concierge Newsletter */}
-        <div className="mb-24 p-12 rounded-[2.5rem] bg-white/[0.02] border border-white/[0.05] backdrop-blur-3xl overflow-hidden relative group">
+        <div className="mb-24 p-12 rounded-[2.5rem] bg-[#0A0A0F] border border-white/[0.05] backdrop-blur-3xl overflow-hidden relative group shadow-2xl">
           <div className="absolute top-0 right-0 p-8 opacity-0 group-hover:opacity-100 transition-opacity duration-1000">
             <div className="w-24 h-24 border border-brand-gold/10 rounded-full animate-spin-slow flex items-center justify-center">
               <ShieldCheck className="w-6 h-6 text-brand-gold/20" />
@@ -75,7 +75,7 @@ export function Footer() {
                 </div>
               ) : (
                 <form onSubmit={handleSubscribe}>
-                  <div className="flex bg-black/40 rounded-2xl border border-white/5 p-2 focus-within:border-brand-gold/30 transition-all">
+                  <div className="flex bg-black/40 rounded-2xl border border-white/5 p-2 focus-within:border-brand-gold/30 transition-all shadow-inner">
                     <input
                       type="email"
                       value={email}
@@ -107,13 +107,11 @@ export function Footer() {
 
           {/* Brand & Social Identity */}
           <div className="lg:col-span-5">
-            <Link href="/" className="inline-flex items-center gap-4 mb-10 group">
-              <div className="w-12 h-12 rounded-2xl border border-white/5 flex items-center justify-center bg-white/[0.02] group-hover:bg-brand-gold/[0.05] group-hover:border-brand-gold transition-all duration-700">
-                <img src="/logo-mark2.svg" alt="NexRice" className="w-10 h-10 grayscale group-hover:grayscale-0 transition-all duration-500" />
+            <Link href="/" className="inline-block mb-10 group">
+              <div className="relative">
+                <img src="/logoMov.png" alt="MOVNLY" className="h-14 md:h-[65px] w-auto transition-all duration-700 group-hover:scale-105" />
+                <div className="absolute inset-0 bg-brand-gold/20 blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
               </div>
-              <span className="text-2xl font-bold text-white tracking-[0.2em] font-sans text-nowrap">
-                NEXRICE
-              </span>
             </Link>
             <p className="text-xl font-medium text-white/50 mb-12 leading-relaxed max-w-md">
               {t("footer.tagline")}

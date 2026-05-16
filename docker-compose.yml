@@ -1,26 +1,26 @@
 services:
-  nexrice-db:
+  movnly-db:
     image: postgres:15-alpine
-    container_name: nexrice-db
+    container_name: movnly-db
     restart: always
     environment:
       POSTGRES_USER: ${POSTGRES_USER:-postgres}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-password}
-      POSTGRES_DB: ${POSTGRES_DB:-nexrice}
+      POSTGRES_DB: ${POSTGRES_DB:-movnly}
     volumes:
       - postgres_data:/var/lib/postgresql/data
     networks:
-      - nexrice-network
+      - movnly-network
 
-  nexrice-backend:
+  movnly-backend:
     build:
       context: ./backend
       dockerfile: Dockerfile
-    container_name: nexrice-backend
+    container_name: movnly-backend
     restart: always
     environment:
       NODE_ENV: production
-      DATABASE_URL: postgresql://${POSTGRES_USER:-postgres}:${POSTGRES_PASSWORD:-password}@nexrice-db:5432/${POSTGRES_DB:-nexrice}?schema=public
+      DATABASE_URL: postgresql://${POSTGRES_USER:-postgres}:${POSTGRES_PASSWORD:-password}@movnly-db:5432/${POSTGRES_DB:-movnly}?schema=public
       JWT_SECRET: ${JWT_SECRET}
       ENCRYPTION_KEY: ${ENCRYPTION_KEY}
       STRIPE_SECRET_KEY: ${STRIPE_SECRET_KEY}
@@ -32,11 +32,11 @@ services:
       GOOGLE_CLIENT_ID: ${GOOGLE_CLIENT_ID}
       GOOGLE_CLIENT_SECRET: ${GOOGLE_CLIENT_SECRET}
     depends_on:
-      - nexrice-db
+      - movnly-db
     networks:
-      - nexrice-network
+      - movnly-network
 
-  nexrice-frontend:
+  movnly-frontend:
     build:
       context: ./frontend
       dockerfile: Dockerfile
@@ -45,16 +45,16 @@ services:
         NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY: ${NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY}
         NEXT_PUBLIC_GOOGLE_MAPS_API_KEY: ${NEXT_PUBLIC_GOOGLE_MAPS_API_KEY}
         NEXT_PUBLIC_SOCKET_URL: https://api.${DOMAIN}
-    container_name: nexrice-frontend
+    container_name: movnly-frontend
     restart: always
     environment:
       NODE_ENV: production
     networks:
-      - nexrice-network
+      - movnly-network
 
-  nexrice-nginx:
+  movnly-nginx:
     image: nginx:latest
-    container_name: nexrice-nginx
+    container_name: movnly-nginx
     restart: always
     ports:
       - "80:80"
@@ -64,13 +64,13 @@ services:
       - ./infra/certbot/conf:/etc/letsencrypt
       - ./infra/certbot/www:/var/www/certbot
     depends_on:
-      - nexrice-backend
-      - nexrice-frontend
+      - movnly-backend
+      - movnly-frontend
     networks:
-      - nexrice-network
+      - movnly-network
 
 networks:
-  nexrice-network:
+  movnly-network:
     driver: bridge
 
 volumes:

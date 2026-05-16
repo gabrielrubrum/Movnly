@@ -13,7 +13,7 @@ const SECTIONS = [
   {
     icon: Lock,
     title: "Pagamentos e Segurança",
-    content: "Todos os pagamentos são processados pela Stripe, certificada PCI DSS nível 1. Os dados do seu cartão nunca são armazenados nos nossos servidores. A NexRice utiliza encriptação SSL/TLS em todas as comunicações entre o seu dispositivo e os nossos servidores.",
+    content: "Todos os pagamentos são processados pela Stripe, certificada PCI DSS nível 1. Os dados do seu cartão nunca são armazenados nos nossos servidores. A MOVNLY utiliza encriptação SSL/TLS em todas as comunicações entre o seu dispositivo e os nossos servidores.",
   },
   {
     icon: Eye,
@@ -28,7 +28,7 @@ const SECTIONS = [
   {
     icon: UserCheck,
     title: "Os Seus Direitos (RGPD)",
-    content: "Tem direito a aceder, corrigir ou eliminar os seus dados a qualquer momento. Pode solicitar a portabilidade dos seus dados ou opor-se ao seu tratamento. Para exercer estes direitos, contacte-nos em privacidade@nexrice.com. Respondemos em até 72 horas.",
+    content: "Tem direito a aceder, corrigir ou eliminar os seus dados a qualquer momento. Pode solicitar a portabilidade dos seus dados ou opor-se ao seu tratamento. Para exercer estes direitos, contacte-nos em privacidade@movnly.com. Respondemos em até 72 horas.",
   },
   {
     icon: Trash2,
@@ -84,14 +84,14 @@ export default function PrivacidadePage() {
               <Mail className="w-5 h-5 text-emerald-400 flex-shrink-0 mt-0.5" />
               <div>
                 <p className="text-white font-bold text-sm mb-1">Encarregado de Proteção de Dados</p>
-                <p className="text-white/50 text-sm">Para questões sobre privacidade ou para exercer os seus direitos RGPD, contacte: <span className="text-emerald-400">privacidade@nexrice.com</span></p>
+                <p className="text-white/50 text-sm">Para questões sobre privacidade ou para exercer os seus direitos RGPD, contacte: <span className="text-emerald-400">privacidade@movnly.com</span></p>
               </div>
             </div>
           </div>
 
           <div className="mt-12 pt-8 border-t border-white/[0.06] text-center">
             <p className="text-white/25 text-xs">
-              NexRice Elite &nbsp;·&nbsp; NIF: 517 842 930 &nbsp;·&nbsp; privacidade@nexrice.com &nbsp;·&nbsp; nexrice.com
+              MOVNLY Elite &nbsp;·&nbsp; NIF: 517 842 930 &nbsp;·&nbsp; privacidade@movnly.com &nbsp;·&nbsp; movnly.com
             </p>
           </div>
 

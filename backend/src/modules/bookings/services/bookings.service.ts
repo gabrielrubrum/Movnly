@@ -189,7 +189,18 @@ export class BookingsService {
         const updatedBooking = await this.prisma.booking.update({
             where: { id },
             data: { status },
+            include: { passenger: true, driver: true }
         });
+
+        // Trigger Arrival Notification
+        if (status === 'ARRIVED' && updatedBooking.passenger?.email) {
+            const ref = String(parseInt(updatedBooking.id.replace(/-/g, '').slice(0, 8), 16) % 900000 + 100000);
+            await this.mailService.sendArrivalEmail(
+                updatedBooking.passenger.email, 
+                updatedBooking.driver?.name || 'Chauffeur MOVNLY', 
+                ref
+            );
+        }
 
         // Real-time: Institutional Broadcast
         this.eventsGateway.emitBookingUpdate(id, status, { driverId: updatedBooking.driverId });
@@ -275,7 +286,8 @@ export class BookingsService {
             category: booking.category,
             origin: booking.from.split(',')[0],
             destination: booking.to.split(',')[0],
-            time: booking.pickupTime.toLocaleString()
+            time: booking.pickupTime.toLocaleString(),
+            pin: booking.pin
         };
 
         // Notify Driver
@@ -313,7 +325,8 @@ export class BookingsService {
             category: booking.category,
             origin: booking.from.split(',')[0],
             destination: booking.to.split(',')[0],
-            time: booking.pickupTime.toLocaleString()
+            time: booking.pickupTime.toLocaleString(),
+            pin: booking.pin
         };
 
         // Notify Passenger (Driver already knows they accepted)

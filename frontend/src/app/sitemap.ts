@@ -1,7 +1,7 @@
 import { MetadataRoute } from 'next'
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl = 'https://nexrice.com'
+  const baseUrl = 'https://movnly.com'
   const now = new Date()
 
   const routes = [

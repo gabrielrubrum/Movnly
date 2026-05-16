@@ -51,7 +51,13 @@ function LoginForm() {
           const user = JSON.parse(decodeURIComponent(userStr));
           setAuth(user, token);
           toast.success("Login efetuado via Google.");
-          router.push(redirect);
+          
+          // Role-based redirection
+          const roleRedirect = user.role === 'DRIVER' ? '/motorista'
+            : (user.role === 'ADMIN' || user.role === 'MANAGER') ? '/admin'
+            : redirect;
+            
+          router.push(roleRedirect);
         } catch (e) {
           console.error("Failed to parse social user", e);
         }
@@ -122,16 +128,12 @@ function LoginForm() {
       {/* Upper Navigation */}
       {/* Branding HUD */}
       <div className="flex items-center justify-between mb-6">
-        <Link href="/" className="lg:hidden group flex items-center gap-4">
+        <Link href="/" className="lg:hidden group flex items-center">
           <img 
-            src="/logo-mark2.svg" 
+            src="/logoMov.png" 
             alt="Logo" 
-            className="w-10 h-10 grayscale group-hover:grayscale-0 transition-all duration-700" 
+            className="h-10 md:h-12 w-auto transition-all duration-700" 
           />
-          <div className="flex flex-col">
-            <span className="text-white font-black text-xl tracking-[0.2em] leading-none uppercase">NEXRICE</span>
-            <span className="text-[7px] font-black text-brand-gold uppercase tracking-[0.6em] mt-1">Chauffeur & Private Transfers</span>
-          </div>
         </Link>
         
         <Link href="/" className="group flex items-center gap-3 text-[10px] font-bold text-white/20 hover:text-white uppercase tracking-[0.3em] transition-all">
@@ -141,10 +143,10 @@ function LoginForm() {
       </div>
 
       <div className="mb-8 space-y-3">
-        <h2 className="text-white text-6xl font-extralight tracking-tighter leading-[0.8] mb-4">
-          {tab === "login" ? (requires2FA ? "Segurança" : "Iniciar") : "Criar"}
-          <span className="font-black italic text-brand-gold">
-            {tab === "login" ? (requires2FA ? " da Conta" : " Sessão") : " Perfil"}
+        <h2 className="text-5xl md:text-6xl font-bold mt-8 text-white tracking-tight leading-[1.1] mb-8">
+          {tab === "login" ? (requires2FA ? "Segurança" : "Iniciar") : "Criar"}{" "}
+          <span className="bg-clip-text text-transparent bg-gradient-to-r from-brand-gold via-brand-gold/90 to-white/50 drop-shadow-[0_0_30px_rgba(212,175,55,0.2)]">
+            {tab === "login" ? (requires2FA ? "da Conta." : "Sessão.") : "Perfil."}
           </span>
         </h2>
         <div className="flex items-center gap-4">
@@ -154,7 +156,7 @@ function LoginForm() {
           </div>
           <p className="text-brand-gold/50 text-[9px] font-black uppercase tracking-[0.6em] leading-relaxed">
             {tab === "login"
-              ? (requires2FA ? "Introduza o código de verificação" : "Área de Cliente NexRice")
+              ? (requires2FA ? "Introduza o código de verificação" : "Área de Cliente MOVNLY")
               : "Preencha os dados para o registo"}
           </p>
         </div>
@@ -199,7 +201,7 @@ function LoginForm() {
                       required
                       value={form.name}
                       onChange={(e) => setForm({ ...form, name: e.target.value })}
-                      className="w-full bg-white/[0.01] border border-white/5 py-5 pl-14 pr-6 rounded-2xl text-white text-xs placeholder:text-white/5 focus:outline-none focus:border-brand-gold/20 focus:bg-white/[0.03] transition-all duration-700 shadow-2xl"
+                      className="w-full bg-[#0A0A0F] border border-white/[0.05] py-5 pl-14 pr-6 rounded-[20px] text-white text-xs placeholder:text-white/20 focus:outline-none focus:border-brand-gold/30 focus:bg-brand-gold/[0.02] transition-all duration-700 shadow-2xl"
                     />
                   </div>
                 </div>
@@ -215,7 +217,7 @@ function LoginForm() {
                     required
                     value={form.email}
                     onChange={(e) => setForm({ ...form, email: e.target.value })}
-                    className="w-full bg-white/[0.01] border border-white/5 py-5 pl-14 pr-6 rounded-2xl text-white text-xs placeholder:text-white/5 focus:outline-none focus:border-brand-gold/20 focus:bg-white/[0.03] transition-all duration-700 shadow-2xl"
+                    className="w-full bg-[#0A0A0F] border border-white/[0.05] py-5 pl-14 pr-6 rounded-[20px] text-white text-xs placeholder:text-white/20 focus:outline-none focus:border-brand-gold/30 focus:bg-brand-gold/[0.02] transition-all duration-700 shadow-2xl"
                   />
                 </div>
               </div>
@@ -237,7 +239,7 @@ function LoginForm() {
                     required
                     value={form.password}
                     onChange={(e) => setForm({ ...form, password: e.target.value })}
-                    className="w-full bg-white/[0.01] border border-white/5 py-5 pl-14 pr-14 rounded-2xl text-white text-xs placeholder:text-white/5 focus:outline-none focus:border-brand-gold/20 focus:bg-white/[0.03] transition-all duration-700 shadow-2xl"
+                    className="w-full bg-[#0A0A0F] border border-white/[0.05] py-5 pl-14 pr-14 rounded-[20px] text-white text-xs placeholder:text-white/20 focus:outline-none focus:border-brand-gold/30 focus:bg-brand-gold/[0.02] transition-all duration-700 shadow-2xl"
                   />
                   <button
                     type="button"
@@ -324,10 +326,10 @@ function LoginForm() {
           </p>
         )}
 
-        <div className="flex items-center gap-4 p-1 bg-white/[0.02] border border-white/5 rounded-2xl backdrop-blur-sm">
+        <div className="flex items-center gap-4 p-2 bg-[#0A0A0F] border border-white/[0.05] rounded-[24px] backdrop-blur-sm shadow-2xl">
           <button 
             onClick={() => handleSocialAuth("Google")} 
-            className="flex items-center gap-3 px-6 py-3 rounded-xl hover:bg-white transition-all duration-500 group/social" 
+            className="flex items-center gap-3 px-6 py-4 rounded-[16px] hover:bg-white transition-all duration-500 group/social" 
             type="button"
             title="Continuar com Google"
           >
@@ -344,7 +346,7 @@ function LoginForm() {
 
           <Link
             href="/driver/login" 
-            className="flex items-center gap-3 px-6 py-3 rounded-xl hover:bg-brand-gold transition-all duration-500 group/driver"
+            className="flex items-center gap-3 px-6 py-4 rounded-[16px] hover:bg-brand-gold transition-all duration-500 group/driver"
           >
             <Fingerprint className="w-4 h-4 text-white/20 group-hover/driver:text-black transition-colors" />
             <span className="text-[9px] font-black uppercase tracking-[0.2em] text-white/40 group-hover/driver:text-black transition-colors">Motorista</span>
@@ -373,14 +375,13 @@ export default function LoginPage() {
           }}
         />
         {/* Gradient layers */}
-        <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-black/30" />
-        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-transparent to-black/50" />
+        <div className="absolute inset-0 bg-gradient-to-t from-[#050507] via-[#050507]/40 to-[#050507]/20" />
+        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-transparent to-[#050507]" />
 
         {/* Logo — top left */}
         <div className="absolute top-10 left-10 z-10">
-          <Link href="/" className="inline-flex items-center gap-4">
-            <img src="/logo-mark2.svg" alt="NexRice" className="w-11 h-11 brightness-0 invert" />
-            <span className="text-white font-black text-xl tracking-[0.3em] uppercase">NEXRICE</span>
+          <Link href="/" className="inline-flex items-center group">
+            <img src="/logoMov.png" alt="MOVNLY" className="h-16 md:h-[70px] w-auto transition-transform duration-700 group-hover:scale-105" />
           </Link>
         </div>
 
@@ -402,7 +403,7 @@ export default function LoginPage() {
             </div>
           </div>
           <p className="text-white/15 text-[8px] font-bold uppercase tracking-[0.3em]">
-            © 2024 NexRice · <Link href="/privacidade" className="hover:text-white/40 transition-colors">Privacidade</Link> · <Link href="/termos" className="hover:text-white/40 transition-colors">Termos</Link>
+            © 2024 MOVNLY · <Link href="/privacidade" className="hover:text-white/40 transition-colors">Privacidade</Link> · <Link href="/termos" className="hover:text-white/40 transition-colors">Termos</Link>
           </p>
         </div>
       </div>

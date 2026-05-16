@@ -123,7 +123,7 @@ export default function BookingDetailsPage() {
                             </div>
                             <div className="space-y-1">
                                 <p className="text-2xl font-light text-white italic tracking-tight uppercase">{booking.category}</p>
-                                <p className="text-[10px] text-white/30 uppercase tracking-[0.2em]">Veículo NexRice</p>
+                                <p className="text-[10px] text-white/30 uppercase tracking-[0.2em]">Veículo MOVNLY</p>
                             </div>
                         </div>
 
@@ -213,7 +213,7 @@ export default function BookingDetailsPage() {
                                     <p className="text-lg font-light text-white italic leading-tight">{booking.driver.name}</p>
                                     <div className="flex items-center gap-1 text-brand-gold mt-1">
                                         <Star className="w-3 h-3 fill-current" />
-                                        <span className="text-[10px] font-bold text-white/40">{booking.driver.rating} · Motorista NexRice</span>
+                                        <span className="text-[10px] font-bold text-white/40">{booking.driver.rating} · Motorista MOVNLY</span>
                                     </div>
                                 </div>
                             </div>

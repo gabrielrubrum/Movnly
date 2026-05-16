@@ -1,6 +1,6 @@
 services:
   nginx:
-    container_name: nexrice-nginx
+    container_name: movnly-nginx
     platform: linux/amd64
     image: nginx:latest
     ports:

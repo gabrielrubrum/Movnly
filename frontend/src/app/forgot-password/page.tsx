@@ -45,7 +45,7 @@ export default function ForgotPasswordPage() {
                         <span>Voltar</span>
                     </Link>
                     <Link href="/">
-                        <img src="/logo-mark2.svg" alt="NexRice" className="w-8 h-8 brightness-0 invert opacity-30 hover:opacity-80 transition-opacity" />
+                        <img src="/logoMov.png" alt="MOVNLY" className="h-10 md:h-12 w-auto  opacity-30 hover:opacity-80 transition-opacity" />
                     </Link>
                 </div>
 
@@ -59,7 +59,7 @@ export default function ForgotPasswordPage() {
                                     <span className="font-black italic text-brand-gold"> Acesso</span>
                                 </h1>
                                 <p className="text-white/30 text-xs font-light leading-relaxed mt-4 max-w-[300px]">
-                                    Introduza o seu e-mail para receber o código de recuperação da sua conta NexRice.
+                                    Introduza o seu e-mail para receber o código de recuperação da sua conta MOVNLY.
                                 </p>
                             </div>
 
@@ -128,7 +128,7 @@ export default function ForgotPasswordPage() {
                 </AnimatePresence>
 
                 <p className="text-white/10 text-[8px] font-bold uppercase tracking-[0.4em] text-center mt-10">
-                    © 2024 NexRice
+                    © 2024 MOVNLY
                 </p>
             </motion.div>
         </div>

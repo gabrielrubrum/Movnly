@@ -40,7 +40,7 @@ const RULES = [
 ];
 
 const PROCESS = [
-  { step: "01", title: "Cancela a reserva", desc: "No painel da sua conta ou por email para suporte@nexrice.com" },
+  { step: "01", title: "Cancela a reserva", desc: "No painel da sua conta ou por email para suporte@movnly.com" },
   { step: "02", title: "Confirmação", desc: "Recebe email de confirmação do cancelamento em até 1 hora" },
   { step: "03", title: "Processamento", desc: "O reembolso é iniciado automaticamente pelo nosso sistema" },
   { step: "04", title: "Devolução", desc: "O valor aparece na sua conta em 5 a 10 dias úteis (depende do banco)" },
@@ -124,10 +124,10 @@ export default function ReembolsosPage() {
 
           {/* Contacto */}
           <div className="flex flex-col sm:flex-row gap-4">
-            <a href="mailto:suporte@nexrice.com"
+            <a href="mailto:suporte@movnly.com"
               className="flex items-center gap-3 px-6 py-4 rounded-2xl bg-brand-gold text-black font-bold text-sm hover:bg-white transition-all">
               <CreditCard className="w-4 h-4" />
-              suporte@nexrice.com
+              suporte@movnly.com
             </a>
             <div className="flex items-center gap-3 px-6 py-4 rounded-2xl text-white/40 text-sm"
               style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.06)" }}>

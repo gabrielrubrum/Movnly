@@ -14,14 +14,15 @@ export default function ParceirosLayout({ children }: { children: React.ReactNod
   return (
     <div className="min-h-screen bg-obsidian-950 flex">
       <aside className="hidden lg:flex flex-col w-60 border-r border-white/06 bg-obsidian-900/60 fixed top-0 bottom-0 left-0 z-30">
-        <div className="p-5 border-b border-white/06">
-          <Link href="/" className="flex items-center gap-2.5">
-            <div className="w-8 h-8 rounded-xl bg-gradient-to-br from-blue-500 to-blue-700 flex items-center justify-center">
-              <span className="text-white font-black text-xs">NX</span>
-            </div>
-            <div>
-              <span className="text-white font-black text-base tracking-[-0.04em]">NEX<span className="text-gradient-gold">RIDE</span></span>
-              <p className="text-[0.6rem] text-slate-600 uppercase tracking-widest">Parceiro</p>
+        <div className="p-8 border-b border-white/06">
+          <Link href="/" className="flex items-center group">
+            <div className="relative">
+              <img 
+                src="/logoMov.png" 
+                alt="MOVNLY" 
+                className="h-14 md:h-16 w-auto transition-all duration-700 group-hover:scale-105" 
+              />
+              <div className="absolute inset-0 bg-brand-gold/20 blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
             </div>
           </Link>
         </div>

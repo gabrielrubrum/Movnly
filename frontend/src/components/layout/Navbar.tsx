@@ -50,12 +50,9 @@ export function Navbar() {
         {/* Logo */}
         <Link href="/" className="flex items-center gap-4 group shrink-0 mr-8">
           <div className="relative">
-            <img src="/logo-mark2.svg" alt="NexRice" className="w-10 h-10 grayscale group-hover:grayscale-0 transition-all duration-700 group-hover:scale-110" />
+            <img src="/logoMov.png" alt="MOVNLY" className="h-14 md:h-[65px] w-auto transition-all duration-700 group-hover:scale-105" />
             <div className="absolute inset-0 bg-brand-gold/20 blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
           </div>
-          <span className="text-xl font-bold text-white tracking-[0.3em] group-hover:tracking-[0.35em] transition-all duration-700 font-sans">
-            NEXRICE
-          </span>
         </Link>
 
         {/* Desktop Links */}

@@ -1,6 +1,6 @@
 {
   "meta": {
-    "title": "NexRice — Su Conductor Privado en Lisboa",
+    "title": "MOVNLY — Su Conductor Privado en Lisboa",
     "description": "Transporte ejecutivo y transfers privados. Conductores profesionales, coches nuevos y precios fijos en Lisboa."
   },
   "nav": {
@@ -107,7 +107,7 @@
     "learnMore": "Elija su Coche",
     "headline1": "Su conductor particular",
     "headline2": "en Lisboa.",
-    "sub": "NexRice ha llegado para simplificar su forma de moverse. Coches nuevos, precios fijos y conductores profesionales listos para llevarle a cualquier lugar.",
+    "sub": "MOVNLY ha llegado para simplificar su forma de moverse. Coches nuevos, precios fijos y conductores profesionales listos para llevarle a cualquier lugar.",
     "trust": {
       "drivers": "Conductores Profesionales",
       "rating": "4.9 · Valoraciones Reales",
@@ -240,7 +240,7 @@
     "viewPrices": "Ver Precios",
     "flightPlaceholder": "Nº de Vuelo (para seguimiento)",
     "meetingPoint": "Punto de Encuentro",
-    "meetingPointBadge": "Estándar NexRice",
+    "meetingPointBadge": "Estándar MOVNLY",
     "meetingPointTitle": "Llegada Sin Estrés",
     "meetingPointDesc": "Su conductor estará en el lugar acordado con identificación clara para una partida rápida.",
     "selectVehicle": "Elegir Vehículo",
@@ -379,7 +379,7 @@
     "stepExtras": {
       "title": "Servicios Adicionales",
       "sub": "Personalice su viaje como prefiera",
-      "recommendation": "Sugerencia NexRice",
+      "recommendation": "Sugerencia MOVNLY",
       "mgTitle": "Recepción en Terminal",
       "mgDesc": "El conductor le espera con una placa personalizada.",
       "exclusiveService": "Servicio Dedicado",
@@ -516,7 +516,7 @@
     "headline2": "Su Negocio.",
     "subtitle": "Programas pensados para facilitar la movilidad de clientes y equipos.",
     "cta_link": "Más información sobre alianzas",
-    "corp_badge": "NexRice Business",
+    "corp_badge": "MOVNLY Business",
     "corp_exclusive": "Servicio Profesional",
     "corp_desc": "Acceso prioritario a la flota y facturación mensual para su organización.",
     "features": [
@@ -540,7 +540,7 @@
     "segments": {
       "hotels": {
         "badge": "Hoteles y Resorts",
-        "title": "NexRice Hospitality",
+        "title": "MOVNLY Hospitality",
         "desc": "Eleve la experiencia de sus huéspedes con un socio de transporte de confianza.",
         "features": [
           "Portal de Reserva Dedicado",
@@ -652,7 +652,7 @@
         "role": "Director Comercial",
         "country": "Portugal",
         "avatar": "RS",
-        "text": "Uso NexRice para todos mis viajes de negocios en Lisboa. Puntualidad británica y vehículos de alto nivel en cada trayecto."
+        "text": "Uso MOVNLY para todos mis viajes de negocios en Lisboa. Puntualidad británica y vehículos de alto nivel en cada trayecto."
       },
       {
         "name": "Maria Fontes",
@@ -686,7 +686,7 @@
       "button": "Suscribirse",
       "privacy": "Sus datos están protegidos."
     },
-    "copyright": "© {year} NexRice. Todos los derechos reservados.",
+    "copyright": "© {year} MOVNLY. Todos los derechos reservados.",
     "cols": {
       "services": {
         "title": "Servicios",
@@ -800,7 +800,7 @@
     {
       "role": "Director Comercial",
       "country": "España",
-      "text": "Uso NexRice para todos mis viajes de negocios en Lisboa. Puntualidad perfecta, vehículos impecables y la plataforma es muy intuitiva.",
+      "text": "Uso MOVNLY para todos mis viajes de negocios en Lisboa. Puntualidad perfecta, vehículos impecables y la plataforma es muy intuitiva.",
       "route": "Aeropuerto → Parque de las Naciones"
     },
     {

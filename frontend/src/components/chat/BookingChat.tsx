@@ -168,7 +168,7 @@ export function BookingChat({ bookingId, isOpen, onClose, title = "Central de Co
                                  <Smartphone className="w-3 h-3" />
                                  <span className="text-[7px] font-black uppercase tracking-widest">Mobile Optimized</span>
                              </div>
-                             <p className="text-[7px] font-bold text-white/10 uppercase tracking-[0.3em]">NexRice Security Protocol v2.4</p>
+                             <p className="text-[7px] font-bold text-white/10 uppercase tracking-[0.3em]">MOVNLY Security Protocol v2.4</p>
                         </div>
                     </div>
                 </motion.div>

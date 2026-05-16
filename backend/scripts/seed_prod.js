@@ -1,5 +1,5 @@
 /**
- * NexRice - Seed de Produção (PostgreSQL)
+ * MOVNLY - Seed de Produção (PostgreSQL)
  * Corre DEPOIS de: npx prisma migrate deploy
  * Uso: node scripts/seed_prod.js
  */
@@ -14,9 +14,9 @@ async function main() {
     const adminPass = await bcrypt.hash(process.env.ADMIN_PASSWORD || 'NexElite2026_Secure!', 10);
 
     const admin = await prisma.user.upsert({
-        where: { email: 'admin@nexrice.com' },
+        where: { email: 'admin@movnly.com' },
         update: { role: 'ADMIN', password: adminPass, isEmailVerified: true },
-        create: { email: 'admin@nexrice.com', name: 'NexRice Operations', password: adminPass, role: 'ADMIN', isEmailVerified: true },
+        create: { email: 'admin@movnly.com', name: 'MOVNLY Operations', password: adminPass, role: 'ADMIN', isEmailVerified: true },
     });
     console.log('[SEED] Admin:', admin.email);
 

@@ -32,7 +32,7 @@ export default function ComoFuncionaPage() {
           <div className="relative container-premium text-center">
             <Badge variant="blue" className="mb-4">Processo Transparente</Badge>
             <h1 className="text-[clamp(2.5rem,5vw,4rem)] font-black tracking-tight text-white mb-4">
-              Como funciona o Serviço NEXRICE
+              Como funciona o Serviço MOVNLY
             </h1>
             <p className="text-lg text-slate-400 max-w-2xl mx-auto">
               Do planeamento à chegada ao destino, cada detalhe é gerido com o máximo rigor para a sua total tranquilidade.

@@ -7,8 +7,8 @@ import Link from "next/link";
 const SECTIONS = [
   {
     icon: Shield,
-    title: "O Serviço NexRice",
-    content: "A NexRice é uma plataforma de transfers e transporte executivo em Portugal. Todos os motoristas são profissionais licenciados com alvará TVDE/RNAAT válido. Ao reservar, está a contratar um serviço de transporte privado com preço fixo, sem surpresas no final da viagem.",
+    title: "O Serviço MOVNLY",
+    content: "A MOVNLY é uma plataforma de transfers e transporte executivo em Portugal. Todos os motoristas são profissionais licenciados com alvará TVDE/RNAAT válido. Ao reservar, está a contratar um serviço de transporte privado com preço fixo, sem surpresas no final da viagem.",
   },
   {
     icon: Scale,
@@ -23,17 +23,17 @@ const SECTIONS = [
   {
     icon: AlertTriangle,
     title: "Responsabilidades",
-    content: "A NexRice não se responsabiliza por atrasos causados por condições de tráfego imprevisíveis, condições meteorológicas extremas ou greves. O passageiro é responsável por fornecer dados de voo corretos. Bagagem danificada durante o transporte deve ser reportada no prazo de 24 horas.",
+    content: "A MOVNLY não se responsabiliza por atrasos causados por condições de tráfego imprevisíveis, condições meteorológicas extremas ou greves. O passageiro é responsável por fornecer dados de voo corretos. Bagagem danificada durante o transporte deve ser reportada no prazo de 24 horas.",
   },
   {
     icon: CheckCircle2,
     title: "Conduta e Utilização",
-    content: "O utilizador compromete-se a manter uma conduta respeitosa com os motoristas e a não utilizar o serviço para fins ilegais. A NexRice reserva-se o direito de suspender contas que violem estas condições. Qualquer disputa será resolvida pelos tribunais portugueses.",
+    content: "O utilizador compromete-se a manter uma conduta respeitosa com os motoristas e a não utilizar o serviço para fins ilegais. A MOVNLY reserva-se o direito de suspender contas que violem estas condições. Qualquer disputa será resolvida pelos tribunais portugueses.",
   },
   {
     icon: Scale,
     title: "Alterações aos Termos",
-    content: "A NexRice pode atualizar estes termos a qualquer momento. As alterações entram em vigor 30 dias após publicação no site. A continuação do uso do serviço após esse prazo implica a aceitação dos novos termos. Para questões, contacte termos@nexrice.com.",
+    content: "A MOVNLY pode atualizar estes termos a qualquer momento. As alterações entram em vigor 30 dias após publicação no site. A continuação do uso do serviço após esse prazo implica a aceitação dos novos termos. Para questões, contacte termos@movnly.com.",
   },
 ];
 
@@ -60,7 +60,7 @@ export default function TermosPage() {
               Termos e Condições
             </h1>
             <p className="text-white/40 text-sm">
-              Última atualização: 27 de Abril de 2026 &nbsp;·&nbsp; NexRice, Lda. &nbsp;·&nbsp; Lisboa, Portugal
+              Última atualização: 27 de Abril de 2026 &nbsp;·&nbsp; MOVNLY, Lda. &nbsp;·&nbsp; Lisboa, Portugal
             </p>
           </div>
 
@@ -85,7 +85,7 @@ export default function TermosPage() {
 
           <div className="mt-16 pt-8 border-t border-white/[0.06] text-center">
             <p className="text-white/25 text-xs">
-              NexRice Elite &nbsp;·&nbsp; NIF: 517 842 930 &nbsp;·&nbsp; termos@nexrice.com &nbsp;·&nbsp; nexrice.com
+              MOVNLY Elite &nbsp;·&nbsp; NIF: 517 842 930 &nbsp;·&nbsp; termos@movnly.com &nbsp;·&nbsp; movnly.com
             </p>
           </div>
 

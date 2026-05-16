@@ -4,4 +4,4 @@ Disallow: /admin
 Disallow: /api
 Disallow: /dashboard
 
-Sitemap: https://nexrice.com/sitemap.xml
+Sitemap: https://movnly.com/sitemap.xml

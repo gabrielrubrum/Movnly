@@ -11,29 +11,28 @@ export function ToursSection() {
     const { t } = useI18n();
     const featuredTours = TOURS.slice(0, 4);
     return (
-        <section className="nx-section bg-surface-0 py-24 relative overflow-hidden">
-            {/* Subtle background accent */}
-            <div className="absolute inset-0 bg-gradient-to-b from-surface-1/30 via-transparent to-transparent pointer-events-none" />
-
+        <section className="nx-section bg-[#050507] py-32 relative overflow-hidden border-t border-white/5">
             <div className="nx-container relative z-10">
 
                 {/* Header */}
                 <div className="flex flex-col md:flex-row items-start md:items-end justify-between gap-8 mb-16">
                     <div>
-                        <span className="badge-editorial mb-4 inline-block">{t("tours_section.badge")}</span>
-                        <h2 className="luxury-headline">
+                        <span className="text-brand-gold text-[10px] uppercase tracking-[0.5em] font-medium mb-6 block">
+                            {t("tours_section.badge")}
+                        </span>
+                        <h2 className="text-5xl md:text-7xl font-bold text-white tracking-tight leading-[1.05]">
                             {t("tours_section.title1")}{" "}
-                            <span className="opacity-40">{t("tours_section.title2")}</span>
+                            <span className="font-sans font-medium text-white/30">{t("tours_section.title2")}</span>
                         </h2>
-                        <p className="luxury-subheadline mt-4 max-w-lg">
+                        <p className="text-lg text-white/40 max-w-xl leading-relaxed font-light mt-6">
                             {t("tours_section.sub")}
                         </p>
                     </div>
                     <Link
                         href="/tours"
-                        className="shrink-0 flex items-center gap-3 text-[11px] font-black uppercase tracking-[0.2em] text-brand-gold hover:text-white transition-all border-b border-brand-gold/30 hover:border-white pb-1 font-sans"
+                        className="shrink-0 flex items-center gap-4 px-8 py-3 rounded-full border border-white/10 text-[10px] font-black uppercase tracking-[0.3em] text-white/50 hover:text-white hover:border-brand-gold/40 hover:bg-white/5 transition-all duration-500 group shadow-xl"
                     >
-                        {t("tours_section.viewAll")} <ArrowRight className="w-4 h-4" />
+                        {t("tours_section.viewAll")} <ArrowRight className="w-4 h-4 group-hover:translate-x-2 transition-transform text-brand-gold" />
                     </Link>
                 </div>
 
@@ -46,25 +45,28 @@ export function ToursSection() {
                                 key={tour.id}
                                 href={`/tours#${tour.id}`}
                                 className={cn(
-                                    "group relative rounded-[24px] overflow-hidden border transition-all duration-700 bg-white/[0.02] cursor-pointer block flex flex-col hover:-translate-y-2",
+                                    "group relative h-[480px] md:h-[540px] rounded-[2rem] overflow-hidden border transition-all duration-700 bg-[#0A0A0F] shadow-2xl block flex flex-col justify-between",
                                     isSummer 
-                                        ? "border-brand-gold/40 shadow-[0_0_40px_rgba(212,175,55,0.05)] hover:border-brand-gold hover:shadow-[0_0_60px_rgba(212,175,55,0.15)]" 
-                                        : "border-white/[0.06] hover:border-brand-gold/30 hover:bg-white/[0.04]"
+                                        ? "border-brand-gold/40 shadow-[0_0_40px_rgba(212,175,55,0.05)] hover:border-brand-gold" 
+                                        : "border-white/[0.05] hover:border-white/15"
                                 )}
-                                style={{ animationDelay: `${idx * 100}ms` }}
                             >
-                                {/* Image */}
-                                <div className="relative h-64 overflow-hidden shrink-0">
+                                {/* Background Image */}
+                                <div className="absolute inset-0 z-0">
                                     <img
                                         src={tour.img}
                                         alt={tour.title}
-                                        className="w-full h-full object-cover scale-105 group-hover:scale-110 transition-transform duration-1000 saturate-[0.8] group-hover:saturate-100"
+                                        className="w-full h-full object-cover opacity-60 group-hover:scale-110 group-hover:opacity-90 transition-transform duration-[2s] ease-out saturate-[0.8] group-hover:saturate-100"
                                     />
-                                    <div className="absolute inset-0 bg-gradient-to-t from-[#07070A] via-[#07070A]/20 to-transparent" />
+                                    {/* Seamless Fade Overlays */}
+                                    <div className="absolute inset-0 bg-gradient-to-t from-[#0A0A0F] via-[#0A0A0F]/60 to-transparent opacity-90" />
+                                    <div className="absolute inset-0 bg-gradient-to-b from-[#0A0A0F]/40 via-transparent to-transparent opacity-80" />
+                                </div>
 
-                                    {/* Tag */}
-                                    <div className="absolute top-4 left-4 flex flex-col gap-2">
-                                        <span className="px-3 py-1.5 bg-brand-gold text-black text-[9px] font-black uppercase tracking-[0.2em] rounded-full shadow-lg self-start">
+                                {/* Top Section */}
+                                <div className="relative z-10 p-8 flex justify-between items-start">
+                                    <div className="flex flex-col gap-3">
+                                        <span className="px-4 py-1.5 bg-brand-gold text-black text-[9px] font-black uppercase tracking-[0.2em] rounded-full shadow-lg self-start">
                                             {t(`tours_list.${tour.id}.tag`)}
                                         </span>
                                         {isSummer && (
@@ -73,43 +75,43 @@ export function ToursSection() {
                                             </span>
                                         )}
                                     </div>
-
-                                    {/* Rating */}
-                                    <div className="absolute top-4 right-4 flex items-center gap-1.5 text-white bg-black/40 backdrop-blur-md px-2.5 py-1.5 rounded-full border border-white/10">
+                                    <div className="flex items-center gap-1.5 text-white bg-white/5 backdrop-blur-md px-3 py-1.5 rounded-full border border-white/10">
                                         <Star className="w-3.5 h-3.5 fill-brand-gold text-brand-gold" />
-                                        <span className="text-[10px] font-bold font-sans">5.0</span>
+                                        <span className="text-[10px] font-bold">5.0</span>
                                     </div>
                                 </div>
 
-                                {/* Content */}
-                                <div className="p-6 relative flex-1 flex flex-col">
-                                    {isSummer && (
-                                        <div className="absolute -top-10 right-6 w-20 h-20 bg-brand-gold/10 blur-[40px] rounded-full group-hover:bg-brand-gold/20 transition-all pointer-events-none" />
-                                    )}
-                                    
-                                    <div className="flex-1">
-                                        <h3 className="text-xl font-bold text-white mb-2 tracking-tight group-hover:text-brand-gold transition-colors">{t(`tours_list.${tour.id}.title`)}</h3>
-                                        <p className="text-[11px] text-white/50 font-medium uppercase tracking-widest mb-6 font-sans leading-relaxed line-clamp-2">
+                                {/* Bottom Content */}
+                                <div className="relative z-10 p-8 flex flex-col gap-4">
+                                    {/* Tour Info */}
+                                    <div>
+                                        <h3 className="text-2xl md:text-3xl font-bold text-white tracking-tight leading-tight mb-2 group-hover:text-brand-gold transition-colors duration-500">
+                                            {t(`tours_list.${tour.id}.title`)}
+                                        </h3>
+                                        <p className="text-[10px] font-black uppercase tracking-[0.2em] text-white/40 mb-6 line-clamp-1">
                                             {t(`tours_list.${tour.id}.sub`)}
                                         </p>
                                     </div>
 
-                                    <div className="flex items-end justify-between mt-auto">
-                                        <div className="flex items-center gap-2.5 text-white/40 bg-white/5 px-3 py-1.5 rounded-lg border border-white/5">
+                                    {/* Metadata */}
+                                    <div className="flex items-center gap-4 text-white/40 pb-6 border-b border-white/[0.06]">
+                                        <div className="flex items-center gap-2 bg-white/5 px-2.5 py-1 rounded-md border border-white/5">
                                             <Clock className="w-3.5 h-3.5 text-brand-gold/60" />
-                                            <span className="text-[10px] font-bold uppercase tracking-wider font-sans text-white/80">{tour.duration}</span>
-                                        </div>
-                                        <div className="text-right flex flex-col justify-end">
-                                            <p className="text-[9px] text-white/30 uppercase tracking-widest font-sans mb-1">{t("tours_section.from")}</p>
-                                            <p className="text-2xl font-black text-brand-gold leading-none tracking-tighter group-hover:scale-105 transition-transform origin-right">€{tour.price}</p>
+                                            <span className="text-[9px] font-bold tracking-[0.2em] uppercase text-white/80">{tour.duration}</span>
                                         </div>
                                     </div>
 
-                                    {/* Hover CTA */}
-                                    <div className="mt-6 flex items-center justify-between text-brand-gold opacity-0 group-hover:opacity-100 transition-all duration-500 translate-y-4 group-hover:translate-y-0 pt-4 border-t border-white/5">
-                                        <span className="text-[10px] font-black uppercase tracking-[0.2em] font-sans">Reservar</span>
-                                        <div className="w-8 h-8 rounded-full bg-brand-gold/10 flex items-center justify-center">
-                                            <ArrowRight className="w-4 h-4" />
+                                    {/* Footer (Price & Button) */}
+                                    <div className="flex items-end justify-between mt-2">
+                                        <div>
+                                            <p className="text-[8px] font-black uppercase tracking-[0.4em] text-white/20 mb-1 font-sans">{t("tours_section.from")}</p>
+                                            <span className="text-3xl font-bold text-white tracking-tighter leading-none group-hover:text-brand-gold transition-colors duration-500">
+                                                €{tour.price}
+                                            </span>
+                                        </div>
+
+                                        <div className="w-12 h-12 rounded-full flex items-center justify-center transition-all duration-500 bg-white/5 border border-white/10 text-white group-hover:bg-brand-gold group-hover:text-black group-hover:border-brand-gold group-hover:scale-110">
+                                            <ArrowRight className="w-5 h-5 -rotate-45" />
                                         </div>
                                     </div>
                                 </div>
@@ -119,19 +121,21 @@ export function ToursSection() {
                 </div>
 
                 {/* Bottom CTA Banner */}
-                <div className="mt-12 glass-concierge rounded-[24px] p-8 md:p-10 flex flex-col md:flex-row items-center justify-between gap-6 border border-white/[0.06]">
-                    <div className="flex items-center gap-4">
-                        <div className="w-10 h-10 rounded-full bg-brand-gold/10 border border-brand-gold/20 flex items-center justify-center shrink-0">
-                            <MapPin className="w-4 h-4 text-brand-gold" />
+                <div className="mt-16 bg-[#0A0A0F] border border-white/[0.06] rounded-[2rem] p-8 md:p-12 flex flex-col md:flex-row items-center justify-between gap-8 shadow-2xl relative overflow-hidden group">
+                    <div className="absolute inset-0 bg-gradient-to-r from-brand-gold/5 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-1000" />
+                    
+                    <div className="flex items-center gap-6 relative z-10">
+                        <div className="w-14 h-14 rounded-full bg-white/[0.02] border border-white/10 flex items-center justify-center shrink-0 shadow-xl group-hover:border-brand-gold/40 group-hover:bg-brand-gold/5 transition-all duration-500">
+                            <MapPin className="w-6 h-6 text-brand-gold/60 group-hover:text-brand-gold transition-colors" />
                         </div>
                         <div>
-                            <p className="text-white font-black text-sm">{t("tours_section.customTitle")}</p>
-                            <p className="text-white/40 text-xs mt-0.5">{t("tours_section.customDesc")}</p>
+                            <p className="text-xl md:text-2xl text-white font-bold tracking-tight">{t("tours_section.customTitle")}</p>
+                            <p className="text-white/40 text-[10px] md:text-xs font-bold uppercase tracking-[0.2em] mt-1">{t("tours_section.customDesc")}</p>
                         </div>
                     </div>
                     <Link
                         href="/tours"
-                        className="shrink-0 btn-editorial-primary h-12 px-10 rounded-full text-[10px] font-black uppercase tracking-[0.3em] flex items-center gap-2"
+                        className="shrink-0 relative z-10 flex items-center gap-4 px-10 py-4 rounded-full bg-brand-gold text-black text-[10px] font-black uppercase tracking-[0.3em] hover:bg-white transition-all duration-500 shadow-[0_0_20px_rgba(212,175,55,0.2)] hover:scale-105 hover:shadow-[0_0_30px_rgba(255,255,255,0.3)]"
                     >
                         {t("tours_section.viewAll")} <ArrowRight className="w-4 h-4" />
                     </Link>

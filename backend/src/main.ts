@@ -72,8 +72,13 @@ async function bootstrap() {
   // ── CORS ───────────────────────────────────────────────────────
   const allowedOrigins = isProd
     ? [
-        process.env.FRONTEND_URL || 'https://nexrice.com',
-        'https://www.nexrice.com',
+        process.env.FRONTEND_URL || 'https://movnly.com',
+        'https://movnly.com',
+        'https://www.movnly.com',
+        'https://app.movnly.com',
+        'https://admin.movnly.com',
+        'https://driver.movnly.com',
+        'https://parceiros.movnly.com',
       ]
     : true;
 
@@ -82,10 +87,11 @@ async function bootstrap() {
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
     credentials: true,
     allowedHeaders: ['Content-Type', 'Authorization', 'stripe-signature', 'x-browser-fingerprint', 'x-client-ip'],
+    exposedHeaders: ['set-cookie'],
   });
 
   const port = process.env.PORT ?? 3002;
   await app.listen(port, '0.0.0.0');
-  console.log(`[NexRice] Backend running on port ${port} [${process.env.NODE_ENV || 'development'}]`);
+  console.log(`[MOVNLY] Backend running on port ${port} [${process.env.NODE_ENV || 'development'}]`);
 }
 bootstrap();

@@ -1,8 +1,8 @@
 "use client";
 
-import { VEHICLE_CATEGORIES } from "@/lib/constants";
+import { VEHICLE_CATEGORIES, LISBON_PRICES, CASCAIS_PRICES } from "@/lib/constants";
 import { useI18n } from "@/i18n/context";
-import { Users, Briefcase, ChevronRight, Star, ShieldCheck, Wifi, Shield, Zap } from "lucide-react";
+import { Users, Briefcase, ChevronRight, Star, ShieldCheck, Wifi, Shield, Zap, ArrowRight, Check } from "lucide-react";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import { useState } from "react";
@@ -25,6 +25,7 @@ const CAT_ICONS: Record<string, React.ReactNode> = {
 export function VehicleCategories() {
   const { t } = useI18n();
   const [hovered, setHovered] = useState<string | null>(null);
+  const [location, setLocation] = useState<"lisboa" | "cascais">("lisboa");
 
   return (
     <section id="categories" className="nx-section bg-luxury-mesh py-32 overflow-hidden relative">
@@ -62,12 +63,43 @@ export function VehicleCategories() {
           >
             {t("categories.sub")}
           </motion.p>
+
+          {/* Location Toggle */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.2 }}
+            className="mt-10 flex items-center p-1.5 bg-white/5 border border-white/10 rounded-full backdrop-blur-md shadow-2xl relative z-20"
+          >
+            <button
+              onClick={() => setLocation("lisboa")}
+              className={cn(
+                "px-8 py-3 rounded-full text-[10px] font-black uppercase tracking-[0.25em] transition-all duration-500",
+                location === "lisboa"
+                  ? "bg-brand-gold text-black shadow-[0_0_20px_rgba(212,175,55,0.3)]"
+                  : "text-white/40 hover:text-white"
+              )}
+            >
+              Lisboa
+            </button>
+            <button
+              onClick={() => setLocation("cascais")}
+              className={cn(
+                "px-8 py-3 rounded-full text-[10px] font-black uppercase tracking-[0.25em] transition-all duration-500",
+                location === "cascais"
+                  ? "bg-brand-gold text-black shadow-[0_0_20px_rgba(212,175,55,0.3)]"
+                  : "text-white/40 hover:text-white"
+              )}
+            >
+              Cascais
+            </button>
+          </motion.div>
         </div>
 
-        {/* Vehicle Cards - 4 col on lg, 2 col on sm */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+        {/* Vehicle Cards - 4 col on lg, 2 col on md */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           {VEHICLE_CATEGORIES.map((vehicle, idx) => {
-            const accent = ACCENTS[vehicle.id] || ACCENTS.smart;
             const isHovered = hovered === vehicle.id;
             const isExec = vehicle.id === "executive";
 
@@ -80,139 +112,109 @@ export function VehicleCategories() {
                 transition={{ delay: idx * 0.1, duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
                 onMouseEnter={() => setHovered(vehicle.id)}
                 onMouseLeave={() => setHovered(null)}
-                className="relative group"
+                className="relative group h-full"
               >
                 <div
                   className={cn(
-                    "relative h-full flex flex-col rounded-[2rem] border transition-all duration-700 overflow-hidden",
+                    "relative h-full flex flex-col rounded-[32px] border transition-all duration-700 overflow-hidden group/card",
                     isExec
-                      ? "border-brand-gold/30 bg-[#0e0c04]"
-                      : "border-white/[0.07] bg-[#0a0a0f] hover:border-white/15"
+                      ? "border-brand-gold/30 bg-[#0A0A0F] shadow-[0_20px_80px_-20px_rgba(212,175,55,0.15)]"
+                      : "border-white/[0.05] bg-[#0A0A0F] hover:border-white/15 hover:shadow-[0_20px_80px_-20px_rgba(255,255,255,0.05)]"
                   )}
-                  style={isHovered ? {
-                    boxShadow: `0 0 80px -20px ${accent.glow}, 0 0 0 1px ${accent.ring}20`,
-                  } : {}}
                 >
-                  {/* Ambient glow layer */}
+                  {/* Ambient glow layer for hover */}
                   <div
-                    className="absolute inset-0 pointer-events-none transition-opacity duration-700"
+                    className="absolute inset-0 pointer-events-none transition-opacity duration-700 z-0"
                     style={{
-                      background: `radial-gradient(ellipse 80% 50% at 50% -10%, ${accent.glow} 0%, transparent 70%)`,
+                      background: isExec ? `radial-gradient(ellipse 80% 50% at 50% -10%, rgba(212,175,55,0.1) 0%, transparent 70%)` : `radial-gradient(ellipse 80% 50% at 50% -10%, rgba(255,255,255,0.03) 0%, transparent 70%)`,
                       opacity: isHovered || isExec ? 1 : 0,
                     }}
                   />
 
-                  {/* EXECUTIVE badge corner ribbon */}
-                  {isExec && (
-                    <div className="absolute top-5 right-5 z-20">
-                      <div className="px-3 py-1 rounded-full bg-brand-gold text-black text-[8px] font-black uppercase tracking-[0.4em]">
-                        Top
-                      </div>
-                    </div>
-                  )}
-
-                  {/* Car Visual */}
-                  <div className="relative h-[200px] md:h-[220px] flex items-center justify-center p-6 overflow-hidden">
-                    {/* Floor shadow */}
-                    <div className="absolute bottom-4 left-1/2 -translate-x-1/2 w-3/5 h-6 blur-xl rounded-full bg-black/60 opacity-70" />
-
-                    {/* Star rating */}
-                    <div className="absolute bottom-5 left-6 flex items-center gap-0.5 opacity-30 group-hover:opacity-80 transition-opacity duration-500">
-                      {[...Array(5)].map((_, i) => (
-                        <Star key={i} className="w-2.5 h-2.5 text-brand-gold fill-brand-gold" />
-                      ))}
-                    </div>
-
+                  {/* Cinematic Image Header */}
+                  <div className="relative h-[260px] md:h-[280px] w-full shrink-0 overflow-hidden">
                     <motion.img
                       src={vehicle.image}
                       alt={vehicle.name}
-                      animate={isHovered
-                        ? { scale: 1.18, y: -10, rotate: -1.5 }
-                        : { scale: 1.0, y: 0, rotate: 0 }}
-                      transition={{ type: "spring", stiffness: 80, damping: 18 }}
                       className={cn(
-                        "relative z-10 w-full max-w-[220px] h-auto object-contain drop-shadow-[0_15px_40px_rgba(0,0,0,0.9)] transition-all duration-700",
-                        !isHovered && "grayscale-[0.3] opacity-70"
+                        "absolute inset-0 w-full h-full object-cover transition-transform duration-[1.5s] ease-out group-hover/card:scale-105",
+                        !isHovered && !isExec && "grayscale-[0.4]"
                       )}
                     />
+                    
+                    {/* Gradient Fade to Black */}
+                    <div className="absolute inset-0 bg-gradient-to-t from-[#0A0A0F] via-[#0A0A0F]/40 to-transparent" />
+                    <div className="absolute inset-0 bg-gradient-to-b from-[#0A0A0F]/60 via-transparent to-transparent opacity-80" />
+
+                    {/* Top Badges */}
+                    <div className="absolute top-6 w-full px-6 flex justify-between items-start z-20">
+                       <div className={cn(
+                         "inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-[8px] font-black uppercase tracking-[0.25em] backdrop-blur-md",
+                         isExec ? "bg-brand-gold text-black shadow-lg" : "bg-black/60 text-white/80 border border-white/10"
+                       )}>
+                         {CAT_ICONS[vehicle.id]}
+                         {t(`categories_list.${vehicle.id}.badge`)}
+                       </div>
+                       
+                       {isExec && (
+                         <div className="px-3 py-1.5 rounded-full bg-white text-black text-[8px] font-black uppercase tracking-[0.4em] shadow-xl">
+                           VIP
+                         </div>
+                       )}
+                    </div>
                   </div>
 
-                  {/* Divider */}
-                  <div className="h-px mx-6 bg-gradient-to-r from-transparent via-white/8 to-transparent" />
-
-                  {/* Content */}
-                  <div className="flex flex-col flex-1 p-7 gap-5">
-
-                    {/* Badge + Name */}
-                    <div className="space-y-3">
-                      <div className={cn(
-                        "inline-flex items-center gap-2 px-3 py-1 rounded-full text-[8px] font-black uppercase tracking-[0.35em]",
-                        accent.label
-                      )}>
-                        {CAT_ICONS[vehicle.id]}
-                        {t(`categories_list.${vehicle.id}.badge`)}
-                      </div>
-
-                      <div>
-                        <h3 className="text-2xl font-bold text-white tracking-tight leading-none mb-1">
-                          {t(`categories_list.${vehicle.id}.name`)}
-                        </h3>
-                        <p className="text-[9px] font-bold uppercase tracking-[0.35em] text-white/30 font-sans">
-                          {t(`categories_list.${vehicle.id}.tagline`)}
-                        </p>
-                      </div>
-                    </div>
-
-                    {/* Models */}
-                    <p className="text-[10px] text-white/25 font-sans leading-relaxed">
-                      {t(`categories_list.${vehicle.id}.examples`)}
+                  {/* Content Body */}
+                  <div className="flex flex-col flex-1 px-8 pb-8 pt-0 relative z-10">
+                    <h3 className="text-3xl font-bold text-white tracking-tight mb-2">
+                      {t(`categories_list.${vehicle.id}.name`)}
+                    </h3>
+                    <p className="text-[10px] font-bold uppercase tracking-[0.25em] text-white/40 font-sans mb-8">
+                      {t(`categories_list.${vehicle.id}.tagline`)}
                     </p>
 
                     {/* Features */}
-                    <div className="space-y-2 flex-1">
+                    <div className="space-y-4 flex-1 mb-8">
                       {(vehicle.features || []).slice(0, 3).map((f, i) => (
-                        <div key={i} className="flex items-center gap-3">
+                        <div key={i} className="flex items-center gap-4">
                           <div className={cn(
                             "w-1.5 h-1.5 rounded-full shrink-0 transition-colors duration-500",
-                            isHovered || isExec ? "bg-brand-gold" : "bg-white/15"
+                            isExec || isHovered ? "bg-brand-gold" : "bg-white/15"
                           )} />
-                          <span className="text-[9px] font-bold text-white/40 uppercase tracking-[0.25em] font-sans">{f}</span>
+                          <span className="text-[10px] font-bold text-white/60 uppercase tracking-[0.15em] font-sans leading-snug">{f}</span>
                         </div>
                       ))}
                     </div>
 
-                    {/* Price + CTA */}
-                    <div className="pt-5 border-t border-white/[0.06] flex items-end justify-between">
+                    <p className="text-[10px] text-white/20 font-sans leading-relaxed mb-6 h-12">
+                      <span className="font-bold text-white/40">Ex:</span> {t(`categories_list.${vehicle.id}.examples`)}
+                    </p>
+
+                    {/* Footer */}
+                    <div className="pt-6 border-t border-white/[0.06] flex items-end justify-between mt-auto">
                       <div>
                         <p className="text-[8px] font-black uppercase tracking-[0.4em] text-white/20 mb-1 font-sans">Desde</p>
                         <span className={cn(
-                          "text-2xl font-bold tracking-tighter leading-none transition-colors duration-500",
-                          isHovered || isExec ? "text-brand-gold" : "text-white/60"
+                          "text-3xl font-bold tracking-tighter leading-none transition-colors duration-500",
+                          isExec || isHovered ? "text-brand-gold" : "text-white"
                         )}>
-                          {t(`categories_list.${vehicle.id}.price`)}€
+                          {location === "lisboa" ? LISBON_PRICES[vehicle.id] : CASCAIS_PRICES[vehicle.id]}€
                         </span>
                       </div>
 
                       <Link
                         href={`/book?category=${vehicle.id}`}
                         className={cn(
-                          "flex items-center gap-2 px-4 py-2 rounded-full border text-[8px] font-black uppercase tracking-widest whitespace-nowrap transition-all duration-500 font-sans",
+                          "w-12 h-12 rounded-full flex items-center justify-center transition-all duration-500",
                           isExec
-                            ? "border-brand-gold/50 text-brand-gold hover:bg-brand-gold hover:text-black"
-                            : "border-white/10 text-white/30 hover:border-brand-gold/50 hover:text-brand-gold"
+                            ? "bg-brand-gold text-black hover:scale-110 shadow-[0_0_20px_rgba(212,175,55,0.3)]"
+                            : "bg-white/5 border border-white/10 text-white hover:bg-brand-gold hover:text-black hover:border-brand-gold hover:scale-110"
                         )}
                       >
-                        {t("nav.bookNow")}
-                        <ChevronRight className="w-3 h-3 shrink-0" />
+                        <ArrowRight className="w-5 h-5 -rotate-45" />
                       </Link>
                     </div>
                   </div>
-
-                  {/* Bottom gold strip on exec or hover */}
-                  <div className={cn(
-                    "absolute bottom-0 left-6 right-6 h-px bg-gradient-to-r from-transparent via-brand-gold/50 to-transparent transition-opacity duration-700",
-                    isHovered || isExec ? "opacity-100" : "opacity-0"
-                  )} />
                 </div>
               </motion.div>
             );

@@ -60,13 +60,17 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
         {/* ── Sidebar Desktop ─────────────────────────────────── */}
         <aside className="hidden lg:flex flex-col w-64 fixed inset-y-0 left-0 z-50 bg-[#0A0A0F] border-r border-white/[0.08]">
 
-          {/* Logo */}
-          <div className="flex items-center gap-3 px-6 h-16 border-b border-white/[0.06]">
-            <img src="/logo-mark2.svg" alt="NexRice" className="w-8 h-8" />
-            <div>
-              <p className="text-white font-black text-sm tracking-[0.2em] uppercase leading-none">NEXRICE</p>
-              <p className="text-[8px] text-brand-gold/60 uppercase tracking-widest font-black mt-0.5">Admin</p>
-            </div>
+          <div className="flex items-center px-6 h-24 border-b border-white/[0.06]">
+            <Link href="/" className="group flex items-center">
+              <div className="relative">
+                <img 
+                  src="/logoMov.png" 
+                  alt="MOVNLY" 
+                  className="h-14 md:h-16 w-auto transition-all duration-700 group-hover:scale-105" 
+                />
+                <div className="absolute inset-0 bg-brand-gold/20 blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
+              </div>
+            </Link>
           </div>
 
           {/* Nav */}

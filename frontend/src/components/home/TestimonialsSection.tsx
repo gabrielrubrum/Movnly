@@ -8,11 +8,11 @@ export function TestimonialsSection() {
   const { t, tArray } = useI18n();
 
   return (
-    <section className="nx-section bg-luxury-mesh py-32 relative overflow-hidden border-t border-white/5">
+    <section className="nx-section bg-[#050507] py-32 relative overflow-hidden border-t border-white/5">
 
       {/* Atmospheric Branding Sub-layer */}
       <div className="absolute top-12 left-8 text-[15vw] font-bold text-white/[0.01] select-none pointer-events-none uppercase tracking-tighter leading-none animate-float">
-        NexRice
+        MOVNLY
       </div>
 
       <div className="nx-container relative z-10">
@@ -51,7 +51,7 @@ export function TestimonialsSection() {
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ delay: i * 0.1 }}
-              className="group p-10 md:p-14 rounded-[48px] glass-bento-premium border-white/10 hover:border-brand-gold/20 transition-all duration-700 flex flex-col shadow-luxury relative overflow-hidden"
+              className="group p-10 md:p-14 rounded-[48px] bg-[#0A0A0F] border border-white/[0.05] hover:border-brand-gold/20 transition-all duration-700 flex flex-col shadow-2xl relative overflow-hidden"
             >
               <div className="absolute top-0 right-0 p-8 opacity-10 group-hover:opacity-30 transition-opacity">
                 <Quote className="w-12 h-12 text-brand-gold" />

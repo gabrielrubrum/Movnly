@@ -1,12 +1,12 @@
 import { MailService } from './mail.service';
 
-describe('MailService (NexRice Elite)', () => {
+describe('MailService (MOVNLY Elite)', () => {
     let mailService: MailService;
     
     beforeEach(() => {
         // Mock environment variables
         process.env.RESEND_API_KEY = 're_test_key';
-        process.env.MAIL_FROM = 'info@test.NexRice.pt';
+        process.env.MAIL_FROM = 'info@test.MOVNLY.pt';
         
         mailService = new MailService();
         
@@ -30,24 +30,24 @@ describe('MailService (NexRice Elite)', () => {
         const html = (mailService as any).sendMail.mock.calls[0][2];
         expect(html).toContain('D4AF37'); // Gold hex
         expect(html).toContain('Plus Jakarta Sans'); // Font
-        expect(html).toContain('NexRice Elite'); // Branding
+        expect(html).toContain('MOVNLY Elite'); // Branding
     });
 
     it('should generate a valid payout scheduled email for drivers', async () => {
-        await mailService.sendPayoutScheduledEmail('driver@NexRice.pt', 25.00);
+        await mailService.sendPayoutScheduledEmail('driver@MOVNLY.pt', 25.00);
         
         expect((mailService as any).sendMail).toHaveBeenCalledWith(
-            'driver@NexRice.pt',
+            'driver@MOVNLY.pt',
             expect.stringContaining('Crédito Agendado'),
             expect.stringContaining('25€')
         );
     });
 
     it('should generate a valid withdrawal confirmation email', async () => {
-        await mailService.sendWithdrawalConfirmationEmail('driver@NexRice.pt', 150.00);
+        await mailService.sendWithdrawalConfirmationEmail('driver@MOVNLY.pt', 150.00);
         
         expect((mailService as any).sendMail).toHaveBeenCalledWith(
-            'driver@NexRice.pt',
+            'driver@MOVNLY.pt',
             expect.stringContaining('Liquidação de Fundos'),
             expect.stringContaining('150€')
         );

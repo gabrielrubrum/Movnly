@@ -41,7 +41,7 @@ export default function HistoricoPage() {
         const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
         const link = document.createElement("a");
         link.setAttribute("href", URL.createObjectURL(blob));
-        link.setAttribute("download", `nexrice_historico_${new Date().toISOString().split('T')[0]}.csv`);
+        link.setAttribute("download", `movnly_historico_${new Date().toISOString().split('T')[0]}.csv`);
         document.body.appendChild(link); link.click(); document.body.removeChild(link);
     };
 

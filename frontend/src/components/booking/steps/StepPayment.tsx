@@ -136,7 +136,7 @@ export function StepPayment({ form, update, onConfirm, onBack, loading, total, c
                               </div>
                               <div>
                                   <h3 className="text-4xl font-black text-white uppercase tracking-tighter font-sans leading-none">{user.name}</h3>
-                                  <p className="text-[10px] text-brand-gold/60 uppercase tracking-[0.4em] font-black mt-2">Sua Conta NexRice</p>
+                                  <p className="text-[10px] text-brand-gold/60 uppercase tracking-[0.4em] font-black mt-2">Sua Conta MOVNLY</p>
                               </div>
                           </div>
                       </div>

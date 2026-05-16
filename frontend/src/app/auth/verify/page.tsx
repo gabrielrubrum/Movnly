@@ -33,7 +33,7 @@ function VerifyEmailContent() {
     return (
         <div className="min-h-screen bg-[#07070A] flex flex-col items-center justify-center p-6 text-center">
             <div className="w-full max-w-md animate-luxury-reveal">
-                <img src="/logo-mark2.svg" alt="NexRice" className="w-20 h-20 mx-auto mb-12" />
+                <img src="/logoMov.png" alt="MOVNLY" className="h-10 md:h-12 w-auto mx-auto mb-12" />
 
                 {status === "loading" && (
                     <div className="space-y-6">
@@ -53,7 +53,7 @@ function VerifyEmailContent() {
                         <div className="space-y-4">
                             <h2 className="text-white uppercase tracking-[0.3em] font-black text-2xl">Confirmado</h2>
                             <p className="text-white/40 text-[10px] uppercase tracking-widest leading-relaxed max-w-[280px] mx-auto">
-                                A sua conta foi verificada com sucesso. Bem-vindo à NexRice.
+                                A sua conta foi verificada com sucesso. Bem-vindo à MOVNLY.
                             </p>
                         </div>
                         <Link

@@ -44,7 +44,7 @@ const mapBackendToFrontend = (dbBooking: any): Booking => {
     totalPrice: dbBooking.price || 0,
     currency: "EUR",
     passenger: {
-      name: dbBooking.passenger?.name || "Cliente NexRice",
+      name: dbBooking.passenger?.name || "Cliente MOVNLY",
       email: dbBooking.passenger?.email || "",
       phone: dbBooking.passenger?.phone || "+351 --- --- ---"
     },

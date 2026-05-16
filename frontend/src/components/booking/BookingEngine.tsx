@@ -108,147 +108,139 @@ export function BookingEngine() {
         </button>
       </div>
 
-      {/* Main Concierge Bar - Optimized Grid */}
-      <div className="w-full relative z-40 glass-concierge p-3 rounded-[32px] grid grid-cols-1 lg:grid-cols-12 gap-1 shadow-luxury border-white/[0.08] transition-all duration-700">
+      {/* Main Concierge Bar - Modern Stacked Layout */}
+      <div className="w-full relative z-40 bg-surface-0/60 backdrop-blur-3xl rounded-[32px] grid grid-cols-1 lg:grid-cols-12 shadow-luxury border border-white/[0.08] transition-all duration-700">
 
-        <div ref={originRef} className={cn(
-          "px-6 md:px-8 py-5 lg:py-4 relative group min-w-0 transition-all duration-500",
-          tripType === "roundtrip" ? "lg:col-span-2" : "lg:col-span-4"
-        )}>
-          <label className="text-[9px] font-black uppercase tracking-[0.3em] text-white/30 block mb-2 group-focus-within:text-white/60 transition-colors font-sans">
-            {t("booking.origin")}
-          </label>
-          <div className="flex items-center gap-3 h-10">
-            <MapPin className="w-5 h-5 text-brand-gold shrink-0" />
-            <LocationInput
-              placeholder={t("booking.originPlaceholder")}
-              value={origin}
-              onChange={(val) => setOrigin(val)}
-              variant="embedded"
-            />
-          </div>
-        </div>
-
-        {/* Floating Swap Interaction */}
+        {/* Left Side: Locations */}
         <div className={cn(
-          "hidden lg:flex absolute top-1/2 -translate-y-1/2 z-[60] transition-all duration-500",
-          tripType === "roundtrip" ? "left-[16%]" : "left-[32%]"
+          "flex flex-col relative py-2 transition-all duration-500",
+          tripType === "roundtrip" ? "lg:col-span-6" : "lg:col-span-7"
         )}>
-          <button onClick={swap} className="w-9 h-9 rounded-full border border-white/[0.1] flex items-center justify-center hover:border-brand-gold transition-all bg-[#0A0A0F] shadow-xl group/swap">
-            <ArrowLeftRight className="w-3.5 h-3.5 text-white/20 group-hover:text-brand-gold transition-colors" />
+          {/* Continuous Vertical Line */}
+          <div className="absolute left-[30px] md:left-[38px] top-[50px] bottom-[50px] w-[2px] bg-gradient-to-b from-white/10 via-white/10 to-brand-gold/40 z-0" />
+
+          {/* Swap Button */}
+          <button
+            onClick={swap}
+            className="absolute left-[31px] md:left-[39px] top-1/2 -translate-x-1/2 -translate-y-1/2 w-8 h-8 bg-[#0A0A0F] border border-white/10 rounded-full flex items-center justify-center z-20 hover:border-brand-gold transition-all shadow-lg group/swap"
+          >
+            <ArrowLeftRight className="w-3.5 h-3.5 text-white/40 group-hover:text-brand-gold lg:rotate-90 transition-colors" />
           </button>
-        </div>
 
-        {/* Destination */}
-        <div ref={destRef} className={cn(
-          "px-6 md:px-8 py-5 lg:py-4 relative group min-w-0 border-t lg:border-t-0 lg:border-l border-white/[0.05] transition-all duration-500",
-          tripType === "roundtrip" ? "lg:col-span-2" : "lg:col-span-4"
-        )}>
-          <label className="text-[9px] font-black uppercase tracking-[0.3em] text-white/30 block mb-2 group-focus-within:text-white/60 transition-colors font-sans">
-            {t("booking.destination")}
-          </label>
-          <div className="flex items-center gap-3 h-10">
-            <MapPin className="w-5 h-5 text-brand-gold shrink-0" />
-            <LocationInput
-              placeholder={t("booking.destinationPlaceholder")}
-              value={destination}
-              onChange={(val) => setDestination(val)}
-              variant="embedded"
-            />
-          </div>
-        </div>
-
-        {/* Date Field (Ida) */}
-        <div className={cn(
-          "px-6 md:px-8 py-5 lg:py-4 relative group border-t lg:border-t-0 lg:border-l border-white/[0.05] transition-all duration-500",
-          tripType === "roundtrip" ? "lg:col-span-2" : "lg:col-span-2"
-        )}>
-          <label className="text-[9px] font-black uppercase tracking-[0.3em] text-white/30 block mb-2 group-focus-within:text-white/60 transition-colors font-sans">
-            {tripType === "roundtrip" ? "Data" : t("booking.date")}
-          </label>
-          <div className="flex items-center gap-2 h-10 relative text-brand-gold">
-            <Calendar className="w-4 h-4 opacity-40 shrink-0" />
-            <div className="flex-1 min-w-0">
-              <DatePicker variant="ghost" minDate={today} value={date} onChange={setDate} />
-            </div>
-          </div>
-        </div>
-
-        {/* Return Date (Volta) */}
-        {tripType === "roundtrip" && (
-          <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            className="col-span-1 lg:col-span-2 px-6 md:px-8 py-5 lg:py-4 relative group border-t lg:border-t-0 lg:border-l border-white/[0.05] bg-brand-gold/[0.02]"
-          >
-            <label className="text-[9px] font-black uppercase tracking-[0.3em] text-brand-gold block mb-2 group-focus-within:text-white/60 transition-colors font-sans">
-              Volta
+          {/* Origin */}
+          <div ref={originRef} className="px-6 md:px-8 py-4 relative group flex-1 flex flex-col justify-center">
+            <label className="text-[9px] font-black uppercase tracking-[0.3em] text-white/30 block mb-1 group-focus-within:text-white/60 transition-colors font-sans ml-9">
+              {t("booking.origin")}
             </label>
-            <div className="flex items-center gap-2 h-10 relative">
-              <Calendar className="w-4 h-4 text-brand-gold shrink-0" />
-              <div className="flex-1 min-w-0 text-brand-gold">
-                <DatePicker variant="ghost" minDate={date || today} value={returnDate} onChange={setReturnDate} />
+            <div className="flex items-center gap-4 h-12">
+              <div className="w-3.5 h-3.5 rounded-full border-[2px] border-white/40 relative z-10 bg-[#0A0A0F] shrink-0" />
+              <div className="flex-1 min-w-0">
+                <LocationInput
+                  placeholder={t("booking.originPlaceholder")}
+                  value={origin}
+                  onChange={(val) => setOrigin(val)}
+                  variant="embedded"
+                />
               </div>
             </div>
-          </motion.div>
-        )}
+          </div>
 
-        {/* Time Field (Ida) */}
-        <div className={cn(
-          "px-6 md:px-8 py-5 lg:py-4 relative group border-t lg:border-t-0 lg:border-l border-white/[0.05] transition-all duration-500",
-          tripType === "roundtrip" ? "lg:col-span-2" : "lg:col-span-2"
-        )}>
-          <label className="text-[9px] font-black uppercase tracking-[0.3em] text-white/30 block mb-2 group-focus-within:text-white/60 transition-colors font-sans">
-            {tripType === "roundtrip" ? "Hora" : t("booking.time")}
-          </label>
-          <div className="flex items-center gap-2 h-10 relative">
-            <Clock className="w-4 h-4 text-brand-gold/40 shrink-0 text-brand-gold" />
-            <div className="flex-1 min-w-0 text-brand-gold">
-              <TimePicker variant="ghost" value={time} onChange={setTime} />
+          <div className="h-[1px] w-[calc(100%-60px)] ml-[60px] bg-white/[0.04]" />
+
+          {/* Destination */}
+          <div ref={destRef} className="px-6 md:px-8 py-4 relative group flex-1 flex flex-col justify-center">
+            <label className="text-[9px] font-black uppercase tracking-[0.3em] text-white/30 block mb-1 group-focus-within:text-white/60 transition-colors font-sans ml-9">
+              {t("booking.destination")}
+            </label>
+            <div className="flex items-center gap-4 h-12">
+              <div className="w-3 h-3 rounded-sm bg-brand-gold relative z-10 shadow-[0_0_10px_rgba(212,175,55,0.4)] shrink-0 ml-[1px]" />
+              <div className="flex-1 min-w-0">
+                <LocationInput
+                  placeholder={t("booking.destinationPlaceholder")}
+                  value={destination}
+                  onChange={(val) => setDestination(val)}
+                  variant="embedded"
+                />
+              </div>
             </div>
           </div>
         </div>
 
-        {/* Return Time (Volta) */}
-        {tripType === "roundtrip" && (
-          <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            className="col-span-1 lg:col-span-2 px-6 md:px-8 py-5 lg:py-4 relative group border-t lg:border-t-0 lg:border-l border-white/[0.05] bg-brand-gold/[0.02]"
-          >
-            <label className="text-[9px] font-black uppercase tracking-[0.3em] text-brand-gold block mb-2 group-focus-within:text-white/60 transition-colors font-sans">
-              Hora Volta
-            </label>
-            <div className="flex items-center gap-2 h-10 relative">
-              <Clock className="w-4 h-4 text-brand-gold shrink-0" />
-              <div className="flex-1 min-w-0 text-brand-gold">
-                <TimePicker variant="ghost" value={returnTime} onChange={setReturnTime} />
+        {/* Right Side: Date & Time */}
+        <div className={cn(
+          "flex flex-col border-t lg:border-t-0 lg:border-l border-white/[0.05] transition-all duration-500",
+          tripType === "roundtrip" ? "lg:col-span-6" : "lg:col-span-5"
+        )}>
+          <div className={cn(
+            "grid grid-cols-2 flex-1",
+            tripType === "roundtrip" ? "border-b border-white/[0.05]" : ""
+          )}>
+            {/* Date Ida */}
+            <div className="px-6 md:px-8 py-6 relative group border-r border-white/[0.05] flex flex-col justify-center">
+              <label className="text-[9px] font-black uppercase tracking-[0.3em] text-white/30 block mb-2 group-focus-within:text-white/60 transition-colors font-sans">
+                {tripType === "roundtrip" ? "Data Ida" : t("booking.date")}
+              </label>
+              <div className="flex items-center gap-3 h-8 relative">
+                <Calendar className="w-4 h-4 text-brand-gold shrink-0" />
+                <div className="flex-1 min-w-0">
+                  <DatePicker variant="ghost" minDate={today} value={date} onChange={setDate} />
+                </div>
               </div>
             </div>
-          </motion.div>
-        )}
-      </div>
+            {/* Time Ida */}
+            <div className="px-6 md:px-8 py-6 relative group flex flex-col justify-center">
+              <label className="text-[9px] font-black uppercase tracking-[0.3em] text-white/30 block mb-2 group-focus-within:text-white/60 transition-colors font-sans">
+                {tripType === "roundtrip" ? "Hora Ida" : t("booking.time")}
+              </label>
+              <div className="flex items-center gap-3 h-8 relative">
+                <Clock className="w-4 h-4 text-brand-gold shrink-0" />
+                <div className="flex-1 min-w-0">
+                  <TimePicker variant="ghost" value={time} onChange={setTime} />
+                </div>
+              </div>
+            </div>
+          </div>
 
-      {/* Main Action Button */}
-      <div className="mt-12 w-full flex justify-center relative z-10">
-        <button
-          onClick={handleSearch}
-          className="btn-editorial-primary h-16 px-16 rounded-full text-[11px] font-bold uppercase tracking-[0.3em] relative overflow-hidden group/cta active:scale-95"
-        >
-          <div className="absolute inset-0 bg-white/20 translate-x-[-100%] group-hover/cta:translate-x-[100%] transition-transform duration-1000" />
-          <span className="relative z-10">{t("booking.viewPrices")}</span>
-        </button>
+          {tripType === "roundtrip" && (
+            <div className="grid grid-cols-2 flex-1">
+              {/* Date Volta */}
+              <div className="px-6 md:px-8 py-6 relative group border-r border-white/[0.05] flex flex-col justify-center bg-brand-gold/[0.02] rounded-bl-[32px] lg:rounded-bl-none">
+                <label className="text-[9px] font-black uppercase tracking-[0.3em] text-brand-gold block mb-2 group-focus-within:text-white/60 transition-colors font-sans">
+                  Data Volta
+                </label>
+                <div className="flex items-center gap-3 h-8 relative">
+                  <Calendar className="w-4 h-4 text-brand-gold shrink-0" />
+                  <div className="flex-1 min-w-0">
+                    <DatePicker variant="ghost" minDate={date || today} value={returnDate} onChange={setReturnDate} />
+                  </div>
+                </div>
+              </div>
+              {/* Time Volta */}
+              <div className="px-6 md:px-8 py-6 relative group flex flex-col justify-center bg-brand-gold/[0.02] rounded-br-[32px]">
+                <label className="text-[9px] font-black uppercase tracking-[0.3em] text-brand-gold block mb-2 group-focus-within:text-white/60 transition-colors font-sans">
+                  Hora Volta
+                </label>
+                <div className="flex items-center gap-3 h-8 relative">
+                  <Clock className="w-4 h-4 text-brand-gold shrink-0" />
+                  <div className="flex-1 min-w-0">
+                    <TimePicker variant="ghost" value={returnTime} onChange={setReturnTime} />
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
+        </div>
       </div>
 
       {/* Sub-bar options */}
-      <div className="mt-8 flex flex-col sm:flex-row flex-wrap items-center justify-center gap-4 w-full px-4">
+      <div className="mt-4 flex flex-col sm:flex-row flex-wrap items-center justify-center gap-4 w-full px-4 relative z-30">
         <div ref={paxRef} className="relative w-full sm:w-auto">
-          <button onClick={() => setShowPax(!showPax)} className="w-full sm:w-auto flex items-center justify-center sm:justify-start gap-4 text-[10px] font-black uppercase tracking-[0.2rem] text-white hover:bg-white/5 transition-all bg-white/[0.03] px-8 md:px-10 py-5 rounded-full border border-white/[0.08] font-sans shadow-2xl backdrop-blur-xl">
+          <button onClick={() => setShowPax(!showPax)} className="w-full sm:w-auto flex items-center justify-center sm:justify-start gap-4 text-[10px] font-black uppercase tracking-[0.2rem] text-white hover:bg-white/5 transition-all bg-white/[0.02] px-8 md:px-10 py-4 rounded-full border border-white/[0.06] font-sans shadow-lg backdrop-blur-md">
             <Users className="w-4 h-4 text-white/40" />
             {passengers} {t("booking.passengersUpper")} <span className="text-white/10">•</span> <Briefcase className="w-4 h-4 text-white/40" /> {luggage} {t("booking.luggageUpper")}
           </button>
           {showPax && (
-            <div className="absolute top-[calc(100%+16px)] left-0 right-0 sm:left-1/2 sm:-translate-x-1/2 mx-auto w-[calc(100vw-32px)] sm:w-72 bg-surface-0/95 backdrop-blur-3xl border border-white/[0.08] p-8 z-50 shadow-luxury animate-luxury-reveal rounded-[24px]">
+            <div className="absolute top-[calc(100%+16px)] left-0 right-0 sm:left-1/2 sm:-translate-x-1/2 mx-auto w-[calc(100vw-32px)] sm:w-72 bg-[#0A0A0F] border border-white/[0.08] p-8 z-50 shadow-2xl animate-in fade-in zoom-in-95 rounded-[24px]">
               {[
                 { label: t("booking.passengers"), val: passengers, set: setPassengers, min: 1, max: 8 },
                 { label: t("booking.luggage"), val: luggage, set: setLuggage, min: 0, max: 10 },
@@ -266,15 +258,26 @@ export function BookingEngine() {
           )}
         </div>
 
-        <div className="flex items-center gap-4 group bg-white/[0.03] px-8 md:px-10 py-5 rounded-full border border-white/[0.08] focus-within:border-white/20 transition-all font-sans shadow-2xl backdrop-blur-xl w-full sm:w-64">
-          <Plane className="w-4 h-4 text-white/20 transition-all group-focus-within:text-white/60" />
+        <label className="flex items-center gap-4 group bg-white/[0.02] px-8 md:px-10 py-4 rounded-full border border-white/[0.06] focus-within:border-white/20 transition-all font-sans shadow-lg backdrop-blur-md w-full sm:w-72 cursor-text">
+          <Plane className="w-4 h-4 text-white/20 transition-all group-focus-within:text-white/60 shrink-0" />
           <input
             placeholder={t("booking.flightPlaceholder")}
-            className="bg-transparent outline-none text-[10px] font-black uppercase tracking-[0.2rem] text-white/30 focus:text-white transition-all w-full placeholder:text-white/20"
+            className="bg-transparent outline-none text-[10px] font-black uppercase tracking-[0.2rem] text-white focus:text-white transition-all w-full placeholder:text-white/30"
             value={flight}
             onChange={(e) => setFlight(e.target.value)}
           />
-        </div>
+        </label>
+      </div>
+
+      {/* Main Action Button */}
+      <div className="mt-8 md:mt-12 w-full flex justify-center relative z-10">
+        <button
+          onClick={handleSearch}
+          className="btn-editorial-primary h-14 md:h-16 px-12 md:px-16 rounded-full text-[11px] font-bold uppercase tracking-[0.3em] relative overflow-hidden group/cta active:scale-95 shadow-xl"
+        >
+          <div className="absolute inset-0 bg-white/20 translate-x-[-100%] group-hover/cta:translate-x-[100%] transition-transform duration-1000" />
+          <span className="relative z-10">{t("booking.viewPrices")}</span>
+        </button>
       </div>
     </div >
   );

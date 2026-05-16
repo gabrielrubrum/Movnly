@@ -17,7 +17,7 @@ export default function PartnersPage() {
                 <div>
                     <div className="flex items-center gap-2 text-brand-gold mb-2 font-black uppercase text-[0.6rem] tracking-[0.2em]">
                         <Building2 className="w-3.5 h-3.5" />
-                        Rede de Parceiros NexRice
+                        Rede de Parceiros MOVNLY
                     </div>
                     <h1 className="text-3xl font-black text-white tracking-tighter italic">Parcerias Estratégicas</h1>
                     <p className="text-white/40 text-sm mt-1">Gestão de grupos hoteleiros, aviação privada e agências de viagens de luxo.</p>

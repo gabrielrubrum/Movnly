@@ -125,7 +125,7 @@ export default function ProfilePage() {
             <div className="absolute inset-0 bg-red-500/[0.05] translate-x-[-100%] group-hover:translate-x-0 transition-transform duration-1000" />
             <div className="relative z-10">
               <h4 className="text-xl font-bold text-white tracking-wide mb-2">Encerrar Conta</h4>
-              <p className="text-[10px] font-black text-white/40 uppercase tracking-[0.2em] font-sans">Exclusão definitiva de registros e faturas NexRice.</p>
+              <p className="text-[10px] font-black text-white/40 uppercase tracking-[0.2em] font-sans">Exclusão definitiva de registros e faturas MOVNLY.</p>
             </div>
             <button className="px-8 py-4 rounded-[16px] bg-[#07070A] border border-red-500/20 text-red-500/60 text-[9px] font-black uppercase tracking-[0.3em] hover:bg-red-500 hover:text-white hover:border-red-500 transition-all relative z-10 shadow-lg">
               Encerrar Agora

@@ -208,7 +208,7 @@ export default function AdminDashboard() {
             </div>
             <div className="p-3 space-y-2">
               {[
-                { label: "NexRice", pct: 60, value: adminStats?.ownerShare || 0, gold: true },
+                { label: "MOVNLY", pct: 60, value: adminStats?.ownerShare || 0, gold: true },
                 { label: "Parceiro A", pct: 20, value: adminStats?.partnerAShare || 0 },
                 { label: "Parceiro B", pct: 20, value: adminStats?.partnerBShare || 0 },
               ].map(({ label, pct, value, gold }, i) => (

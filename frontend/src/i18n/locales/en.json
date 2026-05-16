@@ -1,6 +1,6 @@
 {
   "meta": {
-    "title": "NexRice — Your Private Driver in Lisbon",
+    "title": "MOVNLY — Your Private Driver in Lisbon",
     "description": "Executive transport and private transfers. Professional drivers, new cars, and fixed prices in Lisbon."
   },
   "nav": {
@@ -125,7 +125,7 @@
     "learnMore": "Choose your Car",
     "headline1": "Your private driver",
     "headline2": "in Lisbon.",
-    "sub": "NexRice is here to simplify how you move. New cars, fixed prices, and professional drivers ready to take you anywhere.",
+    "sub": "MOVNLY is here to simplify how you move. New cars, fixed prices, and professional drivers ready to take you anywhere.",
     "trust": {
       "drivers": "Professional Drivers",
       "rating": "4.9 · Real Reviews",
@@ -262,7 +262,7 @@
     "flightPlaceholder": "Flight No (e.g. TP123)",
     "airlinePlaceholder": "e.g. TAP, Emirates...",
     "meetingPoint": "Meeting Point",
-    "meetingPointBadge": "NexRice Guarantee",
+    "meetingPointBadge": "MOVNLY Guarantee",
     "meetingPointTitle": "Stress-Free Arrival",
     "meetingPointDesc": "Your driver will be at the agreed location with clear identification for a quick departure.",
     "selectVehicle": "Choose Vehicle",
@@ -417,7 +417,7 @@
     "stepExtras": {
       "title": "Additional Services",
       "sub": "Customize your trip as you prefer",
-      "recommendation": "NexRice Suggestion",
+      "recommendation": "MOVNLY Suggestion",
       "mgTitle": "Terminal Reception",
       "mgDesc": "The driver waits for you with a personalized sign.",
       "exclusiveService": "Dedicated Service",
@@ -554,7 +554,7 @@
     "headline2": "Your Business.",
     "subtitle": "Programs designed to facilitate mobility for clients and teams.",
     "cta_link": "Learn more about partnerships",
-    "corp_badge": "NexRice Business",
+    "corp_badge": "MOVNLY Business",
     "corp_exclusive": "Professional Service",
     "corp_desc": "Priority fleet access and monthly billing for your organization.",
     "features": [
@@ -578,10 +578,10 @@
     "segments": {
       "hotels": {
         "badge": "Hotels & Resorts",
-        "title": "NexRice Hospitality",
+        "title": "MOVNLY Hospitality",
         "subtitle1": "Excellence in",
         "subtitle2": "Hospitality.",
-        "desc": "Elevate your guests' experience with a trusted transport partner and premium fleet.",
+        "desc": "Elevate your guests' experience with a trusted transport partner and modern fleet.",
         "features": [
           "Dedicated Booking Portal",
           "Consolidated Monthly Payment",
@@ -646,7 +646,7 @@
           "tax_label": "Tax Deductible"
         },
         "final_cta_title": "Take your company to the next level.",
-        "final_cta_desc": "Hundreds of companies trust NexRice to transport their most valuable assets: people."
+        "final_cta_desc": "Hundreds of companies trust MOVNLY to transport their most valuable assets: people."
       },
       "agencies": {
         "badge": "Travel Agencies",
@@ -745,7 +745,7 @@
       {
         "id": "t2",
         "title": "Luxury Algarve Summer",
-        "desc": "Premium transfer between Vilamoura, Quinta do Lago, and Vale do Lobo with waiting and local concierge.",
+        "desc": "Private transfer between Vilamoura, Quinta do Lago, and Vale do Lobo with waiting and local concierge.",
         "duration": "4h",
         "price": "180",
         "image": "https://images.pexels.com/photos/1531660/pexels-photo-1531660.jpeg",
@@ -787,7 +787,7 @@
         "role": "Sales Director",
         "country": "Portugal",
         "avatar": "RS",
-        "text": "I use NexRice for all my business travel in Lisbon. British-style punctuality and high-end vehicles every time."
+        "text": "I use MOVNLY for all my business travel in Lisbon. British-style punctuality and high-end vehicles every time."
       },
       {
         "name": "Maria Fontes",
@@ -821,7 +821,7 @@
       "button": "Subscribe",
       "privacy": "Your data is safe with us."
     },
-    "copyright": "© {year} NexRice. All rights reserved.",
+    "copyright": "© {year} MOVNLY. All rights reserved.",
     "cols": {
       "services": {
         "title": "Services",
@@ -935,7 +935,7 @@
     {
       "role": "Sales Director",
       "country": "Spain",
-      "text": "I use NexRice for all my business trips in Lisbon. Perfect punctuality, flawless vehicles and the booking platform is the most intuitive I've ever used.",
+      "text": "I use MOVNLY for all my business trips in Lisbon. Perfect punctuality, flawless vehicles and the booking platform is the most intuitive I've ever used.",
       "route": "Airport → Nations Park"
     },
     {
@@ -955,7 +955,7 @@
     "alentejo-wine": {
       "title": "Alentejo & Wineries",
       "sub": "Évora · Estates · Wine Immersion",
-      "tag": "Premium Experience",
+      "tag": "Exclusive Experience",
       "desc": "Évora UNESCO Heritage, visit to award-winning estates and Alentejo wine tasting accompanied by regional snacks."
     },
     "douro-valley": {
@@ -980,24 +980,24 @@
       "title": "Exclusive Arrábida",
       "sub": "Mountains and Sea · Azeitão · Wines and Beaches",
       "tag": "Nature Escape",
-      "desc": "Relax through the mountains of Serra da Arrábida until you bathe in unforgettable crystal clear waters, with the refinement of a premium Setúbal Moscatel tasting."
+      "desc": "Relax through the mountains of Serra da Arrábida until you bathe in unforgettable crystal clear waters, with the refinement of a Setúbal Moscatel tasting."
     },
     "summer-tour": {
       "title": "Summer Tour: Estoril Coast",
       "sub": "Cascais · Boca do Inferno · Cabo da Roca",
-      "tag": "Summer Premium",
+      "tag": "Summer Edition",
       "desc": "An unforgettable sunny journey through the western edge of the European world and the aristocratic seaside resorts of the Lisbon Riviera and Estoril Casino."
     }
   },
   "legal": {
     "privacy": {
       "title": "Privacy Guidelines",
-      "badge": "NexRice Real Compliance",
+      "badge": "MOVNLY Real Compliance",
       "lastUpdated": "Audited on: April 14, 2026",
       "sections": [
         {
           "title": "Responsible Data Usage",
-          "content": "NexRice collects only the data strictly necessary for the safe execution of your journey: name, contact phone number for coordination with the driver, and billing data processed via certified banking channels."
+          "content": "MOVNLY collects only the data strictly necessary for the safe execution of your journey: name, contact phone number for coordination with the driver, and billing data processed via certified banking channels."
         },
         {
           "title": "Banking Security & Encryption",
@@ -1015,12 +1015,12 @@
     },
     "terms": {
       "title": "Terms of Service",
-      "badge": "NexRice Transparency",
+      "badge": "MOVNLY Transparency",
       "lastUpdated": "Updated on: April 14, 2026",
       "sections": [
         {
           "title": "Nature of Agreement",
-          "content": "By using NexRice, you are hiring a professional transport brokerage service. We guarantee that all drivers in our network possess the legal licenses required by Portuguese legislation (RNAAT/TVDE)."
+          "content": "By using MOVNLY, you are hiring a professional transport brokerage service. We guarantee that all drivers in our network possess the legal licenses required by Portuguese legislation (RNAAT/TVDE)."
         },
         {
           "title": "Conduct & Responsibilities",

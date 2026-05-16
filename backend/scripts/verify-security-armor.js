@@ -13,7 +13,7 @@ const adapter = new PrismaBetterSqlite3({
 const prisma = new PrismaClient({ adapter });
 
 async function runTests() {
-  console.log("🛡️ INICIANDO TESTES DE SEGURANÇA NexRice (MODO ADAPTATIVO PRISMA 7)...\n");
+  console.log("🛡️ INICIANDO TESTES DE SEGURANÇA MOVNLY (MODO ADAPTATIVO PRISMA 7)...\n");
 
   try {
     // --- SETUP: Criar utilizadores de teste ---

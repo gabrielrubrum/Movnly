@@ -25,16 +25,16 @@ export class AppController {
       await this.mail.sendMail(
         'gabrielfigueiredoandre@gmail.com',
         `Nova subscrição newsletter: ${email}`,
-        `<p>Novo email subscrito na newsletter NexRice: <strong>${email}</strong></p>`
+        `<p>Novo email subscrito na newsletter MOVNLY: <strong>${email}</strong></p>`
       );
       await this.mail.sendMail(
         email,
-        'Bem-vindo à NexRice',
+        'Bem-vindo à MOVNLY',
         `<div style="background:#07070A;color:#fff;padding:40px;font-family:sans-serif;border-radius:16px;">
-          <img src="https://nexrice.com/logo-mark2.svg" width="48" style="margin-bottom:24px;" />
+          <img src="https://movnly.com/logo-mark2.svg" width="48" style="margin-bottom:24px;" />
           <h2 style="color:#D4AF37;font-size:24px;margin-bottom:12px;">Obrigado por subscrever</h2>
-          <p style="color:rgba(255,255,255,0.6);line-height:1.6;">Vai receber as últimas novidades sobre rotas, serviços e ofertas exclusivas da NexRice diretamente no seu email.</p>
-          <p style="color:rgba(255,255,255,0.3);font-size:12px;margin-top:32px;">NexRice · nexrice.com</p>
+          <p style="color:rgba(255,255,255,0.6);line-height:1.6;">Vai receber as últimas novidades sobre rotas, serviços e ofertas exclusivas da MOVNLY diretamente no seu email.</p>
+          <p style="color:rgba(255,255,255,0.3);font-size:12px;margin-top:32px;">MOVNLY · movnly.com</p>
         </div>`
       );
       return { success: true, message: 'Subscrito com sucesso.' };

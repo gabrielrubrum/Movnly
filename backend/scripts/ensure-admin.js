@@ -16,7 +16,7 @@ async function seedAdmin() {
         process.exit(1);
     }
 
-    const adminEmail = process.env.ADMIN_EMAIL || 'admin@nexrice.com';
+    const adminEmail = process.env.ADMIN_EMAIL || 'admin@movnly.com';
     const password = await bcrypt.hash(rawPassword, 12);
 
     await prisma.user.upsert({
@@ -24,7 +24,7 @@ async function seedAdmin() {
         update: { password: password, role: 'ADMIN' },
         create: {
             email: adminEmail,
-            name: 'NexRice Admin',
+            name: 'MOVNLY Admin',
             password: password,
             role: 'ADMIN'
         }

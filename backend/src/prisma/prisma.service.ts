@@ -4,25 +4,32 @@ import { PrismaClient } from '@prisma/client';
 @Injectable()
 export class PrismaService extends PrismaClient implements OnModuleInit {
     constructor() {
-        const isPostgres = (process.env.DATABASE_URL || '').startsWith('postgresql') ||
-                           (process.env.DATABASE_URL || '').startsWith('postgres');
+        const databaseUrl = process.env.DATABASE_URL || '';
+        const isPostgres = databaseUrl.startsWith('postgresql://') || databaseUrl.startsWith('postgres://');
 
         if (isPostgres) {
-            // Produção: PostgreSQL nativo, sem adapter
+            // Produção: PostgreSQL nativo
             super({
                 log: process.env.NODE_ENV === 'production' ? ['error'] : ['error', 'warn'],
             });
+            console.log('[PRISMA] Initialized with Native PostgreSQL.');
         } else {
-            // Desenvolvimento: SQLite com better-sqlite3 adapter (obrigatório no Prisma 7)
-            // eslint-disable-next-line @typescript-eslint/no-require-imports
-            const { PrismaBetterSqlite3 } = require('@prisma/adapter-better-sqlite3');
-            const path = require('path');
-            const dbPath = path.resolve(process.cwd(), 'prisma', 'dev.db');
-            const adapter = new PrismaBetterSqlite3({ url: dbPath });
-            super({
-                adapter,
-                log: ['error', 'warn'],
-            });
+            // Desenvolvimento: SQLite com better-sqlite3 adapter
+            try {
+                // eslint-disable-next-line @typescript-eslint/no-require-imports
+                const { PrismaBetterSqlite3 } = require('@prisma/adapter-better-sqlite3');
+                const path = require('path');
+                const dbPath = path.resolve(process.cwd(), 'prisma', 'dev.db');
+                const adapter = new PrismaBetterSqlite3({ url: dbPath });
+                super({
+                    adapter,
+                    log: ['error', 'warn'],
+                });
+                console.log('[PRISMA] Initialized with SQLite Adapter.');
+            } catch (error) {
+                console.error('[PRISMA] Failed to initialize SQLite Adapter. Falling back to default.', error);
+                super();
+            }
         }
     }
 

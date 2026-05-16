@@ -54,8 +54,8 @@ export class MailService {
             <table class="main">
               <tr>
                 <td class="header">
-                  <div class="logo">Nex<span>Rice</span></div>
-                  <div style="font-size: 8px; font-weight: 800; color: #D4AF37; letter-spacing: 6px; margin-top: 15px; text-transform: uppercase; opacity: 0.6;">Luxury Mobility Network</div>
+                  <div class="logo">MOV<span>NLY</span></div>
+                  <div style="font-size: 8px; font-weight: 800; color: #D4AF37; letter-spacing: 6px; margin-top: 15px; text-transform: uppercase; opacity: 0.6;">Luxury Mobility</div>
                 </td>
               </tr>
               <tr>
@@ -65,8 +65,8 @@ export class MailService {
               </tr>
               <tr>
                 <td class="footer">
-                  <p style="font-size: 9px; font-weight: 800; letter-spacing: 5px; color: #222; text-transform: uppercase; margin: 0;">Quiet Luxury · Global Excellence</p>
-                  <p style="font-size: 8px; color: #111; margin-top: 10px;">NexRice Corporate HQ • Lisbon, Portugal</p>
+                  <p style="font-size: 9px; font-weight: 800; letter-spacing: 5px; color: #222; text-transform: uppercase; margin: 0;">Quiet Luxury · Precision in Motion</p>
+                  <p style="font-size: 8px; color: #111; margin-top: 10px;">MOVNLY • Lisbon, Portugal</p>
                 </td>
               </tr>
             </table>
@@ -77,11 +77,11 @@ export class MailService {
     }
 
     async sendMail(to: string, subject: string, html: string) {
-        const from = process.env.MAIL_FROM || '"NexRice Elite" <info@nexrice.com>';
+        const from = process.env.MAIL_FROM || '"MOVNLY" <info@movnly.com>';
         try {
             if (this.resend) {
                 const { data, error } = await this.resend.emails.send({
-                    from: from.includes('<') ? from : `NexRice Elite <${from}>`,
+                    from: from.includes('<') ? from : `MOVNLY <${from}>`,
                     to, subject, html,
                 });
                 if (error) throw error;
@@ -101,12 +101,12 @@ export class MailService {
     async sendVerificationEmail(to: string, token: string) {
         const url = `${process.env.FRONTEND_URL || 'http://localhost:3000'}/auth/verify?token=${token}`;
         const content = `
-          <h2 style="font-size: 42px; font-weight: 200; italic; margin-bottom: 30px; line-height: 1;">Bem-vindo à <span class="accent">Elite</span>.</h2>
-          <p style="font-size: 18px; font-weight: 300; line-height: 1.6; color: rgba(255,255,255,0.4); margin-bottom: 40px;">Sua entrada na rede operacional da NexRice foi iniciada. Valide sua credencial para ativar o acesso total.</p>
+          <h2 style="font-size: 42px; font-weight: 200; italic; margin-bottom: 30px; line-height: 1;">Bem-vindo à <span class="accent">MOVNLY</span>.</h2>
+          <p style="font-size: 18px; font-weight: 300; line-height: 1.6; color: rgba(255,255,255,0.4); margin-bottom: 40px;">Sua entrada na rede operacional da MOVNLY foi iniciada. Valide sua credencial para ativar o acesso total.</p>
           <a href="${url}" class="btn">Validar Identidade</a>
           <p class="text-muted">Se você não iniciou este protocolo, ignore este comunicado. Auditoria de segurança monitorada.</p>
         `;
-        return this.sendMail(to, 'Acesso Institucional — NexRice Elite', this.getLuxuryTemplate(content));
+        return this.sendMail(to, 'Acesso Institucional — MOVNLY', this.getLuxuryTemplate(content));
     }
 
     async sendPasswordResetEmail(to: string, code: string) {
@@ -118,13 +118,13 @@ export class MailService {
           </div>
           <p class="text-muted">Este código expira em 60 minutos por razões de segurança. Protocolo 2.6 Secured.</p>
         `;
-        return this.sendMail(to, 'Código de Recuperação — NexRice Elite', this.getLuxuryTemplate(content));
+        return this.sendMail(to, 'Código de Recuperação — MOVNLY', this.getLuxuryTemplate(content));
     }
 
     async sendAssignmentEmail(to: string, role: 'DRIVER' | 'PASSENGER', details: any) {
         const title = role === 'DRIVER' ? 'Nova Missão' : 'Reserva';
         const accent = role === 'DRIVER' ? 'Confirmada' : 'Confirmada';
-        const subtitle = role === 'DRIVER' ? 'Missão de Transporte de Elite' : 'O seu Chauffeur está a caminho';
+        const subtitle = role === 'DRIVER' ? 'Missão de Transporte' : 'O seu Chauffeur está a caminho';
         const subjectLabel = role === 'DRIVER' ? 'Nova Missão Confirmada' : 'Reserva Confirmada';
 
         const content = `
@@ -152,23 +152,33 @@ export class MailService {
                 </td>
               </tr>
               <tr>
-                <td style="padding: 10px 0;">
+                <td style="padding: 10px 0; ${role === 'PASSENGER' ? 'border-bottom: 1px solid rgba(255,255,255,0.05);' : ''}">
                   <span style="font-size: 9px; font-weight: 800; text-transform: uppercase; color: #52525B;">Horário</span><br/>
                   <span style="font-size: 15px; color: #D4AF37; font-weight: 400;">${details.time}</span>
                 </td>
               </tr>
+              ${role === 'PASSENGER' ? `
+              <tr>
+                <td style="padding: 10px 0;">
+                  <span style="font-size: 9px; font-weight: 800; text-transform: uppercase; color: #52525B;">Código de Segurança (PIN)</span><br/>
+                  <span style="font-size: 24px; color: #ffffff; font-weight: 800; letter-spacing: 4px;">${details.pin || '---'}</span>
+                </td>
+              </tr>
+              ` : ''}
             </table>
           </div>
           
-          <p style="font-size: 14px; font-weight: 300; italic; color: rgba(255,255,255,0.3);">NexRice Elite: A excelência é o nosso padrão mínimo de operação.</p>
+          <p style="font-size: 14px; font-weight: 300; italic; color: rgba(255,255,255,0.3);">
+            ${role === 'PASSENGER' ? 'Apresente o PIN acima ao seu Chauffeur para validar o início da viagem.' : 'MOVNLY: A excelência é o nosso padrão mínimo de operação.'}
+          </p>
         `;
-        return this.sendMail(to, `${subjectLabel} — NexRice Elite`, this.getLuxuryTemplate(content));
+        return this.sendMail(to, `${subjectLabel} — MOVNLY`, this.getLuxuryTemplate(content));
     }
 
     async sendReceiptEmail(to: string, booking: any, transaction: any) {
         const content = `
           <h2 style="font-size: 36px; font-weight: 200; italic; margin-bottom: 10px; line-height: 1;">Recibo de <span class="accent">Serviço</span>.</h2>
-          <p style="font-size: 10px; font-weight: 800; text-transform: uppercase; color: #52525B; letter-spacing: 3px; margin-bottom: 40px;">Confirmação de Pagamento de Elite</p>
+          <p style="font-size: 10px; font-weight: 800; text-transform: uppercase; color: #52525B; letter-spacing: 3px; margin-bottom: 40px;">Confirmação de Pagamento</p>
           
           <div style="background: #000; padding: 40px; border: 1px solid rgba(255,255,255,0.05); margin-bottom: 40px;">
             <table width="100%" cellspacing="0" cellpadding="0">
@@ -199,12 +209,12 @@ export class MailService {
             </table>
           </div>
 
-          <p style="font-size: 12px; font-weight: 300; line-height: 1.6; color: rgba(255,255,255,0.4); margin-bottom: 20px;">Este documento serve como comprovativo de pagamento para o serviço de transfer privado NexRice.</p>
+          <p style="font-size: 12px; font-weight: 300; line-height: 1.6; color: rgba(255,255,255,0.4); margin-bottom: 20px;">Este documento serve como comprovativo de pagamento para o serviço de transfer privado MOVNLY.</p>
           <div style="border-top: 1px solid rgba(255,255,255,0.05); padding-top: 20px;">
-            <span style="font-size: 9px; font-weight: 800; color: #222; text-transform: uppercase;">NexRice Elite Technology S.A. | NIF: 500 000 000</span>
+            <span style="font-size: 9px; font-weight: 800; color: #222; text-transform: uppercase;">MOVNLY | NIF: 500 000 000</span>
           </div>
         `;
-        return this.sendMail(to, 'Comprovativo de Pagamento — NexRice Elite', this.getLuxuryTemplate(content));
+        return this.sendMail(to, 'Comprovativo de Pagamento — MOVNLY', this.getLuxuryTemplate(content));
     }
 
     async sendPayoutScheduledEmail(to: string, amount: number) {
@@ -218,9 +228,9 @@ export class MailService {
             <p style="font-size: 11px; color: #D4AF37; margin-top: 5px;">Movido para Saldo em Retenção (Libertação em 20 dias)</p>
           </div>
           
-          <p style="font-size: 12px; color: rgba(255,255,255,0.3);">Continue com a excelência. O seu desempenho é o que define o padrão NexRice.</p>
+          <p style="font-size: 12px; color: rgba(255,255,255,0.3);">Continue com a excelência. O seu desempenho é o que define o padrão MOVNLY.</p>
         `;
-        return this.sendMail(to, 'Crédito Agendado — NexRice Driver Panel', this.getLuxuryTemplate(content));
+        return this.sendMail(to, 'Crédito Agendado — MOVNLY Driver Panel', this.getLuxuryTemplate(content));
     }
 
     async sendWithdrawalConfirmationEmail(to: string, amount: number) {
@@ -235,6 +245,21 @@ export class MailService {
 
           <p style="font-size: 12px; color: rgba(255,255,255,0.3);">A transferência pode demorar entre 1 a 3 dias úteis a surgir no seu extrato bancário, dependendo do seu banco comercial.</p>
         `;
-        return this.sendMail(to, 'Liquidação de Fundos — NexRice Driver Panel', this.getLuxuryTemplate(content));
+        return this.sendMail(to, 'Liquidação de Fundos — MOVNLY Driver Panel', this.getLuxuryTemplate(content));
+    }
+
+    async sendArrivalEmail(to: string, driverName: string, reference: string) {
+        const content = `
+          <h2 style="font-size: 36px; font-weight: 200; italic; margin-bottom: 10px; line-height: 1;">Chauffeur <span class="accent">Chegou</span>.</h2>
+          <p style="font-size: 10px; font-weight: 800; text-transform: uppercase; color: #52525B; letter-spacing: 3px; margin-bottom: 40px;">O seu transporte está no ponto de encontro</p>
+          
+          <div style="background: #0A0A0F; padding: 40px; border: 1px solid #D4AF37; margin-bottom: 40px;">
+            <p style="font-size: 16px; font-weight: 300; color: #ffffff; margin: 0;">O seu Chauffeur <span style="font-weight: 800; color: #D4AF37;">${driverName}</span> acabou de chegar ao ponto de partida designado.</p>
+            <p style="font-size: 11px; color: rgba(255,255,255,0.4); margin-top: 20px;">Por favor, dirija-se ao veículo. Tenha o seu PIN de segurança pronto para validar a viagem.</p>
+          </div>
+          
+          <p style="font-size: 12px; color: rgba(255,255,255,0.3);">Referência da Reserva: #${reference}</p>
+        `;
+        return this.sendMail(to, 'O seu Chauffeur Chegou — MOVNLY', this.getLuxuryTemplate(content));
     }
 }

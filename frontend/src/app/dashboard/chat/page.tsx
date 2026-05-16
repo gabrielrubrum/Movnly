@@ -196,7 +196,7 @@ export default function ChatPage() {
                     Central de Mensagens
                 </h1>
                 <p className="text-xs md:text-sm text-white/40 font-light mt-3 tracking-widest uppercase">
-                    Chat Seguro NexRice
+                    Chat Seguro MOVNLY
                 </p>
             </div>
 

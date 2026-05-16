@@ -245,7 +245,7 @@ export class AuthService {
         if (!user) throw new BadRequestException('User not found');
 
         const secret = authenticator.generateSecret();
-        const otpauthUrl = authenticator.keyuri(user.email, 'NexRice Elite', secret);
+        const otpauthUrl = authenticator.keyuri(user.email, 'MOVNLY Elite', secret);
 
         await this.prisma.user.update({
             where: { id: userId },
@@ -281,20 +281,55 @@ export class AuthService {
         return { success: true };
     }
 
-    async validateSocialUser(socialUser: any, req?: Request) {
+    async validateSocialUser(socialUser: any, req?: Request, role: string = 'PASSENGER') {
         let user = await this.prisma.user.findUnique({
             where: { email: socialUser.email },
+            include: { driverProfile: true }
         });
+
+        // Upgrade automático: Se o utilizador já existe como passageiro mas está a entrar pelo painel de motorista
+        if (user && user.role === 'PASSENGER' && role === 'DRIVER') {
+            user = await this.prisma.user.update({
+                where: { id: user.id },
+                data: {
+                    role: 'DRIVER',
+                    driverProfile: {
+                        upsert: {
+                            create: {
+                                license: 'PENDING',
+                                status: 'OFFLINE',
+                                isVerified: false,
+                            },
+                            update: {
+                                // Já existe? Mantemos, mas garantimos que o cargo é DRIVER
+                            }
+                        }
+                    }
+                },
+                include: { driverProfile: true }
+            });
+            await this.audit.log('SOCIAL_UPGRADE_TO_DRIVER', user.id, user.email, req?.ip || '0.0.0.0');
+        }
 
         if (!user) {
             user = await this.prisma.user.create({
                 data: {
                     email: socialUser.email,
-                    name: socialUser.name || (socialUser.firstName ? `${socialUser.firstName} ${socialUser.lastName || ''}` : 'Utilizador NexRice'),
+                    name: socialUser.name || (socialUser.firstName ? `${socialUser.firstName} ${socialUser.lastName || ''}` : 'Utilizador MOVNLY'),
                     password: await bcrypt.hash(crypto.randomBytes(32).toString('hex'), 12),
                     isEmailVerified: true,
-                    role: 'PASSENGER',
+                    role: role as any,
+                    ...(role === 'DRIVER' ? {
+                        driverProfile: {
+                            create: {
+                                license: 'PENDING',
+                                status: 'OFFLINE',
+                                isVerified: false,
+                            }
+                        }
+                    } : {})
                 },
+                include: { driverProfile: true }
             });
             await this.audit.log('SOCIAL_REGISTER', user.id, user.email, req?.ip || '0.0.0.0');
         }

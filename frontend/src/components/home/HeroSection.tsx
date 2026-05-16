@@ -1,129 +1,110 @@
-﻿"use client";
+"use client";
 
 import { useI18n } from "@/i18n/context";
 import { BookingEngine } from "@/components/booking/BookingEngine";
-import { ChevronRight, ShieldCheck, Star, CheckCircle2 } from "lucide-react";
+import { ShieldCheck, Star, CheckCircle2 } from "lucide-react";
 import { motion } from "framer-motion";
 
 export function HeroSection() {
-  const { t, tArray } = useI18n();
+  const { t } = useI18n();
 
   return (
-    <section className="relative min-h-screen flex flex-col items-center justify-center pt-24 md:pt-32 pb-16 px-4 md:px-6 overflow-hidden bg-luxury-mesh">
-
-      {/* Cinematic Background */}
-      <div className="absolute inset-0 z-0">
-        <video
-          autoPlay
-          muted
-          loop
-          playsInline
-          className="w-full h-full object-cover opacity-30 scale-105 saturate-[0.6] contrast-[1.1] animate-float"
-        >
-          <source src="https://assets.mixkit.co/videos/preview/mixkit-luxury-car-driving-through-the-city-at-night-42273-large.mp4" type="video/mp4" />
-        </video>
-        <div className="absolute inset-0 bg-gradient-to-b from-black via-transparent to-black" />
-        <div className="absolute inset-0 bg-brand-gold/5 blur-[120px] rounded-full animate-glow-pulse" />
+    <section className="relative min-h-screen flex flex-col pt-32 pb-16 px-4 md:px-6 bg-[#050507]">
+      
+      {/* Modern Asymmetrical Background */}
+      <div className="absolute inset-0 z-0 overflow-hidden">
+        <div className="absolute right-0 top-0 w-full lg:w-[65%] h-[60vh] lg:h-[85vh]">
+          {/* Gradients for perfect blending */}
+          <div className="absolute inset-0 bg-gradient-to-r from-[#050507] via-[#050507]/80 lg:via-transparent to-transparent z-10" />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#050507] via-[#050507]/40 to-transparent z-10" />
+          
+          <img
+            src="https://images.unsplash.com/photo-1605559424843-9e4c228bf1c2?auto=format&fit=crop&q=80&w=2000"
+            alt="Mercedes Sedan Portugal"
+            className="w-full h-full object-cover object-center opacity-70"
+          />
+        </div>
+        
+        {/* Ambient brand glow */}
+        <div className="absolute top-0 right-0 w-[50vw] h-[50vw] bg-brand-gold/10 blur-[150px] mix-blend-overlay rounded-full pointer-events-none" />
       </div>
 
-      {/* Hero Content */}
-      <div className="nx-container relative z-10 w-full text-center flex flex-col items-center">
+      <div className="nx-container relative z-10 w-full flex-1 flex flex-col">
+        
+        {/* Creative Typographic Hero */}
+        <div className="flex-1 grid lg:grid-cols-12 gap-8 items-center mb-12">
+          <div className="text-left relative lg:col-span-8 xl:col-span-7">
+            
+            <motion.div
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.8 }}
+              className="inline-flex items-center gap-3 px-5 py-2 rounded-full bg-white/[0.03] border border-white/10 backdrop-blur-md mb-8"
+            >
+              <span className="w-2 h-2 rounded-full bg-brand-gold animate-pulse shadow-[0_0_10px_rgba(212,175,55,0.8)]" />
+              <span className="text-[10px] font-black uppercase tracking-[0.3em] text-white/90">
+                {t("hero.pill")}
+              </span>
+            </motion.div>
 
-        {/* Massive Headline */}
-        <div className="max-w-7xl mx-auto mb-10">
-          <motion.h1
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
-            className="text-6xl md:text-8xl lg:text-9xl font-bold mb-8 leading-[1.05] tracking-tight"
-          >
-            {t("hero.headline1")} <br />
-            <span className="font-sans font-bold text-white/70">{t("hero.headline2")}</span>
-          </motion.h1>
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1, delay: 0.2 }}
-            className="text-lg md:text-2xl text-white/50 max-w-3xl mx-auto px-4 leading-relaxed font-light"
-          >
-            {t("hero.sub")}
-          </motion.p>
+            <motion.h1
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 1, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
+              className="text-4xl md:text-5xl lg:text-[4.5rem] font-bold mb-6 leading-[1.1] tracking-tight"
+            >
+              <span className="text-white drop-shadow-xl">{t("hero.headline1")}</span>{" "}
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-gold via-[#F0D680] to-brand-gold drop-shadow-2xl">
+                {t("hero.headline2")}
+              </span>
+            </motion.h1>
+
+            <motion.p
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 1, delay: 0.2 }}
+              className="text-base md:text-lg lg:text-xl text-white/80 max-w-xl leading-relaxed font-light mb-10"
+            >
+              {t("hero.sub")}
+            </motion.p>
+
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.4 }}
+              className="flex flex-wrap items-center gap-8"
+            >
+              {[
+                { icon: ShieldCheck, text: t("hero.trust.drivers") },
+                { icon: Star, text: t("hero.trust.rating") }
+              ].map((item, i) => (
+                <div key={i} className="flex items-center gap-3 group cursor-default">
+                  <div className="w-10 h-10 rounded-full bg-brand-gold/10 border border-brand-gold/20 flex items-center justify-center group-hover:bg-brand-gold group-hover:scale-110 transition-all duration-500">
+                    <item.icon className="w-4 h-4 text-brand-gold group-hover:text-black transition-colors" />
+                  </div>
+                  <span className="text-[10px] font-bold tracking-[0.2em] uppercase text-white/60 group-hover:text-white transition-colors">
+                    {item.text}
+                  </span>
+                </div>
+              ))}
+            </motion.div>
+            
+          </div>
         </div>
 
-        {/* Trust Indicators */}
+        {/* Floating Booking Engine across the bottom */}
         <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.4 }}
-          className="flex flex-wrap items-center justify-center gap-x-12 gap-y-6 mb-20"
+          initial={{ opacity: 0, y: 40 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 1, delay: 0.5, ease: [0.16, 1, 0.3, 1] }}
+          className="w-full relative mt-auto z-20"
         >
-          {[
-            { icon: ShieldCheck, text: t("hero.trust.drivers") },
-            { icon: Star, text: t("hero.trust.rating") },
-            { icon: CheckCircle2, text: t("hero.trust.instant") }
-          ].map((item, i) => (
-            <div key={i} className="flex items-center gap-3 text-white/30 group">
-              <item.icon className="w-4 h-4 text-brand-gold/40 group-hover:text-brand-gold transition-colors" />
-              <span className="text-[11px] font-medium tracking-[.2em] uppercase font-sans">{item.text}</span>
-            </div>
-          ))}
-        </motion.div>
-
-        {/* Global Concierge Entry */}
-        <motion.div
-          initial={{ opacity: 0, scale: 0.98 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ delay: 0.6, duration: 0.8 }}
-          className="w-full max-w-5xl mx-auto relative group"
-        >
-          <div className="absolute -inset-4 bg-brand-gold/5 blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-1000" />
+          {/* Subtle Glow beneath the booking engine */}
+          <div className="absolute -inset-10 bg-brand-gold/10 blur-[100px] rounded-[100px] opacity-40 pointer-events-none" />
+          
           <BookingEngine />
         </motion.div>
 
-        {/* Popular Connections Bar */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.8 }}
-          className="mt-12 md:mt-20 w-full"
-        >
-          <div className="flex flex-col items-center gap-6 max-w-5xl mx-auto">
-            <div className="flex items-center gap-4 w-full">
-              <div className="h-[1px] flex-1 bg-brand-gold/10" />
-              <h3 className="text-white/30 text-[10px] font-bold uppercase tracking-[0.4em] font-sans whitespace-nowrap">
-                {t("hero.popularRoutes")}
-              </h3>
-              <div className="h-[1px] flex-1 bg-brand-gold/10" />
-            </div>
-
-            <div className="flex flex-wrap justify-center gap-x-8 gap-y-4 px-4">
-              {tArray("hero.routes").map((route: string) => (
-                <button
-                  key={route}
-                  className="group flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.2em] text-white/40 hover:text-brand-gold transition-all font-sans"
-                >
-                  <span className="w-1 h-1 rounded-full bg-brand-gold/20 group-hover:bg-brand-gold transition-colors" />
-                  {route}
-                </button>
-              ))}
-            </div>
-          </div>
-        </motion.div>
-
-        {/* Scroll Indicator - Now part of content flow with spacing */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 1 }}
-          className="mt-16 mb-8 flex flex-col items-center gap-4 opacity-40"
-        >
-          <div className="text-[9px] font-bold uppercase tracking-[0.5em] font-sans text-brand-gold/60">{t("hero.discover")}</div>
-          <motion.div
-            animate={{ y: [0, 8, 0] }}
-            transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-            className="w-[1px] h-12 bg-gradient-to-b from-brand-gold to-transparent"
-          />
-        </motion.div>
       </div>
     </section>
   );

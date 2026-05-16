@@ -134,7 +134,7 @@ function ResetPasswordContent() {
                 <div className="mt-20 pt-10 border-t border-white/5 text-center">
                     <div className="flex items-center justify-center gap-3 text-[8px] font-bold text-white/10 uppercase tracking-[0.5em]">
                         <ShieldCheck className="w-3 h-3" />
-                        <span>Segurança NexRice Encriptada</span>
+                        <span>Segurança MOVNLY Encriptada</span>
                     </div>
                 </div>
             </motion.div>

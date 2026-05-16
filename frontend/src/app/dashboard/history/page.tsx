@@ -32,7 +32,7 @@ export default function HistoryPage() {
             Viagens <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-gold to-[#a6862c]">Concluídas</span>
           </h1>
           <p className="text-white/40 text-sm font-light italic mt-4 tracking-wide">
-            Lista das suas viagens realizadas com a NexRice.
+            Lista das suas viagens realizadas com a MOVNLY.
           </p>
         </div>
       </div>

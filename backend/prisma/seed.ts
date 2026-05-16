@@ -12,11 +12,11 @@ async function main() {
 
     // 1. Core Administration
     const admin = await prisma.user.upsert({
-        where: { email: 'admin@NexRice.pt' },
+        where: { email: 'admin@MOVNLY.pt' },
         update: { role: 'ADMIN', password },
         create: {
-            email: 'admin@NexRice.pt',
-            name: 'NexRice Operations',
+            email: 'admin@MOVNLY.pt',
+            name: 'MOVNLY Operations',
             password,
             role: 'ADMIN',
         },
@@ -26,10 +26,10 @@ async function main() {
     // 2. Sample Elite Chauffeur (Demonstration)
     const driverPass = await bcrypt.hash('Driver2026_Elite!', 10);
     const driver = await prisma.user.upsert({
-        where: { email: 'chauffeur.prime@NexRice.pt' },
+        where: { email: 'chauffeur.prime@MOVNLY.pt' },
         update: {},
         create: {
-            email: 'chauffeur.prime@NexRice.pt',
+            email: 'chauffeur.prime@MOVNLY.pt',
             name: 'Ricardo M. Santos',
             password: driverPass,
             role: 'DRIVER',

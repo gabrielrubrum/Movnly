@@ -9,7 +9,7 @@ const result = c.replace(
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
         {([
           { label: "Receita Total", value: formatCurrency(revenue), icon: DollarSign, accent: "gold", trend: "+12%", sub: "todas as viagens" },
-          { label: "Lucro NexRice", value: formatCurrency(profit), icon: TrendingUp, accent: "emerald", trend: "+8%", sub: "após motoristas" },
+          { label: "Lucro MOVNLY", value: formatCurrency(profit), icon: TrendingUp, accent: "emerald", trend: "+8%", sub: "após motoristas" },
           { label: "Viagens Hoje", value: String(today), icon: Activity, accent: "gold", trend: null, sub: "agendadas" },
           { label: "Motoristas", value: String(drivers?.length || 0), icon: Car, accent: "neutral", trend: null, sub: "registados" },
         ] as const).map(({ label, value, icon: Icon, accent, trend, sub }, i) => (
@@ -66,7 +66,7 @@ if (result !== c) {
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
         {([
           { label: "Receita Total", value: formatCurrency(revenue), icon: DollarSign, accent: "gold", trend: "+12%", sub: "todas as viagens" },
-          { label: "Lucro NexRice", value: formatCurrency(profit), icon: TrendingUp, accent: "emerald", trend: "+8%", sub: "após motoristas" },
+          { label: "Lucro MOVNLY", value: formatCurrency(profit), icon: TrendingUp, accent: "emerald", trend: "+8%", sub: "após motoristas" },
           { label: "Viagens Hoje", value: String(today), icon: Activity, accent: "gold", trend: null, sub: "agendadas" },
           { label: "Motoristas", value: String(drivers?.length || 0), icon: Car, accent: "neutral", trend: null, sub: "registados" },
         ] as const).map(({ label, value, icon: Icon, accent, trend, sub }, i) => (

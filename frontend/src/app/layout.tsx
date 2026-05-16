@@ -22,11 +22,11 @@ const serif = Cormorant_Garamond({
 
 export const metadata: Metadata = {
   title: {
-    default: "NEXRICE | Premium Chauffeur & Luxury Transfers Lisbon",
-    template: "%s | NEXRICE",
+    default: "MOVNLY | Chauffeur & Transfers Lisbon",
+    template: "%s | MOVNLY",
   },
   description:
-    "Experiência de transporte executivo de elite em Portugal. Chauffeurs bilingues, frota de luxo e transferes privados premium do Aeroporto de Lisboa para Cascais, Sintra e Algarve.",
+    "Experiência de transporte executivo em Portugal. Chauffeurs bilingues, frota moderna e transferes privados do Aeroporto de Lisboa para Cascais, Sintra e Algarve.",
   keywords: [
     "Luxury Chauffeur Lisbon",
     "Private Driver Portugal",
@@ -34,31 +34,31 @@ export const metadata: Metadata = {
     "Executive Transport Lisbon",
     "Sintra Private Tour",
     "Cascais Luxury Limo",
-    "NexRice Elite",
+    "MOVNLY",
     "Motorista Particular Lisboa",
     "Transfer VIP Portugal"
   ],
-  authors: [{ name: "NEXRICE ELITE" }],
-  metadataBase: new URL("https://nexrice.com"),
+  authors: [{ name: "MOVNLY" }],
+  metadataBase: new URL("https://movnly.com"),
   icons: {
-    icon: "/logo-mark2.svg",
-    apple: "/logo-mark2.svg",
+    icon: "/logoMov.png",
+    apple: "/logoMov.png",
   },
   alternates: {
     canonical: "/",
   },
   openGraph: {
-    title: "NEXRICE — Elegância e Precisão em Cada Viagem",
+    title: "MOVNLY — Elegância e Precisão em Cada Viagem",
     description:
       "A frota mais exclusiva de Lisboa ao seu serviço. Reserve o seu chauffeur particular para transferes, eventos e turismo de luxo.",
-    url: "https://nexrice.com",
-    siteName: "NEXRICE ELITE",
+    url: "https://movnly.com",
+    siteName: "MOVNLY",
     images: [
       {
         url: "/preview.png",
         width: 1200,
         height: 1200,
-        alt: "NexRice Elite — Luxury Chauffeur Service Portugal",
+        alt: "MOVNLY — Chauffeur Service Portugal",
       },
     ],
     locale: "pt_PT",
@@ -66,8 +66,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "NEXRICE — Premium Chauffeur Service",
-    description: "Your journey starts with elite precision. Premium transfers in Lisbon & across Portugal.",
+    title: "MOVNLY — Chauffeur Service",
+    description: "Your journey starts with precision. Luxury transfers in Lisbon & across Portugal.",
     images: ["/preview.png"],
   },
   robots: { index: true, follow: true },

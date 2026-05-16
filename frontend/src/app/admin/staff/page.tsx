@@ -104,7 +104,7 @@ export default function StaffPage() {
             <div className="space-y-3">
               {[
                 { label: "Nome completo *", key: "name", placeholder: "João Silva" },
-                { label: "Email *", key: "email", placeholder: "joao@nexrice.com", type: "email" },
+                { label: "Email *", key: "email", placeholder: "joao@movnly.com", type: "email" },
                 { label: "Password *", key: "password", placeholder: "Mínimo 8 caracteres", type: "password" },
               ].map(({ label, key, placeholder, type }) => (
                 <div key={key}>

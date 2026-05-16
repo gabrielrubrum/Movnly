@@ -131,7 +131,7 @@ export function MissionHUD({ booking }: MissionHUDProps) {
                   <div>
                     <h4 className="text-lg font-bold text-white leading-none mb-1">{booking.driver.name}</h4>
                     <div className="flex items-center gap-3">
-                      <span className="text-[9px] font-black text-brand-gold uppercase tracking-[0.2em] italic">Motorista NexRice</span>
+                      <span className="text-[9px] font-black text-brand-gold uppercase tracking-[0.2em] italic">Motorista MOVNLY</span>
                       <div className="w-1 h-1 rounded-full bg-white/20" />
                       <span className="text-[9px] font-bold text-white/40 uppercase tracking-widest flex items-center gap-1.5">
                         <Activity className="w-3 h-3" /> Classificação: {booking.driver.rating || '5.0'}

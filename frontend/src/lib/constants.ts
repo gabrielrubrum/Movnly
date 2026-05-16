@@ -1,7 +1,7 @@
 export const VEHICLE_CATEGORIES = [
   {
     id: "smart",
-    name: "NexRice Start",
+    name: "MOVNLY Start",
     tagline: "Prático e Inteligente",
     badge: "Melhor preço",
     badgeColor: "emerald",
@@ -17,7 +17,7 @@ export const VEHICLE_CATEGORIES = [
   },
   {
     id: "comfort",
-    name: "NexRice Business",
+    name: "MOVNLY Business",
     tagline: "Elegância e Performance",
     badge: "O Mais Reservado",
     badgeColor: "blue",
@@ -33,7 +33,7 @@ export const VEHICLE_CATEGORIES = [
   },
   {
     id: "group",
-    name: "NexRice Van XL",
+    name: "MOVNLY Van XL",
     tagline: "Privacidade para Grupos",
     badge: "Ideal para Famílias",
     badgeColor: "amber",
@@ -49,7 +49,7 @@ export const VEHICLE_CATEGORIES = [
   },
   {
     id: "executive",
-    name: "NexRice VIP",
+    name: "MOVNLY VIP",
     tagline: "A Joia da Coroa",
     badge: "Serviço Prestigiado",
     badgeColor: "gold",
@@ -126,7 +126,7 @@ export const TESTIMONIALS = [
     role: "Diretor Comercial",
     country: "Espanha",
     rating: 5,
-    text: "Uso o NEXRICE para todas as minhas viagens de negócios em Lisboa. Pontualidade perfeita, veículos impecáveis e a plataforma de reserva é a mais intuitiva que já usei.",
+    text: "Uso o MOVNLY para todas as minhas viagens de negócios em Lisboa. Pontualidade perfeita, veículos impecáveis e a plataforma de reserva é a mais intuitiva que já usei.",
     avatar: "MF",
     route: "Aeroporto → Parque das Nações",
     category: "Comfort",

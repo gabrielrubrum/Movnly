@@ -57,7 +57,7 @@ export default function PaymentCancelledPage() {
                     </motion.div>
 
                     <p className="text-center text-[9px] text-white/10 uppercase tracking-[0.4em] mt-12 font-black">
-                        NexRice Elite Security — Falha Controlada
+                        MOVNLY Elite Security — Falha Controlada
                     </p>
                 </div>
             </main>

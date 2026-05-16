@@ -10,7 +10,7 @@ async function bootstrap() {
   const bookingsService = app.get(BookingsService);
   const prisma = app.get(PrismaService);
 
-  console.log("🛡️ INICIANDO TESTES DE SEGURANÇA NexRice (MODO NATIVO)...\n");
+  console.log("🛡️ INICIANDO TESTES DE SEGURANÇA MOVNLY (MODO NATIVO)...\n");
 
   try {
     // --- SETUP: Criar utilizador de teste ---

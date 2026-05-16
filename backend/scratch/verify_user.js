@@ -4,7 +4,7 @@ const prisma = new PrismaClient();
 
 async function main() {
   await prisma.user.update({
-    where: { email: 'nexrice_test@example.com' },
+    where: { email: 'movnly_test@example.com' },
     data: { isEmailVerified: true },
   });
   console.log('User verified');

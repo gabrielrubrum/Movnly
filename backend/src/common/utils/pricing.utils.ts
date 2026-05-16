@@ -1,5 +1,5 @@
 /**
- * NexRice Pricing & Earnings Utility
+ * MOVNLY Pricing & Earnings Utility
  * Single source of truth for flat-fee model and platform commissions.
  */
 
@@ -119,7 +119,7 @@ export function calculateBookingFinances(
     totalPrice = Math.round(totalPrice * 100 * multiplier) / 100;
 
     // O motorista ganha APENAS o flat rate (os ganhos fixos definidos nas tabelas)
-    // Regra NexRice: Extras e Surges ficam 100% para a plataforma.
+    // Regra MOVNLY: Extras e Surges ficam 100% para a plataforma.
     driverAmount = Math.round(driverAmount * 100) / 100;
 
     // 3. Taxa da Plataforma é o remanescente

@@ -11,7 +11,7 @@ export class AppleStrategy extends PassportStrategy(Strategy, 'apple') {
             keyID: process.env['APPLE_KEY_ID'] || 'placeholder',
             // Usar privateKeyString é recomendado para deploys em cloud (Vercel/Railway)
             privateKeyString: process.env['APPLE_PRIVATE_KEY']?.replace(/\\n/g, '\n') || 'placeholder',
-            callbackURL: `${process.env['BACKEND_URL'] || 'https://api.nexrice.com'}/auth/apple/callback`,
+            callbackURL: `${process.env['BACKEND_URL'] || 'https://api.movnly.com'}/auth/apple/callback`,
             scope: ['email', 'name'],
             passReqToCallback: true,
         });
@@ -32,7 +32,7 @@ export class AppleStrategy extends PassportStrategy(Strategy, 'apple') {
         }
 
         const user = {
-            email: email || 'apple-hidden-email@NexRice.pt',
+            email: email || 'apple-hidden-email@MOVNLY.pt',
             name: name,
             accessToken,
             idToken,

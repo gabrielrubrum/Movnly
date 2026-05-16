@@ -51,22 +51,14 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
       <aside className="hidden lg:flex flex-col w-72 border-r border-white/5 bg-[#07070A]/80 backdrop-blur-3xl fixed top-0 bottom-0 left-0 z-50">
         {/* Branding */}
         <div className="p-8 border-b border-white/5">
-          <Link href="/" className="flex items-center gap-4 group">
+          <Link href="/" className="flex items-center group">
             <div className="relative">
               <img 
-                src="/logo-mark2.svg" 
-                alt="NexRice" 
-                className="w-10 h-10 grayscale group-hover:grayscale-0 transition-all duration-700 group-hover:scale-110" 
+                src="/logoMov.png" 
+                alt="MOVNLY" 
+                className="h-16 md:h-20 w-auto transition-all duration-700 group-hover:scale-105" 
               />
               <div className="absolute inset-0 bg-brand-gold/20 blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
-            </div>
-            <div className="flex flex-col">
-              <span className="text-white font-black text-xl tracking-[0.25em] uppercase leading-none font-sans">
-                NEXRICE
-              </span>
-              <span className="text-[7px] font-black text-brand-gold uppercase tracking-[0.6em] mt-1.5 opacity-60">
-                NexRice Transport
-              </span>
             </div>
           </Link>
         </div>
@@ -147,15 +139,12 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
         
         {/* Mobile Nav HUD */}
         <header className="lg:hidden flex items-center justify-between px-6 h-20 border-b border-white/5 bg-[#07070A]/90 backdrop-blur-xl sticky top-0 z-[60]">
-          <Link href="/" className="flex items-center gap-3">
+          <Link href="/" className="flex items-center">
             <img 
-              src="/logo-mark2.svg" 
-              alt="NexRice" 
-              className="w-8 h-8 grayscale" 
+              src="/logoMov.png" 
+              alt="MOVNLY" 
+              className="h-12 md:h-14 w-auto grayscale-0" 
             />
-            <span className="text-white font-black text-sm tracking-widest uppercase">
-              NEXRICE
-            </span>
           </Link>
           <div className="flex items-center gap-4">
             <NotificationBell />

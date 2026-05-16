@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import { useI18n } from "@/i18n/context";
 import { Check, ArrowRight, ShieldCheck, Clock, Zap, Star } from "lucide-react";
@@ -67,7 +67,7 @@ export function HowItWorks() {
                         </div>
                     </div>
 
-                    {/* Elite Visual Composition V2 */}
+                    {/* Visual Composition V2 */}
                     <div className="relative hidden md:block">
                         <div className="grid grid-cols-2 gap-8">
                             <div className="space-y-8 pt-16">
@@ -76,7 +76,7 @@ export function HowItWorks() {
                                     className="aspect-[4/5] rounded-[48px] overflow-hidden border border-white/10 shadow-luxury group/img relative"
                                 >
                                     <div className="absolute inset-0 bg-brand-gold/5 z-10 opacity-0 group-hover/img:opacity-100 transition-opacity duration-1000" />
-                                    <img src="https://images.pexels.com/photos/120049/pexels-photo-120049.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" className="w-full h-full object-cover grayscale-[30%] group-hover/img:grayscale-0 transition-all duration-1000" alt="Premium Service" />
+                                    <img src="https://images.pexels.com/photos/120049/pexels-photo-120049.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" className="w-full h-full object-cover grayscale-[30%] group-hover/img:grayscale-0 transition-all duration-1000" alt="Chauffeur Service" />
                                 </motion.div>
                                 <motion.div
                                     whileInView={{ opacity: 1, scale: 1 }}
@@ -93,7 +93,7 @@ export function HowItWorks() {
                                 <motion.div
                                     whileInView={{ opacity: 1, y: 0 }}
                                     initial={{ opacity: 0, y: 30 }}
-                                    className="p-10 rounded-[48px] glass-bento-premium border-white/10 shadow-luxury relative overflow-hidden group"
+                                    className="p-10 rounded-[48px] glass-bento-luxury border-white/10 shadow-luxury relative overflow-hidden group"
                                 >
                                     <div className="absolute inset-0 bg-brand-gold/5 opacity-0 group-hover:opacity-100 transition-opacity" />
                                     <Clock className="w-8 h-8 text-brand-gold/60 mb-6 group-hover:text-brand-gold transition-colors" />

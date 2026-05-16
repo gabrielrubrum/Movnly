@@ -32,8 +32,8 @@ export class PaymentsService {
         this.logger.debug(`Create Intent Data: ${JSON.stringify(data)}`);
         const { bookingId, email: rawEmail, name: rawName, from, to, date, time, amount, category } = data;
 
-        const email = (typeof rawEmail === 'string' && rawEmail.trim().length > 0) ? rawEmail.trim() : "guest@nexrice.com";
-        const name = (typeof rawName === 'string' && rawName.trim().length > 0) ? rawName.trim() : "NexRice Guest";
+        const email = (typeof rawEmail === 'string' && rawEmail.trim().length > 0) ? rawEmail.trim() : "guest@movnly.com";
+        const name = (typeof rawName === 'string' && rawName.trim().length > 0) ? rawName.trim() : "MOVNLY Guest";
 
         let booking: any;
         const pickupDateTime = new Date(`${date}T${time}`);

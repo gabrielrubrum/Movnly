@@ -10,7 +10,7 @@ export function B2BSection() {
   const icons = [Building2, Globe2, Trophy, Users];
 
   return (
-    <section className="nx-section bg-luxury-mesh py-32 relative overflow-hidden border-t border-white/5">
+    <section className="nx-section bg-[#050507] py-32 relative overflow-hidden border-t border-white/5">
       {/* Decorative Glow */}
       <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-brand-gold/5 rounded-full blur-[120px] -translate-y-1/2 translate-x-1/2 pointer-events-none animate-glow-pulse" />
 
@@ -53,7 +53,7 @@ export function B2BSection() {
                     initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     transition={{ delay: i * 0.1 }}
-                    className="group p-8 rounded-[40px] glass-bento-premium border-white/10 hover:border-brand-gold/20 transition-all duration-700 shadow-2xl relative overflow-hidden"
+                    className="group p-8 rounded-[40px] bg-[#0A0A0F] border border-white/[0.05] hover:border-brand-gold/20 transition-all duration-700 shadow-2xl relative overflow-hidden"
                   >
                     <div className="absolute inset-0 bg-brand-gold/5 opacity-0 group-hover:opacity-100 transition-opacity" />
                     <div className="w-14 h-14 rounded-2xl bg-brand-gold/10 border border-brand-gold/20 flex items-center justify-center mb-6 text-brand-gold transition-all group-hover:scale-110 shadow-glow">
@@ -88,7 +88,7 @@ export function B2BSection() {
               <img
                 src="https://images.pexels.com/photos/19169811/pexels-photo-19169811.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
                 className="w-full h-full object-cover grayscale-[30%] group-hover/img:grayscale-0 group-hover/img:scale-110 transition-all duration-1000 ease-out"
-                alt="Serviço Executivo NexRice"
+                alt="Serviço Executivo MOVNLY"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent" />
 
@@ -96,7 +96,7 @@ export function B2BSection() {
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                className="absolute bottom-8 left-8 right-8 p-10 bg-black/60 backdrop-blur-3xl border border-white/10 rounded-[40px] shadow-luxury"
+                className="absolute bottom-8 left-8 right-8 p-10 bg-[#0A0A0F]/80 backdrop-blur-3xl border border-white/[0.05] rounded-[40px] shadow-luxury"
               >
                 <div className="flex items-center gap-6 mb-6">
                   <div className="w-14 h-14 rounded-2xl bg-brand-gold/10 flex items-center justify-center border border-brand-gold/20 shadow-glow">

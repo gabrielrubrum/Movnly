@@ -22,6 +22,7 @@ interface BookingDetails {
   to: string;
   category: string;
   price: number;
+  pin: string;
   passenger?: {
     name: string;
   };
@@ -161,9 +162,16 @@ function ConfirmationContent() {
         <div className="flex items-center justify-between">
           <div>
              <p className="text-[10px] text-white/20 uppercase font-black tracking-widest mb-1">Passageiro</p>
-             <p className="text-sm text-white/60">{booking.passenger?.name || "Cliente NexRice"}</p>
+             <p className="text-sm text-white/60">{booking.passenger?.name || "Cliente MOVNLY"}</p>
           </div>
           <div className="text-right">
+            <p className="text-[10px] text-white/20 uppercase font-black tracking-widest mb-1">Código de Segurança (PIN)</p>
+            <p className="text-2xl font-black text-white tracking-[0.2em]">{booking.pin}</p>
+          </div>
+        </div>
+
+        <div className="mt-8 pt-6 border-t border-white/5 flex items-center justify-between">
+          <div className="text-right ml-auto">
             <p className="text-[10px] text-white/20 uppercase font-black tracking-widest mb-1">Montante Liquidado</p>
             <p className="text-3xl font-black text-white tracking-tighter">{formatCurrency(booking.price)}</p>
           </div>
@@ -192,7 +200,7 @@ function ConfirmationContent() {
       {/* Actions */}
       <div className="flex flex-col sm:flex-row gap-4">
         <Link href="/dashboard" className="btn-primary flex-1 justify-center py-4 text-xs font-black uppercase tracking-widest">
-          Aceder ao MyNexRice
+          Aceder ao MyMOVNLY
           <ArrowRight className="w-4 h-4 ml-2" />
         </Link>
         <button 
@@ -205,7 +213,7 @@ function ConfirmationContent() {
       </div>
 
       <p className="text-center text-[10px] text-white/20 uppercase tracking-[0.3em] mt-12 font-medium">
-        NexRice — Private Chauffeur Services
+        MOVNLY — Private Chauffeur Services
       </p>
     </div>
   );

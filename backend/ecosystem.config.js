@@ -1,6 +1,6 @@
 module.exports = {
     apps: [{
-        name: 'nexrice-backend',
+        name: 'movnly-backend',
         script: 'dist/main.js',
         instances: 'max',
         exec_mode: 'cluster',

@@ -46,7 +46,7 @@ export const useNotificationStore = create<NotificationState>()(
             unreadCount: () => get().notifications.filter(n => !n.read).length
         }),
         {
-            name: "nexrice-notifications",
+            name: "movnly-notifications",
         }
     )
 );

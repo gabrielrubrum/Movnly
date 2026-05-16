@@ -8,7 +8,7 @@ export function TrustSection() {
   const { t, tArray } = useI18n();
 
   return (
-    <section className="nx-section bg-luxury-mesh py-32 relative overflow-hidden border-t border-white/5">
+    <section className="nx-section bg-[#050507] py-32 relative overflow-hidden border-t border-white/5">
       {/* Decorative Aura */}
       <div className="absolute top-0 right-0 w-[800px] h-[800px] bg-brand-gold/5 rounded-full blur-[140px] -translate-y-1/2 translate-x-1/2 pointer-events-none animate-glow-pulse" />
 
@@ -51,7 +51,7 @@ export function TrustSection() {
                   initial={{ opacity: 0, y: 30 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   transition={{ delay: i * 0.15, duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-                  className={`group p-10 rounded-[40px] bg-gradient-to-b from-white/[0.04] to-transparent border border-white/[0.06] hover:border-brand-gold/30 hover:bg-brand-gold/[0.02] transition-all duration-700 shadow-2xl relative overflow-hidden backdrop-blur-2xl ${
+                  className={`group p-10 rounded-[40px] bg-[#0A0A0F] border border-white/[0.05] hover:border-brand-gold/30 hover:bg-brand-gold/[0.02] transition-all duration-700 shadow-2xl relative overflow-hidden backdrop-blur-2xl ${
                     i === 2 ? "sm:col-span-2 flex flex-col sm:flex-row sm:items-center gap-6 sm:gap-10 sm:p-12" : "flex flex-col"
                   }`}
                 >
@@ -83,7 +83,7 @@ export function TrustSection() {
                   initial={{ opacity: 0, scale: 0.95, y: 20 }}
                   whileInView={{ opacity: 1, scale: 1, y: 0 }}
                   transition={{ delay: i * 0.1, duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-                  className="p-6 md:p-8 lg:p-10 rounded-[40px] bg-gradient-to-br from-white/[0.04] to-transparent border border-white/[0.06] text-center shadow-2xl group/stat relative overflow-hidden flex flex-col justify-center min-h-[180px] hover:border-brand-gold/30 hover:bg-white/[0.02] transition-all duration-700"
+                  className="p-6 md:p-8 lg:p-10 rounded-[40px] bg-[#0A0A0F] border border-white/[0.05] text-center shadow-2xl group/stat relative overflow-hidden flex flex-col justify-center min-h-[180px] hover:border-brand-gold/30 hover:bg-white/[0.02] transition-all duration-700"
                 >
                   <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(212,175,55,0.08)_0%,transparent_70%)] opacity-0 group-hover/stat:opacity-100 transition-opacity duration-1000 pointer-events-none" />
                   <div className="text-4xl md:text-5xl font-bold bg-clip-text text-transparent bg-gradient-to-br from-white to-white/60 mb-3 tracking-tight group-hover/stat:from-brand-gold group-hover/stat:to-yellow-200 transition-all duration-700 drop-shadow-sm whitespace-nowrap">{s.val}</div>
@@ -97,7 +97,7 @@ export function TrustSection() {
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.3, duration: 0.8 }}
-              className="p-10 md:p-12 rounded-[40px] bg-gradient-to-tr from-[#0a0a0f] to-white/[0.02] border border-white/[0.08] shadow-2xl relative overflow-hidden backdrop-blur-3xl group/matrix hover:border-brand-gold/20 transition-all duration-700"
+              className="p-10 md:p-12 rounded-[40px] bg-[#0A0A0F] border border-white/[0.05] shadow-2xl relative overflow-hidden backdrop-blur-3xl group/matrix hover:border-brand-gold/20 transition-all duration-700"
             >
               <div className="absolute top-0 left-0 w-full h-[2px] bg-gradient-to-r from-transparent via-brand-gold/50 to-transparent opacity-50 group-hover/matrix:opacity-100 transition-opacity duration-700" />
               <div className="absolute -bottom-24 -right-24 w-64 h-64 bg-brand-gold/5 rounded-full blur-[80px] pointer-events-none group-hover/matrix:bg-brand-gold/10 transition-colors duration-1000" />

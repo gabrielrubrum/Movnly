@@ -3,7 +3,7 @@ const prisma = new PrismaClient();
 
 async function promoteAdmin() {
     try {
-        const email = 'admin@nexrice.com';
+        const email = 'admin@movnly.com';
         const user = await prisma.user.update({
             where: { email },
             data: { role: 'ADMIN' }

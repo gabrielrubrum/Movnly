@@ -82,13 +82,33 @@ export class AuthController {
     @SkipThrottle()
     @Get('google')
     @UseGuards(GoogleAuthGuard)
-    async googleAuth() {}
+    async googleAuth(@Query('role') role: string) {
+        // O Guard redireciona automaticamente para o Google.
+        // O Passport vai incluir o 'role' no state se configurado.
+    }
 
     @SkipThrottle()
     @Get('google/callback')
     @UseGuards(GoogleAuthGuard)
-    async googleAuthCallback(@Req() req: any, @Res() res: any) {
-        const result = await this.authService.validateSocialUser(req.user, req);
+    async googleAuthCallback(@Req() req: any, @Res() res: any, @Query('state') state: string) {
+        let role = 'PASSENGER';
+        
+        if (state) {
+            try {
+                // Tenta descodificar de Base64 primeiro
+                const decoded = Buffer.from(state, 'base64').toString();
+                const stateObj = JSON.parse(decoded);
+                if (stateObj.role) role = stateObj.role;
+            } catch (e) {
+                // Se falhar, tenta como JSON direto
+                try {
+                    const stateObj = JSON.parse(state);
+                    if (stateObj.role) role = stateObj.role;
+                } catch (e2) {}
+            }
+        }
+
+        const result = await this.authService.validateSocialUser(req.user, req, role);
         const frontendUrl = process.env.FRONTEND_URL || 'http://localhost:3000';
         const userJson = encodeURIComponent(JSON.stringify(result.user));
         return res.redirect(`${frontendUrl}/login?token=${result.access_token}&user=${userJson}`);

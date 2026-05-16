@@ -118,7 +118,9 @@ export function StepDetails({ form, update, onNext }: Props) {
           form.origin.toLowerCase().includes("aeroporto") ||
           form.origin.toLowerCase().includes("airport") ||
           form.destination.toLowerCase().includes("aeroporto") ||
-          form.destination.toLowerCase().includes("airport");
+          form.destination.toLowerCase().includes("airport") ||
+          form.flightNumber !== "" ||
+          form.airline !== "";
 
         if (!isAirport) return null;
 

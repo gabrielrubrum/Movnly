@@ -44,24 +44,23 @@ function DriverLoginContent() {
   };
 
   const handleGoogle = () => {
-    window.location.href = `${API_URL}/auth/google`;
+    window.location.href = `${API_URL}/auth/google?role=DRIVER`;
   };
 
   return (
-    <div className="min-h-screen bg-[#07070A] flex flex-col lg:flex-row">
+    <div className="min-h-screen bg-[#050507] flex flex-col lg:flex-row">
 
       {/* Left — branding */}
       <div className="hidden lg:flex flex-col justify-between w-[42%] p-14 relative overflow-hidden"
-        style={{ background: "linear-gradient(160deg, #0E0B05 0%, #07070A 100%)" }}>
+        style={{ background: "linear-gradient(160deg, #0E0B05 0%, #050507 100%)" }}>
         <div className="absolute inset-0 pointer-events-none">
           <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-brand-gold/8 blur-[140px] rounded-full -translate-y-1/3 translate-x-1/3" />
           <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-brand-gold/4 blur-[100px] rounded-full translate-y-1/3 -translate-x-1/3" />
         </div>
 
         <div className="relative z-10">
-          <Link href="/" className="flex items-center gap-3 w-fit">
-            <img src="/logo-mark2.svg" alt="NexRice" className="w-9 h-9" />
-            <span className="text-white font-black text-base tracking-[0.25em] uppercase">NEXRICE</span>
+          <Link href="/" className="inline-flex items-center group w-fit">
+            <img src="/logoMov.png" alt="MOVNLY" className="h-16 md:h-[70px] w-auto transition-transform duration-700 group-hover:scale-105" />
           </Link>
         </div>
 
@@ -95,7 +94,7 @@ function DriverLoginContent() {
         </div>
 
         <div className="relative z-10">
-          <p className="text-[10px] text-white/20">nexrice.com &copy; {new Date().getFullYear()}</p>
+          <p className="text-[10px] text-white/20">movnly.com &copy; {new Date().getFullYear()}</p>
         </div>
       </div>
 
@@ -106,9 +105,8 @@ function DriverLoginContent() {
 
           {/* Mobile logo */}
           <div className="flex items-center justify-between mb-10 lg:hidden">
-            <Link href="/" className="flex items-center gap-2">
-              <img src="/logo-mark2.svg" alt="NexRice" className="w-8 h-8" />
-              <span className="text-white font-black text-sm tracking-[0.2em] uppercase">NEXRICE</span>
+            <Link href="/" className="inline-flex items-center group">
+              <img src="/logoMov.png" alt="MOVNLY" className="h-16 w-auto transition-transform duration-700 group-hover:scale-105" />
             </Link>
             <Link href="/" className="flex items-center gap-1.5 text-white/30 hover:text-white transition-colors">
               <ArrowLeft className="w-3.5 h-3.5" />
@@ -134,12 +132,9 @@ function DriverLoginContent() {
                 type="email"
                 value={form.email}
                 onChange={e => setForm(f => ({ ...f, email: e.target.value }))}
-                placeholder="motorista@nexrice.com"
+                placeholder="motorista@movnly.com"
                 required
-                className="w-full px-4 py-3 rounded-xl text-sm text-white outline-none transition-all placeholder-white/15"
-                style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.08)" }}
-                onFocus={e => e.target.style.borderColor = "rgba(212,175,55,0.4)"}
-                onBlur={e => e.target.style.borderColor = "rgba(255,255,255,0.08)"}
+                className="w-full px-5 py-4 rounded-[20px] text-sm text-white outline-none transition-all placeholder-white/20 bg-[#0A0A0F] border border-white/[0.05] focus:border-brand-gold/30 focus:bg-brand-gold/[0.02] shadow-2xl"
               />
             </div>
 
@@ -157,10 +152,7 @@ function DriverLoginContent() {
                   onChange={e => setForm(f => ({ ...f, password: e.target.value }))}
                   placeholder="••••••••"
                   required
-                  className="w-full px-4 py-3 rounded-xl text-sm text-white outline-none transition-all placeholder-white/15 pr-12"
-                  style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.08)" }}
-                  onFocus={e => e.target.style.borderColor = "rgba(212,175,55,0.4)"}
-                  onBlur={e => e.target.style.borderColor = "rgba(255,255,255,0.08)"}
+                  className="w-full px-5 py-4 rounded-[20px] text-sm text-white outline-none transition-all placeholder-white/20 pr-12 bg-[#0A0A0F] border border-white/[0.05] focus:border-brand-gold/30 focus:bg-brand-gold/[0.02] shadow-2xl"
                 />
                 <button type="button" onClick={() => setShowPw(!showPw)}
                   className="absolute right-4 top-1/2 -translate-y-1/2 text-white/25 hover:text-white/60 transition-colors">
@@ -183,8 +175,7 @@ function DriverLoginContent() {
           </div>
 
           <button onClick={handleGoogle}
-            className="w-full flex items-center gap-4 px-5 py-3.5 rounded-2xl font-semibold text-sm text-white/70 hover:text-white transition-all group"
-            style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.09)" }}>
+            className="w-full flex items-center gap-4 px-6 py-4 rounded-[16px] font-semibold text-sm text-white/70 hover:text-white transition-all duration-500 group bg-[#0A0A0F] border border-white/[0.05] hover:bg-white/5 shadow-2xl">
             <div className="w-8 h-8 rounded-xl bg-white flex items-center justify-center flex-shrink-0 group-hover:scale-105 transition-transform">
               <svg className="w-4 h-4" viewBox="0 0 24 24">
                 <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
@@ -211,7 +202,7 @@ function DriverLoginContent() {
 export default function DriverLoginPage() {
   return (
     <Suspense fallback={
-      <div className="min-h-screen bg-[#07070A] flex items-center justify-center">
+      <div className="min-h-screen bg-[#050507] flex items-center justify-center">
         <Loader2 className="w-8 h-8 text-brand-gold animate-spin" />
       </div>
     }>

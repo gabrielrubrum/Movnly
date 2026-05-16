@@ -93,7 +93,7 @@ export default function AdminDashboard() {
               <span className="flex items-center gap-1 text-[9px] font-black text-emerald-400 bg-emerald-500/10 border border-emerald-500/15 px-2.5 py-1 rounded-full"><ArrowUpRight className="w-3 h-3" />+8%</span>
             </div>
             <p className="text-3xl font-light text-emerald-400 tracking-tight leading-none">{formatCurrency(profit)}</p>
-            <p className="text-[11px] font-black text-white/50 uppercase tracking-widest mt-2">Lucro NexRice</p>
+            <p className="text-[11px] font-black text-white/50 uppercase tracking-widest mt-2">Lucro MOVNLY</p>
             <p className="text-[9px] text-white/20 mt-0.5">após motoristas</p>
           </div>
         </motion.div>
@@ -243,7 +243,7 @@ export default function AdminDashboard() {
             </div>
             <div className="p-4 space-y-2">
               {[
-                { label: "NexRice", pct: 60, value: adminStats?.ownerShare || 0, gold: true },
+                { label: "MOVNLY", pct: 60, value: adminStats?.ownerShare || 0, gold: true },
                 { label: "Parceiro A", pct: 20, value: adminStats?.partnerAShare || 0, gold: false },
                 { label: "Parceiro B", pct: 20, value: adminStats?.partnerBShare || 0, gold: false },
               ].map(({ label, pct, value, gold }, i) => (

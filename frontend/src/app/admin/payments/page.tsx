@@ -60,7 +60,7 @@ export default function PaymentsPage() {
         </div>
         <div className="p-5 space-y-3">
           {[
-            { label: "NexRice (60%)", value: adminStats?.ownerShare || 0, pct: 60, gold: true },
+            { label: "MOVNLY (60%)", value: adminStats?.ownerShare || 0, pct: 60, gold: true },
             { label: "Parceiro A (20%)", value: adminStats?.partnerAShare || 0, pct: 20 },
             { label: "Parceiro B (20%)", value: adminStats?.partnerBShare || 0, pct: 20 },
           ].map(({ label, value, pct, gold }) => (

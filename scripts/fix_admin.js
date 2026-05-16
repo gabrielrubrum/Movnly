@@ -59,7 +59,7 @@ export default function AdminDashboard() {
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
         {[
           { label: "Receita Total", value: formatCurrency(revenue), icon: DollarSign, color: "gold", trend: "+12%" },
-          { label: "Lucro NexRice", value: formatCurrency(profit), icon: TrendingUp, color: "emerald", trend: "+8%" },
+          { label: "Lucro MOVNLY", value: formatCurrency(profit), icon: TrendingUp, color: "emerald", trend: "+8%" },
           { label: "Viagens Hoje", value: String(today), icon: Activity, color: "gold", trend: null as string | null },
           { label: "Motoristas", value: String(drivers?.length || 0), icon: Car, color: "white", trend: null as string | null },
         ].map(({ label, value, icon: Icon, color, trend }, i) => (
@@ -154,7 +154,7 @@ export default function AdminDashboard() {
             </div>
             <div className="p-3 space-y-2">
               {[
-                { label: "NexRice", pct: 60, value: adminStats?.ownerShare || 0, gold: true },
+                { label: "MOVNLY", pct: 60, value: adminStats?.ownerShare || 0, gold: true },
                 { label: "Parceiro A", pct: 20, value: adminStats?.partnerAShare || 0, gold: false },
                 { label: "Parceiro B", pct: 20, value: adminStats?.partnerBShare || 0, gold: false },
               ].map(({ label, pct, value, gold }) => (

@@ -11,11 +11,11 @@ async function testEarnings() {
   await prisma.$connect();
   
   // 1. Create a dummy passenger if not exists
-  let user = await prisma.user.findUnique({ where: { email: 'test_earnings@NexRice.pt' } });
+  let user = await prisma.user.findUnique({ where: { email: 'test_earnings@MOVNLY.pt' } });
   if (!user) {
     user = await prisma.user.create({
       data: {
-        email: 'test_earnings@NexRice.pt',
+        email: 'test_earnings@MOVNLY.pt',
         password: 'password123',
         name: 'Test Earnings',
         role: 'PASSENGER'

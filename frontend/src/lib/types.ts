@@ -1,5 +1,5 @@
 /**
- * Centralized Type Definitions for NexRice Platform
+ * Centralized Type Definitions for MOVNLY Platform
  * Ensures consistency across Frontend components and Backend synchronization
  */
 

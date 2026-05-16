@@ -9,7 +9,7 @@ export function CTASection() {
   const { t, tArray } = useI18n();
 
   return (
-    <section className="relative min-h-[700px] py-32 flex flex-col items-center justify-center overflow-hidden bg-luxury-mesh border-t border-white/5">
+    <section className="relative min-h-[700px] py-32 flex flex-col items-center justify-center overflow-hidden bg-[#0A0A0F] border-t border-white/[0.05]">
       {/* Background Decor */}
       <div className="absolute inset-0 z-0">
         <img

@@ -40,11 +40,11 @@ export default function DashboardPage() {
         });
       } else if (data.status === 'IN_PROGRESS') {
         toast.info("Viagem Iniciada", {
-          description: "Tenha uma excelente viagem com a NexRice.",
+          description: "Tenha uma excelente viagem com a MOVNLY.",
         });
       } else if (data.status === 'COMPLETED') {
         toast.success("Viagem Concluída", {
-          description: "Obrigado por escolher a NexRice. Esperamos vê-lo em breve.",
+          description: "Obrigado por escolher a MOVNLY. Esperamos vê-lo em breve.",
         });
       } else {
         toast.info("Reserva atualizada");
@@ -79,7 +79,7 @@ export default function DashboardPage() {
             Bem-vindo, <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-gold to-[#a6862c]">{user?.name?.split(" ")[0]}</span>
           </h1>
           <p className="text-white/40 text-sm font-light italic mt-3 tracking-wide">
-            Aqui está o resumo da sua conta NexRice.
+            Aqui está o resumo da sua conta MOVNLY.
           </p>
         </div>
         <Link

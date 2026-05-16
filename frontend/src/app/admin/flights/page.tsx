@@ -97,7 +97,7 @@ export default function FlightsPage() {
           { label: "Chegadas", value: flights.length, color: "text-white" },
           { label: "Em Aproximação", value: approaching, color: "text-blue-400" },
           { label: "Atrasados", value: delayed, color: "text-amber-400" },
-          { label: "Com Reserva NexRice", value: withBooking, color: "text-brand-gold" },
+          { label: "Com Reserva MOVNLY", value: withBooking, color: "text-brand-gold" },
         ].map(({ label, value, color }, i) => (
           <motion.div key={label}
             initial={{ opacity: 0, y: 6 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.06 }}
@@ -118,7 +118,7 @@ export default function FlightsPage() {
           <div>ETA</div>
           <div className="text-center">Estado</div>
           <div>Terminal / Porta</div>
-          <div className="text-right">Reserva NexRice</div>
+          <div className="text-right">Reserva MOVNLY</div>
         </div>
 
         {loading ? (

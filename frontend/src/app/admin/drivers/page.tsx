@@ -108,7 +108,7 @@ export default function DriversPage() {
             <div className="space-y-3">
               {[
                 { label: "Nome completo *", key: "name", placeholder: "Ricardo M. Santos" },
-                { label: "Email *", key: "email", placeholder: "motorista@nexrice.com", type: "email" },
+                { label: "Email *", key: "email", placeholder: "motorista@movnly.com", type: "email" },
                 { label: "Password *", key: "password", placeholder: "Mínimo 8 caracteres", type: "password" },
                 { label: "Licença de condução", key: "license", placeholder: "LX-PRIME-2026" },
               ].map(({ label, key, placeholder, type }) => (

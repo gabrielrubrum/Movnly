@@ -16,11 +16,11 @@ export const useAuthStore = create<AuthState>()(
             setAuth: (user, token) => set({ user, token }),
             logout: () => {
                 set({ user: null, token: null });
-                localStorage.removeItem("nexrice-auth");
+                localStorage.removeItem("movnly-auth");
             },
         }),
         {
-            name: "nexrice-auth",
+            name: "movnly-auth",
         }
     )
 );
