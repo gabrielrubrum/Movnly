@@ -56,22 +56,22 @@ export function TimePicker({ value, onChange, variant = "default" }: { value: st
     ) : null;
 
     return (
-        <div className="relative w-full">
+        <div className="relative w-full overflow-hidden">
             <button
                 ref={triggerRef}
                 type="button"
                 onClick={togglePortal}
                 className={cn(
-                    "w-full flex items-center justify-between transition-all font-sans h-[64px] px-4",
+                    "w-full flex items-center transition-all font-sans h-[64px] px-4 overflow-hidden",
                     variant === "default" && "nx-input hover:border-white/20 text-sm font-bold",
                     variant === "ghost" && "bg-transparent text-sm md:text-base outline-none hover:text-white/80"
                 )}
             >
-                <div className="flex items-center gap-4">
-                    {variant === "default" && <Clock className="w-5 h-5 text-brand-gold/40" />}
+                <div className="flex items-center gap-3 min-w-0 w-full overflow-hidden">
+                    {variant === "default" && <Clock className="w-5 h-5 text-brand-gold/40 shrink-0" />}
                     <span className={cn(
-                        "text-sm tracking-wide transition-colors whitespace-nowrap truncate",
-                        value ? "text-white font-bold" : "text-white/20 font-medium"
+                        "text-sm tracking-wide transition-colors truncate block",
+                        value ? "text-white font-bold" : "text-white/30 font-medium"
                     )}>{value || t("ui.datepicker.placeholder_time")}</span>
                 </div>
             </button>
