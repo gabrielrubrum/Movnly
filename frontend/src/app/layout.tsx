@@ -43,8 +43,8 @@ export const metadata: Metadata = {
   authors: [{ name: "MOVNLY" }],
   metadataBase: new URL("https://movnly.com"),
   icons: {
-    icon: "/logoMov.png",
-    apple: "/logoMov.png",
+    icon: "/logoMov-favicon.png",
+    apple: "/apple-touch-icon.png",
   },
   alternates: {
     canonical: "/",
