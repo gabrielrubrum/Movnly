@@ -28,7 +28,7 @@ export function PreferencesModal({ isOpen, onClose, currentPreferences, onSucces
   const handleSave = async () => {
     setLoading(true);
     try {
-      await api.patch('/users/preferences', prefs);
+      await api.patch('/auth/preferences', prefs);
       toast.success("Preferências atualizadas com sucesso!");
       onSuccess();
       onClose();

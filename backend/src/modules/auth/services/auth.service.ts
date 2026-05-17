@@ -408,6 +408,28 @@ export class AuthService {
         });
     }
 
+    async getProfile(userId: string) {
+        const user = await this.prisma.user.findUnique({
+            where: { id: userId },
+            select: {
+                id: true,
+                email: true,
+                name: true,
+                role: true,
+                phone: true,
+                defaultCategory: true,
+                notificationsPref: true,
+                silentRide: true,
+                isTwoFactorEnabled: true,
+                createdAt: true,
+            }
+        });
+        if (!user) {
+            throw new BadRequestException('Utilizador não encontrado.');
+        }
+        return user;
+    }
+
     async getDriverProfile(userId: string) {
         const user = await this.prisma.user.findUnique({
             where: { id: userId },

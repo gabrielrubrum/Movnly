@@ -64,6 +64,9 @@ export default function DashboardPage() {
   const activeTrip = live[0];
   const nextTrip = upcoming[0];
   const totalSpent = bookings.reduce((s, b) => s + b.totalPrice, 0);
+  const avgRating = completed.filter((b) => b.rating).length > 0
+    ? completed.filter((b) => b.rating).reduce((s, b) => s + (b.rating || 0), 0) / completed.filter((b) => b.rating).length
+    : 5.0;
 
   return (
     <div className="space-y-10 animate-luxury-reveal pb-10">
@@ -98,7 +101,7 @@ export default function DashboardPage() {
         {[
           { label: "Viagens Realizadas", value: String(completed.length), icon: Car, color: "gold" },
           { label: "Gasto Total", value: formatCurrency(totalSpent), icon: TrendingUp, color: "white" },
-          { label: "Sua Avaliação", value: "100%", icon: ShieldCheck, color: "gold" },
+          { label: "Sua Avaliação", value: `${avgRating.toFixed(1)} ★`, icon: ShieldCheck, color: "gold" },
         ].map(({ label, value, icon: Icon, color }, i) => (
           <motion.div
             key={label}

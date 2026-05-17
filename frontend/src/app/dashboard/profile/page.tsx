@@ -36,7 +36,7 @@ export default function ProfilePage() {
       if (!user) return;
       const fetchPreferences = async () => {
           try {
-              const res = await api.get('/users/me');
+              const res = await api.get('/auth/me');
               if (res.data?.defaultCategory) {
                   setPreferences({
                       defaultCategory: res.data.defaultCategory,

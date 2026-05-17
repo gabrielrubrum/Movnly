@@ -73,6 +73,12 @@ export class AuthController {
     }
 
     @UseGuards(JwtAuthGuard)
+    @Get('me')
+    async getProfile(@Req() req: any) {
+        return this.authService.getProfile(req.user.userId);
+    }
+
+    @UseGuards(JwtAuthGuard)
     @Patch('preferences')
     async updatePreferences(@Body() body: any, @Req() req: any) {
         return this.authService.updatePreferences(req.user.userId, body);
