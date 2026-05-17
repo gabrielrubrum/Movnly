@@ -134,6 +134,7 @@ export function LocationInput({ value, onChange, placeholder, variant = "standal
                             fontSize: "1.125rem",
                             fontWeight: "700",
                             boxShadow: "none",
+                            cursor: "text",
                             "&:hover": {
                                 border: variant === "embedded" ? "none" : "1px solid rgba(255, 255, 255, 0.2)",
                             },
@@ -141,6 +142,12 @@ export function LocationInput({ value, onChange, placeholder, variant = "standal
                         input: (provided: any) => ({
                             ...provided,
                             color: "white",
+                            margin: 0,
+                            padding: 0,
+                        }),
+                        valueContainer: (provided: any) => ({
+                            ...provided,
+                            padding: variant === "embedded" ? "0" : "0 8px",
                         }),
                         singleValue: (provided: any) => ({
                             ...provided,
@@ -148,7 +155,21 @@ export function LocationInput({ value, onChange, placeholder, variant = "standal
                         }),
                         placeholder: (provided: any) => ({
                             ...provided,
-                            color: "rgba(255, 255, 255, 0.1)",
+                            color: "rgba(255, 255, 255, 0.2)",
+                            fontSize: variant === "embedded" ? "1rem" : "1.125rem",
+                            fontWeight: "700",
+                        }),
+                        indicatorsContainer: () => ({
+                            display: "none",
+                        }),
+                        indicatorSeparator: () => ({
+                            display: "none",
+                        }),
+                        dropdownIndicator: () => ({
+                            display: "none",
+                        }),
+                        clearIndicator: () => ({
+                            display: "none",
                         }),
                         menu: (provided: any) => ({
                             ...provided,
@@ -158,6 +179,10 @@ export function LocationInput({ value, onChange, placeholder, variant = "standal
                             padding: "8px",
                             zIndex: 9999,
                             boxShadow: "0 40px 80px rgba(0,0,0,0.8)",
+                        }),
+                        menuPortal: (provided: any) => ({
+                            ...provided,
+                            zIndex: 9999,
                         }),
                         option: (provided: any, state: any) => ({
                             ...provided,

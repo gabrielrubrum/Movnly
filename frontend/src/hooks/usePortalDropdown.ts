@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef, useEffect, useCallback, RefObject } from "react";
+import React, { useState, useRef, useEffect, useCallback } from "react";
 
 export interface PopoverStyle {
   top: number;
@@ -21,7 +21,7 @@ export interface UsePortalDropdownOptions {
 
 export interface UsePortalDropdownReturn {
   /** Ref to attach to the trigger button element */
-  triggerRef: RefObject<HTMLButtonElement | null>;
+  triggerRef: React.RefObject<HTMLButtonElement>;
   /** Whether the dropdown is currently open */
   open: boolean;
   /** Setter for open state */
