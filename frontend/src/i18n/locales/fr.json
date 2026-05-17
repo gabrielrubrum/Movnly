@@ -3,6 +3,9 @@
     "title": "MOVNLY — Votre Chauffeur Privé à Lisbonne",
     "description": "Transport exécutif et transferts privés. Chauffeurs professionnels, voitures neuves et prix fixes à Lisbonne."
   },
+  "languageSwitcher": {
+    "label": "Langue"
+  },
   "nav": {
     "services": "Services",
     "categories": "Notre Flotte",
@@ -104,7 +107,7 @@
     "sub": "MOVNLY est là pour simplifier vos déplacements. Voitures neuves, prix fixes et chauffeurs professionnels prêts à vous emmener partout.",
     "trust": {
       "drivers": "Chauffeurs Professionnels",
-      "rating": "4.9 · Avis Réels",
+      "rating": "Avis Réels",
       "instant": "Confirmation Immédiate"
     },
     "popularRoutes": "Itinéraires Fréquents :",
@@ -659,7 +662,7 @@
     "headline2": "prochain voyage.",
     "sub": "Le meilleur service de transport et chauffeur privé à Lisbonne. Voitures neuves, prix fixes et engagement total envers votre temps.",
     "bookNow": "RÉSERVER MAINTENANT",
-    "callNow": "Aide Client : +351 21 000 0000",
+    "callNow": "Aide Client : +351 924 851 105",
     "microcopy": [
       "Annulation Gratuite",
       "Paiement Sécurisé",

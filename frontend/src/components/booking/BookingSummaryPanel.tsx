@@ -21,15 +21,15 @@ export function BookingSummaryPanel({ form, total, extrasTotal, calculatedBasePr
   const category = VEHICLE_CATEGORIES.find((c) => c.id === form.category);
 
   return (
-    <aside className="relative">
-      <div className="sticky top-10 font-sans">
-        <div className="luxury-card border-brand-gold/10 overflow-hidden animate-luxury-reveal bg-[#0A0A0F]/80 backdrop-blur-3xl shadow-[0_40px_100px_-20px_rgba(0,0,0,0.8)]">
+    <aside className="relative lg:block">
+      <div className="sticky top-24 font-sans">
+        <div className="glass-bento-luxury border-white/5 overflow-hidden animate-luxury-reveal bg-[#0A0A0F]/60 backdrop-blur-[40px] shadow-[0_50px_120px_-30px_rgba(0,0,0,0.9)]">
           {/* God-Tier Header */}
           <div className="p-12 pb-6 space-y-6">
             <div className="flex items-center justify-between">
-              <h3 className="text-3xl font-bold text-white uppercase tracking-tight">{t("bookingFlow.summary.title")}</h3>
-              <div className="w-12 h-12 rounded-full border border-brand-gold/10 flex items-center justify-center bg-brand-gold/5">
-                <ShieldCheck className="w-6 h-6 text-brand-gold/60" />
+              <h3 className="text-4xl font-black text-white uppercase tracking-tighter leading-none">{t("bookingFlow.summary.title")}</h3>
+              <div className="w-14 h-14 rounded-2xl border border-brand-gold/10 flex items-center justify-center bg-brand-gold/5 shadow-[0_0_30px_rgba(212,175,55,0.1)]">
+                <ShieldCheck className="w-8 h-8 text-brand-gold/60" />
               </div>
             </div>
             <div className="h-px w-full bg-gradient-to-r from-brand-gold/30 via-white/5 to-transparent" />
@@ -69,54 +69,50 @@ export function BookingSummaryPanel({ form, total, extrasTotal, calculatedBasePr
             )}
 
             {/* Path visualization */}
-            <div className="space-y-10 px-2">
-              <div className="flex gap-8 relative">
-                <div className="flex flex-col items-center">
-                  <div className="w-3 h-3 rounded-full border-2 border-brand-gold bg-black mt-1 shadow-[0_0_15px_rgba(212,175,55,0.4)]" />
-                  <div className="w-px h-full bg-gradient-to-b from-brand-gold/40 via-white/5 to-transparent my-2" />
-                </div>
+            <div className="space-y-12 px-4 relative">
+              {/* Vertical dotted line with animation */}
+              <div className="absolute left-[31px] top-6 bottom-6 w-[1px] bg-gradient-to-b from-brand-gold via-brand-gold/20 to-emerald-500/40 z-0" />
+              
+              <div className="flex gap-8 relative z-10">
+                <div className="w-4 h-4 rounded-full border-2 border-brand-gold bg-black mt-1 shadow-[0_0_15px_rgba(212,175,55,0.6)]" />
                 <div className="flex-1">
-                  <label className="text-[10px] font-black uppercase tracking-[0.3em] text-white/20 block mb-3">{isTour ? "Tipo de Serviço" : t("bookingFlow.summary.origin")}</label>
-                  <p className="text-xs font-bold text-white uppercase tracking-widest leading-relaxed">
+                  <label className="text-[9px] font-black uppercase tracking-[0.4em] text-white/20 block mb-3">{isTour ? "Tipo de Serviço" : t("bookingFlow.summary.origin")}</label>
+                  <p className="text-[11px] font-black text-white uppercase tracking-widest leading-relaxed">
                     {isTour ? "Roteiro Exclusivo" : (form.origin || t("bookingFlow.summary.notDefined"))}
                   </p>
                 </div>
               </div>
 
-              <div className="flex gap-8">
-                <div className="flex flex-col items-center">
-                  <MapPin className="w-4 h-4 text-white/20 mt-1" />
-                </div>
+              <div className="flex gap-8 relative z-10">
+                <div className="w-4 h-4 rounded-sm bg-emerald-500 mt-1 shadow-[0_0_15px_rgba(16,185,129,0.4)]" />
                 <div className="flex-1">
-                  <label className="text-[10px] font-black uppercase tracking-[0.3em] text-white/20 block mb-3">{isTour ? "Destino do Tour" : t("bookingFlow.summary.destination")}</label>
-                  <p className="text-xs font-bold text-white uppercase tracking-widest leading-relaxed">
+                  <label className="text-[9px] font-black uppercase tracking-[0.4em] text-white/20 block mb-3">{isTour ? "Destino do Tour" : t("bookingFlow.summary.destination")}</label>
+                  <p className="text-[11px] font-black text-white uppercase tracking-widest leading-relaxed">
                     {isTour ? tourData?.title : (form.destination || t("bookingFlow.summary.notDefined"))}
                   </p>
                 </div>
               </div>
             </div>
 
-            {/* Temporal Details - Aligned with Path */}
-            <div className="space-y-10 px-2 border-t border-white/5 pt-10">
+            {/* Temporal Details */}
+            <div className="space-y-12 px-4 border-t border-white/5 pt-12">
               <div className="flex gap-8 relative">
-                <div className="flex flex-col items-center">
-                  <Clock className="w-4 h-4 text-white/20 mt-1" />
-                </div>
+                <Clock className="w-4 h-4 text-brand-gold/40 mt-1" />
                 <div className="flex-1">
-                  <label className="text-[10px] font-black uppercase tracking-[0.3em] text-white/20 block mb-3">{t("bookingFlow.summary.pickup")}</label>
-                  <div className="space-y-2">
-                    <p className="text-xs font-bold text-white uppercase tracking-widest leading-relaxed">
+                  <label className="text-[9px] font-black uppercase tracking-[0.4em] text-white/20 block mb-3">{t("bookingFlow.summary.pickup")}</label>
+                  <div className="space-y-3">
+                    <p className="text-[11px] font-black text-white uppercase tracking-widest leading-relaxed">
                       {form.date} <span className="text-brand-gold/40 mx-2">•</span> {form.time}
                     </p>
                     {(form.flightNumber || form.airline) && (
-                      <p className="text-[10px] font-black uppercase tracking-[0.2em] text-brand-gold/60 mt-2 flex items-center gap-2">
-                         <span className="opacity-40">{t("booking.flightNumber")}:</span> {form.airline} {form.flightNumber}
-                      </p>
+                      <div className="inline-flex items-center gap-3 px-3 py-1.5 rounded-lg bg-brand-gold/5 border border-brand-gold/10">
+                         <span className="text-[8px] font-black uppercase tracking-widest text-brand-gold/60">{t("booking.flightNumber")}:</span>
+                         <span className="text-[9px] font-black text-brand-gold uppercase tracking-widest">{form.airline} {form.flightNumber}</span>
+                      </div>
                     )}
                   </div>
                 </div>
               </div>
-
             </div>
 
             {/* Financial Ledger */}
@@ -153,14 +149,19 @@ export function BookingSummaryPanel({ form, total, extrasTotal, calculatedBasePr
 
 
               <div className="pt-12 mt-4 flex flex-col gap-6">
-                <div className="flex justify-between items-center border-t border-brand-gold/20 pt-12">
+                <div className="flex justify-between items-center border-t border-brand-gold/20 pt-12 relative overflow-hidden group/price">
                   <span className="text-[10px] font-black uppercase tracking-[0.5em] text-white/20">{t("bookingFlow.summary.totalAmount")}</span>
-                  <div className="text-right">
-                    <p className="text-5xl font-bold text-brand-gold tracking-tighter leading-none">
-                      {total > 0 ? formatCurrency(total) : "—"}
-                    </p>
-                    <p className="text-[8px] font-black tracking-[0.3em] text-white/10 mt-2 uppercase">{t("bookingFlow.summary.vatIncluded")}</p>
+                  <div className="text-right relative z-10">
+                    <div className="flex items-baseline justify-end gap-3">
+                      <p className="text-7xl font-black text-brand-gold tracking-tighter leading-none shadow-glow-gold">
+                        {total > 0 ? Math.round(total) : "—"}
+                      </p>
+                      <span className="text-2xl font-black text-brand-gold/40 tracking-widest">EUR</span>
+                    </div>
+                    <p className="text-[8px] font-black tracking-[0.4em] text-white/10 mt-4 uppercase">{t("bookingFlow.summary.vatIncluded")}</p>
                   </div>
+                  {/* Subtle shimmer behind total */}
+                  <div className="absolute inset-0 bg-gradient-to-r from-transparent via-brand-gold/5 to-transparent -translate-x-full group-hover/price:translate-x-full transition-transform duration-[2000ms] ease-in-out" />
                 </div>
 
                 <div className="mt-12 group/seal relative">

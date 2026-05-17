@@ -180,15 +180,18 @@ export class AuthService {
         });
 
         await this.mail.sendPasswordResetEmail(user.email, resetToken);
+        
+        const response: any = { message: 'Código de recuperação enviado com sucesso.' };
 
-        // Em desenvolvimento, logar apenas se não for produção
+        // Em desenvolvimento, facilita a vida do dev expondo o código no log e na resposta
         if (process.env.NODE_ENV !== 'production') {
-            console.log(`[DEV] Password reset code for ${user.email}: ${resetToken}`);
+            console.log(`\n[SECURITY-DEBUG] 🔑 Código para ${user.email}: ${resetToken}\n`);
+            response.debugCode = resetToken; // Retorna na API para teste rápido
         }
 
         await this.audit.log('PASSWORD_RESET_REQUESTED', user.id, user.email, null, req);
 
-        return { message: 'Código de recuperação enviado com sucesso.' };
+        return response;
     }
 
     async resetPassword(data: any, req: Request) {
@@ -215,6 +218,49 @@ export class AuthService {
 
         await this.audit.log('PASSWORD_RESET_SUCCESS', user.id, user.email, null, req);
         return { message: 'Senha atualizada com sucesso. Já pode entrar.' };
+    }
+
+    async changePassword(userId: string, currentPassword: string, newPassword: string) {
+        const user = await this.prisma.user.findUnique({ where: { id: userId } });
+        if (!user) throw new BadRequestException('Utilizador não encontrado.');
+
+        const isMatch = await bcrypt.compare(currentPassword, user.password);
+        if (!isMatch) {
+            throw new BadRequestException('A senha atual está incorreta.');
+        }
+
+        const hashedPassword = await bcrypt.hash(newPassword, 12);
+
+        await this.prisma.user.update({
+            where: { id: userId },
+            data: { password: hashedPassword },
+        });
+
+        await this.audit.log('PASSWORD_CHANGED', userId, 'account', null);
+        return { success: true, message: 'Senha alterada com sucesso.' };
+    }
+
+    async updatePreferences(userId: string, data: any) {
+        const updated = await this.prisma.user.update({
+            where: { id: userId },
+            data: {
+                // @ts-ignore
+                defaultCategory: data.defaultCategory,
+                // @ts-ignore
+                notificationsPref: data.notificationsPref,
+                // @ts-ignore
+                silentRide: data.silentRide,
+            },
+            select: {
+                // @ts-ignore
+                defaultCategory: true,
+                // @ts-ignore
+                notificationsPref: true,
+                // @ts-ignore
+                silentRide: true,
+            }
+        });
+        return updated;
     }
 
     async verifyEmail(token: string) {

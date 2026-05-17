@@ -93,11 +93,11 @@ export function StepVehicle({ form, update, onNext, onBack }: Props) {
               <button
                 onClick={handleClick}
                 className={cn(
-                  "w-full text-left relative overflow-hidden transition-all duration-700",
-                  "rounded-[2rem] border isolate",
+                  "w-full text-left relative overflow-hidden transition-all duration-1000",
+                  "rounded-[2.5rem] border isolate group/card",
                   selected
-                    ? "border-brand-gold/60 shadow-[0_0_80px_-20px_rgba(212,175,55,0.5),0_0_0_1px_rgba(212,175,55,0.2)] bg-[#0c0b08]"
-                    : "border-white/[0.07] bg-[#0a0a0f] hover:border-white/15"
+                    ? "border-brand-gold/60 shadow-[0_0_100px_-20px_rgba(212,175,55,0.4),0_0_0_1px_rgba(212,175,55,0.2)] bg-[#08080C] scale-[1.02] z-20"
+                    : "border-white/[0.05] bg-white/[0.01] hover:border-white/20 hover:bg-white/[0.02] z-10"
                 )}
               >
                 {/* Ambient glow on selected */}
@@ -123,149 +123,158 @@ export function StepVehicle({ form, update, onNext, onBack }: Props) {
                   }}
                 />
 
-                <div className="relative z-10 flex flex-col sm:flex-row min-h-[280px]">
+                {/* Atmospheric light streak inside card */}
+                <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/[0.03] to-transparent -translate-x-full group-hover/card:translate-x-full transition-transform duration-[2000ms] ease-in-out pointer-events-none" />
 
-                  {/* Vehicle Image Panel */}
-                  <div className="sm:w-[45%] relative flex items-center justify-center p-6 sm:py-10 overflow-hidden">
-                    {/* Decorative line */}
-                    <div className="absolute top-6 left-6 right-6 h-px bg-white/5" />
-                    <div className="absolute bottom-6 left-6 right-6 h-px bg-white/5" />
+                <div className="relative z-10 flex flex-col h-full">
 
-                    {/* Floor shadow */}
-                    <div className="absolute bottom-8 left-1/2 -translate-x-1/2 w-3/4 h-8 blur-2xl rounded-[100%] bg-black/50 opacity-60" />
+                  {/* Vehicle Image Panel - Top Half */}
+                  <div className="relative h-[280px] flex items-center justify-center p-8 overflow-hidden bg-gradient-to-b from-white/[0.04] to-transparent">
+                    {/* Decorative Grid */}
+                    <div className="absolute inset-0 opacity-[0.03] pointer-events-none" style={{ backgroundImage: 'radial-gradient(circle, white 0.5px, transparent 0.5px)', backgroundSize: '32px 32px' }} />
+                    
+                    {/* Floor reflection / Podium */}
+                    <div className="absolute bottom-6 left-1/2 -translate-x-1/2 w-[80%] h-8 bg-brand-gold/15 blur-[40px] rounded-full opacity-0 group-hover/card:opacity-100 transition-all duration-1000" />
+                    <div className="absolute bottom-4 left-1/2 -translate-x-1/2 w-[70%] h-12 bg-black/60 blur-2xl rounded-[100%] opacity-90" />
 
                     {/* Car image */}
                     <motion.img
                       src={cat.image}
                       alt={cat.name}
                       animate={selected
-                        ? { scale: 1.18, y: -12, rotate: -1.5 }
-                        : { scale: 1.05, y: 0, rotate: 0 }}
-                      transition={{ type: "spring", stiffness: 70, damping: 18 }}
+                        ? { scale: 1.15, y: -10, rotate: -1.5 }
+                        : { scale: 1, y: 0, rotate: 0 }}
+                      whileHover={{ scale: 1.08, y: -5 }}
+                      transition={{ type: "spring", stiffness: 40, damping: 20 }}
                       className={cn(
-                        "w-full max-w-[260px] h-auto object-contain drop-shadow-[0_20px_60px_rgba(0,0,0,0.9)] z-10",
-                        !selected && "opacity-60 grayscale-[0.5] group-hover:opacity-90 group-hover:grayscale-0 transition-all duration-700"
+                        "w-full max-w-[360px] h-auto object-contain drop-shadow-[0_40px_60px_rgba(0,0,0,0.8)] z-10 relative",
+                        !selected && "opacity-60 grayscale group-hover/card:opacity-100 group-hover/card:grayscale-0 transition-all duration-1000"
                       )}
                     />
-                  </div>
 
-                  {/* Content Panel */}
-                  <div className="flex-1 flex flex-col justify-between p-7 sm:p-8 sm:pl-4 border-t sm:border-t-0 sm:border-l border-white/[0.05]">
+                    {/* Selection indicator - Top Right */}
+                    <div className="absolute top-8 right-8 z-20">
+                      <div className={cn(
+                        "w-8 h-8 rounded-full border-2 flex items-center justify-center transition-all duration-700",
+                        selected
+                          ? "border-brand-gold bg-brand-gold shadow-[0_0_20px_rgba(212,175,55,0.8)] scale-110"
+                          : "border-white/10 bg-black/20"
+                      )}>
+                        {selected && <Check className="w-5 h-5 text-black" strokeWidth={4} />}
+                      </div>
+                    </div>
 
-                    {/* Top: Badge + Name */}
-                    <div className="space-y-4">
-                      <div className="flex items-center justify-between">
-                        <div className="flex items-center gap-2">
-                          <div className={cn(
-                            "inline-flex items-center gap-2 px-3 py-1 rounded-full text-[9px] font-bold uppercase tracking-[0.2em]",
-                            accent.badge
-                          )}>
-                            {CATEGORY_ICONS[cat.id]}
-                            {t(`categories_list.${cat.id}.badge`)}
-                          </div>
-                          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-brand-gold/10 border border-brand-gold/20 text-brand-gold text-[8px] font-black uppercase tracking-widest">
-                            <Zap className="w-3 h-3" />
+                    {/* Category Badge - Top Left */}
+                    <div className="absolute top-8 left-8 z-20 flex flex-col gap-3">
+                        <div className={cn(
+                          "inline-flex items-center gap-2.5 px-4 py-2 rounded-xl text-[10px] font-black uppercase tracking-[0.2em] shadow-2xl backdrop-blur-md",
+                          accent.badge
+                        )}>
+                          {CATEGORY_ICONS[cat.id]}
+                          {t(`categories_list.${cat.id}.badge`)}
+                        </div>
+                        {cat.id === "executive" && (
+                          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-brand-gold/10 border border-brand-gold/20 text-brand-gold text-[9px] font-black uppercase tracking-[0.3em] shadow-[0_0_30px_rgba(212,175,55,0.2)] backdrop-blur-md">
+                            <Zap className="w-3.5 h-3.5 animate-pulse" />
                             MEET & GREET
                           </div>
-                        </div>
+                        )}
+                    </div>
+                  </div>
 
-                        {/* Selection indicator */}
-                        <div className={cn(
-                          "w-5 h-5 rounded-full border-2 flex items-center justify-center transition-all duration-500",
-                          selected
-                            ? "border-brand-gold bg-brand-gold shadow-[0_0_12px_rgba(212,175,55,0.6)]"
-                            : "border-white/15"
-                        )}>
-                          {selected && <Check className="w-3 h-3 text-black" strokeWidth={3} />}
-                        </div>
-                      </div>
-
+                  {/* Content Panel - Bottom Half */}
+                  <div className="flex-1 flex flex-col p-10 space-y-10 border-t border-white/[0.05]">
+                    
+                    <div className="flex flex-col gap-4">
                       <div>
                         <h3 className={cn(
-                          "text-2xl sm:text-3xl font-bold font-sans uppercase tracking-tight leading-none mb-1.5 transition-colors duration-500",
+                          "text-4xl font-black font-sans uppercase tracking-tighter leading-none mb-3 transition-colors duration-700",
                           selected ? "text-white" : "text-white/80"
                         )}>
                           {t(`categories_list.${cat.id}.name`)}
                         </h3>
                         <p className={cn(
-                          "text-[10px] font-bold uppercase tracking-[0.3em]",
+                          "text-[10px] font-black uppercase tracking-[0.4em]",
                           accent.text,
-                          !selected && "opacity-60"
+                          !selected && "opacity-50"
                         )}>
                           {t(`categories_list.${cat.id}.tagline`)}
                         </p>
                       </div>
 
-                      <p className="text-[11px] text-white/35 leading-relaxed font-sans">
+                      <p className="text-xs text-white/30 leading-relaxed font-sans max-w-sm">
                         {t(`categories_list.${cat.id}.desc`)}
                       </p>
-
-                      {/* Features */}
-                      <div className="space-y-2 pt-1">
-                        {(cat.features || []).slice(0, 4).map((f, fi) => (
-                          <div key={fi} className="flex items-center gap-2.5">
-                            <div className={cn(
-                              "w-1.5 h-1.5 rounded-full shrink-0 transition-colors duration-500",
-                              selected ? "bg-brand-gold" : "bg-white/20"
-                            )} />
-                            <span className="text-[10px] text-white/50 font-sans font-semibold tracking-wide uppercase">{f}</span>
-                          </div>
-                        ))}
-                      </div>
                     </div>
 
-                    {/* Bottom: Specs + Price */}
-                    <div className="pt-5 mt-5 border-t border-white/[0.06] space-y-4">
-                      {/* Specs row */}
-                      <div className="flex items-center gap-5">
-                        <div className="flex items-center gap-2">
-                          <Users className="w-3.5 h-3.5 text-white/20" />
-                          <span className="text-[10px] font-bold text-white/40 uppercase tracking-widest font-sans">
+                    {/* Features Grid */}
+                    <div className="grid grid-cols-2 gap-x-8 gap-y-5 py-8 border-y border-white/[0.03]">
+                      {(cat.features || []).slice(0, 4).map((f, fi) => (
+                        <div key={fi} className="flex items-center gap-4 group/feat">
+                          <div className={cn(
+                            "w-1.5 h-1.5 rounded-full shrink-0 transition-all duration-700",
+                            selected ? "bg-brand-gold shadow-[0_0_12px_rgba(212,175,55,1)]" : "bg-white/10 group-hover/feat:bg-white/30"
+                          )} />
+                          <span className="text-[10px] text-white/30 font-sans font-black tracking-[0.15em] uppercase group-hover/feat:text-white/60 transition-colors">{f}</span>
+                        </div>
+                      ))}
+                    </div>
+
+                    {/* Bottom row: Specs + Price & CTA */}
+                    <div className="flex flex-col gap-10">
+                      {/* Specs Row */}
+                      <div className="flex items-center gap-8">
+                        <div className="flex items-center gap-3">
+                          <Users className="w-4 h-4 text-white/20" />
+                          <span className="text-[11px] font-black text-white/40 uppercase tracking-widest font-sans">
                             {cat.passengers} PAX
                           </span>
                         </div>
-                        <div className="w-px h-3 bg-white/10" />
-                        <div className="flex items-center gap-2">
-                          <Briefcase className="w-3.5 h-3.5 text-white/20" />
-                          <span className="text-[10px] font-bold text-white/40 uppercase tracking-widest font-sans">
+                        <div className="w-px h-4 bg-white/10" />
+                        <div className="flex items-center gap-3">
+                          <Briefcase className="w-4 h-4 text-white/20" />
+                          <span className="text-[11px] font-black text-white/40 uppercase tracking-widest font-sans">
                             {cat.luggage} MALAS
                           </span>
                         </div>
-                        <div className="w-px h-3 bg-white/10" />
-                        <div className="flex items-center gap-1.5">
-                          <Star className="w-3 h-3 fill-brand-gold text-brand-gold" />
-                          <span className="text-[10px] font-bold text-brand-gold/60 font-sans">5.0</span>
+                        <div className="w-px h-4 bg-white/10" />
+                        <div className="flex items-center gap-2">
+                          <Star className="w-3.5 h-3.5 fill-brand-gold text-brand-gold" />
+                          <span className="text-[11px] font-black text-brand-gold/60 font-sans">5.0</span>
                         </div>
                       </div>
 
-                      {/* Price row */}
-                      <div className="flex items-center justify-between gap-4 mt-auto">
-                        <div className="flex flex-col">
-                          <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-white/20 font-sans mb-1">
+                      {/* Financials & CTA */}
+                      <div className="flex items-center justify-between gap-4 pt-6">
+                        <div className="flex flex-col min-w-[120px]">
+                          <span className="text-[9px] font-black uppercase tracking-[0.3em] text-white/20 font-sans mb-2">
                             {form.tripType === "roundtrip" ? "Total (Ida e Volta)" : "Valor Total"}
                           </span>
-                          <div className="flex items-baseline gap-1">
+                          <div className="flex items-baseline gap-2">
                             <span className={cn(
-                              "text-3xl sm:text-[2.2rem] font-bold tracking-tight font-sans transition-colors duration-500",
-                              selected ? "text-brand-gold" : "text-white/80"
+                              "text-5xl font-black tracking-tighter font-sans transition-colors duration-700",
+                              selected ? "text-brand-gold" : "text-white"
                             )}>
                               {finalPrice}
                             </span>
-                            <span className="text-sm font-bold text-white/40">€</span>
+                            <span className="text-base font-black text-white/10 tracking-widest uppercase">EUR</span>
                           </div>
                         </div>
 
                         {/* CTA Button */}
                         <div className={cn(
-                          "flex items-center gap-3 px-8 py-4 rounded-2xl transition-all duration-700 shrink-0",
+                          "flex items-center gap-4 px-8 py-5 rounded-2xl transition-all duration-700 shrink-0 isolate relative overflow-hidden",
                           selected 
-                            ? "bg-brand-gold text-black shadow-[0_10px_30px_rgba(212,175,55,0.3)]" 
-                            : "border border-white/10 text-white/20 group-hover:border-white/20 group-hover:text-white/40"
+                            ? "bg-brand-gold text-black shadow-[0_20px_40px_rgba(212,175,55,0.4)]" 
+                            : "bg-white/[0.04] border border-white/10 text-white/40 group-hover/card:border-brand-gold/50 group-hover/card:text-white group-hover/card:bg-brand-gold/10"
                         )}>
-                          <span className="text-[10px] font-black uppercase tracking-[0.35em] font-sans">
-                            {selected ? "Reservar" : "Escolher"}
+                          <span className="text-[11px] font-black uppercase tracking-[0.4em] font-sans relative z-10">
+                            {selected ? "Reservado" : "Escolher"}
                           </span>
-                          <ChevronRight className={cn("w-4 h-4 transition-transform", selected ? "translate-x-0.5" : "group-hover:translate-x-0.5")} />
+                          <ChevronRight className={cn("w-5 h-5 transition-transform relative z-10", selected ? "translate-x-1.5" : "group-hover/card:translate-x-1.5")} />
+                          {selected && (
+                            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/50 to-transparent -translate-x-[200%] animate-[shimmer_1.5s_infinite] z-0" />
+                          )}
                         </div>
                       </div>
                     </div>
@@ -316,15 +325,16 @@ export function StepVehicle({ form, update, onNext, onBack }: Props) {
             onClick={onNext}
             disabled={!form.category}
             className={cn(
-              "relative overflow-hidden btn-editorial btn-editorial-primary !px-16 !py-7 text-base font-sans font-bold group shadow-[0_30px_60px_rgba(212,175,55,0.35)]",
+              "relative overflow-hidden btn-editorial btn-editorial-primary !px-20 !py-8 text-lg font-sans font-black group shadow-[0_40px_100px_-20px_rgba(212,175,55,0.45)] hover:shadow-[0_50px_120px_-20px_rgba(212,175,55,0.6)]",
               !form.category && "opacity-40 grayscale cursor-not-allowed"
             )}
           >
-            <span className="relative z-10 flex items-center gap-6">
+            <span className="relative z-10 flex items-center gap-8">
+              <span className="text-xs opacity-40 font-black tracking-tighter">02</span>
               {t("bookingFlow.stepVehicle.next")}
-              <ChevronRight className="w-6 h-6 group-hover:translate-x-2 transition-transform duration-500" />
+              <ChevronRight className="w-8 h-8 group-hover:translate-x-4 transition-transform duration-700 ease-in-out" />
             </span>
-            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/15 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-900" />
+            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-[200%] group-hover:translate-x-[200%] transition-transform duration-[1200ms] ease-in-out" />
           </button>
         </div>
       </div>

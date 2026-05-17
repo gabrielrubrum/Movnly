@@ -1,148 +1,62 @@
 {
   "meta": {
-    "title": "MOVNLY — Your Private Driver in Lisbon",
-    "description": "Executive transport and private transfers. Professional drivers, new cars, and fixed prices in Lisbon."
+    "title": "MOVNLY — Prestige Transfers & Private Chauffeur in Lisbon",
+    "description": "Executive transportation services in Portugal. Punctuality, discretion, and top-of-the-line fleet for airport transfers and events."
+  },
+  "languageSwitcher": {
+    "label": "Language"
   },
   "nav": {
     "services": "Services",
-    "categories": "Our Fleet",
-    "guarantee": "Certificate of Excellence",
-    "guaranteeDesc": "Rigorously inspected vehicles",
-    "compare": "View Routes",
-    "bookNow": "Book Now",
-    "passengers": "{count} Passengers",
-    "luggage": "{count} Luggage",
-    "driver": "Private Driver",
-    "space": "Sanitized Space",
-    "select": "Select Vehicle",
-    "choiceTitle": "Your Choice Matters",
-    "choiceDesc": "All vehicles in our fleet are maintained to the highest European quality standards.",
-    "routes": "Destinations",
-    "forCompanies": "Business",
+    "categories": "Fleet",
+    "routes": "Itineraries",
+    "forCompanies": "Corporate",
     "forHotels": "Hotels",
-    "signIn": "Sign In",
+    "signIn": "Access",
+    "bookNow": "Book Now",
     "allServices": "View All"
   },
   "navbar": {
     "services": "Services",
     "howItWorks": "How it Works",
-    "fleet": "Fleet",
-    "partners": "Partners",
+    "fleet": "Vehicles",
+    "partners": "Partnerships",
     "clientArea": "Client Area"
   },
-  "services_list": {
-    "airport": {
-      "label": "Airport",
-      "desc": "Direct transfers from Lisbon Airport",
-      "full_desc": "We track your flight and wait for you at the arrivals terminal with a personalized sign.",
-      "features": ["Flight Tracking", "Meet & Greet", "Luggage Support", "No Waiting"]
-    },
-    "hotels": {
-      "label": "Hotels & Resorts",
-      "desc": "Dedicated transport for your guests",
-      "full_desc": "Spacious vehicles for guest transport, groups, or direct connections to events and conferences.",
-      "features": ["Vans for Groups", "Local Support", "Extra Space"]
-    },
-    "corporate": {
-      "label": "Executive",
-      "desc": "Prestige transport for businesses",
-      "full_desc": "High-level corporate logistics for meetings and official travel. We guarantee absolute punctuality.",
-      "features": ["Monthly Billing", "24/7 Availability", "Onboard Wi-Fi"]
-    },
-    "groups": {
-      "label": "Groups & Families",
-      "desc": "Executive vans with 7 or 8 seats",
-      "full_desc": "Versatile solutions for large groups with total safety and the comfort your party deserves.",
-      "features": ["7/8 Pax Capacity", "XL Luggage Space", "Child Safety"]
-    },
-    "citytour": {
-      "label": "Private Tours",
-      "desc": "Sintra, Cascais and more with a local driver",
-      "full_desc": "Travel and tours outside the city. Get to know the main areas of Portugal with a dedicated local driver.",
-      "features": ["Local Drivers", "Bottled Water", "Flexible Destinations"]
-    }
-  },
-  "categories_list": {
-    "smart": {
-      "name": "Sedan Economy",
-      "tagline": "Practical & Efficient",
-      "desc": "The ideal choice for your urban travels. Modern cars and professional drivers.",
-      "price": "22.50",
-      "badge": "BEST VALUE",
-      "examples": "Toyota Prius, VW Passat or similar",
-      "features": [
-        "Meet & Greet included",
-        "Complimentary Wi-Fi",
-        "Air Conditioning",
-        "Onboard Water"
-      ]
-    },
-    "comfort": {
-      "name": "Sedan Executive",
-      "tagline": "Standard of Excellence",
-      "desc": "Travel with more space and elegance. Ideal for business meetings or receiving clients.",
-      "price": "28",
-      "badge": "MOST POPULAR",
-      "examples": "Mercedes E-Class, BMW 5 Series or similar",
-      "features": [
-        "Meet & Greet included",
-        "Leather Interior",
-        "Absolute Silence",
-        "Device Charger"
-      ]
-    },
-    "group": {
-      "name": "Executive Van XL",
-      "tagline": "Comfort for Groups",
-      "desc": "Perfect for corporate groups or families with plenty of luggage. Total comfort for all passengers.",
-      "price": "35",
-      "badge": "IDEAL FOR GROUPS",
-      "examples": "Mercedes V-Class, VW Multivan or similar",
-      "features": [
-        "Meet & Greet included",
-        "Meeting Setup",
-        "Up to 7 Passengers",
-        "XL Luggage Space"
-      ]
-    },
-    "executive": {
-      "name": "First Class / VIP",
-      "tagline": "The Supreme Experience",
-      "desc": "The top of our fleet. Luxury vehicles with the most exclusive private chauffeur service in Lisbon.",
-      "price": "39.50",
-      "badge": "LUXURY SERIES",
-      "examples": "Mercedes S-Class, BMW 7 Series or similar",
-      "features": [
-        "Terminal Greeting",
-        "Private Chauffeur",
-        "Personalized Welcome",
-        "Prestige Amenities"
-      ]
+  "ui": {
+    "datepicker": {
+      "placeholder": "Select Date",
+      "placeholder_time": "Time",
+      "months": [
+        "January", "February", "March", "April", "May", "June",
+        "July", "August", "September", "October", "November", "December"
+      ],
+      "days": ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"]
     }
   },
   "hero": {
-    "pill": "Professional Drivers 24/7 in Lisbon",
-    "learnMore": "Choose your Car",
-    "headline1": "Your private driver",
-    "headline2": "in Lisbon.",
-    "sub": "MOVNLY is here to simplify how you move. New cars, fixed prices, and professional drivers ready to take you anywhere.",
+    "pill": "24/7 Executive Transport in Lisbon",
+    "learnMore": "Discover Our Services",
+    "headline1": "Your Reference in",
+    "headline2": "Prestige Mobility.",
+    "sub": "Private transport focused on punctuality, discretion, and absolute comfort for demanding passengers.",
     "trust": {
-      "drivers": "Professional Drivers",
-      "rating": "4.9 · Real Reviews",
-      "instant": "Instant Confirmation"
+      "drivers": "Professional Chauffeurs",
+      "rating": "Excellence",
+      "instant": "Immediate Response"
     },
-    "popularRoutes": "Popular Routes:",
+    "popularRoutes": "Frequent Routes:",
     "routes": [
       "Airport → Lisbon Center",
       "Lisbon → Cascais / Estoril",
-      "Lisbon → Sintra (Village)",
-      "Lisbon → Porto"
+      "Lisbon → Sintra",
+      "Portugal → Algarve"
     ],
-    "discover": "Check Prices & Book",
+    "discover": "Check Rates",
     "stats": {
       "trips": {
-        "value": "25,000+",
-        "label": "Services Completed"
+        "value": "50,000+",
+        "label": "Trips Completed"
       },
       "rating": {
         "value": "4.9★",
@@ -150,92 +64,256 @@
       },
       "punctuality": {
         "value": "99.9%",
-        "label": "Punctuality"
+        "label": "Punctuality Rate"
       },
       "support": {
         "value": "24/7",
-        "label": "Permanent Support"
+        "label": "Customer Support"
       }
     }
   },
+  "services_list": {
+    "airport": {
+      "label": "Airport Transfer",
+      "desc": "Personalized reception at Lisbon Airport",
+      "full_desc": "Meet & Greet service with real-time flight monitoring to ensure your chauffeur is there upon arrival.",
+      "features": ["Flight Monitoring", "Terminal Reception", "Luggage Support", "No Waiting"]
+    },
+    "hotels": {
+      "label": "Hotel Service",
+      "desc": "Dedicated mobility for hotel units",
+      "full_desc": "Transport solutions for guests, ensuring a service that matches Portugal's best hotels.",
+      "features": ["24h Availability", "Modern Vehicles", "Professional Protocol"]
+    },
+    "corporate": {
+      "label": "Corporate Mobility",
+      "desc": "Logistical support for the business sector",
+      "full_desc": "Transport for meetings, events, and daily travels with monthly billing and booking priority.",
+      "features": ["Monthly Billing", "Account Manager", "On-board Wi-Fi"]
+    },
+    "groups": {
+      "label": "Group Travel",
+      "desc": "Passenger vans up to 8 seats",
+      "full_desc": "Comfort for families or work teams with spacious and safe vehicles.",
+      "features": ["High Capacity", "Recent Vans", "Dual-zone AC"]
+    },
+    "citytour": {
+      "label": "Private Tours",
+      "desc": "Discover Portugal in comfort",
+      "full_desc": "Custom itineraries through Sintra, Cascais, Fátima, or any other destination of your choice.",
+      "features": ["Driver Guide", "Flexible Schedule", "Total Comfort"]
+    }
+  },
+  "categories_list": {
+    "smart": {
+      "name": "Economy",
+      "tagline": "Comfort and Efficiency",
+      "desc": "The ideal solution for fast urban travel with a high-quality standard.",
+      "price": "25",
+      "badge": "MOST VERSATILE",
+      "examples": "VW Passat, Toyota Camry or similar",
+      "features": [
+        "Air Conditioning",
+        "Free Wi-Fi",
+        "On-board Water",
+        "Professional Driver"
+      ]
+    },
+    "comfort": {
+      "name": "Comfort",
+      "tagline": "Corporate Prestige",
+      "desc": "Premium vehicles ideal for executives and long-distance travel.",
+      "price": "35",
+      "badge": "BUSINESS CLASS",
+      "examples": "Mercedes E-Class, BMW 5 Series or similar",
+      "features": [
+        "Soundproofing",
+        "Leather Seats",
+        "Mobile Charger",
+        "Total Discretion"
+      ]
+    },
+    "group": {
+      "name": "Premium Van",
+      "tagline": "Space and Convenience",
+      "desc": "Perfect for groups up to 8 people who don't compromise on comfort and luggage space.",
+      "price": "45",
+      "badge": "FAMILY & GROUPS",
+      "examples": "Mercedes V-Class or similar",
+      "features": [
+        "Up to 8 Passengers",
+        "Large Cargo Volume",
+        "Reclining Seats",
+        "Free Wi-Fi"
+      ]
+    },
+    "executive": {
+      "name": "Executive",
+      "tagline": "The Top of Mobility",
+      "desc": "Our most exclusive fleet for those who demand the best in every detail.",
+      "price": "55",
+      "badge": "MAXIMUM EXCLUSIVITY",
+      "examples": "Mercedes S-Class or similar",
+      "features": [
+        "VIP Service",
+        "Top-tier Vehicle",
+        "Exclusive Amenities",
+        "Protocol Driver"
+      ]
+    }
+  },
+  "routes_section": {
+    "badge": "Itineraries",
+    "title1": "The Most",
+    "title2": "Popular Routes.",
+    "sub": "Fixed rates for the most requested destinations, with total transparency from booking.",
+    "exploreAll": "See All Destinations",
+    "status": "Active Monitoring",
+    "items": [
+      {
+        "from": "Lisbon Airport",
+        "to": "Lisbon Center",
+        "duration": "25 min",
+        "price": "25"
+      },
+      {
+        "from": "Lisbon",
+        "to": "Cascais / Estoril",
+        "duration": "35 min",
+        "price": "31"
+      },
+      {
+        "from": "Lisbon",
+        "to": "Sintra (Village)",
+        "duration": "40 min",
+        "price": "50"
+      },
+      {
+        "from": "Lisbon Airport",
+        "to": "Setúbal / Tróia",
+        "duration": "50 min",
+        "price": "85"
+      }
+    ]
+  },
+  "tours_section": {
+    "badge": "Tours",
+    "title1": "Explore the best",
+    "title2": "of Portugal.",
+    "sub": "Private tours with a driver so you can enjoy the scenery without worries.",
+    "viewAll": "See All Tours",
+    "from": "From",
+    "customTitle": "Want a Custom Tour?",
+    "customDesc": "Talk to our support to create an exclusive itinerary tailored to you."
+  },
+  "tours_list": {
+    "sintra-palaces": {
+      "title": "Sintra & Palaces",
+      "sub": "Pena, Quinta da Regaleira and Cabo da Roca",
+      "tag": "HISTORY"
+    },
+    "alentejo-wine": {
+      "title": "Évora & Wines",
+      "sub": "Alentejo Culture and Gastronomy",
+      "tag": "GASTRONOMY"
+    },
+    "douro-valley": {
+      "title": "Douro Valley",
+      "sub": "Cruise and Tasting in the Douro Valley",
+      "tag": "WINES"
+    },
+    "obidos-nazare": {
+      "title": "Óbidos & Nazaré",
+      "sub": "Medieval Village and Giant Waves",
+      "tag": "COAST"
+    }
+  },
+  "cta": {
+    "pill": "Ready to Travel?",
+    "headline1": "Book now your",
+    "headline2": "next transport.",
+    "sub": "Immediate confirmation and constant support for your peace of mind.",
+    "booknow": "Book Online",
+    "callnow": "Call Support"
+  },
   "trust": {
-    "badge": "Why choose us?",
-    "headline1": "Your Safety,",
-    "headline2": "No Compromises.",
-    "sub": "We maintain the highest quality and hygiene standards to ensure your only concern is to relax and enjoy the ride.",
-    "pureSecurity": "Total Security",
-    "zeroCompromise": "Zero Failures",
-    "regulatoryTitle": "Certifications & Insurance",
+    "badge": "Quality Commitment",
+    "headline1": "Excellence in Service,",
+    "headline2": "Safety First.",
+    "sub": "We work daily to ensure your trip is safe, discreet, and punctual.",
+    "pureSecurity": "Privacy",
+    "zeroCompromise": "Professionalism",
+    "regulatoryTitle": "Licensing & Rules",
     "stats": {
       "trips": {
-        "value": "50K+",
-        "label": "Trips"
+        "value": "100K+",
+        "label": "Trips Completed"
       },
       "rating": {
         "value": "4.9★",
-        "label": "Rating"
+        "label": "Feedback"
       },
       "punctual": {
         "value": "99.9%",
-        "label": "Punctuality"
+        "label": "Punctual"
       },
       "drivers": {
-        "value": "100+",
-        "label": "Team"
+        "value": "150+",
+        "label": "Drivers"
       }
     },
     "pillars": [
       {
-        "title": "Rigorous Selection",
-        "desc": "Our drivers undergo driving and posture tests to ensure the best service."
+        "title": "Rigorous Recruitment",
+        "desc": "Our drivers are selected for their experience and professional attitude."
       },
       {
-        "title": "Total Discretion",
-        "desc": "Your privacy is our priority. Quiet and safe journeys."
+        "title": "Renewed Fleet",
+        "desc": "Vehicles under 3 years old, subject to constant preventive maintenance."
       },
       {
-        "title": "24h Support",
-        "desc": "We have a team ready to help you at any time, day or night."
+        "title": "Local Support",
+        "desc": "We are based in Lisbon and know every street to avoid delays."
       }
     ],
     "compliance": [
-      "RNAAT License",
-      "Full Coverage Insurance",
-      "Guaranteed Sanitization",
-      "Transparent Billing"
+      "IMT Licenses",
+      "Mandatory Insurance",
+      "Daily Sanitization",
+      "Price Transparency"
     ]
   },
   "howItWorks": {
-    "sectionBadge": "Step by Step",
-    "safetyTitle": "Immediate Confirmation",
-    "safetyDesc": "As soon as you book, you receive all driver and vehicle details.",
-    "concierge": "Support",
-    "priorityReady": "Always Ready",
-    "ops247": "24/7",
-    "liveOps": "24/7 Monitoring",
+    "sectionBadge": "Process",
+    "safetyTitle": "Simplified Booking",
+    "safetyDesc": "An intuitive system so you can schedule your transport in less than 1 minute.",
+    "concierge": "24h Support",
+    "priorityReady": "Always Available",
+    "ops247": "Monitoring",
+    "liveOps": "Real Control",
     "items": [
       {
-        "label": "Book in 1 minute"
+        "label": "Fast Booking"
       },
       {
-        "label": "Chat Support"
+        "label": "Assigned Driver"
       },
       {
-        "label": "Easy Cancellation"
+        "label": "Safe Journey"
       }
     ],
     "steps": [
       {
-        "title": "Set Destination",
-        "desc": "Tell us where you are and where you want to go. Our system calculates the best price."
+        "title": "1. Enter Details",
+        "desc": "Origin, destination, and schedule. The price you see is what you pay."
       },
       {
-        "title": "Choose your Car",
-        "desc": "We have sedans, vans, and luxury cars. Choose the one that fits you best."
+        "title": "2. Choose Car",
+        "desc": "From discreet sedans to vans for larger groups."
       },
       {
-        "title": "Enjoy the Ride",
-        "desc": "Track your driver in real-time and relax in a clean, comfortable car."
+        "title": "3. Travel with Us",
+        "desc": "Your driver will be there at the scheduled time."
       }
     ]
   },
@@ -244,797 +322,387 @@
     "roundTrip": "Round Trip",
     "origin": "Pickup Point",
     "destination": "Final Destination",
-    "originPlaceholder": "Where does your journey start?",
-    "destinationPlaceholder": "What is your destination?",
+    "originPlaceholder": "E.g.: Lisbon Airport",
+    "destinationPlaceholder": "Where are we going?",
     "date": "Date",
     "time": "Time",
     "returnDate": "Return Date",
     "returnTime": "Return Time",
-    "passengers": "Pax",
-    "luggage": "Bags",
+    "passengers": "Passengers",
+    "luggage": "Luggage",
     "save5": "RETURN DISCOUNT (-5%)",
     "passengersUpper": "PASSENGERS",
-    "luggageUpper": "BAGS",
-    "viewPrices": "Check Prices",
-    "flightInfo": "Flight Information",
-    "flightNumber": "Flight No",
+    "luggageUpper": "LUGGAGE",
+    "viewPrices": "Check Rates",
+    "flightInfo": "Flight Info",
+    "flightNumber": "Flight No.",
     "airline": "Airline",
-    "flightPlaceholder": "Flight No (e.g. TP123)",
-    "airlinePlaceholder": "e.g. TAP, Emirates...",
+    "flightPlaceholder": "E.g.: TP123",
+    "airlinePlaceholder": "E.g.: TAP",
     "meetingPoint": "Meeting Point",
-    "meetingPointBadge": "MOVNLY Guarantee",
-    "meetingPointTitle": "Stress-Free Arrival",
-    "meetingPointDesc": "Your driver will be at the agreed location with clear identification for a quick departure.",
+    "meetingPointBadge": "Customer Care",
+    "meetingPointTitle": "Terminal Reception",
+    "meetingPointDesc": "The driver waits in the arrivals area with a sign with your name.",
     "selectVehicle": "Choose Vehicle",
-    "summary": "Trip Summary",
-    "total": "Total Amount",
-    "personalDetails": "Your Details",
+    "summary": "Summary",
+    "total": "Total to Pay",
+    "personalDetails": "Contact Details",
     "payment": "Payment",
-    "originNotSet": "Select pickup location",
-    "destinationNotSet": "Select destination",
+    "originNotSet": "Enter origin",
+    "destinationNotSet": "Enter destination",
     "locations": [
-      "Lisbon Airport (Terminal 1)",
-      "Lisbon Center (Avenida da Liberdade)",
-      "Cascais / Estoril",
-      "Sintra (Village)",
-      "Belém Tower",
+      "Lisbon Airport",
+      "Avenida da Liberdade",
+      "Cascais",
+      "Sintra",
+      "Estoril",
+      "Belém",
       "Parque das Nações",
-      "Setúbal / Arrábida",
-      "Algarve (Direct Connections)",
-      "Porto (Center)",
-      "Alentejo (Wine Tours)"
-    ]
-  },
-  "categories": {
-    "sectionBadge": "Our Fleet",
-    "title1": "Choose your",
-    "title2": "Comfort Level.",
-    "sub": "From economical trips to luxury cars, we have the ideal vehicle for every moment.",
-    "viewDetails": "Details",
-    "select": "Choose",
-    "perTrip": "per trip",
-    "guarantee": "Quality Guarantee",
-    "guaranteeDesc": "Includes professional driver and all insurance",
-    "compare": "View Full Fleet",
-    "startingFrom": "Starting at",
-    "bookNow": "Book Now"
-  },
-  "whyChooseUs": {
-    "badge": "What defines us",
-    "title1": "Your trusted",
-    "title2": "private",
-    "title3": "chauffeur.",
-    "ritual": "RITUAL OF",
-    "welcome": "at Reception.",
-    "standard": "EXCELLENCE",
-    "zeroWait": "Zero Wait",
-    "location": "Strategic Location",
-    "hub": "Lisbon Hub (P19)",
-    "sub": "We transform simple transport into a pleasant experience, where every detail is thought of for your well-being.",
-    "items": [
-      {
-        "title": "Chauffeur Selection",
-        "desc": "Our team consists of experienced professionals selected through a rigorous background and skills audit."
-      },
-      {
-        "title": "Prestige Fleet",
-        "desc": "Modern, meticulously maintained vehicles equipped for maximum comfort and style."
-      },
-      {
-        "title": "Pricing Transparency",
-        "desc": "Fixed rates agreed upon at the time of booking, with no hidden fees or surcharges."
-      }
-    ],
-    "trustBadges": [
-      "Professional Chauffeurs",
-      "Sanitized Vehicles",
-      "Priority Support"
+      "Setúbal",
+      "Algarve",
+      "Porto"
     ]
   },
   "bookingFlow": {
     "steps": {
-      "details": "Itinerary",
-      "vehicle": "Car",
-      "extras": "Services",
-      "payment": "Confirm"
+      "details": "Route",
+      "vehicle": "Vehicle",
+      "extras": "Options",
+      "payment": "Payment"
     },
     "stepVehicle": {
-      "title": "Choose your category",
-      "sub": "The ideal car for your trip",
-      "selectedClass": "Chosen Category",
+      "title": "Choose Your Car",
+      "sub": "Select the category that best suits your needs",
+      "selectedClass": "Selected Category",
       "totalReturn": "Total Round Trip",
-      "estimated": "Estimated Amount",
-      "back": "Adjust Route",
+      "estimated": "Estimated",
+      "back": "Back",
       "next": "Continue",
       "pax": "Pax",
       "bags": "Bags"
     },
     "summary": {
-      "title": "Confirm Details",
-      "subtitle": "Check if everything is correct",
-      "selectedClass": "Chosen Vehicle",
+      "title": "Complete Booking",
+      "subtitle": "Please validate the details below",
+      "selectedClass": "Selected Vehicle",
       "origin": "Pickup",
-      "destination": "Dropoff",
-      "notDefined": "Not defined",
+      "destination": "Destination",
+      "notDefined": "To be defined",
       "pickup": "Outbound",
       "return": "Return",
       "baseRate": "Base Rate",
-      "exclusiveAmenities": "Exclusive Amenities",
       "oneWay": "One Way",
       "roundTrip": "Round Trip",
-      "extras": "Extra Services",
-      "discount": "Return Discount (-5%)",
-      "totalAmount": "Total Price",
-      "vatIncluded": "VAT INCLUDED",
+      "extras": "Extra Options",
+      "exclusiveAmenities": "Included Services",
+      "discount": "Return Discount",
+      "totalAmount": "Final Total",
+      "vatIncluded": "VAT Included",
       "secureProtocol": "Secure Booking",
-      "disclaimer": "Final prices including all taxes and tolls.",
-      "meetGreetIncl": "Greeting Included",
+      "disclaimer": "Final prices with tolls and fees included.",
+      "meetGreetIncl": "Meet & Greet Included",
       "freeCancel": "Free Cancellation",
       "reasons": {
-        "night_shift": "Night Shift",
+        "night_shift": "Night Period",
         "peak_hour": "Peak Hour",
         "weekend": "Weekend",
         "holiday": "Holiday"
       }
     },
     "payment": {
-      "title": "Complete Booking",
-      "sub": "Secure Processing",
-      "encrypted": "Secure Payment",
-      "authRequired": "Reserved Access",
-      "authDesc": "Sign in to complete your booking quickly.",
-      "profile": "Booking Details",
-      "personal": "Personal Details",
+      "title": "Confirm and Pay",
+      "sub": "100% Secure Payment via Stripe",
+      "encrypted": "Encrypted Data",
+      "authRequired": "Identification",
+      "authDesc": "To finish, create an account or sign in to your dashboard.",
+      "profile": "Your Details",
+      "personal": "Contact",
       "signOut": "Sign Out",
-      "passengerName": "Passenger Name",
-      "email": "Contact E-mail",
-      "phone": "Phone Number",
-      "notes": "Instructions (Optional)",
+      "passengerName": "Full Name",
+      "email": "E-mail",
+      "phone": "Phone",
+      "notes": "Notes",
       "transaction": "Payment Method",
       "cardNumber": "Card Number",
       "expiry": "Expiry",
       "cvc": "CVC",
-      "mbway": "MB WAY Number",
-      "processing": "Validating payment...",
-      "terms": "Terms of Service",
-      "confirm": "Confirm Booking",
-      "verify": "Verify Details",
-      "notesPlaceholder": "Ex: Child seat, extra luggage, etc.",
+      "mbway": "MB WAY Phone",
+      "processing": "Processing...",
+      "terms": "Terms and Conditions",
+      "confirm": "Complete Booking",
+      "verify": "Sign In / Register",
+      "notesPlaceholder": "E.g.: Baby seat, extra stop, etc.",
       "expiryPlaceholder": "MM/YY",
-      "waitingDetails": "Waiting for final details...",
-      "initialize": "Initialize Payment"
+      "waitingDetails": "Waiting for details...",
+      "initialize": "Activate Payment"
     },
     "extras": {
       "baby_seat": "Baby Seat",
       "booster": "Booster Seat",
-      "meet_greet": "VIP Reception (Meet & Greet)",
+      "meet_greet": "Personalized Reception",
       "name_board": "Name Board",
-      "water": "Extra Water Set",
-      "wifi": "Dedicated Wi-Fi Hotspot",
-      "extra_stop": "In-transit Stop",
-      "extra_wait": "Extra Waiting Time"
+      "water": "Extra Water",
+      "wifi": "On-board Wi-Fi",
+      "extra_stop": "Extra Stop",
+      "extra_wait": "Extended Wait"
     },
     "stepExtras": {
-      "title": "Additional Services",
-      "sub": "Customize your trip as you prefer",
-      "recommendation": "MOVNLY Suggestion",
-      "mgTitle": "Terminal Reception",
-      "mgDesc": "The driver waits for you with a personalized sign.",
-      "exclusiveService": "Dedicated Service",
-      "selected": "Activated",
-      "add": "Add to Trip",
-      "noExtras": "Proceed without extras",
+      "title": "Would you like to add anything?",
+      "sub": "Personalize your trip with our extras",
+      "recommendation": "Recommended",
+      "mgTitle": "Meet & Greet",
+      "mgDesc": "The driver waits with a sign at arrivals.",
+      "exclusiveService": "Attentive Service",
+      "selected": "Selected",
+      "add": "Add",
+      "noExtras": "Continue without extras",
       "back": "Back",
-      "next": "Go to Payment"
+      "next": "Continue"
     }
   },
   "confirmation": {
-    "badge": "Trip Scheduled",
-    "title": "It's all confirmed!",
-    "sentTo": "We sent details to",
-    "reference": "Booking No",
+    "badge": "Success",
+    "title": "Booking successful!",
+    "sentTo": "We sent an e-mail with the details to",
+    "reference": "Booking No.",
     "statusConfirmed": "Confirmed",
-    "pickup": "Pickup",
+    "pickup": "Departure",
     "dropoff": "Arrival",
     "date": "Date",
-    "time": "Hour",
-    "category": "Vehicle",
+    "time": "Time",
+    "category": "Car Type",
     "passenger": "Passenger",
-    "totalPaid": "Total Paid",
-    "nextStepsTitle": "What happens now?",
-    "step1": "You will receive an email with the booking summary.",
-    "step2": "24h before, we send driver and car details.",
-    "step3": "You can track the driver's arrival in real-time.",
-    "viewDashboard": "My Bookings",
-    "downloadPdf": "Save PDF",
-    "share": "Share Details",
-    "changeSomething": "Need to change something?",
-    "callUs": "Direct Line",
-    "customerArea": "Client Portal"
+    "totalPaid": "Paid",
+    "nextStepsTitle": "Useful Information",
+    "step1": "You will receive the driver's contact by SMS/E-mail.",
+    "step2": "You can manage your booking in the Client Area.",
+    "step3": "In case of doubt, contact our support.",
+    "viewDashboard": "See My Bookings",
+    "downloadPdf": "Download PDF",
+    "share": "Share",
+    "changeSomething": "Change Booking",
+    "callUs": "Phone Support",
+    "customerArea": "Client Panel"
   },
   "auth": {
-    "titleRedefined": "Your Trip, Your Control.",
-    "desc": "Access your account to manage bookings, check invoices, and talk to your driver.",
-    "fleetManagement": "Active Fleet Management",
-    "welcomeBack": "Welcome back",
-    "createAccount": "Create Client Account",
-    "loginSubtitle": "Enter your details to access.",
-    "registerSubtitle": "Register for exclusive benefits.",
+    "titleRedefined": "MOVNLY Client Area",
+    "desc": "Manage your transports and invoices easily.",
+    "fleetManagement": "Operational Panel",
+    "welcomeBack": "Hello,",
+    "createAccount": "Create New Account",
+    "loginSubtitle": "Access Data",
+    "registerSubtitle": "Register for faster booking",
     "fullName": "Full Name",
-    "emailAddress": "Email",
+    "emailAddress": "E-mail",
     "password": "Password",
-    "forgotPasswordLink": "Forgot password?",
+    "forgotPasswordLink": "Forgot password",
     "signIn": "Sign In",
-    "register": "Register Now",
-    "noAccount": "Not a client yet?",
+    "register": "Create Account",
+    "noAccount": "Don't have an account yet?",
     "hasAccount": "Already have an account?",
-    "applyAccess": "Get Started",
-    "signInHere": "Log in here",
-    "fleetLogin": "Driver Area",
-    "backToPlatform": "Back to Site",
+    "applyAccess": "Start Now",
+    "signInHere": "Log In",
+    "fleetLogin": "Drivers Access",
+    "backToPlatform": "Go to Site",
     "forgotPassword": {
-      "title": "Recover Account",
-      "desc": "Enter your email to receive a recovery code.",
-      "emailLabel": "Email Address",
-      "emailPlaceholder": "ex: john.doe@email.com",
-      "submit": "Send Code",
-      "successTitle": "Email Sent",
-      "successDesc": "We sent instructions to {email}.",
+      "title": "Recover Password",
+      "desc": "Enter your e-mail to send instructions.",
+      "emailLabel": "E-mail",
+      "emailPlaceholder": "your@email.com",
+      "submit": "Send",
+      "successTitle": "E-mail Sent",
+      "successDesc": "Check your inbox.",
       "resetButton": "Set New Password"
     }
   },
   "dashboard": {
-    "welcomeBack": "Welcome back,",
-    "authRequired": "Authentication Required",
-    "authDesc": "This dashboard is reserved for registered clients only.",
+    "welcomeBack": "Hello,",
+    "authRequired": "Login Required",
+    "authDesc": "Please sign in to your account to see your schedules.",
     "authenticate": "Log In",
-    "portalTitle": "Client Area",
-    "portalSub": "Your bookings and itineraries.",
-    "reserveConcierge": "New Booking",
+    "portalTitle": "My Dashboard",
+    "portalSub": "Transport management and trip history.",
+    "reserveConcierge": "Schedule New Transport",
     "completedJourneys": "Completed Trips",
     "totalInvested": "Total Spent",
-    "chauffeurRating": "Average Rating",
+    "chauffeurRating": "Rating",
     "upcomingJourney": "Next Trip",
-    "pendingItineraries": "Upcoming Bookings",
-    "viewPortfolio": "View History",
+    "pendingItineraries": "Active Schedules",
+    "viewPortfolio": "See History",
     "noPending": "You have no scheduled trips at the moment",
-    "scheduleNext": "Book your next trip here",
-    "recentItineraries": "Recent Activity",
-    "noCompleted": "You haven't completed trips with us yet",
-    "viewFullLedger": "View Full History",
-    "quickActions": "Quick Actions",
-    "newReservation": "Book Now",
+    "scheduleNext": "Book Now",
+    "recentItineraries": "Latest Trips",
+    "noCompleted": "No trip history.",
+    "viewFullLedger": "See All",
+    "quickActions": "Shortcuts",
+    "newReservation": "New Booking",
     "duplicateTrip": "Repeat Trip",
-    "billingProfiles": "Billing Details",
-    "privateConcierge": "Customer Support",
+    "billingProfiles": "Billing Data",
+    "privateConcierge": "Support",
     "status": {
-      "pending_payment": "Awaiting payment",
+      "pending_payment": "Pay Now",
       "confirmed": "Scheduled",
       "driver_assigned": "Driver Assigned",
-      "driver_en_route": "En route",
-      "driver_arrived": "On site",
-      "in_progress": "In progress",
+      "driver_en_route": "On the Way",
+      "driver_arrived": "Arrived",
+      "in_progress": "In Trip",
       "completed": "Completed",
-      "cancelled": "Cancelled",
-      "no_show": "No show"
+      "cancelled": "Canceled",
+      "no_show": "No Show"
     },
     "card": {
       "at": "at",
       "flight": "Flight",
-      "monitoringActive": "Active",
-      "viewDetails": "View More",
-      "changeFlight": "Adjust Flight",
+      "monitoringActive": "Monitored",
+      "viewDetails": "See More",
+      "changeFlight": "Edit Flight",
       "cancel": "Cancel",
-      "rateTrip": "Rate Trip",
-      "cancelConfirm": "Are you sure you want to cancel this booking?",
-      "extrasCount": "{count} extra service",
-      "extrasCountPlural": "{count} extra services"
+      "rateTrip": "Rate",
+      "cancelConfirm": "Are you sure you want to cancel?",
+      "extrasCount": "{count} extra",
+      "extrasCountPlural": "{count} extras"
     },
     "payment": {
       "title": "Payment Methods",
-      "desc": "Manage your cards and billing details securely.",
-      "noMethods": "No saved cards.",
-      "default": "Primary",
-      "makeDefault": "Make Primary",
-      "addNew": "New Card",
-      "cardNumber": "Card Number",
+      "desc": "Manage your saved cards.",
+      "noMethods": "No cards.",
+      "default": "Default",
+      "makeDefault": "Set as Primary",
+      "addNew": "Add Card",
+      "cardNumber": "Number",
       "expiry": "Expiry",
       "cvv": "CVV",
       "cancel": "Cancel",
-      "saveCard": "Save Card",
-      "addNewMethod": "Add Method",
-      "corporateBilling": "Monthly Billing",
-      "corporateDesc": "Does your company travel frequently? Request consolidated monthly billing.",
-      "applyNow": "Request Business Access"
+      "saveCard": "Save",
+      "addNewMethod": "Register",
+      "corporateBilling": "Company Billing",
+      "corporateDesc": "Need to bill for a company?",
+      "applyNow": "Request Company Access"
     }
-  },
-  "b2b": {
-    "badge_pill": "Corporate Partnerships",
-    "headline1": "Solutions for",
-    "headline2": "Your Business.",
-    "subtitle": "Programs designed to facilitate mobility for clients and teams.",
-    "cta_link": "Learn more about partnerships",
-    "corp_badge": "MOVNLY Business",
-    "corp_exclusive": "Professional Service",
-    "corp_desc": "Priority fleet access and monthly billing for your organization.",
-    "features": [
-      {
-        "title": "For Hotels",
-        "desc": "Full integration for reception with direct hotel billing."
-      },
-      {
-        "title": "For Companies",
-        "desc": "Executive transport with the highest standards of punctuality."
-      },
-      {
-        "title": "Travel Agencies",
-        "desc": "Commissioning and service guarantee for your VIP clients."
-      },
-      {
-        "title": "Events & Congresses",
-        "desc": "Full transport management for events, summits and parties."
-      }
-    ],
-    "segments": {
-      "hotels": {
-        "badge": "Hotels & Resorts",
-        "title": "MOVNLY Hospitality",
-        "subtitle1": "Excellence in",
-        "subtitle2": "Hospitality.",
-        "desc": "Elevate your guests' experience with a trusted transport partner and modern fleet.",
-        "features": [
-          "Dedicated Booking Portal",
-          "Consolidated Monthly Payment",
-          "24h Priority Support",
-          "Lobby Meet & Greet"
-        ],
-        "cta_card_title": "Hotel Partnership",
-        "cta_card_desc": "Offer quality transport to your guests with total ease and discretion.",
-        "cta": "Learn More",
-        "bento_title": "Five-star service.",
-        "bento_desc": "We transform the transfer into an extension of your hotel's luxury stay.",
-        "benefits": [
-          {
-            "title": "White Label",
-            "desc": "Hotel branding on all communications with the guest."
-          },
-          {
-            "title": "Concierge Pro",
-            "desc": "Intuitive dashboard for reception to book in seconds."
-          },
-          {
-            "title": "Single Invoice",
-            "desc": "Eliminate bureaucracy with consolidated monthly reports."
-          }
-        ]
-      },
-      "corporate": {
-        "badge": "Companies",
-        "title": "Executive Business",
-        "subtitle1": "Mobility",
-        "subtitle2": "For Business.",
-        "desc": "Private and safe transport for your company. We guarantee your team and clients arrive on time.",
-        "features": [
-          "Private Account Manager",
-          "Detailed Expense Reports",
-          "Single Monthly Invoice",
-          "Scheduling Priority"
-        ],
-        "cta_card_title": "Business Account",
-        "cta_card_desc": "Centralized management of all your team's transport needs.",
-        "cta": "Talk to Manager",
-        "bento_title": "Efficiency at every turn.",
-        "bento_desc": "Corporate mobility focused on productivity and the well-being of your most valuable assets.",
-        "benefits": [
-          {
-            "title": "Monthly Billing",
-            "desc": "Consolidate all trips into a single detailed monthly statement."
-          },
-          {
-            "title": "Management Portal",
-            "desc": "Total control over routes, costs, and permissions in real-time."
-          },
-          {
-            "title": "Local Presence",
-            "desc": "Full support at Lisbon Airport and major business centers."
-          }
-        ],
-        "stats": {
-          "response": "15min",
-          "response_label": "Response Time",
-          "tax": "100%",
-          "tax_label": "Tax Deductible"
-        },
-        "final_cta_title": "Take your company to the next level.",
-        "final_cta_desc": "Hundreds of companies trust MOVNLY to transport their most valuable assets: people."
-      },
-      "agencies": {
-        "badge": "Travel Agencies",
-        "title": "Travel Partners",
-        "subtitle1": "Your Trusted",
-        "subtitle2": "Network.",
-        "desc": "Impeccable service guarantee for your most demanding passengers and exclusive bonuses.",
-        "features": [
-          "Private Agent Dashboard",
-          "Agile Commission Payment",
-          "Priority VIP Support",
-          "Bilingual Drivers"
-        ],
-        "cta_card_title": "Agent Network",
-        "cta_card_desc": "Be an official partner and guarantee total satisfaction for your end client.",
-        "cta": "Join Network",
-        "bento_title": "Loyalty Guaranteed.",
-        "bento_desc": "Your clients deserve the best welcome when arriving in Portugal.",
-        "benefits": [
-          {
-            "title": "Guaranteed Commission",
-            "desc": "Transparent remuneration plan for every completed booking."
-          },
-          {
-            "title": "Voucher Control",
-            "desc": "Issuance of personalized vouchers for your passengers."
-          },
-          {
-            "title": "VIP Support",
-            "desc": "24/7 direct line to resolve any unforeseen event in minutes."
-          }
-        ]
-      }
-    }
-  },
-  "routes_section": {
-    "badge": "Main Destinations",
-    "headline": "Our Connections",
-    "title1": "Portugal,",
-    "title2": "Without Borders.",
-    "desc": "From North to South, from the beaches of Arrábida to the mountains of Gerês. Travel with the comfort of a private jet on solid ground.",
-    "sub": "Direct and comfortable connections throughout the national territory.",
-    "exploreAll": "View all routes",
-    "status": "Operational",
-    "durationLabel": "Estimated Time",
-    "fromLabel": "Origin",
-    "transfer": "Transfer",
-    "items": [
-      {
-        "from": "Lisbon Airport",
-        "to": "Lisbon Center",
-        "duration": "25 min",
-        "price": "35"
-      },
-      {
-        "from": "Lisbon Airport",
-        "to": "Cascais",
-        "duration": "45 min",
-        "price": "31"
-      },
-      {
-        "from": "Lisbon Airport",
-        "to": "Sintra",
-        "duration": "50 min",
-        "price": "70"
-      },
-      {
-        "from": "Lisbon Airport",
-        "to": "Algarve",
-        "duration": "2h 30min",
-        "price": "220"
-      }
-    ]
-  },
-  "tours_section": {
-    "badge": "Private Tours",
-    "title1": "Portugal,",
-    "title2": "at your pace.",
-    "sub": "Exclusive itineraries with bilingual drivers. Explore the soul of Portugal with the sophistication you deserve.",
-    "viewAll": "View all tours",
-    "from": "from",
-    "bookNow": "Book now",
-    "customTitle": "Customized Itinerary?",
-    "customDesc": "We create the ideal experience for your group, celebration, or corporate event.",
-    "items": [
-      {
-        "id": "t1",
-        "title": "Royal Sintra & Cascais",
-        "desc": "Aristocratic palaces, the mysticism of Quinta da Regaleira, and the sea breeze of the Portuguese Riviera.",
-        "duration": "8h",
-        "price": "280",
-        "image": "https://images.pexels.com/photos/2042161/pexels-photo-2042161.jpeg",
-        "featured": true,
-        "location": "Sintra, Portugal"
-      },
-      {
-        "id": "t2",
-        "title": "Luxury Algarve Summer",
-        "desc": "Private transfer between Vilamoura, Quinta do Lago, and Vale do Lobo with waiting and local concierge.",
-        "duration": "4h",
-        "price": "180",
-        "image": "https://images.pexels.com/photos/1531660/pexels-photo-1531660.jpeg",
-        "featured": false,
-        "location": "Algarve, Portugal"
-      },
-      {
-        "id": "t3",
-        "title": "Arrábida: Wine & Sea",
-        "desc": "Tasting in Azeitão and the crystalline waters of Portinho da Arrábida aboard an executive vehicle.",
-        "duration": "6h",
-        "price": "220",
-        "image": "https://images.pexels.com/photos/34091/pexels-photo.jpg",
-        "featured": false,
-        "location": "Setúbal, Portugal"
-      }
-    ]
-  },
-  "testimonials": {
-    "sectionBadge": "What clients say",
-    "title1": "The Voice of",
-    "title2": "Experience.",
-    "sub": "The trust of executives and travelers from around the world.",
-    "socialProof": [
-      "Lisbon Transport Reference",
-      "98% Satisfied Clients",
-      "2024 Punctuality Leader"
-    ],
-    "items": [
-      {
-        "name": "Sarah Mitchell",
-        "role": "Executive Traveler",
-        "country": "United Kingdom",
-        "avatar": "SM",
-        "text": "Absolutely impeccable service. My chauffeur was waiting with a personalized sign, the vehicle was excellent, and the journey was very smooth."
-      },
-      {
-        "name": "Eng. Ricardo Silva",
-        "role": "Sales Director",
-        "country": "Portugal",
-        "avatar": "RS",
-        "text": "I use MOVNLY for all my business travel in Lisbon. British-style punctuality and high-end vehicles every time."
-      },
-      {
-        "name": "Maria Fontes",
-        "role": "Consultant",
-        "country": "Portugal",
-        "avatar": "MF",
-        "text": "Booked in less than a minute and had immediate confirmation. The driver arrived early and was extremely helpful with my luggage."
-      }
-    ]
-  },
-  "cta": {
-    "pill": "Ready for your trip?",
-    "headline1": "Book your",
-    "headline2": "next ride.",
-    "sub": "The best transport and private driver service in Lisbon. New cars, fixed prices, and total commitment to your schedule.",
-    "bookNow": "BOOK NOW",
-    "callNow": "Customer Support: +351 21 000 0000",
-    "microcopy": [
-      "Free Cancellation",
-      "Secure Payment",
-      "24/7 Monitoring"
-    ]
   },
   "footer": {
-    "tagline": "The best transport and private driver service in Lisbon.",
+    "tagline": "Reliable Executive Mobility and Transfers in Portugal.",
+    "about": "MOVNLY is a private transport platform focused on offering excellence, punctual and safe service in Lisbon and surroundings.",
+    "solutions": "Our Services",
+    "institutional": "Company",
+    "contact": "Talk to Us",
     "newsletter": {
-      "badge": "Newsletter",
-      "title": "News & <gold>Special Offers</gold>",
-      "sub": "Subscribe to receive the latest updates on routes and exclusive services in Lisbon.",
-      "placeholder": "Your email here...",
+      "badge": "News",
+      "title": "Stay <gold>Updated</gold>",
+      "sub": "Receive information about new destinations and services.",
+      "placeholder": "Your e-mail",
       "button": "Subscribe",
-      "privacy": "Your data is safe with us."
+      "privacy": "We guarantee your data privacy."
     },
-    "copyright": "© {year} MOVNLY. All rights reserved.",
     "cols": {
       "services": {
         "title": "Services",
-        "links": [
-          "Airport",
-          "Execs",
-          "Events",
-          "Private Tours"
-        ]
+        "links": ["Airport", "Hotels", "Corporate", "Groups", "Tours"]
       },
       "company": {
-        "title": "Company",
-        "links": [
-          "About Us",
-          "The Fleet",
-          "Careers",
-          "Blog"
-        ]
-      },
-      "partners": {
-        "title": "Partners",
-        "links": [
-          "Hotels",
-          "Agencies",
-          "Affiliates"
-        ]
+        "title": "Institutional",
+        "links": ["About Us", "Fleet", "Careers", "Partners"]
       },
       "support": {
         "title": "Support",
-        "links": [
-          "Contacts",
-          "Privacy",
-          "Terms",
-          "FAQ"
-        ]
+        "links": ["Help", "Contacts", "Privacy", "Terms"]
       }
     },
-    "legal": [
-      "Privacy",
-      "Terms",
-      "Cookies"
+    "copyright": "© {year} MOVNLY. All rights reserved.",
+    "legal": ["Privacy", "Terms", "How it Works"],
+    "subscribe": "Subscribe",
+    "allRights": "All rights reserved.",
+    "developedBy": "Developed by"
+  },
+  "categories": {
+    "sectionBadge": "Elite Fleet",
+    "title1": "Vehicle",
+    "title2": "Categories Available",
+    "sub": "Select the standard of excellence that best suits your requirements and prestige.",
+    "guarantee": "MOVNLY Quality Guarantee",
+    "guaranteeDesc": "Rigorously inspected vehicles, professional drivers, and excellent service.",
+    "compare": "View More Itineraries"
+  },
+  "whyChooseUs": {
+    "badge": "Our Difference",
+    "title1": "Your",
+    "title2": "Priority",
+    "title3": "Is Our Commitment",
+    "ritual": "The Ritual of",
+    "welcome": "Executive Excellence",
+    "sub": "At MOVNLY, every detail is orchestrated to provide an irreproachable transport experience.",
+    "zeroWait": "Zero Waiting Times",
+    "hub": "Central Monitoring",
+    "standard": "Operational Standard",
+    "location": "Strategic Location",
+    "trustBadges": [
+      "Absolute Punctuality",
+      "Total Discretion",
+      "24/7 Support",
+      "Premium Insurance"
+    ]
+  },
+  "testimonials": {
+    "sectionBadge": "Experiences",
+    "title1": "What Our",
+    "title2": "Clients Say",
+    "sub": "Our passengers' trust is our greatest asset.",
+    "items": [
+      {
+        "name": "Ricardo Santos",
+        "role": "CEO Tech Global",
+        "text": "The most punctual and discreet service I have ever used in Lisbon. The driver was impeccable.",
+        "avatar": "RS",
+        "country": "Portugal"
+      },
+      {
+        "name": "Sarah Miller",
+        "role": "Executive Producer",
+        "text": "Everything was perfect. The car was spotless and the driver was extremely professional.",
+        "avatar": "SM",
+        "country": "UK"
+      },
+      {
+        "name": "Jean-Pierre",
+        "role": "Consultant Senior",
+        "text": "An impeccable service from start to finish. Highly recommended for business travel.",
+        "avatar": "JP",
+        "country": "France"
+      }
     ],
-    "motto": "Your journey in safe hands."
+    "socialProof": [
+      "Lisbon Reference",
+      "Luxury Protocol",
+      "Corporate Trust",
+      "Guaranteed Excellence"
+    ]
   },
-  "ui": {
-    "datepicker": {
-      "placeholder": "Date",
-      "placeholder_time": "Time",
-      "months": [
-        "January",
-        "February",
-        "March",
-        "April",
-        "May",
-        "June",
-        "July",
-        "August",
-        "September",
-        "October",
-        "November",
-        "December"
-      ],
-      "days": [
-        "Mon",
-        "Tue",
-        "Wed",
-        "Thu",
-        "Fri",
-        "Sat",
-        "Sun"
-      ]
-    },
-    "timepicker": {
-      "hour": "Hour",
-      "minute": "Minute"
-    }
-  },
-  "routes_list": [
-    {
-      "from": "Lisbon Airport",
-      "to": "Lisbon Center"
-    },
-    {
-      "from": "Lisbon Airport",
-      "to": "Cascais"
-    },
-    {
-      "from": "Lisbon Airport",
-      "to": "Sintra"
-    },
-    {
-      "from": "Lisbon Airport",
-      "to": "Setúbal"
-    },
-    {
-      "from": "Lisbon Center",
-      "to": "Óbidos"
-    },
-    {
-      "from": "Lisbon Airport",
-      "to": "Algarve"
-    }
-  ],
-  "testimonials_list": [
-    {
-      "role": "Frequent Traveler",
-      "country": "United Kingdom",
-      "text": "Absolutely impeccable service. The driver was waiting for me with a personalized sign, the car was luxurious and the trip was perfect.",
-      "route": "Airport → Cascais"
-    },
-    {
-      "role": "Sales Director",
-      "country": "Spain",
-      "text": "I use MOVNLY for all my business trips in Lisbon. Perfect punctuality, flawless vehicles and the booking platform is the most intuitive I've ever used.",
-      "route": "Airport → Nations Park"
-    },
-    {
-      "role": "Tourists",
-      "country": "Germany",
-      "text": "We traveled with 2 children and a lot of luggage. The driver was extremely attentive, the vehicle spacious and the service exceeded all expectations.",
-      "route": "Airport → Sintra"
-    }
-  ],
-  "tours_list": {
-    "sintra-palaces": {
-      "title": "Palatial Sintra",
-      "sub": "National Palace · Pena · Regaleira",
-      "tag": "Most Popular",
-      "desc": "The classic route through the palaces of Sintra. Departure from Lisbon at dawn, stops at the three historic palaces and return at dusk."
-    },
-    "alentejo-wine": {
-      "title": "Alentejo & Wineries",
-      "sub": "Évora · Estates · Wine Immersion",
-      "tag": "Exclusive Experience",
-      "desc": "Évora UNESCO Heritage, visit to award-winning estates and Alentejo wine tasting accompanied by regional snacks."
-    },
-    "douro-valley": {
-      "title": "Douro Valley",
-      "sub": "Porto · Terraced Vineyards · Cruise",
-      "tag": "Exclusive",
-      "desc": "Journey to the Douro Valley with a river cruise, visit to historic quintas and Port wine tasting at the source."
-    },
-    "obidos-nazare": {
-      "title": "Óbidos & Nazaré",
-      "sub": "Medieval Village · Giant Waves · Coast",
-      "tag": "Portuguese Adventure",
-      "desc": "The medieval village of Óbidos intact since the 13th century, followed by the fishing village of Nazaré and the iconic Praia do Norte with its giant waves."
-    },
-    "algarve-private": {
-      "title": "Algarve Lighthouses",
-      "sub": "Sagres · Vicentina Coast · Albufeira",
-      "tag": "Escape to the South",
-      "desc": "Discover the paradise of southern Europe. Sunbathe on the most beautiful beaches and feel the breeze on the dramatic cliffs of Cape St. Vincent."
-    },
-    "setubal-arrabida": {
-      "title": "Exclusive Arrábida",
-      "sub": "Mountains and Sea · Azeitão · Wines and Beaches",
-      "tag": "Nature Escape",
-      "desc": "Relax through the mountains of Serra da Arrábida until you bathe in unforgettable crystal clear waters, with the refinement of a Setúbal Moscatel tasting."
-    },
-    "summer-tour": {
-      "title": "Summer Tour: Estoril Coast",
-      "sub": "Cascais · Boca do Inferno · Cabo da Roca",
-      "tag": "Summer Edition",
-      "desc": "An unforgettable sunny journey through the western edge of the European world and the aristocratic seaside resorts of the Lisbon Riviera and Estoril Casino."
-    }
-  },
-  "legal": {
-    "privacy": {
-      "title": "Privacy Guidelines",
-      "badge": "MOVNLY Real Compliance",
-      "lastUpdated": "Audited on: April 14, 2026",
-      "sections": [
-        {
-          "title": "Responsible Data Usage",
-          "content": "MOVNLY collects only the data strictly necessary for the safe execution of your journey: name, contact phone number for coordination with the driver, and billing data processed via certified banking channels."
-        },
-        {
-          "title": "Banking Security & Encryption",
-          "content": "All financial transactions are processed through Stripe, one of the world leaders in payment security, ensuring that your card data never resides on our servers."
-        },
-        {
-          "title": "Location Management",
-          "content": "The vehicle's location is monitored exclusively during the service to ensure passenger safety and route efficiency, with this data being deleted after the legal retention period."
-        },
-        {
-          "title": "Your Rights (GDPR)",
-          "content": "As a user, you have the full right to access, rectify, or request the permanent deletion of your data. Our commitment is to total transparency on how your information helps us serve you better."
-        }
-      ]
-    },
-    "terms": {
-      "title": "Terms of Service",
-      "badge": "MOVNLY Transparency",
-      "lastUpdated": "Updated on: April 14, 2026",
-      "sections": [
-        {
-          "title": "Nature of Agreement",
-          "content": "By using MOVNLY, you are hiring a professional transport brokerage service. We guarantee that all drivers in our network possess the legal licenses required by Portuguese legislation (RNAAT/TVDE)."
-        },
-        {
-          "title": "Conduct & Responsibilities",
-          "content": "We commit to providing a punctual and safe service. In return, we ask the user to maintain respectful conduct and provide accurate flight data for airport transfers."
-        },
-        {
-          "title": "Flexibility & Cancellations",
-          "content": "We understand that plans change. We offer free cancellation up to 24h before the trip. Late cancellations may be subject to administrative fees to compensate for driver availability."
-        },
-        {
-          "title": "Conflict Resolution",
-          "content": "Any unforeseen event will be treated with maximum priority by our support team. We always favor friendly and direct resolution through our 24/7 support center."
-        }
-      ]
-    }
+  "b2b": {
+    "badge_pill": "B2B Solutions",
+    "headline1": "Partnerships for",
+    "headline2": "Corporate Success",
+    "subtitle": "Tailored transport solutions for companies, hotels, and travel agencies.",
+    "cta_link": "Open Corporate Account",
+    "corp_badge": "Corporate Service",
+    "corp_exclusive": "Exclusive Access",
+    "corp_desc": "Dedicated portal for booking management and centralized billing.",
+    "features": [
+      {
+        "title": "Monthly Billing",
+        "desc": "Simplified financial management with unified billing for your company."
+      },
+      {
+        "title": "Account Manager",
+        "desc": "Priority support and personalized follow-up on all bookings."
+      },
+      {
+        "title": "Dedicated Fleet",
+        "desc": "Guarantee of immediate availability for your urgent needs."
+      },
+      {
+        "title": "Booking API",
+        "desc": "Direct integration with your company or hotel systems."
+      }
+    ]
   }
 }

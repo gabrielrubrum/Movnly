@@ -98,7 +98,7 @@ export default function ConfiguracoesPage() {
             <div className="w-full flex-1 max-w-[1400px] space-y-24 animate-luxury-reveal mx-auto">
                 <div className="space-y-4">
                     <h1 className="text-white text-6xl font-bold tracking-tight leading-none">
-                        Meus {" "}<span className="text-brand-gold not-italic font-light">Dados</span>
+                        Minha {" "}<span className="text-brand-gold not-italic font-light">Conta</span>
                     </h1>
                     <p className="text-white/30 text-lg font-light max-w-md">
                         Faça a gestão das suas informações pessoais, do seu veículo e da conta para onde os seus ganhos são enviados.

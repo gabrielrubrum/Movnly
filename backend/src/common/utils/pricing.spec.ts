@@ -21,8 +21,8 @@ describe('PricingEngine (Unit Tests)', () => {
             
             expect(result.region).toBe('CASCAIS');
             expect(result.totalPrice).toBe(48);
-            expect(result.driverAmount).toBe(22);
-            expect(result.platformFee).toBe(26);
+            expect(result.driverAmount).toBe(33);
+            expect(result.platformFee).toBe(15); // 48 - 33 = 15
         });
     });
 

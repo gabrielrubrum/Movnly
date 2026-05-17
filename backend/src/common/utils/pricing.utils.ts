@@ -1,6 +1,14 @@
 /**
  * MOVNLY Pricing & Earnings Utility
  * Single source of truth for flat-fee model and platform commissions.
+ *
+ * ─── GANHOS DO MOTORISTA ───────────────────────────────────────────
+ * Lisboa (intra-cidade):  Econômico €10 · Conforto €12 · Grupo €15 · Executivo €17
+ * Cascais (~30km):        Econômico €18 · Conforto €23 · Grupo €28 · Executivo €33
+ *
+ * Regra MOVNLY: Surges (noturno, feriado, fim de semana) ficam 100% para a
+ * plataforma. O motorista recebe SEMPRE o flat rate fixo abaixo.
+ * ───────────────────────────────────────────────────────────────────
  */
 
 export interface PricingBreakdown {
@@ -12,46 +20,49 @@ export interface PricingBreakdown {
     appliedSurges: string[];
 }
 
-// Preços Finais Base (Total pago pelo cliente)
+// ── Preço Total Pago pelo Cliente ──────────────────────────────────
+// Fins de semana, noite (22h–06h) e feriados aplicam surge em cima destes valores.
 const LISBON_TOTALS = {
-    smart: 22.5,
-    comfort: 28,
-    business: 28,     // Alias for comfort
-    group: 35,
-    van: 35,          // Alias for group
-    executive: 39.5,
-    vip: 39.5         // Alias for executive
+    smart: 22.5,      // Econômico
+    comfort: 28,      // Conforto
+    business: 28,     // alias: conforto
+    group: 35,        // Monovolume
+    van: 35,          // alias: grupo
+    executive: 39.5,  // Executivo
+    vip: 39.5         // alias: executivo
 };
 
 const CASCAIS_TOTALS = {
-    smart: 31,
-    comfort: 38,
-    business: 38,     // Alias for comfort
-    group: 43,
-    van: 43,          // Alias for group
-    executive: 48,
-    vip: 48           // Alias for executive
+    smart: 31,        // Econômico
+    comfort: 38,      // Conforto
+    business: 38,     // alias: conforto
+    group: 43,        // Monovolume
+    van: 43,          // alias: grupo
+    executive: 48,    // Executivo
+    vip: 48           // alias: executivo
 };
 
-// Ganhos Fixos do Motorista (Flat Rate)
+// ── Ganho Fixo do Motorista (Flat Rate Oficial MOVNLY) ─────────────
+// Lisboa — Corridas Intra-cidade
 const LISBON_DRIVER_RATES = {
-    smart: 10,
-    comfort: 12,
+    smart: 10,        // Econômico
+    comfort: 12,      // Conforto
     business: 12,
-    group: 15,
+    group: 15,        // Grupo / Monovolume
     van: 15,
-    executive: 17,
+    executive: 17,    // Executivo
     vip: 17
 };
 
+// Cascais — Transfers (~30 km desde o aeroporto)
 const CASCAIS_DRIVER_RATES = {
-    smart: 15,
-    comfort: 17,
-    business: 17,
-    group: 20,
-    van: 20,
-    executive: 22,
-    vip: 22
+    smart: 18,        // Econômico — +80% vs Lisboa
+    comfort: 23,      // Conforto  — +92% vs Lisboa
+    business: 23,
+    group: 28,        // Grupo     — +87% vs Lisboa
+    van: 28,
+    executive: 33,    // Executivo — +94% vs Lisboa
+    vip: 33
 };
 
 // Feriados Nacionais (Baseado no PaymentsService)

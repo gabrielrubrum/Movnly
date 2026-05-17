@@ -290,8 +290,8 @@ export default function ConfirmationPage({ params }: { params: Promise<{ id: str
                   {t("confirmation.changeSomething")}
                 </p>
                 <div className="flex flex-col gap-8">
-                  <a href="tel:+351210000000" className="text-5xl font-black text-brand-gold font-sans hover:text-white transition-all duration-700 tracking-tighter group-hover/hotline:scale-105 inline-block">
-                    +351 21 000 0000
+                  <a href="tel:+351924851105" className="text-5xl font-black text-brand-gold font-sans hover:text-white transition-all duration-700 tracking-tighter group-hover/hotline:scale-105 inline-block">
+                    +351 924 851 105
                   </a>
                   <div className="pt-8 border-t border-brand-gold/10">
                     <Link href="/dashboard" className="text-[12px] font-black text-brand-gold/40 uppercase tracking-[0.7em] hover:text-brand-gold hover:tracking-[0.8em] transition-all duration-500 flex items-center justify-center gap-5">

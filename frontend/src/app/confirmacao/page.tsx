@@ -4,6 +4,7 @@ import { useState, useEffect, Suspense } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import api from "@/lib/api";
 import Link from "next/link";
+import { useI18n } from "@/i18n/context";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { Badge } from "@/components/ui/Badge";
@@ -32,6 +33,7 @@ function ConfirmationContent() {
   const searchParams = useSearchParams();
   const router = useRouter();
   const { token } = useAuthStore();
+  const { t } = useI18n();
   const [booking, setBooking] = useState<BookingDetails | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -85,95 +87,107 @@ function ConfirmationContent() {
   const pickupDate = new Date(booking.pickupTime);
 
   return (
-    <div className="container-premium max-w-2xl animate-in fade-in slide-in-from-bottom-4 duration-1000">
-      {/* Success Header */}
-      <div className="text-center mb-10">
-        <div className="w-20 h-20 rounded-full bg-brand-gold/10 border-2 border-brand-gold/30 flex items-center justify-center mx-auto mb-5 shadow-[0_0_60px_rgba(197,160,89,0.15)]">
-          <CheckCircle className="w-10 h-10 text-brand-gold" />
+    <div className="container-premium max-w-2xl animate-luxury-reveal">
+      {/* Success Header with Orbital Celebration */}
+      <div className="text-center mb-24 relative">
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] h-[300px] bg-brand-gold/10 blur-[100px] rounded-full animate-pulse" />
+        
+        <div className="relative z-10">
+          <div className="w-32 h-32 rounded-full bg-brand-gold/10 border border-brand-gold/20 flex items-center justify-center mx-auto mb-10 shadow-[0_0_100px_rgba(212,175,55,0.3)] group">
+            <CheckCircle className="w-16 h-16 text-brand-gold group-hover:scale-110 transition-transform duration-1000" />
+          </div>
+          <div className="inline-flex items-center gap-3 mb-8 px-8 py-3 rounded-full bg-brand-gold/10 border border-brand-gold/20 shadow-lg">
+             <span className="w-2 h-2 rounded-full bg-brand-gold animate-ping" />
+             <span className="text-[10px] font-black uppercase tracking-[0.5em] text-brand-gold">{t("bookingFlow.confirmation.status")}</span>
+          </div>
+          <h1 className="text-6xl sm:text-8xl font-black text-white mb-6 uppercase tracking-tighter leading-none">
+            {t("bookingFlow.confirmation.titlePart1")} <br />
+            <span className="text-brand-gold">{t("bookingFlow.confirmation.titlePart2")}</span>
+          </h1>
+          <p className="text-white/30 text-xs font-black uppercase tracking-[0.5em] mt-8 max-w-md mx-auto leading-relaxed">
+            {t("bookingFlow.confirmation.subtitle")}
+          </p>
         </div>
-        <Badge variant="gold" className="mb-3 px-4 py-1">Reserva Confirmada</Badge>
-        <h1 className="text-4xl font-normal text-white mb-2 italic text-serif tracking-tight leading-tight">Experiência <span className="text-brand-gold not-italic">Garantida</span></h1>
-        <p className="text-white/40 text-sm font-light">
-          A sua reserva foi confirmada com sucesso.
-        </p>
       </div>
 
-      {/* Booking Card */}
-      <div className="card-premium p-10 mb-8 border-brand-gold/10 relative overflow-hidden group">
-        <div className="absolute top-0 right-0 w-32 h-32 bg-brand-gold/5 blur-3xl rounded-full -translate-y-1/2 translate-x-1/2" />
+      {/* Futuristic Booking Voucher */}
+      <div className="glass-bento-luxury p-12 mb-12 border-brand-gold/10 relative overflow-hidden group shadow-[0_40px_100px_-20px_rgba(0,0,0,0.9)]">
+        <div className="absolute top-0 right-0 w-64 h-64 bg-brand-gold/5 blur-[120px] rounded-full -translate-y-1/2 translate-x-1/2" />
         
-        <div className="flex items-center justify-between mb-8">
+        {/* Perforated edge effect */}
+        <div className="absolute -left-3 top-1/2 -translate-y-1/2 w-6 h-12 bg-[#07070A] rounded-full border border-white/5" />
+        <div className="absolute -right-3 top-1/2 -translate-y-1/2 w-6 h-12 bg-[#07070A] rounded-full border border-white/5" />
+
+        <div className="flex items-center justify-between mb-12">
           <div>
-            <p className="text-[10px] text-white/30 uppercase font-black tracking-widest mb-1">Número da Reserva</p>
-            <p className="text-2xl font-black text-white tracking-tighter">{ref}</p>
+            <p className="text-[10px] text-white/20 uppercase font-black tracking-[0.4em] mb-2">{t("bookingFlow.confirmation.ref")}</p>
+            <p className="text-4xl font-black text-white tracking-tighter">{ref}</p>
           </div>
           <div className="text-right">
-             <p className="text-[10px] text-white/30 uppercase font-black tracking-widest mb-1">Status</p>
-             <div className="flex items-center gap-2 text-emerald-400 font-bold text-xs uppercase tracking-wider">
+             <p className="text-[10px] text-white/20 uppercase font-black tracking-[0.4em] mb-2">STATUS</p>
+             <div className="inline-flex items-center gap-3 px-4 py-2 rounded-xl bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 font-black text-[10px] uppercase tracking-widest">
                 <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-                Pago & Reservado
+                VERIFICADO
              </div>
           </div>
         </div>
 
-        <div className="space-y-4 mb-8 pb-8 border-b border-white/5">
-          <div className="flex items-start gap-4">
-            <div className="w-10 h-10 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center flex-shrink-0">
-              <MapPin className="w-5 h-5 text-brand-gold" />
+        <div className="grid md:grid-cols-2 gap-12 mb-12 pb-12 border-b border-white/5 relative">
+          <div className="absolute left-1/2 top-0 bottom-0 w-px bg-white/5 hidden md:block" />
+          <div className="space-y-8">
+            <div className="flex items-start gap-5">
+              <div className="w-12 h-12 rounded-2xl bg-white/[0.03] border border-white/10 flex items-center justify-center flex-shrink-0 group-hover:border-brand-gold/40 transition-colors">
+                <MapPin className="w-6 h-6 text-brand-gold" />
+              </div>
+              <div>
+                <p className="text-[10px] text-white/20 uppercase font-black tracking-[0.4em] mb-1">{t("bookingFlow.confirmation.from")}</p>
+                <p className="text-sm font-black text-white uppercase tracking-wider leading-tight">{booking.from}</p>
+              </div>
             </div>
-            <div>
-              <p className="text-[10px] text-white/20 uppercase font-black tracking-widest mb-0.5">Ponto de Partida</p>
-              <p className="text-base font-medium text-white leading-tight">{booking.from}</p>
+            
+            <div className="flex items-start gap-5">
+              <div className="w-12 h-12 rounded-2xl bg-white/[0.03] border border-white/10 flex items-center justify-center flex-shrink-0 group-hover:border-emerald-500/40 transition-colors">
+                <MapPin className="w-6 h-6 text-emerald-500" />
+              </div>
+              <div>
+                <p className="text-[10px] text-white/20 uppercase font-black tracking-[0.4em] mb-1">{t("bookingFlow.confirmation.to")}</p>
+                <p className="text-sm font-black text-white uppercase tracking-wider leading-tight">{booking.to}</p>
+              </div>
             </div>
           </div>
-          
-          <div className="flex items-start gap-4">
-            <div className="w-10 h-10 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center flex-shrink-0">
-              <MapPin className="w-5 h-5 text-emerald-500" />
-            </div>
-            <div>
-              <p className="text-[10px] text-white/20 uppercase font-black tracking-widest mb-0.5">Destino da Viagem</p>
-              <p className="text-base font-medium text-white leading-tight">{booking.to}</p>
-            </div>
-          </div>
-        </div>
 
-        <div className="grid grid-cols-3 gap-6 mb-8 pb-8 border-b border-white/5">
-          <div>
-            <div className="flex items-center gap-2 text-[10px] uppercase font-black tracking-widest text-white/20 mb-2">
-              <Calendar className="w-3 h-3 text-brand-gold" /> Data
+          <div className="grid grid-cols-2 gap-8">
+            <div className="space-y-6">
+              <div>
+                <p className="text-[10px] text-white/20 uppercase font-black tracking-[0.4em] mb-2">{t("bookingFlow.confirmation.date")}</p>
+                <p className="text-xs font-black text-white uppercase tracking-widest">{pickupDate.toLocaleDateString('pt-PT', { day: 'numeric', month: 'long' })}</p>
+              </div>
+              <div>
+                <p className="text-[10px] text-white/20 uppercase font-black tracking-[0.4em] mb-2">{t("bookingFlow.confirmation.time")}</p>
+                <p className="text-xs font-black text-white uppercase tracking-widest">{pickupDate.toLocaleTimeString('pt-PT', { hour: '2-digit', minute: '2-digit' })}</p>
+              </div>
             </div>
-            <p className="text-sm font-bold text-white italic">{pickupDate.toLocaleDateString('pt-PT', { day: 'numeric', month: 'long' })}</p>
-          </div>
-          <div>
-            <div className="flex items-center gap-2 text-[10px] uppercase font-black tracking-widest text-white/20 mb-2">
-              <Clock className="w-3 h-3 text-brand-gold" /> Hora
+            <div className="space-y-6">
+              <div>
+                <p className="text-[10px] text-white/20 uppercase font-black tracking-[0.4em] mb-2">{t("bookingFlow.confirmation.category")}</p>
+                <p className="text-xs font-black text-brand-gold uppercase tracking-widest">{booking.category}</p>
+              </div>
+              <div>
+                <p className="text-[10px] text-white/20 uppercase font-black tracking-[0.4em] mb-2">PIN</p>
+                <p className="text-xl font-black text-white tracking-[0.3em]">{booking.pin}</p>
+              </div>
             </div>
-            <p className="text-sm font-bold text-white italic">{pickupDate.toLocaleTimeString('pt-PT', { hour: '2-digit', minute: '2-digit' })}</p>
-          </div>
-          <div>
-            <div className="flex items-center gap-2 text-[10px] uppercase font-black tracking-widest text-white/20 mb-2">
-              <Car className="w-3 h-3 text-brand-gold" /> Categoria
-            </div>
-            <p className="text-sm font-bold text-white uppercase tracking-widest text-brand-400">{booking.category}</p>
           </div>
         </div>
 
         <div className="flex items-center justify-between">
           <div>
-             <p className="text-[10px] text-white/20 uppercase font-black tracking-widest mb-1">Passageiro</p>
-             <p className="text-sm text-white/60">{booking.passenger?.name || "Cliente MOVNLY"}</p>
+             <p className="text-[10px] text-white/20 uppercase font-black tracking-[0.4em] mb-2">{t("bookingFlow.confirmation.passenger")}</p>
+             <p className="text-xs font-black text-white uppercase tracking-widest">{booking.passenger?.name || "Cliente MOVNLY"}</p>
           </div>
           <div className="text-right">
-            <p className="text-[10px] text-white/20 uppercase font-black tracking-widest mb-1">Código de Segurança (PIN)</p>
-            <p className="text-2xl font-black text-white tracking-[0.2em]">{booking.pin}</p>
-          </div>
-        </div>
-
-        <div className="mt-8 pt-6 border-t border-white/5 flex items-center justify-between">
-          <div className="text-right ml-auto">
-            <p className="text-[10px] text-white/20 uppercase font-black tracking-widest mb-1">Montante Liquidado</p>
-            <p className="text-3xl font-black text-white tracking-tighter">{formatCurrency(booking.price)}</p>
+            <p className="text-[10px] text-white/20 uppercase font-black tracking-[0.4em] mb-2">{t("bookingFlow.confirmation.amount")}</p>
+            <p className="text-4xl font-black text-white tracking-tighter leading-none">{formatCurrency(booking.price)}</p>
           </div>
         </div>
       </div>
@@ -198,16 +212,16 @@ function ConfirmationContent() {
       </div>
 
       {/* Actions */}
-      <div className="flex flex-col sm:flex-row gap-4">
-        <Link href="/dashboard" className="btn-primary flex-1 justify-center py-4 text-xs font-black uppercase tracking-widest">
+      <div className="flex flex-col sm:flex-row gap-6 mt-12">
+        <Link href="/dashboard" className="btn-editorial btn-editorial-primary flex-1">
           Aceder ao MyMOVNLY
-          <ArrowRight className="w-4 h-4 ml-2" />
+          <ArrowRight className="w-4 h-4 ml-3" />
         </Link>
         <button 
           onClick={() => window.print()}
-          className="bg-white/5 hover:bg-white/10 border border-white/10 text-white/60 py-4 px-6 rounded-2xl text-[10px] font-black uppercase tracking-widest transition-all flex items-center justify-center gap-2"
+          className="btn-editorial btn-editorial-outline group"
         >
-          <Download className="w-4 h-4" />
+          <Download className="w-4 h-4 mr-3 group-hover:-translate-y-1 transition-transform" />
           Voucher PDF
         </button>
       </div>

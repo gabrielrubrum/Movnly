@@ -12,10 +12,10 @@ async function main() {
 
     // 1. Core Administration
     const admin = await prisma.user.upsert({
-        where: { email: 'admin@MOVNLY.pt' },
+        where: { email: 'admin@movnly.com' },
         update: { role: 'ADMIN', password },
         create: {
-            email: 'admin@MOVNLY.pt',
+            email: 'admin@movnly.com',
             name: 'MOVNLY Operations',
             password,
             role: 'ADMIN',
@@ -26,15 +26,29 @@ async function main() {
     // 2. Sample Elite Chauffeur (Demonstration)
     const driverPass = await bcrypt.hash('Driver2026_Elite!', 10);
     const driver = await prisma.user.upsert({
-        where: { email: 'chauffeur.prime@MOVNLY.pt' },
+        where: { email: 'chauffeur.prime@movnly.com' },
         update: {},
         create: {
-            email: 'chauffeur.prime@MOVNLY.pt',
+            email: 'chauffeur.prime@movnly.com',
             name: 'Ricardo M. Santos',
             password: driverPass,
             role: 'DRIVER',
         },
     });
+
+    // 2.1. Test Client User (from screenshot)
+    const clientPass = await bcrypt.hash('Gabriel1512@#', 10);
+    const testClient = await prisma.user.upsert({
+        where: { email: 'gabrielflamengof50@gmail.com' },
+        update: { password: clientPass, role: 'PASSENGER' },
+        create: {
+            email: 'gabrielflamengof50@gmail.com',
+            name: 'Gabriel Figueiredo',
+            password: clientPass,
+            role: 'PASSENGER',
+        },
+    });
+    console.log(`[SEED] Test Client account verified: ${testClient.email}`);
 
     // 3. Operational Vehicle
     const vehicle = await prisma.vehicle.upsert({

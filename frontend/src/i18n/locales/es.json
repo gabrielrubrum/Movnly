@@ -3,6 +3,9 @@
     "title": "MOVNLY — Su Conductor Privado en Lisboa",
     "description": "Transporte ejecutivo y transfers privados. Conductores profesionales, coches nuevos y precios fijos en Lisboa."
   },
+  "languageSwitcher": {
+    "label": "Idioma"
+  },
   "nav": {
     "services": "Servicios",
     "categories": "Nuestra Flota",
@@ -46,7 +49,7 @@
   },
   "categories_list": {
     "smart": {
-      "name": "Sedán Economy",
+      "name": "Economy",
       "tagline": "Práctico y Confortable",
       "desc": "La elección ideal para sus desplazamientos urbanos. Coches modernos con conductores profesionales.",
       "price": "22.50",
@@ -60,7 +63,7 @@
       ]
     },
     "comfort": {
-      "name": "Sedán Ejecutivo",
+      "name": "Confort",
       "tagline": "Estándar de Excelencia",
       "desc": "Viaje con más prestigio y elegancia. Ideal para compromisos de negocios o recepción de clientes.",
       "price": "28",
@@ -74,7 +77,7 @@
       ]
     },
     "group": {
-      "name": "Van Ejecutiva XL",
+      "name": "Van",
       "tagline": "Confort para Grupos",
       "desc": "Perfecto para comitivas o familias con mucho equipaje. Confort total para todos los pasajeros.",
       "price": "35",
@@ -88,7 +91,7 @@
       ]
     },
     "executive": {
-      "name": "Primera Clase / VIP",
+      "name": "Ejecutivo",
       "tagline": "La Experiencia Suprema",
       "desc": "El tope de nuestra flota. Vehículos de lujo con el servicio de chófer particular más exclusivo de Lisboa.",
       "price": "39.50",
@@ -110,7 +113,7 @@
     "sub": "MOVNLY ha llegado para simplificar su forma de moverse. Coches nuevos, precios fijos y conductores profesionales listos para llevarle a cualquier lugar.",
     "trust": {
       "drivers": "Conductores Profesionales",
-      "rating": "4.9 · Valoraciones Reales",
+      "rating": "Valoraciones Reales",
       "instant": "Confirmación Inmediata"
     },
     "popularRoutes": "Rutas Frecuentes:",
@@ -669,7 +672,7 @@
     "headline2": "próximo viaje.",
     "sub": "El mejor servicio de transporte y conductor particular en Lisboa. Coches nuevos, precios fijos y compromiso con su tiempo.",
     "bookNow": "RESERVAR AHORA",
-    "callNow": "Atención al Cliente: +351 21 000 0000",
+    "callNow": "Atención al Cliente: +351 924 851 105",
     "microcopy": [
       "Cancelación Gratuita",
       "Pago Seguro",

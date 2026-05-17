@@ -47,7 +47,7 @@ export function BookingCard({ booking: b, showActions = true }: Props) {
 
           <div className="flex items-center gap-3 text-white/50 font-light text-lg">
             <Calendar className="w-5 h-5 text-brand-gold" />
-            {b.pickupDate} <span className="text-white/20 not-italic font-sans text-xs uppercase tracking-widest mx-1">{t("dashboard.card.at")}</span> {b.pickupTime}
+            {b.pickupDate} <span className="text-white/20 font-sans text-xs uppercase tracking-widest mx-1">{t("dashboard.card.at")}</span> {b.pickupTime}
           </div>
         </div>
 
@@ -102,9 +102,9 @@ export function BookingCard({ booking: b, showActions = true }: Props) {
               {b.driver.name.split(" ").map((n) => n[0]).join("")}
             </div>
             <div>
-              <p className="text-base font-normal text-white text-serif italic tracking-tight">{b.driver.name}</p>
+              <p className="text-[12px] font-black text-white uppercase tracking-[0.2em]">{b.driver.name}</p>
               <p className="text-[10px] font-black text-white/20 uppercase tracking-[0.2em] mt-1 font-sans">
-                {b.driver.vehicle.make} {b.driver.vehicle.model} · {b.driver.vehicle.plate}
+                {b.driver.vehicle?.make || ''} {b.driver.vehicle?.model || ''} {b.driver.vehicle?.plate ? `· ${b.driver.vehicle.plate}` : ''}
               </p>
             </div>
           </div>

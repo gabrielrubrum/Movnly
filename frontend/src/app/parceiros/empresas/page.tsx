@@ -104,10 +104,10 @@ export default function EmpresasPage() {
                     style={{ background: "#D4AF37" }}>
                     Solicitar Proposta <ArrowRight className="w-4 h-4" />
                   </button>
-                  <a href="tel:+351210000000"
+                  <a href="tel:+351924851105"
                     className="inline-flex items-center gap-3 px-8 py-4 rounded-2xl font-bold text-[11px] uppercase tracking-widest text-white/50 hover:text-white transition-all"
                     style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.08)" }}>
-                    <Phone className="w-4 h-4" /> +351 21 000 0000
+                    <Phone className="w-4 h-4" /> +351 924 851 105
                   </a>
                 </div>
               </motion.div>
@@ -190,7 +190,7 @@ export default function EmpresasPage() {
                       style={{ background: "#D4AF37" }}>
                       Solicitar Proposta
                     </button>
-                    <a href="tel:+351210000000"
+                    <a href="tel:+351924851105"
                       className="flex-1 py-3 rounded-xl text-[10px] font-black uppercase tracking-widest text-white/40 hover:text-white text-center transition-all"
                       style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.07)" }}>
                       Ligar Agora

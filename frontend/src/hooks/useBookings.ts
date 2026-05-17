@@ -48,7 +48,26 @@ const mapBackendToFrontend = (dbBooking: any): Booking => {
       email: dbBooking.passenger?.email || "",
       phone: dbBooking.passenger?.phone || "+351 --- --- ---"
     },
-    driver: dbBooking.driver,
+    driver: dbBooking.driver ? {
+      id: dbBooking.driver.id,
+      name: dbBooking.driver.name,
+      phone: dbBooking.driver.phone || "+351 --- --- ---",
+      rating: 5.0,
+      totalTrips: 12,
+      vehicle: dbBooking.driver.driverProfile?.vehicle ? {
+        make: dbBooking.driver.driverProfile.vehicle.model.split(" ")[0] || "Mercedes-Benz",
+        model: dbBooking.driver.driverProfile.vehicle.model.split(" ").slice(1).join(" ") || "EQE 500",
+        plate: dbBooking.driver.driverProfile.vehicle.plate || "NR-01-EL",
+        color: "Preto",
+        year: 2026
+      } : {
+        make: "Mercedes-Benz",
+        model: "Classe E",
+        plate: "NR-01-EL",
+        color: "Preto",
+        year: 2026
+      }
+    } : undefined,
     paymentStatus: (dbBooking.paymentStatus?.toLowerCase() || 'pending') as any,
     tripType: "oneway",
     driverAmount: dbBooking.driverAmount || 0,
@@ -58,6 +77,7 @@ const mapBackendToFrontend = (dbBooking: any): Booking => {
     createdAt: dbBooking.createdAt,
     updatedAt: dbBooking.updatedAt,
     pin: dbBooking.pin,
+    rating: dbBooking.rating?.score,
   };
 };
 
@@ -133,7 +153,7 @@ export function useBookings() {
     }),
     completed: bookings.filter((b) => b.status === "completed"),
     live: bookings.filter((b) =>
-      ["driver_assigned", "driver_en_route", "driver_arrived", "in_progress", "on_route"].includes(b.status.toLowerCase()) && b.driver
+      ["confirmed", "on_route", "arrived", "in_progress", "driver_assigned", "driver_en_route", "driver_arrived"].includes(b.status.toLowerCase()) && b.driver
     ),
     marketplace: bookings.filter((b) =>
       b.status.toLowerCase() === "confirmed" && !b.driver

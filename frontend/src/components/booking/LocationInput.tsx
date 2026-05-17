@@ -72,7 +72,7 @@ export function LocationInput({ value, onChange, placeholder, variant = "standal
     if (!mounted) {
         return (
             <div className={cn(
-                "w-full bg-white/[0.01] border border-white/[0.08] rounded-2xl flex items-center px-6 text-white/10 italic text-sm transition-all",
+                "w-full bg-white/[0.01] border border-white/[0.08] rounded-2xl flex items-center px-6 text-white/10 font-medium text-sm transition-all",
                 variant === "embedded" ? "h-full border-none px-0" : "h-[72px]"
             )}>
                 {placeholder}

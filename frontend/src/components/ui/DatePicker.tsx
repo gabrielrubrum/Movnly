@@ -112,6 +112,7 @@ export function DatePicker({ value, onChange, minDate, variant = "default" }: { 
                                     type="button"
                                     disabled={disabled}
                                     onClick={() => selectDate(d)}
+                                    data-testid={`day-${d}`}
                                     className={cn(
                                         "w-10 h-10 rounded-xl text-xs flex items-center justify-center transition-all font-sans font-bold",
                                         selected ? "bg-brand-gold text-black shadow-luxury-gold" :

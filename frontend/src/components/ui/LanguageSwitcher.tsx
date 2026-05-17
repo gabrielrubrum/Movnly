@@ -7,7 +7,7 @@ import { locales, localeNames, localeFlags, type Locale } from "@/i18n/config";
 import { Globe, Check, ChevronDown } from "lucide-react";
 
 interface LanguageSwitcherProps {
-  variant?: "navbar" | "footer" | "minimal";
+  variant?: "navbar" | "footer" | "minimal" | "sidebar";
 }
 
 export function LanguageSwitcher({ variant = "navbar" }: LanguageSwitcherProps) {
@@ -15,6 +15,53 @@ export function LanguageSwitcher({ variant = "navbar" }: LanguageSwitcherProps) 
   const [open, setOpen] = useState(false);
 
   const closeMenu = () => setOpen(false);
+
+  if (variant === "sidebar") {
+    return (
+      <div className="relative w-full">
+        <button
+          onClick={() => setOpen(!open)}
+          className="flex items-center justify-between w-full px-4 py-3.5 rounded-2xl border border-white/5 bg-white/[0.02] hover:bg-white/[0.04] hover:border-white/10 text-[10px] font-black uppercase tracking-widest text-white/50 hover:text-white transition-all duration-300 group"
+        >
+          <div className="flex items-center gap-3">
+            <img 
+              src={`https://flagcdn.com/w40/${localeFlags[locale]}.png`} 
+              alt={locale} 
+              className="w-5 h-3.5 rounded-[3px] object-cover shadow-[0_0_10px_rgba(0,0,0,0.5)]" 
+            />
+            <span className="font-black uppercase tracking-[0.2em]">{localeNames[locale]}</span>
+          </div>
+          <ChevronDown className={cn("w-3.5 h-3.5 text-white/20 group-hover:text-white transition-transform duration-300", open && "rotate-180")} />
+        </button>
+        {open && (
+          <>
+            <div className="fixed inset-0 z-40" onClick={closeMenu} />
+            <div className="absolute bottom-full left-0 mb-2.5 w-full bg-[#0A0A0F]/95 backdrop-blur-xl rounded-2xl border border-white/10 shadow-2xl p-1.5 z-50">
+              <p className="text-[8px] font-black text-brand-gold/60 uppercase tracking-[0.2em] px-3 py-2 border-b border-white/5 mb-1.5">
+                Selecione o Idioma
+              </p>
+              <div className="space-y-0.5">
+                {locales.map((l) => (
+                  <button key={l} onClick={() => { setLocale(l); closeMenu(); }}
+                    className={cn(
+                      "w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all",
+                      l === locale 
+                        ? "bg-brand-gold/10 text-brand-gold border border-brand-gold/20" 
+                        : "text-white/40 hover:text-white hover:bg-white/[0.04] border border-transparent"
+                    )}
+                  >
+                    <img src={`https://flagcdn.com/w40/${localeFlags[l]}.png`} alt={l} className="w-5 h-3.5 rounded-[3px] object-cover" />
+                    <span>{localeNames[l]}</span>
+                    {l === locale && <Check className="w-3.5 h-3.5 ml-auto text-brand-gold" />}
+                  </button>
+                ))}
+              </div>
+            </div>
+          </>
+        )}
+      </div>
+    );
+  }
 
   if (variant === "minimal") {
     return (

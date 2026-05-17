@@ -60,7 +60,7 @@ export function CTASection() {
             <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
           </Link>
 
-          <Link href="tel:+351210000000" className="px-16 py-6 rounded-full border border-white/10 text-xs font-bold uppercase tracking-[0.2em] flex items-center justify-center gap-4 group w-full sm:w-auto text-white/60 hover:text-white hover:bg-white/5 transition-all">
+          <Link href="tel:+351924851105" className="px-16 py-6 rounded-full border border-white/10 text-xs font-bold uppercase tracking-[0.2em] flex items-center justify-center gap-4 group w-full sm:w-auto text-white/60 hover:text-white hover:bg-white/5 transition-all">
             <Phone className="w-5 h-5 text-brand-gold/60" />
             {t("cta.callNow")}
           </Link>

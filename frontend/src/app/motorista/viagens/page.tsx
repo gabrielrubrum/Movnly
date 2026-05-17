@@ -1,9 +1,9 @@
 "use client";
 
-import { motion } from "framer-motion";
-import { Calendar, Navigation, Search, ArrowRight, MessageSquare, X } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
+import { Calendar, Navigation, Search, ArrowRight, MessageSquare, X, ChevronDown, ChevronUp, Users, Car, MapPin, DollarSign } from "lucide-react";
 import { useBookings } from "@/hooks/useBookings";
-import { cn } from "@/lib/utils";
+import { cn, formatCurrency } from "@/lib/utils";
 import { BookingChat } from "@/components/chat/BookingChat";
 import { useState, useMemo } from "react";
 
@@ -18,6 +18,7 @@ export default function ViagensPage() {
     const [activeChatId, setActiveChatId] = useState<string | null>(null);
     const [search, setSearch] = useState("");
     const [statusFilter, setStatusFilter] = useState("all");
+    const [expandedId, setExpandedId] = useState<string | null>(null);
 
     const allMissions = useMemo(() => {
         const raw = [...live, ...upcoming].filter(
@@ -105,20 +106,106 @@ export default function ViagensPage() {
                                     <p className="text-sm font-bold text-white truncate">{mission.destination}</p>
                                 </div>
                             </div>
-                            <div className="flex items-center gap-4 lg:pl-6">
-                                <div className="text-center">
+                            <div className="flex items-center gap-3 lg:pl-6">
+                                <div className="text-center pr-2">
                                     <p className="text-base font-bold text-white">{mission.pickupTime || '--:--'}</p>
                                     <p className="text-[8px] font-black text-white/20 uppercase tracking-widest mt-0.5">Horário</p>
                                 </div>
-                                <button onClick={() => setActiveChatId(mission.id)}
-                                    className="w-10 h-10 rounded-xl bg-brand-gold/10 border border-brand-gold/20 flex items-center justify-center text-brand-gold hover:bg-brand-gold hover:text-black transition-all">
-                                    <MessageSquare className="w-4 h-4" />
+                                <button onClick={() => setExpandedId(expandedId === mission.id ? null : mission.id)}
+                                    className={cn("px-4 py-2.5 rounded-xl text-[9px] font-black uppercase tracking-widest transition-all flex items-center gap-1.5",
+                                        expandedId === mission.id
+                                            ? "bg-white/10 text-white"
+                                            : "bg-brand-gold/10 border border-brand-gold/20 text-brand-gold hover:bg-brand-gold hover:text-black")}
+                                >
+                                    {expandedId === mission.id ? "Fechar" : "Detalhes"}
+                                    {expandedId === mission.id ? <ChevronUp className="w-3 h-3" /> : <ChevronDown className="w-3 h-3" />}
                                 </button>
-                                <button className="w-10 h-10 rounded-xl bg-white/5 border border-white/[0.08] flex items-center justify-center text-white/30 hover:bg-brand-gold hover:text-black hover:border-brand-gold transition-all">
-                                    <Navigation className="w-4 h-4" />
+                                <button onClick={() => setActiveChatId(mission.id)}
+                                    className="w-10 h-10 rounded-xl bg-white/5 border border-white/[0.08] flex items-center justify-center text-white/40 hover:bg-brand-gold hover:text-black hover:border-brand-gold transition-all">
+                                    <MessageSquare className="w-4 h-4" />
                                 </button>
                             </div>
                         </div>
+
+                        {/* Details Dropdown */}
+                        <AnimatePresence>
+                            {expandedId === mission.id && (
+                                <motion.div
+                                    initial={{ height: 0, opacity: 0 }}
+                                    animate={{ height: "auto", opacity: 1 }}
+                                    exit={{ height: 0, opacity: 0 }}
+                                    transition={{ duration: 0.3 }}
+                                    className="overflow-hidden border-t border-white/5 mt-6 pt-6"
+                                >
+                                    <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-left">
+                                        {/* Passageiro */}
+                                        <div className="p-5 rounded-2xl bg-white/[0.02] border border-white/5 space-y-3">
+                                            <p className="text-[9px] font-black text-brand-gold uppercase tracking-[0.2em] flex items-center gap-1.5">
+                                                <Users className="w-3.5 h-3.5" /> Passageiro
+                                            </p>
+                                            <div className="space-y-1">
+                                                <p className="text-sm font-bold text-white">{mission.passenger?.name || "Cliente MOVNLY"}</p>
+                                                <p className="text-xs text-white/40 font-mono truncate">{mission.passenger?.email}</p>
+                                                <a href={`tel:${mission.passenger?.phone || ''}`} className="inline-block text-xs text-emerald-400 font-mono mt-2 hover:underline">
+                                                    {mission.passenger?.phone || "+351 --- --- ---"}
+                                                </a>
+                                            </div>
+                                        </div>
+
+                                        {/* Corrida */}
+                                        <div className="p-5 rounded-2xl bg-white/[0.02] border border-white/5 space-y-3">
+                                            <p className="text-[9px] font-black text-brand-gold uppercase tracking-[0.2em] flex items-center gap-1.5">
+                                                <Car className="w-3.5 h-3.5" /> Detalhes da Corrida
+                                            </p>
+                                            <div className="grid grid-cols-2 gap-4 text-xs">
+                                                <div>
+                                                    <p className="text-white/30 uppercase text-[8px] tracking-wider mb-0.5">Data</p>
+                                                    <p className="text-white font-bold">{mission.pickupDate}</p>
+                                                </div>
+                                                <div>
+                                                    <p className="text-white/30 uppercase text-[8px] tracking-wider mb-0.5">Categoria</p>
+                                                    <p className="text-white font-bold uppercase">{mission.category}</p>
+                                                </div>
+                                                <div>
+                                                    <p className="text-white/30 uppercase text-[8px] tracking-wider mb-0.5">Passageiros</p>
+                                                    <p className="text-white font-bold">{mission.passengers} pax</p>
+                                                </div>
+                                                <div>
+                                                    <p className="text-white/30 uppercase text-[8px] tracking-wider mb-0.5">Bagagem</p>
+                                                    <p className="text-white font-bold">{mission.luggage} mala(s)</p>
+                                                </div>
+                                            </div>
+                                            {mission.flightNumber && (
+                                                <div className="pt-2 border-t border-white/5">
+                                                    <p className="text-[8px] text-brand-gold/60 uppercase tracking-widest">Nº VOO: {mission.flightNumber}</p>
+                                                </div>
+                                            )}
+                                        </div>
+
+                                        {/* Rendimento */}
+                                        <div className="p-5 rounded-2xl bg-white/[0.02] border border-white/5 space-y-3">
+                                            <p className="text-[9px] font-black text-brand-gold uppercase tracking-[0.2em] flex items-center gap-1.5">
+                                                <DollarSign className="w-3.5 h-3.5" /> Rendimento
+                                            </p>
+                                            <div className="space-y-2">
+                                                <div className="flex justify-between items-center text-xs">
+                                                    <span className="text-white/40">Tarifa do Cliente</span>
+                                                    <span className="text-white font-mono">{formatCurrency(mission.totalPrice)}</span>
+                                                </div>
+                                                <div className="flex justify-between items-center text-xs">
+                                                    <span className="text-white/40">Taxa de Serviço (15%)</span>
+                                                    <span className="text-red-400/60 font-mono">-{formatCurrency(mission.platformFee || (mission.totalPrice * 0.15))}</span>
+                                                </div>
+                                                <div className="pt-2 border-t border-white/5 flex justify-between items-center">
+                                                    <span className="text-xs font-bold text-white">O seu Ganho</span>
+                                                    <span className="text-sm font-black text-brand-gold font-mono">{formatCurrency(mission.driverAmount || (mission.totalPrice * 0.85))}</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </motion.div>
+                            )}
+                        </AnimatePresence>
                     </motion.div>
                 )) : (
                     <div className="py-24 text-center rounded-3xl bg-white/[0.01] border border-dashed border-white/5">

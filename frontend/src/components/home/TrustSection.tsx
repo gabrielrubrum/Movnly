@@ -3,9 +3,22 @@
 import { useI18n } from "@/i18n/context";
 import { Shield, Lock, Clock, UserCheck, Star, CheckCircle2 } from "lucide-react";
 import { motion } from "framer-motion";
+import { useState, useEffect } from "react";
 
 export function TrustSection() {
   const { t, tArray } = useI18n();
+  const [ratingStr, setRatingStr] = useState("4.9");
+
+  useEffect(() => {
+    fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3002'}/ratings/stats/public`)
+      .then(res => res.json())
+      .then(data => {
+        if (data.avg) {
+          setRatingStr(data.avg.toFixed(1));
+        }
+      })
+      .catch(console.error);
+  }, []);
 
   return (
     <section className="nx-section bg-[#050507] py-32 relative overflow-hidden border-t border-white/5">
@@ -74,7 +87,7 @@ export function TrustSection() {
             <div className="grid grid-cols-2 gap-6 md:gap-8">
               {[
                 { label: t("trust.stats.trips.label"), val: t("trust.stats.trips.value") },
-                { label: t("trust.stats.rating.label"), val: t("trust.stats.rating.value") },
+                { label: t("trust.stats.rating.label"), val: `${ratingStr}★` },
                 { label: t("trust.stats.punctual.label"), val: t("trust.stats.punctual.value") },
                 { label: t("trust.stats.drivers.label"), val: t("trust.stats.drivers.value") }
               ].map((s, i) => (

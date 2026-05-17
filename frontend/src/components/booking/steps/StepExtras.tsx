@@ -76,11 +76,11 @@ export function StepExtras({ form, update, onNext, onBack }: Props) {
                   <div className="relative z-10">
                     <div className="flex items-start justify-between mb-4">
                       <div>
-                        <h3 className="text-3xl font-medium text-white text-serif mb-3 tracking-tight">{t("bookingFlow.stepExtras.mgTitle")}</h3>
-                        <p className="text-sm text-white/50 leading-relaxed font-sans max-w-sm">{t("bookingFlow.stepExtras.mgDesc")}</p>
+                        <h3 className="text-3xl font-bold text-white font-sans uppercase tracking-tight mb-3">{t("bookingFlow.stepExtras.mgTitle")}</h3>
+                        <p className="text-xs font-medium text-white/50 leading-relaxed font-sans max-w-sm">{t("bookingFlow.stepExtras.mgDesc")}</p>
                       </div>
                       <div className="text-right">
-                        <span className="text-3xl font-light text-brand-gold text-serif italic">
+                        <span className="text-3xl font-black text-brand-gold font-sans tracking-tighter">
                           {mg.price === 0 ? "INCLUÍDO" : `+${formatCurrency(mg.price)}`}
                         </span>
                       </div>
@@ -130,7 +130,7 @@ export function StepExtras({ form, update, onNext, onBack }: Props) {
               <div className="flex-1">
                 <p className="text-[12px] font-bold uppercase tracking-[0.2em] text-white/80 group-hover:text-white transition-colors font-sans">{t(`bookingFlow.extras.${extra.id}`)}</p>
               </div>
-              <span className="text-lg font-medium text-brand-gold text-serif">+{formatCurrency(extra.price)}</span>
+              <span className="text-xl font-black text-brand-gold font-sans tracking-tighter">+{formatCurrency(extra.price)}</span>
             </button>
           );
         })}

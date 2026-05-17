@@ -62,7 +62,7 @@ export default function HoteisPage() {
                                     <Link href="/book" className="bg-brand-gold text-black px-12 py-5 rounded-full text-xs font-bold uppercase tracking-[0.2em] hover:scale-105 transition-all shadow-xl">
                                         {t("b2b.segments.hotels.cta")}
                                     </Link>
-                                    <a href="tel:+351210000000" className="text-[10px] font-bold uppercase tracking-[0.3em] text-white/40 hover:text-brand-gold transition-colors flex items-center gap-3 border-b border-white/10 pb-2">
+                                    <a href="tel:+351924851105" className="text-[10px] font-bold uppercase tracking-[0.3em] text-white/40 hover:text-brand-gold transition-colors flex items-center gap-3 border-b border-white/10 pb-2">
                                         {t("cta.callNow")} <ArrowRight className="w-4 h-4" />
                                     </a>
                                 </div>
@@ -161,7 +161,7 @@ export default function HoteisPage() {
                             <button className="h-16 px-16 rounded-full bg-brand-gold text-black font-bold text-[10px] uppercase tracking-[0.3em] hover:scale-105 transition-all shadow-xl">
                                 {t("b2b.segments.hotels.cta")}
                             </button>
-                            <a href="tel:+351210000000" className="h-16 px-12 rounded-full border border-white/10 flex items-center justify-center gap-4 text-white/30 hover:text-white transition-all group">
+                            <a href="tel:+351924851105" className="h-16 px-12 rounded-full border border-white/10 flex items-center justify-center gap-4 text-white/30 hover:text-white transition-all group">
                                 <Phone className="w-5 h-5 text-brand-gold/60 group-hover:text-brand-gold transition-colors" />
                                 <span className="text-[10px] font-bold uppercase tracking-[0.2em]">{t("cta.callNow").includes(":") ? t("cta.callNow").split(":")[1].trim() : t("cta.callNow")}</span>
                             </a>

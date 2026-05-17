@@ -32,7 +32,7 @@ export class AppleStrategy extends PassportStrategy(Strategy, 'apple') {
         }
 
         const user = {
-            email: email || 'apple-hidden-email@MOVNLY.pt',
+            email: email || 'apple-hidden-email@movnly.com',
             name: name,
             accessToken,
             idToken,

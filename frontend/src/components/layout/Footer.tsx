@@ -164,9 +164,13 @@ export function Footer() {
         {/* Bottom Bar: Legal & Global Recognition */}
         <div className="pt-12 border-t border-white/[0.03] flex flex-col lg:flex-row items-center justify-between gap-12">
 
-          <div className="flex items-center gap-10">
+          <div className="flex flex-col md:flex-row items-center gap-10">
             <span className="text-[10px] font-black uppercase tracking-[0.3em] text-white/15">
               {t("footer.copyright", { year })}
+            </span>
+            <div className="hidden md:block w-px h-4 bg-white/5" />
+            <span className="text-[10px] font-black uppercase tracking-[0.3em] text-white/20">
+              {t("footer.developedBy")} <span className="text-brand-gold">VERV</span>
             </span>
           </div>
 

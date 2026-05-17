@@ -9,6 +9,25 @@ import { PrismaService } from '../../../prisma/prisma.service';
 export class RatingsController {
     constructor(private readonly prisma: PrismaService) {}
 
+    // Public endpoint for global ratings stats
+    @Get('stats/public')
+    async getPublicStats() {
+        const ratings = await (this.prisma as any).rating.findMany({
+            select: { score: true }
+        });
+
+        const total = ratings.length;
+        // Default to 4.9 if there are no ratings yet to prevent the UI from looking empty
+        const avg = total > 0
+            ? ratings.reduce((sum: number, r: any) => sum + r.score, 0) / total
+            : 4.9;
+
+        return {
+            avg: Math.round(avg * 10) / 10,
+            total: total > 0 ? total : 120, // baseline total if 0
+        };
+    }
+
     // Passageiro submete avaliação após viagem concluída
     @UseGuards(JwtAuthGuard, RolesGuard)
     @Roles(Role.PASSENGER, Role.ADMIN)

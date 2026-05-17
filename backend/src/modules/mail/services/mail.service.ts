@@ -1,4 +1,5 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, Logger } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
 import * as nodemailer from 'nodemailer';
 import { Resend } from 'resend';
 
@@ -6,26 +7,28 @@ import { Resend } from 'resend';
 export class MailService {
     private transporter: nodemailer.Transporter | null = null;
     private resend: Resend | null = null;
+    private readonly logger = new Logger(MailService.name);
 
-    constructor() {
-        const resendKey = process.env.RESEND_API_KEY;
-        const mailHost = process.env.MAIL_HOST;
-        const mailUser = process.env.MAIL_USER;
-        const mailPass = process.env.MAIL_PASS;
+    constructor(private configService: ConfigService) {
+        const resendKey = this.configService.get<string>('RESEND_API_KEY');
+        const mailHost = this.configService.get<string>('MAIL_HOST');
+        const mailUser = this.configService.get<string>('MAIL_USER');
+        const mailPass = this.configService.get<string>('MAIL_PASS');
 
         if (resendKey && !resendKey.startsWith('re_placeholder')) {
             this.resend = new Resend(resendKey);
-            console.log('[MAIL] Resend service initialized.');
+            this.logger.log(`Resend service initialized with key: ${resendKey.substring(0, 7)}...`);
         } else if (mailHost && mailUser && mailPass && mailUser !== 'mock-user') {
             this.transporter = nodemailer.createTransport({
                 host: mailHost,
-                port: Number(process.env.MAIL_PORT) || 587,
+                port: Number(this.configService.get('MAIL_PORT')) || 587,
                 auth: { user: mailUser, pass: mailPass },
             });
-            console.log('[MAIL] Nodemailer SMTP service initialized.');
+            this.logger.log(`Nodemailer SMTP service initialized with host: ${mailHost}`);
         } else {
-            console.log('[MAIL] No mail provider configured — running in DEV/LOG-ONLY mode.');
+            this.logger.warn('No mail provider configured — running in DEV/LOG-ONLY mode.');
         }
+        this.logger.log(`MAIL_FROM: ${this.configService.get('MAIL_FROM') || 'NOT SET'}`);
     }
 
     private getLuxuryTemplate(content: string, title?: string) {
@@ -44,18 +47,17 @@ export class MailService {
             .logo span { color: #D4AF37; font-style: normal; }
             .content { padding: 60px 50px; }
             .footer { padding: 40px; text-align: center; background-color: #030303; border-top: 1px solid #1A1A1A; }
-            .btn { display: inline-block; background-color: #D4AF37; color: #000000; padding: 18px 45px; text-decoration: none; font-weight: 800; font-size: 11px; text-transform: uppercase; letter-spacing: 4px; border-radius: 4px; margin-top: 30px; transition: all 0.3s; }
-            .text-muted { color: #52525B; font-size: 12px; line-height: 1.8; margin-top: 40px; }
+            .btn { display: inline-block; background-color: #D4AF37; color: #000000 !important; padding: 18px 45px; text-decoration: none; font-weight: 800; font-size: 11px; text-transform: uppercase; letter-spacing: 4px; border-radius: 4px; margin-top: 30px; }
+            .text-muted { color: #52525B; font-size: 12px; line-height: 1.6; margin-top: 40px; }
             .accent { color: #D4AF37; }
           </style>
         </head>
         <body>
           <div class="wrapper">
-            <table class="main">
+            <table class="main" cellpadding="0" cellspacing="0" border="0">
               <tr>
                 <td class="header">
-                  <div class="logo">MOV<span>NLY</span></div>
-                  <div style="font-size: 8px; font-weight: 800; color: #D4AF37; letter-spacing: 6px; margin-top: 15px; text-transform: uppercase; opacity: 0.6;">Luxury Mobility</div>
+                  <img src="https://movnly.com/logoMov.png" alt="MOVNLY" width="140" style="display: block; margin: 0 auto; border: 0;" />
                 </td>
               </tr>
               <tr>
@@ -65,8 +67,8 @@ export class MailService {
               </tr>
               <tr>
                 <td class="footer">
-                  <p style="font-size: 9px; font-weight: 800; letter-spacing: 5px; color: #222; text-transform: uppercase; margin: 0;">Quiet Luxury · Precision in Motion</p>
-                  <p style="font-size: 8px; color: #111; margin-top: 10px;">MOVNLY • Lisbon, Portugal</p>
+                  <p style="font-size: 10px; font-weight: 800; letter-spacing: 2px; color: #52525B; text-transform: uppercase; margin: 0;">MOVNLY · Mobilidade de Prestígio</p>
+                  <p style="font-size: 9px; color: #3F3F46; margin-top: 10px;">Lisboa, Portugal</p>
                 </td>
               </tr>
             </table>
@@ -76,100 +78,109 @@ export class MailService {
         `;
     }
 
-    async sendMail(to: string, subject: string, html: string) {
-        const from = process.env.MAIL_FROM || '"MOVNLY" <info@movnly.com>';
+    async sendMail(toAddress: string, subject: string, html: string) {
+        const to = toAddress.trim().toLowerCase();
+        let from = this.configService.get<string>('MAIL_FROM') || 'info@movnly.com';
+        // Limpeza de aspas se houver
+        from = from.replace(/"/g, '');
+        
         try {
+            this.logger.log(`Attempting to send email: "${subject}" to ${to} from ${from}`);
             if (this.resend) {
                 const { data, error } = await this.resend.emails.send({
                     from: from.includes('<') ? from : `MOVNLY <${from}>`,
                     to, subject, html,
                 });
-                if (error) throw error;
+                if (error) {
+                    this.logger.error(`Resend error: ${JSON.stringify(error)}`);
+                    throw error;
+                }
+                this.logger.log(`Email sent successfully via Resend: ${data?.id}`);
                 return data;
             } else if (this.transporter) {
-                return await this.transporter.sendMail({ from, to, subject, html });
+                const info = await this.transporter.sendMail({ from, to, subject, html });
+                this.logger.log(`Email sent successfully via SMTP: ${info.messageId}`);
+                return info;
             } else {
-                // DEV mode: log only, no SMTP attempt
-                console.log(`[MAIL-DEV] Would send "${subject}" to ${to}`);
+                this.logger.warn(`[MAIL-DEV] No provider. Subject: "${subject}" to ${to}`);
             }
         } catch (error) {
-            console.error('[MAIL] Failed to send email:', (error as any)?.message || error);
-            console.log(`[MAIL-DEV] Would send "${subject}" to ${to}`);
+            this.logger.error(`Failed to send email: ${(error as any)?.message || error}`);
         }
     }
 
     async sendVerificationEmail(to: string, token: string) {
-        const url = `${process.env.FRONTEND_URL || 'http://localhost:3000'}/auth/verify?token=${token}`;
+        const url = `${this.configService.get('FRONTEND_URL') || 'http://localhost:3000'}/auth/verify?token=${token}`;
         const content = `
-          <h2 style="font-size: 42px; font-weight: 200; italic; margin-bottom: 30px; line-height: 1;">Bem-vindo à <span class="accent">MOVNLY</span>.</h2>
-          <p style="font-size: 18px; font-weight: 300; line-height: 1.6; color: rgba(255,255,255,0.4); margin-bottom: 40px;">Sua entrada na rede operacional da MOVNLY foi iniciada. Valide sua credencial para ativar o acesso total.</p>
-          <a href="${url}" class="btn">Validar Identidade</a>
-          <p class="text-muted">Se você não iniciou este protocolo, ignore este comunicado. Auditoria de segurança monitorada.</p>
+          <h2 style="font-size: 32px; font-weight: 800; margin-bottom: 20px; color: #ffffff;">Bem-vindo à MOVNLY.</h2>
+          <p style="font-size: 16px; font-weight: 400; line-height: 1.6; color: #A1A1AA; margin-bottom: 30px;">Estamos muito felizes por ter você connosco. Para começar a desfrutar da melhor experiência de mobilidade executiva, por favor confirme o seu e-mail abaixo.</p>
+          <a href="${url}" class="btn" style="color: #000000 !important;">Confirmar E-mail</a>
+          <p class="text-muted" style="text-transform: none; letter-spacing: 0;">Se você não criou esta conta, pode ignorar este e-mail com segurança.</p>
         `;
-        return this.sendMail(to, 'Acesso Institucional — MOVNLY', this.getLuxuryTemplate(content));
+        return this.sendMail(to, 'Bem-vindo à MOVNLY - Confirme o seu e-mail', this.getLuxuryTemplate(content));
     }
 
     async sendPasswordResetEmail(to: string, code: string) {
         const content = `
-          <h2 style="font-size: 42px; font-weight: 200; italic; margin-bottom: 30px; line-height: 1;">Protocolo de <span class="accent">Segurança</span>.</h2>
-          <p style="font-size: 18px; font-weight: 300; line-height: 1.6; color: rgba(255,255,255,0.4); margin-bottom: 40px;">Uma recuperação de senha foi solicitada para o seu perfil corporativo. Utilize o código de alta precisão abaixo:</p>
-          <div style="background: #000; padding: 40px; text-align: center; border: 1px solid #D4AF37; margin: 40px 0;">
-            <span style="font-size: 48px; font-weight: 800; letter-spacing: 20px; color: #D4AF37; margin-left: 20px;">${code}</span>
+          <h2 style="font-size: 32px; font-weight: 800; margin-bottom: 20px; color: #ffffff;">Recuperação de Senha.</h2>
+          <p style="font-size: 16px; font-weight: 400; line-height: 1.6; color: #A1A1AA; margin-bottom: 30px;">Recebemos um pedido para redefinir a sua senha. Utilize o código de verificação abaixo para prosseguir:</p>
+          <div style="background: #0A0A0F; padding: 30px; text-align: center; border: 1px solid #D4AF37; margin: 30px 0;">
+            <span style="font-size: 40px; font-weight: 800; letter-spacing: 15px; color: #D4AF37; margin-left: 15px;">${code}</span>
           </div>
-          <p class="text-muted">Este código expira em 60 minutos por razões de segurança. Protocolo 2.6 Secured.</p>
+          <p class="text-muted" style="text-transform: none; letter-spacing: 0;">Este código é válido por 60 minutos. Se não solicitou esta alteração, proteja a sua conta e ignore este e-mail.</p>
         `;
-        return this.sendMail(to, 'Código de Recuperação — MOVNLY', this.getLuxuryTemplate(content));
+        return this.sendMail(to, 'MOVNLY - Código de Recuperação', this.getLuxuryTemplate(content));
     }
 
     async sendAssignmentEmail(to: string, role: 'DRIVER' | 'PASSENGER', details: any) {
         const title = role === 'DRIVER' ? 'Nova Missão' : 'Reserva';
-        const accent = role === 'DRIVER' ? 'Confirmada' : 'Confirmada';
-        const subtitle = role === 'DRIVER' ? 'Missão de Transporte' : 'O seu Chauffeur está a caminho';
-        const subjectLabel = role === 'DRIVER' ? 'Nova Missão Confirmada' : 'Reserva Confirmada';
+        const accent = role === 'DRIVER' ? 'Atribuída' : 'Confirmada';
+        const subtitle = role === 'DRIVER' ? 'Detalhes da Viagem' : 'O seu Chauffeur está a caminho';
+        const subjectLabel = role === 'DRIVER' ? 'Nova Missão Atribuída' : 'Reserva Confirmada';
 
         const content = `
-          <h2 style="font-size: 36px; font-weight: 200; italic; margin-bottom: 10px; line-height: 1;">${title} <span class="accent">${accent}</span>.</h2>
-          <p style="font-size: 14px; font-weight: 800; text-transform: uppercase; color: #52525B; letter-spacing: 3px; margin-bottom: 40px;">${subtitle}</p>
+          <h2 style="font-size: 32px; font-weight: 800; margin-bottom: 10px; color: #ffffff;">${title} <span class="accent">${accent}</span>.</h2>
+          <p style="font-size: 12px; font-weight: 800; text-transform: uppercase; color: #D4AF37; letter-spacing: 2px; margin-bottom: 30px;">${subtitle}</p>
           
-          <div style="background: #0A0A0F; padding: 30px; border-left: 2px solid #D4AF37; margin-bottom: 40px;">
+          <div style="background: #0A0A0F; padding: 30px; border: 1px solid #1A1A1A; margin-bottom: 30px;">
             <table width="100%" cellspacing="0" cellpadding="0">
               <tr>
-                <td style="padding: 10px 0; border-bottom: 1px solid rgba(255,255,255,0.05);">
-                  <span style="font-size: 9px; font-weight: 800; text-transform: uppercase; color: #52525B;">Referência</span><br/>
-                  <span style="font-size: 16px; color: #ffffff; font-weight: 400;">${details.reference}</span>
+                <td style="padding: 10px 0; border-bottom: 1px solid #1A1A1A;">
+                  <span style="font-size: 10px; font-weight: 800; text-transform: uppercase; color: #52525B;">Referência</span><br/>
+                  <span style="font-size: 16px; color: #ffffff; font-weight: 600;">#${details.reference}</span>
                 </td>
               </tr>
               <tr>
-                <td style="padding: 10px 0; border-bottom: 1px solid rgba(255,255,255,0.05);">
-                  <span style="font-size: 9px; font-weight: 800; text-transform: uppercase; color: #52525B;">De</span><br/>
-                  <span style="font-size: 15px; color: #ffffff; font-weight: 200;">${details.origin}</span>
+                <td style="padding: 10px 0; border-bottom: 1px solid #1A1A1A;">
+                  <span style="font-size: 10px; font-weight: 800; text-transform: uppercase; color: #52525B;">Origem</span><br/>
+                  <span style="font-size: 14px; color: #ffffff;">${details.origin}</span>
                 </td>
               </tr>
               <tr>
-                <td style="padding: 10px 0; border-bottom: 1px solid rgba(255,255,255,0.05);">
-                  <span style="font-size: 9px; font-weight: 800; text-transform: uppercase; color: #52525B;">Para</span><br/>
-                  <span style="font-size: 15px; color: #ffffff; font-weight: 200;">${details.destination}</span>
+                <td style="padding: 10px 0; border-bottom: 1px solid #1A1A1A;">
+                  <span style="font-size: 10px; font-weight: 800; text-transform: uppercase; color: #52525B;">Destino</span><br/>
+                  <span style="font-size: 14px; color: #ffffff;">${details.destination}</span>
                 </td>
               </tr>
               <tr>
-                <td style="padding: 10px 0; ${role === 'PASSENGER' ? 'border-bottom: 1px solid rgba(255,255,255,0.05);' : ''}">
-                  <span style="font-size: 9px; font-weight: 800; text-transform: uppercase; color: #52525B;">Horário</span><br/>
-                  <span style="font-size: 15px; color: #D4AF37; font-weight: 400;">${details.time}</span>
+                <td style="padding: 10px 0; ${role === 'PASSENGER' ? 'border-bottom: 1px solid #1A1A1A;' : ''}">
+                  <span style="font-size: 10px; font-weight: 800; text-transform: uppercase; color: #52525B;">Horário</span><br/>
+                  <span style="font-size: 14px; color: #D4AF37; font-weight: 600;">${details.time}</span>
                 </td>
               </tr>
               ${role === 'PASSENGER' ? `
               <tr>
                 <td style="padding: 10px 0;">
-                  <span style="font-size: 9px; font-weight: 800; text-transform: uppercase; color: #52525B;">Código de Segurança (PIN)</span><br/>
-                  <span style="font-size: 24px; color: #ffffff; font-weight: 800; letter-spacing: 4px;">${details.pin || '---'}</span>
+                  <span style="font-size: 10px; font-weight: 800; text-transform: uppercase; color: #52525B;">PIN de Segurança</span><br/>
+                  <span style="font-size: 24px; color: #ffffff; font-weight: 800; letter-spacing: 5px;">${details.pin || '---'}</span>
                 </td>
               </tr>
               ` : ''}
             </table>
           </div>
           
-          <p style="font-size: 14px; font-weight: 300; italic; color: rgba(255,255,255,0.3);">
-            ${role === 'PASSENGER' ? 'Apresente o PIN acima ao seu Chauffeur para validar o início da viagem.' : 'MOVNLY: A excelência é o nosso padrão mínimo de operação.'}
+          <p style="font-size: 14px; font-weight: 400; color: #A1A1AA;">
+            ${role === 'PASSENGER' ? 'Apresente o PIN acima ao seu Chauffeur para validar o início da viagem.' : 'Aceda ao seu painel para mais detalhes sobre a missão.'}
           </p>
         `;
         return this.sendMail(to, `${subjectLabel} — MOVNLY`, this.getLuxuryTemplate(content));

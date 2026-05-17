@@ -1,342 +1,378 @@
 {
   "meta": {
-    "title": "MOVNLY — Motoristas Particulares em Lisboa",
-    "description": "Transporte e transferes privados. Motoristas profissionais, veículos recentes e preços fixos em Lisboa."
+    "title": "MOVNLY — Transfers de Prestígio & Motorista Privado em Lisboa",
+    "description": "Serviços de transporte executivo em Portugal. Pontualidade, discrição e frota topo de gama para transferes de aeroporto e eventos."
+  },
+  "languageSwitcher": {
+    "label": "Idioma"
   },
   "nav": {
     "services": "Serviços",
-    "categories": "Nossa Frota",
-    "routes": "Destinos",
-    "forCompanies": "Empresas",
+    "categories": "Frota",
+    "routes": "Itinerários",
+    "forCompanies": "Empresarial",
     "forHotels": "Hotéis",
-    "signIn": "Entrar",
+    "signIn": "Acesso",
     "bookNow": "Reservar",
-    "allServices": "Ver Todos"
+    "allServices": "Ver Tudo"
   },
   "navbar": {
     "services": "Serviços",
     "howItWorks": "Como Funciona",
-    "fleet": "Frota",
-    "partners": "Parceiros",
-    "clientArea": "Acesso Cliente"
+    "fleet": "Vaturas",
+    "partners": "Parcerias",
+    "clientArea": "Área de Cliente"
+  },
+  "ui": {
+    "datepicker": {
+      "placeholder": "Selecionar Data",
+      "placeholder_time": "Horário",
+      "months": [
+        "Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho",
+        "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"
+      ],
+      "days": ["Dom", "Seg", "Ter", "Qua", "Qui", "Sex", "Sáb"]
+    }
+  },
+  "hero": {
+    "pill": "Transporte Executivo 24/7 em Lisboa",
+    "learnMore": "Conheça os Nossos Serviços",
+    "headline1": "A Sua Referência em",
+    "headline2": "Mobilidade de Prestígio.",
+    "sub": "Transporte privado com foco na pontualidade, discrição e conforto absoluto para passageiros exigentes.",
+    "trust": {
+      "drivers": "Motoristas Profissionais",
+      "rating": "Excelência",
+      "instant": "Resposta Imediata"
+    },
+    "popularRoutes": "Percursos Frequentes:",
+    "routes": [
+      "Aeroporto → Centro de Lisboa",
+      "Lisboa → Cascais / Estoril",
+      "Lisboa → Sintra",
+      "Portugal → Algarve"
+    ],
+    "discover": "Consultar Valores",
+    "stats": {
+      "trips": {
+        "value": "50.000+",
+        "label": "Serviços Efetuados"
+      },
+      "rating": {
+        "value": "4.9★",
+        "label": "Avaliação Média"
+      },
+      "punctuality": {
+        "value": "99.9%",
+        "label": "Taxa de Pontualidade"
+      },
+      "support": {
+        "value": "24/7",
+        "label": "Apoio ao Cliente"
+      }
+    }
   },
   "services_list": {
     "airport": {
-      "label": "Aeroporto",
-      "desc": "Transferes diretos do Aeroporto de Lisboa",
-      "full_desc": "Acompanhamos o seu voo e esperamos por si no terminal das chegadas.",
-      "features": ["Acompanhamento do Voo", "Recepção com Placa", "Ajuda com Bagagem", "Sem Tempos de Espera"]
+      "label": "Transfer de Aeroporto",
+      "desc": "Recepção personalizada no Aeroporto de Lisboa",
+      "full_desc": "Serviço de Meet & Greet com monitorização de voo em tempo real para garantir que o seu motorista está lá à sua chegada.",
+      "features": ["Monitorização de Voo", "Recepção no Terminal", "Apoio com Bagagem", "Sem Esperas"]
     },
     "hotels": {
-      "label": "Hotéis",
-      "desc": "Transporte dedicado para hóspedes",
-      "full_desc": "Veículos com espaço extra para transporte de hóspedes, grupos ou ligação a eventos.",
-      "features": ["Carrinhas para Grupos", "Apoio Local", "Espaço Adicional"]
+      "label": "Serviço Hoteleiro",
+      "desc": "Mobilidade dedicada para unidades hoteleiras",
+      "full_desc": "Soluções de transporte para hóspedes, garantindo um serviço à altura dos melhores hotéis de Portugal.",
+      "features": ["Disponibilidade 24h", "Viaturas Modernas", "Protocolo Profissional"]
     },
     "corporate": {
-      "label": "Empresas",
-      "desc": "Transporte para o setor empresarial",
-      "full_desc": "Apoio logístico para reuniões e deslocações profissionais. Foco na pontualidade.",
-      "features": ["Faturação Mensal", "Disponível 24/7", "Wi-Fi a Bordo"]
+      "label": "Mobilidade Empresarial",
+      "desc": "Apoio logístico para o setor corporativo",
+      "full_desc": "Transporte para reuniões, eventos e deslocações diárias com faturação mensal e prioridade de reserva.",
+      "features": ["Faturação Mensal", "Gestor de Conta", "Wi-Fi a Bordo"]
     },
     "groups": {
-      "label": "Grupos e Famílias",
-      "desc": "Carrinhas de 7 e 8 lugares",
-      "full_desc": "Soluções práticas para grupos que precisam de mais espaço para viajar juntos.",
-      "features": ["Até 8 Passageiros", "Mais Espaço para Bagagem", "Cadeiras de Criança"]
+      "label": "Viagens em Grupo",
+      "desc": "Vans de passageiros até 8 lugares",
+      "full_desc": "Conforto para famílias ou equipas de trabalho com viaturas espaçosas e seguras.",
+      "features": ["Grande Capacidade", "Vans Recentes", "Ar Condicionado Bizona"]
     },
     "citytour": {
-      "label": "Passeios Turísticos",
-      "desc": "Sintra, Cascais e roteiros flexíveis",
-      "full_desc": "Viagens e passeios fora da cidade com um motorista local que conhece a zona.",
-      "features": ["Motoristas Locais", "Água no Veículo", "Destinos Personalizados"]
+      "label": "Passeios Privados",
+      "desc": "Descubra Portugal com conforto",
+      "full_desc": "Itinerários personalizados por Sintra, Cascais, Fátima ou qualquer outro destino à sua escolha.",
+      "features": ["Guia Motorista", "Flexibilidade de Horário", "Conforto Total"]
     }
   },
   "categories_list": {
     "smart": {
-      "name": "Sedan Económico",
-      "tagline": "Prático e Eficiente",
-      "desc": "A escolha prática para viagens na cidade. Carros modernos para o dia a dia.",
+      "name": "Economy",
+      "tagline": "Conforto e Eficiência",
+      "desc": "A solução ideal para deslocações urbanas rápidas com elevado padrão de qualidade.",
       "price": "22.50",
-      "badge": "MAIS ACESSÍVEL",
-      "examples": "Toyota Prius, VW Passat ou similar",
+      "badge": "MAIS VERSÁTIL",
+      "examples": "VW Passat, Toyota Camry ou similar",
       "features": [
-        "Recepção incluída",
-        "Wi-Fi",
         "Ar Condicionado",
-        "Água"
+        "Wi-Fi Gratuito",
+        "Água a Bordo",
+        "Motorista Profissional"
       ]
     },
     "comfort": {
-      "name": "Sedan Executivo",
-      "tagline": "Mais Conforto",
-      "desc": "Ideal para viagens mais longas ou compromissos profissionais.",
+      "name": "Conforto",
+      "tagline": "Prestígio Corporativo",
+      "desc": "Veículos de gama superior ideais para executivos e viagens de longo curso.",
       "price": "28",
-      "badge": "MAIS SOLICITADO",
+      "badge": "CLASSE NEGÓCIOS",
       "examples": "Mercedes Classe E, BMW Série 5 ou similar",
       "features": [
-        "Recepção incluída",
-        "Bancos em Pele",
-        "Viagem Silenciosa",
-        "Carregador de Telemóvel"
+        "Insonorização",
+        "Estofos em Pele",
+        "Carregador de Telemóvel",
+        "Discrição Total"
       ]
     },
     "group": {
-      "name": "Carrinha de 7 Lugares",
-      "tagline": "Espaço para Grupos",
-      "desc": "Ideal para famílias com muitas malas ou pequenos grupos que viajam juntos.",
+      "name": "Monovolume",
+      "tagline": "Espaço e Comodidade",
+      "desc": "Perfeito para grupos até 8 pessoas que não abdicam do conforto e do espaço para malas.",
       "price": "35",
-      "badge": "PARA GRUPOS",
-      "examples": "Mercedes Classe V, VW Multivan ou similar",
+      "badge": "FAMÍLIA & GRUPOS",
+      "examples": "Mercedes Classe V ou similar",
       "features": [
-        "Recepção incluída",
-        "Assentos Frente a Frente",
-        "Até 7 passageiros",
-        "Espaço Extra para Malas"
+        "Até 8 Passageiros",
+        "Grande Volume de Carga",
+        "Bancos Reclináveis",
+        "Wi-Fi Gratuito"
       ]
     },
     "executive": {
-      "name": "Primeira Classe",
-      "tagline": "Veículos de Topo",
-      "desc": "O segmento mais alto da nossa frota, oferecendo mais espaço no banco traseiro.",
+      "name": "Executivo",
+      "tagline": "O Topo da Mobilidade",
+      "desc": "A nossa frota mais exclusiva para quem exige o melhor em cada detalhe.",
       "price": "39.50",
-      "badge": "GAMA ALTA",
-      "examples": "Mercedes Classe S LWB, BMW Série 7 ou similar",
+      "badge": "MÁXIMA EXCLUSIVIDADE",
+      "examples": "Mercedes Classe S ou similar",
       "features": [
-        "Recepção no Terminal",
-        "Motorista Dedicado",
-        "Mais Espaço Traseiro",
-        "Água e Wi-Fi"
+        "Atendimento VIP",
+        "Viatura de Topo",
+        "Amenities Exclusivas",
+        "Motorista de Protocolo"
       ]
     }
   },
-  "hero": {
-    "pill": "Disponível a qualquer hora em Lisboa",
-    "learnMore": "Escolha o seu Carro",
-    "headline1": "O seu motorista particular",
-    "headline2": "em Lisboa.",
-    "sub": "Viagens seguras e confortáveis, com preços fixos definidos antes de arrancar.",
-    "trust": {
-      "drivers": "Motoristas Credenciados",
-      "rating": "4.9 · Avaliações",
-      "instant": "Reserva Imediata"
-    },
-    "popularRoutes": "Rotas mais procuradas:",
-    "routes": [
-      "Aeroporto → Centro de Lisboa",
-      "Lisboa → Cascais",
-      "Lisboa → Sintra",
-      "Lisboa → Porto"
-    ],
-    "discover": "Ver Preços e Reservar",
-    "stats": {
-      "trips": {
-        "value": "25.000+",
-        "label": "Viagens Concluídas"
+  "routes_section": {
+    "badge": "Itinerários",
+    "title1": "Os Percursos mais",
+    "title2": "Populares em Portugal.",
+    "sub": "Valores fixos para os destinos mais solicitados, com transparência total desde a reserva.",
+    "exploreAll": "Ver Todos os Destinos",
+    "status": "Monitorização Ativa",
+    "items": [
+      {
+        "from": "Aeroporto de Lisboa",
+        "to": "Centro de Lisboa",
+        "duration": "25 min",
+        "price": "22.50"
       },
-      "rating": {
-        "value": "4.9★",
-        "label": "Avaliação"
+      {
+        "from": "Lisboa",
+        "to": "Cascais / Estoril",
+        "duration": "35 min",
+        "price": "31"
       },
-      "punctuality": {
-        "value": "99%",
-        "label": "Pontualidade"
+      {
+        "from": "Lisboa",
+        "to": "Sintra (Vila)",
+        "duration": "40 min",
+        "price": "50"
       },
-      "support": {
-        "value": "24/7",
-        "label": "Apoio"
+      {
+        "from": "Aeroporto de Lisboa",
+        "to": "Setúbal / Tróia",
+        "duration": "50 min",
+        "price": "85"
       }
+    ]
+  },
+  "tours_section": {
+    "badge": "Passeios",
+    "title1": "Explore o melhor",
+    "title2": "de Portugal.",
+    "sub": "Passeios privados com motorista para que possa desfrutar da paisagem sem preocupações.",
+    "viewAll": "Ver Todos os Passeios",
+    "from": "Desde",
+    "customTitle": "Deseja um Passeio Personalizado?",
+    "customDesc": "Fale com o nosso suporte para criar um itinerário exclusivo à sua medida."
+  },
+  "tours_list": {
+    "sintra-palaces": {
+      "title": "Sintra & Palácios",
+      "sub": "Pena, Quinta da Regaleira e Cabo da Roca",
+      "tag": "HISTÓRIA"
+    },
+    "alentejo-wine": {
+      "title": "Évora & Vinhos",
+      "sub": "Cultura e Gastronomia do Alentejo",
+      "tag": "GASTRONOMIA"
+    },
+    "douro-valley": {
+      "title": "Douro Valley",
+      "sub": "Cruzeiro e Degustação no Vale do Douro",
+      "tag": "VINHOS"
+    },
+    "obidos-nazare": {
+      "title": "Óbidos & Nazaré",
+      "sub": "Vila Medieval e as Ondas Gigantes",
+      "tag": "COSTA"
     }
   },
+  "cta": {
+    "pill": "Pronto para Viajar?",
+    "headline1": "Agende agora o seu",
+    "headline2": "próximo transporte.",
+    "sub": "Confirmação imediata e suporte constante para a sua total tranquilidade.",
+    "booknow": "Fazer Reserva Online",
+    "callnow": "Ligar para o Apoio"
+  },
   "trust": {
-    "badge": "O nosso compromisso",
-    "headline1": "Viagens seguras,",
-    "headline2": "sem surpresas.",
-    "sub": "Trabalhamos com motoristas credenciados e veículos recentes para garantir viagens tranquilas.",
+    "badge": "Compromisso de Qualidade",
+    "headline1": "Excelência em Serviço,",
+    "headline2": "Segurança em Primeiro Lugar.",
+    "sub": "Trabalhamos diariamente para garantir que a sua viagem seja segura, discreta e pontual.",
     "pureSecurity": "Privacidade",
-    "zeroCompromise": "Segurança",
-    "regulatoryTitle": "Licenças em dia",
+    "zeroCompromise": "Profissionalismo",
+    "regulatoryTitle": "Licenciamento & Regras",
     "stats": {
       "trips": {
-        "value": "50K+",
-        "label": "Viagens"
+        "value": "100K+",
+        "label": "Viagens Efetuadas"
       },
       "rating": {
         "value": "4.9★",
-        "label": "Nota"
+        "label": "Feedback"
       },
       "punctual": {
-        "value": "99%",
-        "label": "Pontualidade"
+        "value": "99.9%",
+        "label": "Pontual"
       },
       "drivers": {
-        "value": "100+",
+        "value": "150+",
         "label": "Motoristas"
       }
     },
     "pillars": [
       {
-        "title": "Seleção de Motoristas",
-        "desc": "Os nossos motoristas têm as licenças em dia e cumprem as regras de transporte."
+        "title": "Recrutamento Rigoroso",
+        "desc": "Os nossos motoristas são selecionados pela sua experiência e postura profissional."
       },
       {
-        "title": "Respeito pela Privacidade",
-        "desc": "Garantimos discrição em todas as viagens."
+        "title": "Frota Renovada",
+        "desc": "Viaturas com menos de 3 anos, sujeitas a manutenções preventivas constantes."
       },
       {
-        "title": "Apoio Permanente",
-        "desc": "Temos uma equipa pronta para ajudar a qualquer hora do dia."
+        "title": "Suporte Local",
+        "desc": "Estamos em Lisboa e conhecemos cada rua para evitar atrasos."
       }
     ],
     "compliance": [
-      "Licenças Válidas",
+      "Alvarás IMT",
       "Seguros Obrigatórios",
-      "Veículos Limpos",
-      "Faturação Clara"
+      "Higienização Diária",
+      "Transparência de Preço"
     ]
   },
   "howItWorks": {
-    "sectionBadge": "Como funciona",
-    "safetyTitle": "Confirmação Imediata",
-    "safetyDesc": "Após a reserva, recebe os dados do motorista e do veículo.",
-    "concierge": "Apoio",
-    "priorityReady": "Pronto a Arrancar",
-    "ops247": "24/7",
-    "liveOps": "Acompanhamento",
+    "sectionBadge": "Processo",
+    "safetyTitle": "Reserva Simplificada",
+    "safetyDesc": "Um sistema intuitivo para que possa agendar o seu transporte em menos de 1 minuto.",
+    "concierge": "Apoio 24h",
+    "priorityReady": "Sempre Disponível",
+    "ops247": "Monitorização",
+    "liveOps": "Controle Real",
     "items": [
       {
-        "label": "Reserva simples"
+        "label": "Reserva Rápida"
       },
       {
-        "label": "Apoio direto"
+        "label": "Motorista Atribuído"
       },
       {
-        "label": "Cancelamento fácil"
+        "label": "Viagem Segura"
       }
     ],
     "steps": [
       {
-        "title": "1. Indique a Rota",
-        "desc": "Diga-nos onde está e para onde vai. O preço é calculado na hora."
+        "title": "1. Introduza os Detalhes",
+        "desc": "Origem, destino e horário. O preço que vê é o que paga."
       },
       {
         "title": "2. Escolha o Carro",
-        "desc": "Selecione entre modelos económicos, executivos ou carrinhas de 7 lugares."
+        "desc": "Desde sedans discretos a vans para grupos maiores."
       },
       {
-        "title": "3. Boa Viagem",
-        "desc": "Siga o motorista no mapa e viaje com tranquilidade."
+        "title": "3. Viaje Connosco",
+        "desc": "O seu motorista estará lá à hora marcada."
       }
     ]
   },
   "booking": {
-    "oneWay": "Só Ida",
-    "roundTrip": "Ida e Volta",
-    "origin": "Partida",
-    "destination": "Chegada",
-    "originPlaceholder": "Onde está?",
-    "destinationPlaceholder": "Para onde vai?",
+    "oneWay": "Trajeto Simples",
+    "roundTrip": "Ida e Regresso",
+    "origin": "Ponto de Recolha",
+    "destination": "Destino Final",
+    "originPlaceholder": "Ex: Aeroporto de Lisboa",
+    "destinationPlaceholder": "Para onde vamos?",
     "date": "Data",
-    "time": "Hora",
-    "returnDate": "Data do Regresso",
-    "returnTime": "Hora do Regresso",
-    "passengers": "Pax",
+    "time": "Horário",
+    "returnDate": "Data de Regresso",
+    "returnTime": "Horário de Regresso",
+    "passengers": "Passageiros",
     "luggage": "Malas",
-    "save5": "DESCONTO NO REGRESSO (-5%)",
+    "save5": "DESCONTO REGRESSO (-5%)",
     "passengersUpper": "PASSAGEIROS",
     "luggageUpper": "MALAS",
-    "viewPrices": "Ver Preços",
+    "viewPrices": "Consultar Tarifas",
     "flightInfo": "Dados do Voo",
     "flightNumber": "Nº do Voo",
     "airline": "Companhia",
-    "flightPlaceholder": "Nº do Voo (ex: TP123)",
+    "flightPlaceholder": "Ex: TP123",
     "airlinePlaceholder": "Ex: TAP",
     "meetingPoint": "Ponto de Encontro",
-    "meetingPointBadge": "Garantia MOVNLY",
-    "meetingPointTitle": "Recepção no Aeroporto",
-    "meetingPointDesc": "O motorista estará no local combinado com uma placa de identificação.",
-    "selectVehicle": "Escolher Veículo",
+    "meetingPointBadge": "Atenção ao Cliente",
+    "meetingPointTitle": "Recepção no Terminal",
+    "meetingPointDesc": "O motorista aguarda na zona de chegadas com uma placa com o seu nome.",
+    "selectVehicle": "Escolher Viatura",
     "summary": "Resumo",
-    "total": "Total",
-    "personalDetails": "Seus Dados",
+    "total": "Total a Pagar",
+    "personalDetails": "Dados de Contacto",
     "payment": "Pagamento",
     "originNotSet": "Indique a partida",
     "destinationNotSet": "Indique o destino",
     "locations": [
-      "Aeroporto de Lisboa (Terminal 1)",
-      "Centro de Lisboa (Avenida da Liberdade)",
-      "Cascais / Estoril",
-      "Sintra (Vila)",
-      "Torre de Belém",
+      "Aeroporto de Lisboa",
+      "Avenida da Liberdade",
+      "Cascais",
+      "Sintra",
+      "Estoril",
+      "Belém",
       "Parque das Nações",
       "Setúbal",
       "Algarve",
-      "Porto",
-      "Alentejo"
-    ]
-  },
-  "categories": {
-    "sectionBadge": "Os Nossos Veículos",
-    "title1": "Escolha o carro",
-    "title2": "ideal para si.",
-    "sub": "Temos opções para quem viaja sozinho, em negócios ou com a família inteira.",
-    "viewDetails": "Detalhes",
-    "select": "Selecionar",
-    "perTrip": "por viagem",
-    "guarantee": "Veículos Inspecionados",
-    "guaranteeDesc": "Manutenção regular e limpeza após cada viagem",
-    "compare": "Comparar",
-    "startingFrom": "A partir de",
-    "bookNow": "Reservar",
-    "passengers": "{count} Passageiros",
-    "luggage": "{count} Malas",
-    "driver": "Motorista Privado",
-    "space": "Espaço Limpo",
-    "choiceTitle": "Manutenção Garantida",
-    "choiceDesc": "Todos os veículos são mantidos em boas condições para garantir viagens seguras."
-  },
-  "whyChooseUs": {
-    "badge": "Como trabalhamos",
-    "title1": "O seu motorista",
-    "title2": "particular de",
-    "title3": "confiança.",
-    "ritual": "RECEPÇÃO NO",
-    "welcome": "Aeroporto.",
-    "standard": "EFICIÊNCIA",
-    "zeroWait": "Acompanhamos o seu voo",
-    "location": "Apoio Local",
-    "hub": "Lisboa",
-    "sub": "O nosso objetivo é tornar a sua deslocação mais simples e sem stress.",
-    "items": [
-      {
-        "title": "Motoristas Credenciados",
-        "desc": "Profissionais com experiência e licenças ativas em Portugal."
-      },
-      {
-        "title": "Carros Recentes",
-        "desc": "Frota moderna, limpa e com ar condicionado a funcionar."
-      },
-      {
-        "title": "Preço Fixo",
-        "desc": "Sem surpresas. Sabe sempre quanto vai pagar antes de entrar no carro."
-      }
-    ],
-    "trustBadges": [
-      "Motoristas Profissionais",
-      "Carros Limpos",
-      "Apoio Telefónico"
+      "Porto"
     ]
   },
   "bookingFlow": {
     "steps": {
-      "details": "Rota",
-      "vehicle": "Carro",
+      "details": "Percurso",
+      "vehicle": "Viatura",
       "extras": "Opções",
-      "payment": "Confirmar"
+      "payment": "Pagamento"
     },
     "stepVehicle": {
-      "title": "Escolha o seu carro",
-      "sub": "Temos opções para diferentes necessidades",
+      "title": "Escolha o seu Carro",
+      "sub": "Selecione a categoria que melhor se adapta às suas necessidades",
       "selectedClass": "Categoria Escolhida",
       "totalReturn": "Total Ida e Volta",
       "estimated": "Estimativa",
@@ -346,191 +382,191 @@
       "bags": "Malas"
     },
     "summary": {
-      "title": "Confirmação",
-      "subtitle": "Verifique os dados da viagem",
-      "selectedClass": "Veículo",
-      "origin": "De",
-      "destination": "Para",
-      "notDefined": "-",
+      "title": "Concluir Reserva",
+      "subtitle": "Por favor, valide os detalhes abaixo",
+      "selectedClass": "Viatura Selecionada",
+      "origin": "Recolha",
+      "destination": "Destino",
+      "notDefined": "Por definir",
       "pickup": "Ida",
-      "return": "Volta",
-      "baseRate": "Valor Base",
+      "return": "Regresso",
+      "baseRate": "Tarifa Base",
       "oneWay": "Só Ida",
       "roundTrip": "Ida e Volta",
-      "extras": "Extras",
-      "exclusiveAmenities": "Opções Incluídas",
-      "discount": "Desconto no Regresso",
-      "totalAmount": "Total a Pagar",
+      "extras": "Opções Extra",
+      "exclusiveAmenities": "Serviços Incluídos",
+      "discount": "Desconto Regresso",
+      "totalAmount": "Total Final",
       "vatIncluded": "IVA Incluído",
       "secureProtocol": "Reserva Segura",
-      "disclaimer": "Preços com portagens incluídas.",
-      "meetGreetIncl": "Recepção Incluída",
+      "disclaimer": "Preços finais com portagens e taxas incluídas.",
+      "meetGreetIncl": "Meet & Greet Incluído",
       "freeCancel": "Cancelamento Grátis",
       "reasons": {
-        "night_shift": "Taxa Noturna",
+        "night_shift": "Período Noturno",
         "peak_hour": "Hora de Ponta",
         "weekend": "Fim de Semana",
         "holiday": "Feriado"
       }
     },
     "payment": {
-      "title": "Pagamento",
-      "sub": "Processo de pagamento",
-      "encrypted": "Conexão Segura",
-      "authRequired": "Acesso",
-      "authDesc": "Faça login para guardar a reserva na sua conta.",
-      "profile": "Dados da Reserva",
-      "personal": "Dados Pessoais",
-      "signOut": "Terminar Sessão",
-      "passengerName": "Nome",
-      "email": "Email",
-      "phone": "Telemóvel",
-      "notes": "Notas (Opcional)",
-      "transaction": "Pagamento",
-      "cardNumber": "Cartão",
+      "title": "Confirmar e Pagar",
+      "sub": "Pagamento 100% Seguro via Stripe",
+      "encrypted": "Dados Encriptados",
+      "authRequired": "Identificação",
+      "authDesc": "Para finalizar, crie uma conta ou entre no seu painel.",
+      "profile": "Seus Dados",
+      "personal": "Contacto",
+      "signOut": "Sair",
+      "passengerName": "Nome Completo",
+      "email": "E-mail",
+      "phone": "Telefone",
+      "notes": "Observações",
+      "transaction": "Método de Pagamento",
+      "cardNumber": "Número do Cartão",
       "expiry": "Validade",
       "cvc": "CVC",
-      "mbway": "Nº MB WAY",
+      "mbway": "Telemóvel MB WAY",
       "processing": "A processar...",
       "terms": "Termos e Condições",
-      "confirm": "Pagar e Reservar",
-      "verify": "Validar",
-      "notesPlaceholder": "Ex: Cadeira de bebé necessária.",
+      "confirm": "Finalizar Reserva",
+      "verify": "Entrar / Registar",
+      "notesPlaceholder": "Ex: Cadeirinha de bebé, paragem extra, etc.",
       "expiryPlaceholder": "MM/AA",
-      "waitingDetails": "A aguardar...",
-      "initialize": "Preparar Pagamento"
+      "waitingDetails": "Aguardando detalhes...",
+      "initialize": "Ativar Pagamento"
     },
     "extras": {
       "baby_seat": "Cadeira de Bebé",
-      "booster": "Assento de Criança",
-      "meet_greet": "Recepção no Aeroporto",
-      "name_board": "Placa de Identificação",
-      "water": "Água Extra",
-      "wifi": "Wi-Fi",
-      "extra_stop": "Paragem pelo Caminho",
-      "extra_wait": "Tempo de Espera"
+      "booster": "Assento Elevatório",
+      "meet_greet": "Recepção Personalizada",
+      "name_board": "Placa com Nome",
+      "water": "Águas Extra",
+      "wifi": "Wi-Fi a Bordo",
+      "extra_stop": "Paragem Extra",
+      "extra_wait": "Espera Prolongada"
     },
     "stepExtras": {
-      "title": "Opções Adicionais",
-      "sub": "Precisa de algo mais para a viagem?",
-      "recommendation": "Sugerido",
-      "mgTitle": "Recepção no Aeroporto",
-      "mgDesc": "O motorista espera por si com o seu nome.",
-      "exclusiveService": "Serviço",
-      "selected": "Adicionado",
+      "title": "Deseja adicionar algo?",
+      "sub": "Personalize a sua viagem com os nossos extras",
+      "recommendation": "Recomendado",
+      "mgTitle": "Meet & Greet",
+      "mgDesc": "O motorista aguarda com placa no desembarque.",
+      "exclusiveService": "Serviço Atento",
+      "selected": "Selecionado",
       "add": "Adicionar",
-      "noExtras": "Avançar sem opções",
+      "noExtras": "Continuar sem extras",
       "back": "Voltar",
-      "next": "Avançar"
+      "next": "Continuar"
     }
   },
   "confirmation": {
     "badge": "Sucesso",
-    "title": "A reserva está confirmada!",
-    "sentTo": "Enviámos o recibo para",
-    "reference": "Nº Reserva",
+    "title": "Reserva efetuada com sucesso!",
+    "sentTo": "Enviámos um e-mail com os detalhes para",
+    "reference": "Nº de Reserva",
     "statusConfirmed": "Confirmada",
     "pickup": "Partida",
     "dropoff": "Chegada",
     "date": "Data",
     "time": "Hora",
-    "category": "Veículo",
-    "passenger": "Nome",
+    "category": "Tipo de Carro",
+    "passenger": "Passageiro",
     "totalPaid": "Pago",
-    "nextStepsTitle": "O que se segue?",
-    "step1": "O resumo da viagem foi enviado para o seu email.",
-    "step2": "Receberá os dados do motorista antes da viagem.",
-    "step3": "O motorista estará no local à hora marcada.",
-    "viewDashboard": "As minhas viagens",
-    "downloadPdf": "Descarregar PDF",
+    "nextStepsTitle": "Informações Úteis",
+    "step1": "Receberá o contacto do motorista por SMS/E-mail.",
+    "step2": "Pode gerir a sua reserva na Área de Cliente.",
+    "step3": "Em caso de dúvida, contacte o nosso suporte.",
+    "viewDashboard": "Ver Minhas Reservas",
+    "downloadPdf": "Baixar PDF",
     "share": "Partilhar",
-    "changeSomething": "Precisa de alterar algo?",
-    "callUs": "Ligar",
-    "customerArea": "Área de Cliente"
+    "changeSomething": "Alterar Reserva",
+    "callUs": "Apoio Telefónico",
+    "customerArea": "Painel de Cliente"
   },
   "auth": {
-    "titleRedefined": "Área de Cliente",
-    "desc": "Entre na sua conta para consultar as suas viagens ou faturas.",
-    "fleetManagement": "Acesso Profissional",
+    "titleRedefined": "Área de Cliente MOVNLY",
+    "desc": "Faça a gestão dos seus transportes e faturas de forma simples.",
+    "fleetManagement": "Painel Operacional",
     "welcomeBack": "Olá,",
-    "createAccount": "Criar Conta",
-    "loginSubtitle": "Insira os seus dados.",
-    "registerSubtitle": "Crie uma conta para facilitar as reservas.",
-    "fullName": "Nome",
-    "emailAddress": "Email",
-    "password": "Password",
-    "forgotPasswordLink": "Esqueceu a password?",
+    "createAccount": "Criar Nova Conta",
+    "loginSubtitle": "Dados de Acesso",
+    "registerSubtitle": "Registe-se para um agendamento mais rápido",
+    "fullName": "Nome Completo",
+    "emailAddress": "E-mail",
+    "password": "Senha",
+    "forgotPasswordLink": "Esqueci-me da senha",
     "signIn": "Entrar",
-    "register": "Registar",
+    "register": "Criar Conta",
     "noAccount": "Ainda não tem conta?",
     "hasAccount": "Já tem conta?",
-    "applyAccess": "Começar",
+    "applyAccess": "Começar Agora",
     "signInHere": "Fazer Login",
-    "fleetLogin": "Acesso para Motoristas",
-    "backToPlatform": "Voltar à Página Inicial",
+    "fleetLogin": "Acesso Motoristas",
+    "backToPlatform": "Ir para o Site",
     "forgotPassword": {
-      "title": "Recuperar Password",
-      "desc": "Insira o seu email para receber as instruções.",
-      "emailLabel": "Email",
-      "emailPlaceholder": "email@exemplo.com",
+      "title": "Recuperar Senha",
+      "desc": "Indique o seu e-mail para enviarmos instruções.",
+      "emailLabel": "E-mail",
+      "emailPlaceholder": "seu@email.com",
       "submit": "Enviar",
-      "successTitle": "Email Enviado",
-      "successDesc": "Instruções enviadas para {email}.",
-      "resetButton": "Nova Password"
+      "successTitle": "E-mail Enviado",
+      "successDesc": "Verifique a sua caixa de entrada.",
+      "resetButton": "Definir Nova Senha"
     }
   },
   "dashboard": {
     "welcomeBack": "Olá,",
-    "authRequired": "Faça Login",
-    "authDesc": "Precisa de estar autenticado para ver esta página.",
-    "authenticate": "Entrar",
-    "portalTitle": "O seu painel",
-    "portalSub": "Consulte as suas reservas.",
-    "reserveConcierge": "Nova Reserva",
-    "completedJourneys": "Viagens Realizadas",
-    "totalInvested": "Gasto",
-    "chauffeurRating": "Média",
+    "authRequired": "Login Necessário",
+    "authDesc": "Por favor, entre na sua conta para ver os seus agendamentos.",
+    "authenticate": "Fazer Login",
+    "portalTitle": "O Meu Painel",
+    "portalSub": "Gestão de transportes e histórico de viagens.",
+    "reserveConcierge": "Agendar Novo Transporte",
+    "completedJourneys": "Viagens Concluídas",
+    "totalInvested": "Gasto Total",
+    "chauffeurRating": "Avaliação",
     "upcomingJourney": "Próxima Viagem",
-    "pendingItineraries": "Agendadas",
+    "pendingItineraries": "Agendamentos Ativos",
     "viewPortfolio": "Ver Histórico",
-    "noPending": "Sem viagens agendadas",
-    "scheduleNext": "Agendar viagem",
-    "recentItineraries": "Recentes",
-    "noCompleted": "Nenhuma viagem ainda.",
+    "noPending": "Não tem viagens agendadas no momento",
+    "scheduleNext": "Marcar Agora",
+    "recentItineraries": "Últimas Viagens",
+    "noCompleted": "Sem histórico de viagens.",
     "viewFullLedger": "Ver Tudo",
-    "quickActions": "Ações Rápidas",
+    "quickActions": "Atalhos",
     "newReservation": "Nova Reserva",
-    "duplicateTrip": "Repetir",
-    "billingProfiles": "Faturação",
-    "privateConcierge": "Apoio ao Cliente",
+    "duplicateTrip": "Repetir Viagem",
+    "billingProfiles": "Dados de Faturação",
+    "privateConcierge": "Suporte",
     "status": {
-      "pending_payment": "A aguardar pagamento",
-      "confirmed": "Agendada",
+      "pending_payment": "Pagar Agora",
+      "confirmed": "Agendado",
       "driver_assigned": "Motorista Atribuído",
-      "driver_en_route": "A caminho",
-      "driver_arrived": "No local",
-      "in_progress": "Em viagem",
-      "completed": "Concluída",
-      "cancelled": "Cancelada",
-      "no_show": "Faltou"
+      "driver_en_route": "A Caminho",
+      "driver_arrived": "Chegou",
+      "in_progress": "Em Viagem",
+      "completed": "Concluído",
+      "cancelled": "Anulado",
+      "no_show": "Falta de Comparência"
     },
     "card": {
       "at": "às",
       "flight": "Voo",
       "monitoringActive": "Monitorizado",
-      "viewDetails": "Ver",
-      "changeFlight": "Alterar Voo",
-      "cancel": "Cancelar",
+      "viewDetails": "Ver Mais",
+      "changeFlight": "Editar Voo",
+      "cancel": "Anular",
       "rateTrip": "Avaliar",
-      "cancelConfirm": "Cancelar esta viagem?",
-      "extrasCount": "{count} opção",
-      "extrasCountPlural": "{count} opções"
+      "cancelConfirm": "Tem a certeza que deseja anular?",
+      "extrasCount": "{count} extra",
+      "extrasCountPlural": "{count} extras"
     },
     "payment": {
       "title": "Métodos de Pagamento",
-      "desc": "Gira os seus cartões.",
+      "desc": "Gerir os seus cartões guardados.",
       "noMethods": "Sem cartões.",
-      "default": "Principal",
+      "default": "Predefinido",
       "makeDefault": "Tornar Principal",
       "addNew": "Adicionar Cartão",
       "cardNumber": "Número",
@@ -538,555 +574,135 @@
       "cvv": "CVV",
       "cancel": "Cancelar",
       "saveCard": "Guardar",
-      "addNewMethod": "Adicionar",
-      "corporateBilling": "Faturação Mensal",
-      "corporateDesc": "Precisa de faturas mensais para a empresa?",
-      "applyNow": "Pedir Faturação Mensal"
+      "addNewMethod": "Registar",
+      "corporateBilling": "Faturação Empresa",
+      "corporateDesc": "Precisa de faturar para uma empresa?",
+      "applyNow": "Pedir Acesso Empresa"
     }
-  },
-  "b2b": {
-    "badge_pill": "Para Empresas e Parceiros",
-    "headline1": "Soluções de Transporte",
-    "headline2": "para a sua Organização.",
-    "subtitle": "Facilitamos as deslocações da sua equipa e dos seus clientes.",
-    "cta_link": "Falar com a nossa equipa",
-    "corp_badge": "Serviço B2B",
-    "corp_exclusive": "Apoio a Empresas",
-    "corp_desc": "Agilize os pagamentos da sua empresa com faturação mensal única.",
-    "features": [
-      {
-        "title": "Para Hotéis",
-        "desc": "Reserve para os seus hóspedes e receba uma fatura mensal."
-      },
-      {
-        "title": "Para Empresas",
-        "desc": "Transporte de equipas e clientes com relatórios claros."
-      },
-      {
-        "title": "Agências de Viagens",
-        "desc": "Garantimos o serviço aos seus clientes com pagamento facilitado."
-      },
-      {
-        "title": "Eventos",
-        "desc": "Coordenamos o transporte de pequenos ou grandes grupos."
-      }
-    ],
-    "segments": {
-      "hotels": {
-        "badge": "Hotéis",
-        "title": "Parcerias com Hotéis",
-        "subtitle1": "Transporte para",
-        "subtitle2": "os seus hóspedes.",
-        "desc": "Uma solução fiável para receções que precisam de marcar viagens rápidas e seguras.",
-        "features": [
-          "Portal Rápido",
-          "Faturação Mensal",
-          "Apoio Direto",
-          "Recepção no Aeroporto"
-        ],
-        "cta_card_title": "Programa para Hotéis",
-        "cta_card_desc": "Dê aos seus hóspedes uma forma simples de ir para o aeroporto ou visitar a cidade.",
-        "cta": "Pedir Informações",
-        "bento_title": "Simples para a receção.",
-        "bento_desc": "Marque as viagens em segundos no nosso portal.",
-        "benefits": [
-          {
-            "title": "Portal de Receção",
-            "desc": "Interface simples para marcar viagens para os quartos."
-          },
-          {
-            "title": "Faturação Mensal",
-            "desc": "Evite recibos soltos com um único pagamento ao fim do mês."
-          },
-          {
-            "title": "Acompanhamento",
-            "desc": "Saiba sempre onde está o motorista através do painel."
-          }
-        ]
-      },
-      "corporate": {
-        "badge": "Empresas",
-        "title": "Contas de Empresa",
-        "subtitle1": "Viagens",
-        "subtitle2": "Profissionais.",
-        "desc": "Assegure as viagens dos seus colaboradores e clientes com uma gestão centralizada.",
-        "features": [
-          "Relatórios Mensais",
-          "Múltiplos Utilizadores",
-          "Fatura Consolidada",
-          "Preços Fixos"
-        ],
-        "cta_card_title": "Conta Empresa",
-        "cta_card_desc": "Abra uma conta corporativa para simplificar pagamentos.",
-        "cta": "Criar Conta Empresa",
-        "bento_title": "Menos trabalho com despesas.",
-        "bento_desc": "Pare de aprovar recibos de táxi individuais.",
-        "benefits": [
-          {
-            "title": "Faturação Única",
-            "desc": "Todas as viagens do mês numa só fatura para a contabilidade."
-          },
-          {
-            "title": "Painel de Empresa",
-            "desc": "Controle quem viaja e verifique os custos mensais."
-          },
-          {
-            "title": "Suporte Local",
-            "desc": "Apoio telefónico rápido se houver mudanças de planos."
-          }
-        ],
-        "stats": {
-          "response": "Rápido",
-          "response_label": "Agendamento",
-          "tax": "Fatura",
-          "tax_label": "Empresarial"
-        },
-        "final_cta_title": "Simplifique as deslocações.",
-        "final_cta_desc": "Empresas de vários setores confiam em nós para gerir o transporte das suas equipas."
-      },
-      "agencies": {
-        "badge": "Agências de Viagens",
-        "title": "Rede de Agências",
-        "subtitle1": "Apoio no",
-        "subtitle2": "Terreno.",
-        "desc": "Garantimos o transporte dos seus clientes com fiabilidade e comissões claras.",
-        "features": [
-          "Portal de Agência",
-          "Comissões Clarificadas",
-          "Apoio Direto",
-          "Acompanhamento de Voos"
-        ],
-        "cta_card_title": "Para Agências",
-        "cta_card_desc": "Seja nosso parceiro e ofereça um transfer de confiança aos seus clientes.",
-        "cta": "Aderir",
-        "bento_title": "Parceria de Confiança.",
-        "bento_desc": "Um parceiro local em que pode confiar para as transferências.",
-        "benefits": [
-          {
-            "title": "Comissões",
-            "desc": "Modelo de remuneração transparente nas vendas."
-          },
-          {
-            "title": "Gestão de Reservas",
-            "desc": "Faça alterações rápidas aos horários dos seus clientes."
-          },
-          {
-            "title": "Suporte a Operadores",
-            "desc": "Linha direta para os agentes de viagens."
-          }
-        ]
-      }
-    }
-  },
-  "routes_section": {
-    "badge": "Destinos Frequentes",
-    "headline": "Ligações",
-    "title1": "Viagens",
-    "title2": "Nacionais.",
-    "desc": "De Lisboa para o resto do país de forma direta e sem paragens desnecessárias.",
-    "sub": "Rotas populares para as principais cidades e pontos turísticos.",
-    "exploreAll": "Ver todas as rotas",
-    "status": "Ativo",
-    "durationLabel": "Tempo Médio",
-    "fromLabel": "De",
-    "transfer": "Transfer",
-    "items": [
-      {
-        "from": "Aeroporto de Lisboa",
-        "to": "Centro de Lisboa",
-        "duration": "25 min",
-        "price": "22.50"
-      },
-      {
-        "from": "Aeroporto de Lisboa",
-        "to": "Cascais",
-        "duration": "45 min",
-        "price": "31"
-      },
-      {
-        "from": "Aeroporto de Lisboa",
-        "to": "Sintra",
-        "duration": "50 min",
-        "price": "70"
-      },
-      {
-        "from": "Aeroporto de Lisboa",
-        "to": "Algarve",
-        "duration": "2h 30min",
-        "price": "220"
-      }
-    ]
-  },
-  "tours_section": {
-    "badge": "Passeios e Visitas",
-    "title1": "Conheça",
-    "title2": "Portugal.",
-    "sub": "Organizamos passeios de dia inteiro ou meio-dia aos locais mais procurados com motoristas conhecedores da zona.",
-    "viewAll": "Ver passeios",
-    "from": "desde",
-    "bookNow": "Reservar",
-    "customTitle": "Quer fazer a sua própria rota?",
-    "customDesc": "Podemos organizar um passeio à medida. Diga-nos o que quer visitar.",
-    "items": [
-      {
-        "id": "t1",
-        "title": "Palácios de Sintra",
-        "desc": "Visite a vila de Sintra, o Palácio da Pena e a Quinta da Regaleira num passeio calmo a partir de Lisboa.",
-        "duration": "8h",
-        "price": "280",
-        "image": "https://images.pexels.com/photos/2042161/pexels-photo-2042161.jpeg",
-        "featured": true,
-        "location": "Sintra"
-      },
-      {
-        "id": "t2",
-        "title": "Lisboa Histórica",
-        "desc": "Conheça o centro de Lisboa, Alfama e os monumentos de Belém sem ter de se preocupar com o estacionamento.",
-        "duration": "4h",
-        "price": "180",
-        "image": "https://images.pexels.com/photos/1531660/pexels-photo-1531660.jpeg",
-        "featured": true,
-        "location": "Lisboa"
-      },
-      {
-        "id": "t3",
-        "title": "Fátima e Óbidos",
-        "desc": "Viagem de dia até ao Santuário de Fátima com paragem na vila de Óbidos no regresso.",
-        "duration": "7h",
-        "price": "220",
-        "image": "https://images.pexels.com/photos/34091/pexels-photo.jpg",
-        "featured": false,
-        "location": "Fátima"
-      }
-    ]
-  },
-  "testimonials": {
-    "sectionBadge": "Feedback",
-    "title1": "A opinião",
-    "title2": "de quem viaja.",
-    "sub": "O que dizem os clientes que já viajaram connosco.",
-    "items": [
-      {
-        "name": "Sarah Mitchell",
-        "role": "Viajante",
-        "country": "Reino Unido",
-        "avatar": "SM",
-        "text": "O motorista estava à espera no aeroporto com o meu nome. O carro estava muito limpo e a viagem foi direta."
-      },
-      {
-        "name": "Ricardo Silva",
-        "role": "Cliente Empresarial",
-        "country": "Portugal",
-        "avatar": "RS",
-        "text": "Uso regularmente para ir a reuniões em Lisboa. São pontuais e a faturação mensal tira-me muito trabalho."
-      },
-      {
-        "name": "Maria Fontes",
-        "role": "Cliente",
-        "country": "Portugal",
-        "avatar": "MF",
-        "text": "Reserva rápida, o motorista chegou um pouco antes da hora e foi muito simpático com a bagagem."
-      }
-    ]
-  },
-  "cta": {
-    "pill": "Precisa de transporte?",
-    "headline1": "Marque a sua",
-    "headline2": "próxima viagem.",
-    "sub": "Transporte de confiança com preço fixo garantido em Lisboa e arredores.",
-    "bookNow": "RESERVAR",
-    "callNow": "Contacto: +351 21 000 0000",
-    "microcopy": [
-      "Cancelamento Fácil",
-      "Pagamento Online",
-      "Apoio Direto"
-    ]
   },
   "footer": {
-    "tagline": "Serviço de transporte e motoristas em Lisboa.",
+    "tagline": "Mobilidade Executiva e Transfers de Confiança em Portugal.",
+    "about": "A MOVNLY é uma plataforma de transporte privado focada em oferecer um serviço de excelência, pontual e seguro em Lisboa e arredores.",
+    "solutions": "Nossos Serviços",
+    "institutional": "Empresa",
+    "contact": "Fale Connosco",
     "newsletter": {
       "badge": "Novidades",
-      "title": "Notícias e Ofertas",
-      "sub": "Deixe o seu email para receber novidades sobre novos passeios.",
-      "placeholder": "Seu email...",
-      "button": "Enviar",
-      "privacy": "Apenas enviamos emails úteis."
+      "title": "Mantenha-se <gold>Atualizado</gold>",
+      "sub": "Receba informações sobre novos destinos e serviços.",
+      "placeholder": "O seu e-mail",
+      "button": "Subscrever",
+      "privacy": "Garantimos a privacidade dos seus dados."
     },
-    "copyright": "© {year} MOVNLY. Todos os direitos reservados.",
     "cols": {
       "services": {
         "title": "Serviços",
-        "links": [
-          "Aeroporto",
-          "Empresas",
-          "Eventos",
-          "Passeios"
-        ]
+        "links": ["Aeroporto", "Hotéis", "Empresas", "Grupos", "Tours"]
       },
       "company": {
-        "title": "Empresa",
-        "links": [
-          "Sobre Nós",
-          "Frota",
-          "Trabalhar Connosco",
-          "Blog"
-        ]
-      },
-      "partners": {
-        "title": "Parcerias",
-        "links": [
-          "Hotéis",
-          "Agências",
-          "Contactos"
-        ]
+        "title": "Institucional",
+        "links": ["Sobre Nós", "Frota", "Carreiras", "Parceiros"]
       },
       "support": {
-        "title": "Ajuda",
-        "links": [
-          "Falar Connosco",
-          "Privacidade",
-          "Termos",
-          "Perguntas"
-        ]
+        "title": "Suporte",
+        "links": ["Ajuda", "Contactos", "Privacidade", "Termos"]
       }
     },
-    "legal": [
-      "Privacidade",
-      "Termos",
-      "Cookies"
+    "copyright": "© {year} MOVNLY. Todos os direitos reservados.",
+    "legal": ["Privacidade", "Termos", "Como Funciona"],
+    "subscribe": "Subscrever",
+    "allRights": "Todos os direitos reservados.",
+    "developedBy": "Desenvolvido por"
+  },
+  "categories": {
+    "sectionBadge": "Frota de Elite",
+    "title1": "Categorias de",
+    "title2": "Viatura Disponíveis",
+    "sub": "Selecione o padrão de excelência que melhor se adapta à sua exigência e prestígio.",
+    "guarantee": "Garantia de Qualidade MOVNLY",
+    "guaranteeDesc": "Veículos rigorosamente inspecionados, motoristas profissionais e atendimento de excelência.",
+    "compare": "Ver Mais Itinerários"
+  },
+  "whyChooseUs": {
+    "badge": "O Nosso Diferencial",
+    "title1": "A Sua",
+    "title2": "Prioridade",
+    "title3": "É o Nosso Compromisso",
+    "ritual": "O Ritual da",
+    "welcome": "Excelência Executiva",
+    "sub": "Na MOVNLY, cada detalhe é orquestrado para proporcionar uma experiência de transporte irrepreensível.",
+    "zeroWait": "Zero Tempos de Espera",
+    "hub": "Monitorização Central",
+    "standard": "Padrão Operacional",
+    "location": "Localização Estratégica",
+    "trustBadges": [
+      "Pontualidade Absoluta",
+      "Discrição Total",
+      "Suporte 24/7",
+      "Seguro Premium"
+    ]
+  },
+  "testimonials": {
+    "sectionBadge": "Experiências",
+    "title1": "O Que Dizem os",
+    "title2": "Nossos Clientes",
+    "sub": "A confiança dos nossos passageiros é o nosso maior ativo.",
+    "items": [
+      {
+        "name": "Ricardo Santos",
+        "role": "CEO Tech Global",
+        "text": "O serviço mais pontual e discreto que já utilizei em Lisboa. O motorista foi impecável.",
+        "avatar": "RS",
+        "country": "Portugal"
+      },
+      {
+        "name": "Sarah Miller",
+        "role": "Executive Producer",
+        "text": "Everything was perfect. The car was spotless and the driver was extremely professional.",
+        "avatar": "SM",
+        "country": "UK"
+      },
+      {
+        "name": "Jean-Pierre",
+        "role": "Consultant Senior",
+        "text": "Un service irréprochable du début à la fin. Très recommandé pour les voyages d'affaires.",
+        "avatar": "JP",
+        "country": "França"
+      }
     ],
-    "motto": "Boa viagem."
+    "socialProof": [
+      "Referência em Lisboa",
+      "Protocolo de Luxo",
+      "Confiança Corporativa",
+      "Excelência Garantida"
+    ]
   },
-  "ui": {
-    "datepicker": {
-      "placeholder": "Data",
-      "placeholder_time": "Hora",
-      "months": [
-        "Janeiro",
-        "Fevereiro",
-        "Março",
-        "Abril",
-        "Maio",
-        "Junho",
-        "Julho",
-        "Agosto",
-        "Setembro",
-        "Outubro",
-        "Novembro",
-        "Dezembro"
-      ],
-      "days": [
-        "Seg",
-        "Ter",
-        "Qua",
-        "Qui",
-        "Sex",
-        "Sáb",
-        "Dom"
-      ]
-    },
-    "timepicker": {
-      "hour": "Hora",
-      "minute": "Minuto"
-    }
-  },
-  "routes_list": [
-    {
-      "from": "Aeroporto de Lisboa",
-      "to": "Centro de Lisboa"
-    },
-    {
-      "from": "Aeroporto de Lisboa",
-      "to": "Cascais"
-    },
-    {
-      "from": "Aeroporto de Lisboa",
-      "to": "Sintra"
-    },
-    {
-      "from": "Aeroporto de Lisboa",
-      "to": "Setúbal"
-    },
-    {
-      "from": "Centro de Lisboa",
-      "to": "Óbidos"
-    },
-    {
-      "from": "Aeroporto de Lisboa",
-      "to": "Algarve"
-    }
-  ],
-  "testimonials_list": [
-    {
-      "role": "Viajante",
-      "country": "Reino Unido",
-      "text": "O motorista estava à minha espera com uma placa. O carro era limpo e a viagem foi direta ao hotel.",
-      "route": "Aeroporto → Cascais"
-    },
-    {
-      "role": "Empresa",
-      "country": "Espanha",
-      "text": "Usamos para as viagens de trabalho a Lisboa. Têm sido sempre pontuais.",
-      "route": "Aeroporto → Parque das Nações"
-    },
-    {
-      "role": "Turista",
-      "country": "Alemanha",
-      "text": "Tínhamos duas crianças. Trouxeram as cadeiras certas e a carrinha tinha espaço para as malas todas.",
-      "route": "Aeroporto → Sintra"
-    }
-  ],
-  "tours_list": {
-    "sintra-palaces": {
-      "title": "Palácios de Sintra",
-      "sub": "Vila · Pena · Regaleira",
-      "tag": "Popular",
-      "desc": "Visita aos palácios de Sintra com partida de Lisboa e regresso ao fim da tarde."
-    },
-    "alentejo-wine": {
-      "title": "Évora e Vinhos",
-      "sub": "Évora · Prova de Vinhos",
-      "tag": "Passeio",
-      "desc": "Visita a Évora e a uma quinta da região com prova de vinhos do Alentejo."
-    },
-    "douro-valley": {
-      "title": "Vale do Douro",
-      "sub": "Porto · Quintas",
-      "tag": "Norte",
-      "desc": "Passeio pelas vinhas do Douro e prova de Vinho do Porto nas propriedades históricas."
-    },
-    "obidos-nazare": {
-      "title": "Óbidos e Nazaré",
-      "sub": "Vila Medieval · Mar",
-      "tag": "Costa",
-      "desc": "Visita à vila de Óbidos e à praia da Nazaré."
-    },
-    "algarve-private": {
-      "title": "Algarve Sul",
-      "sub": "Sagres · Albufeira",
-      "tag": "Sul",
-      "desc": "Viagem pelo sul do país com passagens pela Costa Vicentina."
-    },
-    "setubal-arrabida": {
-      "title": "Serra da Arrábida",
-      "sub": "Azeitão · Praias",
-      "tag": "Natureza",
-      "desc": "Passeio pela Serra da Arrábida e paragem para provar o vinho moscatel local."
-    },
-    "summer-tour": {
-      "title": "Costa de Cascais",
-      "sub": "Cascais · Boca do Inferno",
-      "tag": "Meio Dia",
-      "desc": "Passeio pela marginal de Lisboa até Cascais e ao Cabo da Roca."
-    }
-  },
-  "driver_portal": {
-    "login": {
-      "title": "Área de Motorista",
-      "subtitle": "Entre no seu painel de trabalho",
-      "google": "Entrar com Google",
-      "or": "ou",
-      "email": "Email",
-      "password": "Password",
-      "forgot": "Esqueceu a password?",
-      "submit": "Entrar",
-      "noAccount": "Não tem conta?",
-      "register": "Pedir registo",
-      "badge": "Motoristas",
-      "stat1": "Apoio",
-      "stat2": "Ganhos",
-      "stat3": "Regras Claras",
-      "tagline1": "Plataforma de",
-      "tagline2": "trabalho"
-    },
-    "dashboard": {
-      "title": "O seu painel",
-      "available": "Disponível",
-      "offline": "Offline",
-      "totalEarnings": "Ganhos",
-      "available_balance": "Saldo",
-      "rating": "Nota",
-      "acceptance": "Aceitação",
-      "activeTrip": "Viagem Atual",
-      "noActiveTrip": "Sem viagem ativa",
-      "waitingAssignment": "A aguardar marcações",
-      "marketplace": "Corridas",
-      "noMarketplace": "Não há viagens novas",
-      "thisWeek": "Semana",
-      "withdraw": "Levantar",
-      "online": "Online",
-      "cancellations": "Cancelamentos",
-      "startRoute": "Iniciar Percurso",
-      "confirmArrival": "Cheguei ao Local",
-      "startTrip": "Iniciar Viagem",
-      "finalize": "Terminar",
-      "accept": "Aceitar",
-      "pickup": "Recolha",
-      "destination": "Destino",
-      "earning": "Valor",
-      "steps": ["Confirmado", "A Caminho", "Chegou", "Em Viagem", "Fim"],
-      "pinModal": {
-        "title": "Finalizar a viagem",
-        "subtitle": "Insira o PIN do cliente",
-        "confirm": "Validar"
+  "b2b": {
+    "badge_pill": "B2B Solutions",
+    "headline1": "Parcerias de",
+    "headline2": "Sucesso Corporativo",
+    "subtitle": "Soluções de transporte à medida para empresas, hotéis e agências de viagens.",
+    "cta_link": "Abrir Conta Empresa",
+    "corp_badge": "Serviço Corporativo",
+    "corp_exclusive": "Acesso Exclusivo",
+    "corp_desc": "Portal dedicado para gestão de reservas e faturação centralizada.",
+    "features": [
+      {
+        "title": "Faturação Mensal",
+        "desc": "Gestão financeira simplificada com faturação unificada para a sua empresa."
+      },
+      {
+        "title": "Gestor de Conta",
+        "desc": "Apoio prioritário e acompanhamento personalizado em todas as reservas."
+      },
+      {
+        "title": "Frota Dedicada",
+        "desc": "Garantia de disponibilidade imediata para as suas necessidades urgentes."
+      },
+      {
+        "title": "API de Reserva",
+        "desc": "Integração direta com os sistemas da sua empresa ou hotel."
       }
-    },
-    "nav": {
-      "dashboard": "Início",
-      "trips": "Viagens",
-      "history": "Histórico",
-      "earnings": "Ganhos",
-      "ratings": "Opiniões",
-      "settings": "Perfil",
-      "logout": "Sair"
-    }
-  },
-  "legal": {
-    "privacy": {
-      "title": "Política de Privacidade",
-      "badge": "Dados e Privacidade",
-      "lastUpdated": "Atualizado: 27 de Abril de 2026",
-      "sections": [
-        {
-          "title": "Os seus dados",
-          "content": "A MOVNLY pede o nome, email e contacto para validar a sua reserva. A localização só é usada durante a viagem para garantir que o motorista o encontra facilmente."
-        },
-        {
-          "title": "Pagamentos",
-          "content": "Os pagamentos são feitos através de sistemas seguros. Nós não guardamos os dados do seu cartão bancário."
-        },
-        {
-          "title": "Como partilhamos",
-          "content": "Não vendemos dados. Apenas o motorista que fará a viagem tem acesso ao seu nome e contacto para o encontrar."
-        },
-        {
-          "title": "Os seus direitos",
-          "content": "Pode pedir para apagar ou alterar os seus dados a qualquer momento enviando um email para a nossa equipa."
-        }
-      ]
-    },
-    "terms": {
-      "title": "Termos de Serviço",
-      "badge": "Regras",
-      "lastUpdated": "Atualizado: 27 de Abril de 2026",
-      "sections": [
-        {
-          "title": "O Serviço",
-          "content": "A MOVNLY presta serviços de transporte com motorista. Ao marcar viagem connosco, aceita o preço fixo que lhe é apresentado no final da reserva."
-        },
-        {
-          "title": "As Reservas",
-          "content": "A reserva fica garantida após o pagamento. No aeroporto, o motorista espera até 60 minutos sem custos extras após o avião aterrar."
-        },
-        {
-          "title": "Cancelamentos",
-          "content": "Se cancelar com mais de 24 horas, devolvemos todo o dinheiro. Entre 2 a 24 horas, devolvemos metade. Com menos de 2 horas não há devolução."
-        },
-        {
-          "title": "O que nos compete",
-          "content": "Fazemos o possível para chegar a horas, mas não nos responsabilizamos por trânsito ou cortes de estrada repentinos."
-        }
-      ]
-    }
+    ]
   }
 }

@@ -28,55 +28,72 @@ export default function ForgotPasswordPage() {
     };
 
     return (
-        <div className="min-h-screen bg-[#050507] flex items-center justify-center px-6 font-sans selection:bg-brand-gold selection:text-black">
+        <div className="min-h-screen bg-luxury-mesh flex flex-col items-center justify-center p-6 relative overflow-hidden font-sans">
+            {/* HUD Navigation */}
+            <div className="absolute top-8 left-8 md:top-12 md:left-12 z-20">
+                <Link
+                    href="/login"
+                    className="group flex items-center gap-3 text-[10px] font-bold text-white/20 hover:text-white uppercase tracking-[0.4em] transition-all"
+                >
+                    <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
+                    <span className="hidden sm:inline">Voltar</span>
+                </Link>
+            </div>
+
+            {/* Background Light Leaks */}
+            <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-brand-gold/[0.03] blur-[120px] rounded-full pointer-events-none" />
+            <div className="absolute bottom-0 left-0 w-[600px] h-[600px] bg-brand-gold/[0.02] blur-[150px] rounded-full pointer-events-none" />
+
             <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.7, ease: "easeOut" }}
-                className="w-full max-w-[420px]"
+                transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
+                className="w-full max-w-[420px] z-10"
             >
-                {/* Nav */}
-                <div className="flex items-center justify-between mb-10">
-                    <Link
-                        href="/login"
-                        className="group flex items-center gap-3 text-[10px] font-bold text-white/20 hover:text-white uppercase tracking-[0.3em] transition-all"
-                    >
-                        <ArrowLeft className="w-3.5 h-3.5" />
-                        <span>Voltar</span>
-                    </Link>
+                {/* Branding Section */}
+                <div className="text-center mb-12 relative">
                     <Link href="/">
-                        <img src="/logoMov.png" alt="MOVNLY" className="h-10 md:h-12 w-auto  opacity-30 hover:opacity-80 transition-opacity" />
+                        <img src="/logoMov.png" alt="MOVNLY" className="h-24 md:h-28 w-auto mx-auto mb-6 hover:scale-105 transition-transform duration-700" />
                     </Link>
+                    <div className="w-20 h-px bg-brand-gold/20 mx-auto" />
                 </div>
 
                 <AnimatePresence mode="wait">
                     {!sent ? (
-                        <motion.div key="form-section" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
-                            {/* Heading */}
-                            <div className="mb-8">
-                                <h1 className="text-white text-5xl font-extralight tracking-tighter leading-[0.9]">
-                                    Recuperar
-                                    <span className="font-black italic text-brand-gold"> Acesso</span>
-                                </h1>
-                                <p className="text-white/30 text-xs font-light leading-relaxed mt-4 max-w-[300px]">
-                                    Introduza o seu e-mail para receber o código de recuperação da sua conta MOVNLY.
-                                </p>
+                        <motion.div 
+                            key="form-section" 
+                            initial={{ opacity: 0, scale: 0.95 }} 
+                            animate={{ opacity: 1, scale: 1 }} 
+                            exit={{ opacity: 0, scale: 1.05 }}
+                            className="luxury-card p-10 md:p-12"
+                        >
+                            <div className="mb-10 space-y-4">
+                                <h2 className="text-4xl font-light text-white tracking-tight leading-none uppercase">
+                                    Recuperar<br />
+                                    <span className="text-brand-gold font-medium">Senha.</span>
+                                </h2>
+                                <div className="flex items-center gap-3">
+                                    <div className="w-6 h-[1px] bg-brand-gold/40" />
+                                    <p className="text-white/40 text-[9px] font-medium uppercase tracking-[0.4em] leading-none">
+                                        Segurança de Conta
+                                    </p>
+                                </div>
                             </div>
 
-                            <form onSubmit={handleSubmit} className="space-y-5">
-                                <div className="space-y-2">
-                                    <label className="text-[8px] font-black uppercase tracking-[0.5em] text-white/20 ml-1">
-                                        Endereço de E-mail
+                            <form onSubmit={handleSubmit} className="space-y-8">
+                                <div className="space-y-2 group">
+                                    <label className="text-[9px] font-medium uppercase tracking-[0.3em] text-white/30 group-focus-within:text-brand-gold transition-colors ml-1">
+                                        E-mail da Conta
                                     </label>
-                                    <div className="relative group">
-                                        <Mail className="absolute left-5 top-1/2 -translate-y-1/2 w-4 h-4 text-white/10 group-focus-within:text-brand-gold transition-all duration-500" />
+                                    <div className="relative">
+                                        <Mail className="absolute left-0 top-1/2 -translate-y-1/2 w-4 h-4 text-white/10 group-focus-within:text-brand-gold transition-all duration-500" />
                                         <input
                                             type="email"
                                             required
                                             value={email}
                                             onChange={(e) => setEmail(e.target.value)}
-                                            placeholder="ex: nome@empresa.com"
-                                            className="w-full bg-white/[0.01] border border-white/5 py-5 pl-12 pr-6 rounded-2xl text-white text-xs placeholder:text-white/10 focus:outline-none focus:border-brand-gold/20 focus:bg-white/[0.03] transition-all duration-500 shadow-2xl"
+                                            placeholder="EXEMPLO@EMAIL.COM"
+                                            className="w-full bg-transparent border-b border-white/10 py-3 pl-8 pr-0 text-white text-xs font-medium uppercase tracking-[0.1em] placeholder:text-white/10 focus:outline-none focus:border-brand-gold transition-all duration-500"
                                         />
                                     </div>
                                 </div>
@@ -84,52 +101,79 @@ export default function ForgotPasswordPage() {
                                 <button
                                     type="submit"
                                     disabled={loading}
-                                    className="w-full h-14 bg-gradient-to-r from-brand-gold to-[#B8860B] text-black text-[10px] font-black uppercase tracking-[0.8em] rounded-2xl hover:scale-[1.01] hover:brightness-110 transition-all shadow-[0_20px_50px_-15px_rgba(212,175,55,0.4)] group flex items-center justify-center gap-4 relative overflow-hidden"
+                                    className="w-full h-14 bg-brand-gold text-black text-[10px] font-bold uppercase tracking-[0.4em] rounded-full hover:shadow-[0_20px_50px_-10px_rgba(212,175,55,0.3)] hover:scale-[1.02] transition-all duration-500 group relative overflow-hidden mt-4"
                                 >
-                                    <div className="absolute inset-0 bg-white/30 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-1000 ease-in-out opacity-20" />
+                                    <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/40 to-transparent -translate-x-[200%] group-hover:translate-x-[200%] transition-transform duration-[1000ms] ease-in-out z-0" />
                                     {loading ? (
-                                        <Loader2 className="w-5 h-5 animate-spin" />
+                                        <Loader2 className="w-4 h-4 animate-spin mx-auto" />
                                     ) : (
-                                        <span className="relative z-10 flex items-center gap-3 ml-[0.8em]">
+                                        <span className="relative z-10 flex items-center justify-center gap-3">
                                             Enviar Código
                                             <ChevronRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
                                         </span>
                                     )}
                                 </button>
                             </form>
+                            
+                            <div className="mt-8 text-center lg:hidden">
+                                <Link
+                                    href="/login"
+                                    className="text-[9px] font-medium text-white/30 hover:text-white uppercase tracking-[0.3em] transition-all"
+                                >
+                                    Voltar ao Login
+                                </Link>
+                            </div>
                         </motion.div>
                     ) : (
                         <motion.div
                             key="success-section"
                             initial={{ scale: 0.95, opacity: 0 }}
                             animate={{ scale: 1, opacity: 1 }}
-                            className="space-y-8 text-center py-4"
+                            className="luxury-card p-12 text-center space-y-10 relative overflow-hidden"
                         >
-                            <div className="w-16 h-16 rounded-2xl bg-brand-gold/10 border border-brand-gold/20 flex items-center justify-center mx-auto">
-                                <ShieldCheck className="w-8 h-8 text-brand-gold" />
+                            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-brand-gold/[0.05] to-transparent -translate-x-full animate-[shimmer_3s_infinite]" />
+
+                            <div className="relative">
+                                <div className="w-24 h-24 bg-brand-gold/5 border border-brand-gold/20 rounded-full flex items-center justify-center mx-auto relative group">
+                                    <ShieldCheck className="w-10 h-10 text-brand-gold relative z-10" />
+                                    <div className="absolute inset-0 bg-brand-gold/20 blur-[30px] rounded-full opacity-40 group-hover:opacity-60 transition-opacity" />
+                                </div>
                             </div>
-                            <div className="space-y-3">
-                                <h2 className="text-white text-2xl font-extralight tracking-tight">
-                                    Código <span className="font-black italic text-brand-gold">Enviado</span>
+
+                            <div className="space-y-4">
+                                <h2 className="text-white text-3xl font-black uppercase tracking-tight leading-none">
+                                    Código <br />
+                                    <span className="text-brand-gold">Enviado.</span>
                                 </h2>
-                                <p className="text-white/30 text-xs font-light leading-relaxed max-w-[260px] mx-auto">
-                                    Verifique a sua caixa de entrada em <span className="text-white/60">{email}</span> e siga as instruções.
+                                <p className="text-white/40 text-[9px] font-medium uppercase tracking-[0.3em] leading-relaxed max-w-[260px] mx-auto">
+                                    Verifique o seu e-mail institucional <br/>
+                                    <span className="text-white/70 font-bold tracking-normal lowecase mt-1 block">{email}</span>
                                 </p>
                             </div>
+
                             <Link
                                 href={`/reset-password?email=${encodeURIComponent(email)}`}
-                                className="w-full h-14 bg-white/[0.03] border border-white/10 text-white text-[10px] font-black uppercase tracking-[0.8em] rounded-2xl hover:bg-white hover:text-black transition-all flex items-center justify-center gap-3 group"
+                                className="w-full h-14 bg-white text-black text-[10px] font-bold uppercase tracking-[0.4em] rounded-full hover:bg-brand-gold transition-all duration-500 flex items-center justify-center gap-3 mt-8 relative z-10"
                             >
                                 Inserir Código
                                 <ChevronRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
                             </Link>
+                            
+                            <button 
+                                onClick={() => setSent(false)}
+                                className="text-[9px] text-white/20 hover:text-white uppercase tracking-[0.3em] font-medium transition-colors"
+                            >
+                                Não recebeu? Tentar novamente
+                            </button>
                         </motion.div>
                     )}
                 </AnimatePresence>
 
-                <p className="text-white/10 text-[8px] font-bold uppercase tracking-[0.4em] text-center mt-10">
-                    © 2024 MOVNLY
-                </p>
+                <div className="mt-16 text-center">
+                    <p className="text-white/10 text-[8px] font-medium uppercase tracking-[0.5em]">
+                        © 2024 MOVNLY · Global Security Protocols
+                    </p>
+                </div>
             </motion.div>
         </div>
     );

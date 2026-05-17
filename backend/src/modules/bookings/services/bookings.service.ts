@@ -71,7 +71,20 @@ export class BookingsService {
             where,
             include: {
                 passenger: { select: { name: true, email: true } },
-                driver: { select: { id: true, name: true, email: true } },
+                driver: { 
+                    select: { 
+                        id: true, 
+                        name: true, 
+                        email: true, 
+                        phone: true,
+                        driverProfile: {
+                            include: {
+                                vehicle: true
+                            }
+                        }
+                    } 
+                },
+                rating: true,
             },
             orderBy: { createdAt: 'desc' }
         });
@@ -95,7 +108,20 @@ export class BookingsService {
             where: { passengerId: userId },
             include: {
                 passenger: { select: { name: true, email: true } },
-                driver: { select: { id: true, name: true, email: true } },
+                driver: { 
+                    select: { 
+                        id: true, 
+                        name: true, 
+                        email: true, 
+                        phone: true,
+                        driverProfile: {
+                            include: {
+                                vehicle: true
+                            }
+                        }
+                    } 
+                },
+                rating: true,
             },
             orderBy: { createdAt: 'desc' }
         });
@@ -106,7 +132,20 @@ export class BookingsService {
             where: { id },
             include: {
                 passenger: { select: { name: true, email: true } },
-                driver: { select: { id: true, name: true, email: true } },
+                driver: { 
+                    select: { 
+                        id: true, 
+                        name: true, 
+                        email: true, 
+                        phone: true,
+                        driverProfile: {
+                            include: {
+                                vehicle: true
+                            }
+                        }
+                    } 
+                },
+                rating: true,
             },
         });
         if (!booking) throw new NotFoundException('Booking not found');

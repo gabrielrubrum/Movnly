@@ -1,7 +1,7 @@
 export const VEHICLE_CATEGORIES = [
   {
     id: "smart",
-    name: "MOVNLY Start",
+    name: "Economy",
     tagline: "Prático e Inteligente",
     badge: "Melhor preço",
     badgeColor: "emerald",
@@ -17,8 +17,8 @@ export const VEHICLE_CATEGORIES = [
   },
   {
     id: "comfort",
-    name: "MOVNLY Business",
-    tagline: "Elegância e Performance",
+    name: "Conforto",
+    tagline: "Elegaância e Performance",
     badge: "O Mais Reservado",
     badgeColor: "blue",
     description: "A escolha predileta para o mundo corporativo. Veículos com acabamentos em pele e conforto acústico superior.",
@@ -33,7 +33,7 @@ export const VEHICLE_CATEGORIES = [
   },
   {
     id: "group",
-    name: "MOVNLY Van XL",
+    name: "Monovolume",
     tagline: "Privacidade para Grupos",
     badge: "Ideal para Famílias",
     badgeColor: "amber",
@@ -49,7 +49,7 @@ export const VEHICLE_CATEGORIES = [
   },
   {
     id: "executive",
-    name: "MOVNLY VIP",
+    name: "Executivo",
     tagline: "A Joia da Coroa",
     badge: "Serviço Prestigiado",
     badgeColor: "gold",
@@ -65,18 +65,22 @@ export const VEHICLE_CATEGORIES = [
   },
 ];
 
-export const CASCAIS_PRICES: Record<string, number> = {
-  smart: 31,
-  comfort: 38,
-  group: 43,
-  executive: 48,
+// ── Preços ao Cliente (Lisboa) ────────────────────────────────────────
+// Margem plataforma: ~55–60%   |   Driver: flat rate fixo
+export const LISBON_PRICES: Record<string, number> = {
+  smart: 22.5,     // Econômico
+  comfort: 28,     // Conforto
+  group: 35,       // Monovolume
+  executive: 39.5, // Executivo
 };
 
-export const LISBON_PRICES: Record<string, number> = {
-  smart: 22.5,
-  comfort: 28,
-  group: 35,
-  executive: 39.5,
+// ── Preços ao Cliente (Cascais ~30 km) ───────────────────────────────
+// Margem plataforma: ~40–45%   |   Driver: flat rate fixo
+export const CASCAIS_PRICES: Record<string, number> = {
+  smart: 31,       // Econômico
+  comfort: 38,     // Conforto
+  group: 43,       // Monovolume
+  executive: 48,   // Executivo
 };
 
 export function getBasePrice(category: string, origin: string, destination: string): number {
@@ -162,78 +166,138 @@ export const TRUST_BADGES = [
   { label: "Cancelamento gratuito", icon: "refresh-cw" },
 ];
 
+// ════════════════════════════════════════════════════════════════
+//  TOURS — Destinos mais famosos e desejados de Portugal
+//  Modelo financeiro dos Tours: 70% driver · 30% plataforma
+//
+//  Exemplo (Sintra €420):
+//    → Driver:     €294  (70%)
+//    → Plataforma: €126  (30%)
+// ════════════════════════════════════════════════════════════════
 export const TOURS = [
   {
     id: "sintra-palaces",
     title: "Sintra Palaciana",
     shortTitle: "Sintra",
-    sub: "Palácio da Pena · Regaleira · Monserrate",
+    sub: "Palácio da Pena · Quinta da Regaleira · Monserrate",
     duration: "8h",
     maxPax: 7,
-    price: 380,
+    price: 420,           // Driver: €294 · Plataforma: €126
+    driverEarns: 294,
+    platformEarns: 126,
     tag: "O Favorito",
-    desc: "Uma viagem no tempo pela arquitetura romântica de Sintra. Explore o Palácio da Pena e a Quinta da Regaleira com o acompanhamento de um motorista especialista na vila.",
+    featured: true,
+    desc: "O destino mais visitado de Portugal. Explore a arquitectura romántica e os jardins secretos de Sintra com um chauffeur especialista, sem filas nem stress.",
     img: "https://images.pexels.com/photos/1010657/pexels-photo-1010657.jpeg?auto=compress&cs=tinysrgb&w=800",
+    highlights: ["Palácio da Pena", "Quinta da Regaleira", "Palácio de Monserrate", "Centro Histórico UNESCO"],
+  },
+  {
+    id: "cascais-estoril",
+    title: "Cascais & Riviera",
+    shortTitle: "Cascais",
+    sub: "Boca do Inferno · Casino Estoril · Praia do Guincho",
+    duration: "5h",
+    maxPax: 7,
+    price: 280,           // Driver: €196 · Plataforma: €84
+    driverEarns: 196,
+    platformEarns: 84,
+    tag: "Costa Dourada",
+    featured: true,
+    desc: "A vila mais sofisticada da Riviera Portuguesa. Da Boca do Inferno ao Casino mais antigo da Europa, passando pelas praias selvagens do Guincho.",
+    img: "https://images.pexels.com/photos/1285625/pexels-photo-1285625.jpeg?auto=compress&cs=tinysrgb&w=800",
+    highlights: ["Boca do Inferno", "Casino Estoril", "Praia do Guincho", "Marina de Cascais"],
+  },
+  {
+    id: "obidos-nazare",
+    title: "Óbidos & Nazaré",
+    shortTitle: "Óbidos/Nazaré",
+    sub: "Castelo Medieval · Ondas Gigantes · Aldeia Branca",
+    duration: "9h",
+    maxPax: 7,
+    price: 460,           // Driver: €322 · Plataforma: €138
+    driverEarns: 322,
+    platformEarns: 138,
+    tag: "Ícone de Portugal",
+    desc: "Caminhe nas muralhas medievais de Óbidos e testemunhe as maiores ondas surfadas do mundo na Nazaré — dois dos cartões postais mais icónicos de Portugal.",
+    img: "https://images.pexels.com/photos/1612351/pexels-photo-1612351.jpeg?auto=compress&cs=tinysrgb&w=800",
+    highlights: ["Castelo de Óbidos", "Farol da Nazaré", "Praia Norte", "Ginjinha de Óbidos"],
+  },
+  {
+    id: "setubal-arrabida",
+    title: "Serra da Arrábida",
+    shortTitle: "Arrábida",
+    sub: "Praias Cristalinas · Moscatel · Reserva Natural",
+    duration: "6h",
+    maxPax: 7,
+    price: 330,           // Driver: €231 · Plataforma: €99
+    driverEarns: 231,
+    platformEarns: 99,
+    tag: "Mar Azul Turquesa",
+    desc: "As praias mais bonitas da costa portuguesa, com águas que rivalizam com o Mediterrâneo. Inclui prova de Moscatel nas caves históricas de Setúbal.",
+    img: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=800&q=80",
+    highlights: ["Praia de Galapinhos", "Serra da Arrábida", "Caves José Maria da Fonseca", "Portinho da Arrábida"],
   },
   {
     id: "alentejo-wine",
     title: "Alentejo & Herdades",
     shortTitle: "Alentejo",
-    sub: "Évora · Provas de Vinho · Azeites",
+    sub: "Évora UNESCO · Provas Privadas · Planície Dourada",
     duration: "10h",
     maxPax: 7,
-    price: 490,
+    price: 520,           // Driver: €364 · Plataforma: €156
+    driverEarns: 364,
+    platformEarns: 156,
     tag: "Experiência Curada",
-    desc: "Descubra a alma do Alentejo. Visita guiada a Évora (Património UNESCO), seguida de uma degustação privada em herdades de renome internacional.",
+    desc: "Descubra a alma do Alentejo. Visita guiada a Évora (Património UNESCO), seguida de uma degustação privada em herdades de renome internacional e almoço típico.",
     img: "https://images.pexels.com/photos/592753/pexels-photo-592753.jpeg?auto=compress&cs=tinysrgb&w=800",
-  },
-  {
-    id: "douro-valley",
-    title: "Vinhos do Douro",
-    shortTitle: "Douro",
-    sub: "Peso da Régua · Pinhão · Cruzeiro Privado",
-    duration: "Dia Inteiro",
-    maxPax: 6,
-    price: 560,
-    tag: "Luxo Rural",
-    desc: "A região vinícola demarcada mais antiga do mundo. Cruzeiro privativo pelo rio Douro e visitas exclusivas às quintas onde nasce o Vinho do Porto.",
-    img: "https://images.unsplash.com/photo-1559827291-72ee739d0d9a?w=800&q=80",
-  },
-  {
-    id: "obidos-nazare",
-    title: "Vilas Medievais e Mar",
-    shortTitle: "Óbidos/Nazaré",
-    sub: "Castelo de Óbidos · Farol da Nazaré",
-    duration: "9h",
-    maxPax: 7,
-    price: 420,
-    tag: "Tradição",
-    desc: "Caminhe pelas muralhas de Óbidos e sinta a força do Atlântico na Nazaré, palco das maiores ondas do mundo. Uma ligação perfeita entre história e natureza.",
-    img: "https://images.pexels.com/photos/1612351/pexels-photo-1612351.jpeg?auto=compress&cs=tinysrgb&w=800",
+    highlights: ["Évora UNESCO", "Cromeleque dos Almendres", "Herdade Vinícola Privada", "Gastronomia Alentejana"],
   },
   {
     id: "algarve-private",
-    title: "Costa Algarvia Privada",
+    title: "Algarve Privado",
     shortTitle: "Algarve",
-    sub: "Lagos · Sagres · Grutas Marítimas",
+    sub: "Lagos · Sagres · Ponta mais Ocidental da Europa",
     duration: "Full Day",
     maxPax: 6,
-    price: 650,
+    price: 680,           // Driver: €476 · Plataforma: €204
+    driverEarns: 476,
+    platformEarns: 204,
     tag: "Exclusivo",
-    desc: "Explore o sul de Portugal com total privacidade. Das arribas de Sagres às águas turquesa de Lagos, uma jornada inesquecível pelo litoral algarvio.",
-    img: "https://images.pexels.com/photos/1285625/pexels-photo-1285625.jpeg?auto=compress&cs=tinysrgb&w=800",
+    desc: "Do Cabo de São Vicente — o fim do mundo dos navegadores — às grutas marinhas de Lagos. A rota mais épica do litoral algarvio em total privacidade.",
+    img: "https://images.pexels.com/photos/1482193/pexels-photo-1482193.jpeg?auto=compress&cs=tinysrgb&w=800",
+    highlights: ["Cabo de São Vicente", "Praia da Marinha", "Grutas de Benagil", "Lagos Centro Histórico"],
   },
   {
-    id: "setubal-arrabida",
-    title: "Arrábida & Setúbal",
-    shortTitle: "Arrábida",
-    sub: "Serra da Arrábida · Moscatel · Praias",
-    duration: "6h",
+    id: "lisbon-highlights",
+    title: "Lisboa Essencial",
+    shortTitle: "Lisboa",
+    sub: "Belém · Alfama · Castelo de São Jorge · Tram 28",
+    duration: "4h",
     maxPax: 7,
-    price: 310,
-    tag: "Refúgio Local",
-    desc: "A beleza crua da Serra da Arrábida e as suas praias de águas cristalinas. Inclui paragem para prova do icónico Moscatel de Setúbal nas caves José Maria da Fonseca.",
-    img: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=800&q=80",
+    price: 220,           // Driver: €154 · Plataforma: €66
+    driverEarns: 154,
+    platformEarns: 66,
+    tag: "Clássico",
+    desc: "Os pontos mais emblemáticos de Lisboa num só dia. Do Mosteiro dos Jerónimos à vista panorâmica do Castelo, com paragem obrigatória para pastel de nata em Belém.",
+    img: "https://images.unsplash.com/photo-1555881400-74d7acaacd8b?w=800&q=80",
+    highlights: ["Mosteiro dos Jerónimos", "Torre de Belém", "Castelo de São Jorge", "Miradouro da Graça"],
+  },
+  {
+    id: "summer-tour",
+    title: "Comporta & Melides",
+    shortTitle: "Comporta",
+    sub: "Arrozais · Praias Virgens · Alentejo Costeiro",
+    duration: "7h",
+    maxPax: 6,
+    price: 390,           // Driver: €273 · Plataforma: €117
+    driverEarns: 273,
+    platformEarns: 117,
+    tag: "Edição Verão",
+    featured: true,
+    desc: "O segredo mais bem guardado de Portugal. Comporta e Melides são o destino preferido da realeza e das celebridades europeias — praias desertas e arrozais infinitos.",
+    img: "https://images.unsplash.com/photo-1510414842594-a61c69b5ae57?w=800&q=80",
+    highlights: ["Praia da Comporta", "Arrozais do Sado", "Melides Lagoon", "Gastronomia de Mariscos"],
   },
 ];
+
 

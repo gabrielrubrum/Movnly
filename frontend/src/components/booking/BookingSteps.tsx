@@ -182,55 +182,83 @@ export function BookingSteps() {
   if (!hasHydrated) return <div className="min-h-[400px] flex items-center justify-center"><Check className="w-8 h-8 animate-spin text-brand-gold" /></div>;
 
   return (
-    <div className="nx-container max-w-[1440px]">
-      {/* Progress bar */}
-      <div className="mb-10">
-        <div className="flex items-center justify-between">
-          {STEPS.map((s, i) => (
-            <div key={s.id} className="flex items-center flex-1">
-              <div className="flex flex-col items-center">
-                <button
-                  onClick={() => step > s.id && setStep(s.id)}
-                  className={cn(
-                    "w-8 h-8 sm:w-9 sm:h-9 rounded-full flex items-center justify-center text-sm font-bold transition-all duration-300",
-                    step > s.id ? "bg-emerald-500 text-white cursor-pointer" :
-                      step === s.id ? "bg-brand-gold text-black shadow-[0_0_16px_rgba(212,175,55,0.5)]" :
-                        "bg-white/[0.06] text-white/30 border border-white/[0.08]"
-                  )}
-                >
-                  {step > s.id ? <Check className="w-3.5 h-3.5" /> : s.id}
-                </button>
-                <span className={cn("hidden xs:block text-[10px] mt-2 font-black uppercase tracking-widest font-sans", step >= s.id ? "text-white" : "text-white/20")}>
-                  {s.label}
-                </span>
-              </div>
-              {i < STEPS.length - 1 && (
-                <div className={cn("flex-1 h-px mx-2 sm:mx-3 mb-0 xs:mb-5 transition-all duration-500", step > s.id ? "bg-emerald-500/50" : "bg-white/[0.08]")} />
-              )}
-            </div>
-          ))}
-        </div>
+    <div className="nx-container max-w-[1440px] animate-luxury-reveal relative">
+      {/* Background Atmosphere */}
+      <div className="absolute -top-40 left-0 w-full h-[1000px] pointer-events-none z-0">
+          <div className="absolute top-1/4 left-1/4 w-[600px] h-[600px] bg-brand-gold/5 blur-[160px] rounded-full animate-pulse" />
+          <div className="absolute top-1/2 right-1/4 w-[400px] h-[400px] bg-emerald-500/5 blur-[120px] rounded-full" />
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-[1fr_420px] gap-8 lg:gap-12">
-        {/* Step content */}
-        <div>
-          {step === 1 && <StepDetails form={form} update={update} onNext={() => setStep(2)} />}
-          {step === 2 && <StepVehicle form={form} update={update} onNext={() => setStep(3)} onBack={() => setStep(1)} />}
-          {step === 3 && <StepExtras form={form} update={update} onNext={nextStep} onBack={() => setStep(2)} />}
-          {step === 4 && <StepPayment form={form} update={update} onConfirm={handleConfirm} onBack={() => setStep(3)} loading={loading} total={total} clientSecret={clientSecret} initPaymentIntent={initPaymentIntent} bookingId={lastBookingId} />}
+      <div className="relative z-10">
+        {/* Cinematic Progress Bar */}
+        <div className="mb-24 relative px-4 md:px-12">
+          <div className="absolute top-1/2 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-y-1/2" />
+          
+          <div className="flex items-center justify-between relative z-10">
+            {STEPS.map((s, i) => {
+              const isCompleted = step > s.id;
+              const isActive = step === s.id;
+              
+              return (
+                <div key={s.id} className="flex flex-col items-center group">
+                  <button
+                    onClick={() => step > s.id && setStep(s.id)}
+                    className={cn(
+                      "w-12 h-12 rounded-full flex items-center justify-center transition-all duration-700 relative",
+                      isCompleted ? "bg-emerald-500 text-white shadow-[0_0_30px_rgba(16,185,129,0.3)]" :
+                        isActive ? "bg-brand-gold text-black shadow-[0_0_40px_rgba(212,175,55,0.6)] scale-110" :
+                          "bg-[#0A0A0F] text-white/20 border border-white/10 group-hover:border-white/30"
+                    )}
+                  >
+                    {isActive && (
+                      <div className="absolute -inset-2 bg-brand-gold/20 rounded-full blur-md animate-pulse" />
+                    )}
+                    {isCompleted ? (
+                      <Check className="w-5 h-5 relative z-10" />
+                    ) : (
+                      <span className="text-[11px] font-black font-sans relative z-10 tracking-tighter">0{s.id}</span>
+                    )}
+                  </button>
+                  
+                  <div className="absolute -bottom-10 flex flex-col items-center">
+                    <span className={cn(
+                      "text-[10px] font-black uppercase tracking-[0.3em] font-sans transition-all duration-700 whitespace-nowrap",
+                      isActive ? "text-white opacity-100 translate-y-0" : "text-white/20 opacity-0 translate-y-2 group-hover:opacity-60 group-hover:translate-y-0"
+                    )}>
+                      {s.label}
+                    </span>
+                    {isActive && (
+                      <div className="w-1 h-1 rounded-full bg-brand-gold mt-2 animate-bounce" />
+                    )}
+                  </div>
+                </div>
+              );
+            })}
+          </div>
         </div>
 
-        {/* Summary - shows below content on mobile, on the right on lg */}
-        <BookingSummaryPanel
-          form={form}
-          total={total}
-          extrasTotal={extrasTotal}
-          calculatedBasePrice={calculatedBasePrice}
-          step={step}
-          isTour={isTour}
-          tourData={tourData}
-        />
+        <div className="grid grid-cols-1 lg:grid-cols-[1fr_450px] gap-12 lg:gap-24 items-start">
+          {/* Step content */}
+          <div className="relative min-h-[600px]">
+            {step === 1 && <StepDetails form={form} update={update} onNext={() => setStep(2)} />}
+            {step === 2 && <StepVehicle form={form} update={update} onNext={() => setStep(3)} onBack={() => setStep(1)} />}
+            {step === 3 && <StepExtras form={form} update={update} onNext={nextStep} onBack={() => setStep(2)} />}
+            {step === 4 && <StepPayment form={form} update={update} onConfirm={handleConfirm} onBack={() => setStep(3)} loading={loading} total={total} clientSecret={clientSecret} initPaymentIntent={initPaymentIntent} bookingId={lastBookingId} />}
+          </div>
+
+          {/* Summary - shows below content on mobile, on the right on lg */}
+          <div className="sticky top-24">
+            <BookingSummaryPanel
+              form={form}
+              total={total}
+              extrasTotal={extrasTotal}
+              calculatedBasePrice={calculatedBasePrice}
+              step={step}
+              isTour={isTour}
+              tourData={tourData}
+            />
+          </div>
+        </div>
       </div>
     </div>
   );

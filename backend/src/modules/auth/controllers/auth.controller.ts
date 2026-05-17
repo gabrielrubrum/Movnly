@@ -1,4 +1,4 @@
-import { Controller, Post, Body, Ip, Req, BadRequestException, Get, UseGuards, Query, Res } from '@nestjs/common';
+import { Controller, Post, Body, Ip, Req, BadRequestException, Get, UseGuards, Query, Res, Patch } from '@nestjs/common';
 import { Throttle, SkipThrottle } from '@nestjs/throttler';
 import { AuthService } from '../services/auth.service';
 import { RegisterDto, LoginDto, ForgotPasswordDto, ResetPasswordDto } from '../dto/auth.dto';
@@ -64,6 +64,18 @@ export class AuthController {
     @Post('reset-password')
     async resetPassword(@Body() body: ResetPasswordDto, @Req() req: Request) {
         return this.authService.resetPassword(body, req);
+    }
+
+    @UseGuards(JwtAuthGuard)
+    @Post('change-password')
+    async changePassword(@Body() body: any, @Req() req: any) {
+        return this.authService.changePassword(req.user.userId, body.currentPassword, body.newPassword);
+    }
+
+    @UseGuards(JwtAuthGuard)
+    @Patch('preferences')
+    async updatePreferences(@Body() body: any, @Req() req: any) {
+        return this.authService.updatePreferences(req.user.userId, body);
     }
 
     @UseGuards(JwtAuthGuard, RolesGuard)

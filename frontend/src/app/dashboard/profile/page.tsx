@@ -1,21 +1,61 @@
 "use client";
 
-import { useState } from "react";
-import { User, Mail, Phone, Lock, ShieldCheck, ChevronRight, Activity, Globe, Car, Bell, Settings } from "lucide-react";
+import { useState, useEffect } from "react";
+import { LogOut, Settings, ShieldCheck, CreditCard, Clock, Star, Car, Bell, KeyRound, ChevronRight, VolumeX, Lock, User, Mail, Phone, Globe } from "lucide-react";
 import { useAuthStore } from "@/lib/auth-store";
+import { useBookings } from "@/hooks/useBookings";
 import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
+import { PasswordModal } from "@/components/profile/PasswordModal";
+import { TwoFactorModal } from "@/components/profile/TwoFactorModal";
+import { PreferencesModal } from "@/components/profile/PreferencesModal";
+import api from "@/lib/api";
 
 export default function ProfilePage() {
   const user = useAuthStore(s => s.user);
+  const { bookings, completed } = useBookings();
   const [editing, setEditing] = useState(false);
+  const is2faEnabled = !!user?.isTwoFactorEnabled;
+  const [preferences, setPreferences] = useState({
+      defaultCategory: "smart",
+      notificationsPref: "email",
+      silentRide: false,
+  });
+
+  const [showPasswordModal, setShowPasswordModal] = useState(false);
+  const [show2faModal, setShow2faModal] = useState(false);
+  const [showPreferencesModal, setShowPreferencesModal] = useState(false);
+
+  const totalTrips = bookings.length;
+  const avgRating = completed.filter((b) => b.rating).length > 0
+    ? completed.filter((b) => b.rating).reduce((s, b) => s + (b.rating || 0), 0) / completed.filter((b) => b.rating).length
+    : 0;
+
+  // Fetch user preferences on mount
+  useEffect(() => {
+      if (!user) return;
+      const fetchPreferences = async () => {
+          try {
+              const res = await api.get('/users/me');
+              if (res.data?.defaultCategory) {
+                  setPreferences({
+                      defaultCategory: res.data.defaultCategory,
+                      notificationsPref: res.data.notificationsPref,
+                      silentRide: res.data.silentRide,
+                  });
+              }
+          } catch (err) {
+              console.log("No preferences found, using defaults");
+          }
+      };
+      fetchPreferences();
+  }, [user]);
 
   if (!user) return null;
 
   return (
     <div className="max-w-6xl mx-auto space-y-12 animate-luxury-reveal pb-10">
       
-      {/* Cabeçalho */}
       <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 border-b border-white/5 pb-10 relative">
         <div className="absolute top-0 right-1/4 w-64 h-64 bg-brand-gold/5 rounded-full blur-[80px] pointer-events-none" />
         <div className="flex flex-col relative z-10">
@@ -44,9 +84,7 @@ export default function ProfilePage() {
 
       <div className="grid lg:grid-cols-[1fr_1.5fr] gap-12">
         
-        {/* Left Column: Profile Card & Security */}
         <div className="space-y-8">
-          {/* Profile Card */}
           <div className="p-10 rounded-[32px] bg-[#07070A] border border-white/5 text-center relative overflow-hidden group shadow-2xl">
             <div className="absolute inset-0 bg-gradient-to-b from-brand-gold/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-1000 pointer-events-none" />
             <div className="absolute top-0 left-1/2 -translate-x-1/2 w-48 h-48 bg-brand-gold/5 blur-[60px] rounded-full pointer-events-none" />
@@ -60,36 +98,53 @@ export default function ProfilePage() {
               
               <div className="mt-10 pt-8 border-t border-white/5 grid grid-cols-2 gap-4">
                 <div className="text-center space-y-1 p-4 rounded-2xl bg-white/[0.02] border border-white/5">
-                  <p className="text-3xl font-light text-white tracking-tight">12</p>
+                  <p className="text-3xl font-light text-white tracking-tight">{totalTrips}</p>
                   <p className="text-[8px] font-black text-white/40 uppercase tracking-[0.2em]">Viagens</p>
                 </div>
                 <div className="text-center space-y-1 p-4 rounded-2xl bg-white/[0.02] border border-white/5">
-                  <p className="text-3xl font-light text-brand-gold tracking-tight">4.9<span className="text-lg">★</span></p>
+                  <p className="text-3xl font-light text-brand-gold tracking-tight">{avgRating ? avgRating.toFixed(1) : "—"}<span className="text-lg">★</span></p>
                   <p className="text-[8px] font-black text-white/40 uppercase tracking-[0.2em]">Avaliação</p>
                 </div>
               </div>
             </div>
           </div>
 
-          {/* Security Box */}
-          <div className="p-8 rounded-[32px] bg-[#07070A] border border-white/5 space-y-6 shadow-xl relative overflow-hidden">
-            <div className="absolute bottom-0 right-0 w-32 h-32 bg-white/5 blur-[50px] rounded-full pointer-events-none" />
+          <div className="bg-[#0A0A0F]/50 border border-white/5 rounded-3xl p-8 relative overflow-hidden group">
+            <div className="absolute inset-0 bg-gradient-to-br from-brand-gold/5 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-all duration-700" />
             
-            <h4 className="text-[10px] font-black text-white/40 uppercase tracking-[0.4em] px-2 flex items-center gap-3 relative z-10">
-              <ShieldCheck className="w-4 h-4 text-brand-gold" /> Segurança da Conta
-            </h4>
+            <h2 className="flex items-center gap-3 text-xs font-black uppercase tracking-[0.3em] text-brand-gold mb-8 relative z-10">
+                <ShieldCheck className="w-5 h-5" /> Segurança da Conta
+            </h2>
+
             <div className="space-y-4 relative z-10">
-              <button className="w-full p-5 rounded-[20px] bg-[#0A0A0C] border border-white/5 flex items-center justify-between text-[10px] font-black uppercase tracking-[0.2em] text-white/50 hover:text-white hover:border-brand-gold/30 hover:bg-brand-gold/5 transition-all group shadow-inner">
-                Alterar Senha <ChevronRight className="w-4 h-4 text-white/20 group-hover:text-brand-gold" />
-              </button>
-              <button className="w-full p-5 rounded-[20px] bg-[#0A0A0C] border border-white/5 flex items-center justify-between text-[10px] font-black uppercase tracking-[0.2em] text-white/50 hover:text-white hover:border-brand-gold/30 hover:bg-brand-gold/5 transition-all group shadow-inner">
-                Autenticação 2FA <ChevronRight className="w-4 h-4 text-white/20 group-hover:text-brand-gold" />
-              </button>
+                <button onClick={() => setShowPasswordModal(true)} className="w-full flex items-center justify-between p-5 rounded-2xl bg-white/[0.02] border border-white/5 hover:bg-white/[0.04] hover:border-white/10 transition-all group/btn">
+                    <div className="flex items-center gap-4">
+                        <div className="w-10 h-10 rounded-xl bg-white/5 flex items-center justify-center text-white/50 group-hover/btn:text-brand-gold group-hover/btn:scale-110 transition-all">
+                            <KeyRound className="w-5 h-5" />
+                        </div>
+                        <span className="text-xs font-bold uppercase tracking-widest text-white/80 group-hover/btn:text-white transition-colors">Alterar Senha</span>
+                    </div>
+                    <ChevronRight className="w-4 h-4 text-white/20 group-hover/btn:text-brand-gold transition-colors group-hover/btn:translate-x-1" />
+                </button>
+
+                <button onClick={() => setShow2faModal(true)} className="w-full flex items-center justify-between p-5 rounded-2xl bg-white/[0.02] border border-white/5 hover:bg-white/[0.04] hover:border-white/10 transition-all group/btn">
+                    <div className="flex items-center gap-4">
+                        <div className="w-10 h-10 rounded-xl bg-white/5 flex items-center justify-center text-white/50 group-hover/btn:text-brand-gold group-hover/btn:scale-110 transition-all">
+                            <Lock className="w-5 h-5" />
+                        </div>
+                        <div className="text-left">
+                            <span className="text-xs font-bold uppercase tracking-widest text-white/80 group-hover/btn:text-white transition-colors block">Autenticação 2FA</span>
+                            <span className={`text-[9px] font-black uppercase tracking-widest mt-1 block ${is2faEnabled ? "text-brand-gold" : "text-white/30"}`}>
+                                {is2faEnabled ? "Ativado" : "Desativado"}
+                            </span>
+                        </div>
+                    </div>
+                    <ChevronRight className="w-4 h-4 text-white/20 group-hover/btn:text-brand-gold transition-colors group-hover/btn:translate-x-1" />
+                </button>
             </div>
           </div>
         </div>
 
-        {/* Right Column: Details & Preferences Form */}
         <div className="space-y-10">
           <div className="p-8 md:p-12 rounded-[40px] bg-[#07070A] border border-white/5 shadow-2xl relative overflow-hidden">
             <div className="absolute inset-0 bg-[url('/noise.png')] opacity-[0.02]" />
@@ -107,20 +162,55 @@ export default function ProfilePage() {
             </section>
 
             <section className="space-y-8 pt-12 mt-12 border-t border-white/5 relative z-10">
-              <h4 className="text-[10px] font-black text-brand-gold uppercase tracking-[0.4em] px-2 flex items-center gap-3 mb-8">
-                  <Car className="w-3 h-3" /> Preferências de Viagem
-              </h4>
-              <div className="grid md:grid-cols-2 gap-8">
-                <ProfileOption icon={Car} label="Categoria Padrão" value="Vip / Executive" />
-                <ProfileOption icon={Bell} label="Notificações" value="SMS & Push" />
-                <ProfileOption icon={Activity} label="Silêncio a Bordo" value="Ativado" />
-                <ProfileOption icon={Lock} label="PIN de Segurança" value="••••" />
-              </div>
-            </section>
+                <div className="bg-[#0A0A0F]/50 border border-white/5 rounded-3xl p-8 relative overflow-hidden group">
+                    <div className="absolute inset-0 bg-gradient-to-tr from-brand-gold/5 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-all duration-700" />
+                    
+                    <div className="flex items-center justify-between mb-8 relative z-10">
+                        <h2 className="flex items-center gap-3 text-xs font-black uppercase tracking-[0.3em] text-brand-gold">
+                            <Car className="w-5 h-5" /> Preferências de Viagem
+                        </h2>
+                        <button onClick={() => setShowPreferencesModal(true)} className="text-[10px] font-black uppercase tracking-widest text-white/50 hover:text-brand-gold transition-colors">
+                            Editar
+                        </button>
+                    </div>
 
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 relative z-10">
+                        <div className="p-5 rounded-2xl bg-white/[0.02] border border-white/5 flex items-center justify-between group/pref hover:bg-white/[0.04] transition-all">
+                            <div>
+                                <span className="text-[9px] font-black uppercase tracking-[0.2em] text-white/40 block mb-1">Categoria Padrão</span>
+                                <span className="text-sm font-medium text-white">{preferences.defaultCategory.toUpperCase()}</span>
+                            </div>
+                            <ChevronRight className="w-4 h-4 text-white/10 group-hover/pref:text-brand-gold transition-all group-hover/pref:translate-x-1" />
+                        </div>
+
+                        <div className="p-5 rounded-2xl bg-white/[0.02] border border-white/5 flex items-center justify-between group/pref hover:bg-white/[0.04] transition-all">
+                            <div>
+                                <span className="text-[9px] font-black uppercase tracking-[0.2em] text-white/40 block mb-1">Notificações</span>
+                                <span className="text-sm font-medium text-white">{preferences.notificationsPref.toUpperCase()}</span>
+                            </div>
+                            <ChevronRight className="w-4 h-4 text-white/10 group-hover/pref:text-brand-gold transition-all group-hover/pref:translate-x-1" />
+                        </div>
+
+                        <div className="p-5 rounded-2xl bg-white/[0.02] border border-white/5 flex items-center justify-between group/pref hover:bg-white/[0.04] transition-all">
+                            <div>
+                                <span className="text-[9px] font-black uppercase tracking-[0.2em] text-white/40 block mb-1">Silêncio a Bordo</span>
+                                <span className="text-sm font-medium text-white">{preferences.silentRide ? "Ativado" : "Desativado"}</span>
+                            </div>
+                            <ChevronRight className="w-4 h-4 text-white/10 group-hover/pref:text-brand-gold transition-all group-hover/pref:translate-x-1" />
+                        </div>
+
+                        <div className="p-5 rounded-2xl bg-white/[0.02] border border-white/5 flex items-center justify-between group/pref hover:bg-white/[0.04] transition-all">
+                            <div>
+                                <span className="text-[9px] font-black uppercase tracking-[0.2em] text-white/40 block mb-1">PIN de Segurança</span>
+                                <span className="text-sm font-medium text-white tracking-[0.2em]">Dinâmico</span>
+                            </div>
+                            <ShieldCheck className="w-4 h-4 text-brand-gold/50" />
+                        </div>
+                    </div>
+                </div>
+            </section>
           </div>
 
-          {/* Danger Zone */}
           <div className="p-8 md:p-10 rounded-[32px] bg-red-500/[0.02] border border-red-500/10 flex flex-col md:flex-row md:items-center justify-between gap-6 group overflow-hidden relative shadow-inner">
             <div className="absolute inset-0 bg-red-500/[0.05] translate-x-[-100%] group-hover:translate-x-0 transition-transform duration-1000" />
             <div className="relative z-10">
@@ -132,9 +222,11 @@ export default function ProfilePage() {
             </button>
           </div>
         </div>
-
       </div>
 
+      <PasswordModal isOpen={showPasswordModal} onClose={() => setShowPasswordModal(false)} />
+      <TwoFactorModal isOpen={show2faModal} onClose={() => setShow2faModal(false)} isTwoFactorEnabled={is2faEnabled} onSuccess={() => window.location.reload()} />
+      <PreferencesModal isOpen={showPreferencesModal} onClose={() => setShowPreferencesModal(false)} currentPreferences={preferences} onSuccess={() => window.location.reload()} />
     </div>
   );
 }
@@ -155,23 +247,6 @@ function ProfileInput({ icon: Icon, label, value, editing }: any) {
           <span className="text-sm font-light tracking-wide">{value}</span>
         )}
       </div>
-    </div>
-  );
-}
-
-function ProfileOption({ icon: Icon, label, value }: any) {
-  return (
-    <div className="p-6 rounded-[24px] bg-[#0A0A0C] border border-white/5 flex items-center justify-between group hover:border-brand-gold/30 hover:bg-white/[0.03] transition-all duration-300 shadow-inner">
-       <div className="flex items-center gap-5">
-          <div className="w-12 h-12 rounded-[16px] bg-white/5 border border-white/10 flex items-center justify-center text-white/30 group-hover:text-brand-gold group-hover:border-brand-gold/20 transition-colors">
-             <Icon className="w-5 h-5" />
-          </div>
-          <div>
-             <p className="text-[9px] font-black text-white/30 uppercase tracking-[0.2em] mb-1.5">{label}</p>
-             <p className="text-sm font-light text-white tracking-wide">{value}</p>
-          </div>
-       </div>
-       <ChevronRight className="w-4 h-4 text-white/10 group-hover:text-brand-gold transition-colors" />
     </div>
   );
 }

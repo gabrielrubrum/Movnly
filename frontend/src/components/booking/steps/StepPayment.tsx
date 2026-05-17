@@ -5,6 +5,7 @@ import { useI18n } from "@/i18n/context";
 import { cn } from "@/lib/utils";
 import { type BookingFormData } from "../BookingSteps";
 import { useAuthStore } from "@/lib/auth-store";
+import api from "@/lib/api";
 import {
   Lock, ArrowLeft, User, Key, Phone, Loader2, ShieldCheck, CreditCard, MessageSquare, Check, LogOut
 } from "lucide-react";
@@ -32,6 +33,7 @@ export function StepPayment({ form, update, onConfirm, onBack, loading, total, c
   const { user, setAuth, logout } = useAuthStore();
   const [authForm, setAuthForm] = useState({ name: "", email: "" });
   const [clientSecret, setClientSecret] = useState<string | null>(propClientSecret);
+  const [isRegistering, setIsRegistering] = useState(false);
 
   useEffect(() => {
     if (user && (!form.name || !form.email)) {
@@ -52,8 +54,41 @@ export function StepPayment({ form, update, onConfirm, onBack, loading, total, c
     setClientSecret(propClientSecret);
   }, [propClientSecret]);
 
-  const handleFakeAuth = () => {
-    // Redirect to login — fake tokens are rejected by the backend
+  const handleInstantRegister = async () => {
+    if (!authForm.name || !authForm.email) {
+      return;
+    }
+
+    setIsRegistering(true);
+    try {
+      // Create a secure temporary password
+      const tempPassword = `Movnly_${Math.random().toString(36).slice(-8)}!`;
+      
+      // 1. Register the user
+      await api.post("/auth/register", {
+        name: authForm.name,
+        email: authForm.email,
+        password: tempPassword,
+      });
+
+      // 2. Login immediately
+      const response = await api.post("/auth/login", {
+        email: authForm.email,
+        password: tempPassword,
+      });
+
+      const { user: userData, access_token } = response.data;
+      setAuth(userData, access_token);
+      update({ name: userData.name, email: userData.email });
+      
+    } catch (error) {
+      console.error("Registration error:", error);
+    } finally {
+      setIsRegistering(false);
+    }
+  };
+
+  const handleLoginRedirect = () => {
     const currentPath = typeof window !== 'undefined' ? window.location.pathname + window.location.search : '/reservar';
     window.location.href = `/login?redirect=${encodeURIComponent(currentPath)}`;
   };
@@ -71,10 +106,10 @@ export function StepPayment({ form, update, onConfirm, onBack, loading, total, c
             </div>
         </div>
         <div className="flex flex-col gap-4">
-            <h2 className="text-5xl md:text-7xl font-bold text-white uppercase tracking-tighter leading-none font-sans italic">
+            <h2 className="text-5xl md:text-7xl font-black text-white uppercase tracking-tighter leading-none font-sans">
                 {t("bookingFlow.payment.title")}
             </h2>
-            <p className="text-white/40 text-sm md:text-base font-light tracking-wide max-w-xl italic font-serif">
+            <p className="text-white/40 text-xs md:text-sm font-bold uppercase tracking-[0.3em] max-w-xl font-sans mt-2">
                 {t("bookingFlow.payment.sub")}
             </p>
         </div>
@@ -113,9 +148,29 @@ export function StepPayment({ form, update, onConfirm, onBack, loading, total, c
                 />
             </div>
           </div>
-          <button onClick={handleFakeAuth} className="mt-16 w-full max-w-2xl py-8 bg-brand-gold text-black rounded-full uppercase tracking-[0.5em] font-black hover:scale-[1.02] transition-transform shadow-luxury">
-            {t("bookingFlow.payment.verify")}
+          <button 
+            onClick={handleInstantRegister} 
+            disabled={isRegistering || !authForm.name || !authForm.email}
+            className="mt-16 w-full max-w-2xl py-8 bg-brand-gold text-black rounded-full uppercase tracking-[0.5em] font-black hover:scale-[1.02] active:scale-[0.98] transition-all shadow-luxury disabled:opacity-50 disabled:hover:scale-100 flex items-center justify-center gap-4"
+          >
+            {isRegistering ? (
+                <>
+                    <Loader2 className="w-5 h-5 animate-spin" />
+                    A PROCESSAR...
+                </>
+            ) : (
+                "VALIDAR IDENTIDADE & CONTINUAR"
+            )}
           </button>
+          <div className="mt-8 flex items-center justify-center gap-4">
+              <span className="text-[10px] uppercase font-black text-white/20 tracking-widest">Já é membro da rede?</span>
+              <button 
+                onClick={handleLoginRedirect}
+                className="text-[10px] uppercase font-black text-brand-gold hover:text-white transition-colors tracking-widest underline underline-offset-8"
+              >
+                Efectuar Login
+              </button>
+          </div>
         </motion.div>
       ) : (
         <div className="flex flex-col gap-8">
@@ -285,7 +340,7 @@ export function StepPayment({ form, update, onConfirm, onBack, loading, total, c
                         </motion.div>
                     ) : (
                         <div className="flex flex-col items-center justify-center text-center space-y-12 my-20">
-                            <p className="text-white/30 text-2xl font-serif italic">{t("bookingFlow.payment.waitingDetails")}</p>
+                            <p className="text-white/30 text-xl font-black uppercase tracking-[0.3em] font-sans">{t("bookingFlow.payment.waitingDetails")}</p>
                             <button 
                                 onClick={() => initPaymentIntent(user.email, user.name)} 
                                 className="px-16 py-8 bg-brand-gold text-black rounded-full text-[12px] font-black uppercase tracking-[0.5em] hover:scale-105 transition-all shadow-luxury-gold"

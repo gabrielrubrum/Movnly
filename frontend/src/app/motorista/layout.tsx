@@ -6,7 +6,7 @@ import { LanguageSwitcher } from "@/components/ui/LanguageSwitcher";
 import { cn } from "@/lib/utils";
 import {
   LayoutDashboard, Calendar, Clock, Star,
-  DollarSign, LogOut, Menu, X, MessageSquare
+  DollarSign, LogOut, Menu, X, MessageSquare, Settings
 } from "lucide-react";
 import { useState, useEffect } from "react";
 import { useAuthStore } from "@/lib/auth-store";
@@ -20,6 +20,7 @@ const navItems = [
   { href: "/motorista/historico", label: "Arquivo", icon: Clock },
   { href: "/motorista/ganhos", label: "Rendimentos", icon: DollarSign },
   { href: "/motorista/avaliacoes", label: "Avaliações", icon: Star },
+  { href: "/motorista/configuracoes", label: "Minha Conta", icon: Settings },
 ];
 
 export default function MotoristaLayout({ children }: { children: React.ReactNode }) {
@@ -77,8 +78,11 @@ export default function MotoristaLayout({ children }: { children: React.ReactNod
         )}
 
         {/* Navigation Core */}
-        <nav className="flex-1 p-6 space-y-1 overflow-y-auto custom-scrollbar">
-          <div className="text-[10px] font-black text-white/10 uppercase tracking-[0.4em] mb-6 px-4">Navegação</div>
+        <nav className="flex-1 p-6 space-y-2 overflow-y-auto custom-scrollbar">
+          <div className="text-[10px] font-black text-white/20 uppercase tracking-[0.4em] mb-8 px-4 flex items-center gap-4">
+            Navegação
+            <div className="flex-1 h-px bg-gradient-to-r from-white/10 to-transparent" />
+          </div>
           {navItems.map(({ href, label, icon: Icon }) => {
             const active = href === '/motorista'
               ? pathname === '/motorista'
@@ -88,22 +92,25 @@ export default function MotoristaLayout({ children }: { children: React.ReactNod
                 key={href}
                 href={href}
                 className={cn(
-                  "flex items-center gap-4 px-4 py-3.5 rounded-2xl text-[11px] font-black uppercase tracking-[0.15em] transition-all duration-200 relative group",
+                  "flex items-center gap-4 px-4 py-3.5 rounded-2xl text-[11px] font-black uppercase tracking-[0.15em] transition-all duration-300 relative group overflow-hidden",
                   active
-                    ? "bg-brand-gold text-black shadow-[0_8px_24px_-8px_rgba(212,175,55,0.5)]"
-                    : "text-white/60 hover:text-white hover:bg-white/[0.06]"
+                    ? "bg-brand-gold text-black shadow-[0_0_30px_-5px_rgba(212,175,55,0.4)]"
+                    : "bg-transparent border border-transparent text-white/40 hover:text-white hover:bg-white/[0.04] hover:translate-x-1"
                 )}
               >
+                {active && (
+                    <div className="absolute inset-0 bg-gradient-to-r from-white/20 to-transparent opacity-30 pointer-events-none" />
+                )}
                 <div className={cn(
-                  "w-8 h-8 rounded-xl flex items-center justify-center flex-shrink-0 transition-all duration-200",
+                  "w-9 h-9 rounded-[12px] flex items-center justify-center flex-shrink-0 transition-all duration-300 relative z-10",
                   active
-                    ? "bg-black/10 text-black"
-                    : "bg-white/5 text-white/40 group-hover:bg-brand-gold/10 group-hover:text-brand-gold"
+                    ? "bg-black/10 text-black shadow-inner"
+                    : "bg-white/5 text-white/30 group-hover:bg-brand-gold/10 group-hover:text-brand-gold group-hover:scale-110"
                 )}>
                   <Icon className="w-4 h-4" />
                 </div>
-                <span>{label}</span>
-                {active && <div className="absolute right-4 w-1.5 h-1.5 rounded-full bg-black/30" />}
+                <span className="relative z-10 flex-1 whitespace-nowrap">{label}</span>
+                {active && <div className="absolute right-4 w-1.5 h-1.5 rounded-full bg-black/40 relative z-10" />}
               </Link>
             );
           })}
@@ -111,22 +118,20 @@ export default function MotoristaLayout({ children }: { children: React.ReactNod
 
         {/* Footer Sidebar */}
         <div className="p-6 border-t border-white/5 space-y-3">
-          <LanguageSwitcher variant="navbar" />
+          <LanguageSwitcher variant="sidebar" />
 
-          {/* Chat button */}
-          <button
-            onClick={() => setShowChat(true)}
-            className="flex items-center gap-3 w-full px-4 py-3.5 rounded-2xl text-[10px] font-black uppercase tracking-[0.2em] text-white/50 hover:text-white bg-white/[0.02] border border-white/5 hover:bg-brand-gold/10 hover:border-brand-gold/20 hover:text-brand-gold transition-all"
+          {/* Suporte Operacional WhatsApp */}
+          <a
+            href="https://wa.me/351924851105"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-center gap-3 w-full px-4 py-3.5 rounded-2xl text-[10px] font-black uppercase tracking-[0.2em] text-[#25D366]/80 hover:text-[#25D366] bg-[#25D366]/5 border border-[#25D366]/10 hover:bg-[#25D366]/10 hover:border-[#25D366]/30 transition-all shadow-[0_0_15px_-5px_rgba(37,211,102,0.2)]"
           >
-            <div className="w-8 h-8 rounded-xl bg-white/5 flex items-center justify-center flex-shrink-0">
+            <div className="w-8 h-8 rounded-xl bg-[#25D366]/10 flex items-center justify-center flex-shrink-0">
               <MessageSquare className="w-4 h-4" />
             </div>
-            Chat com Passageiro
-          </button>
-
-          <button className="flex items-center justify-center gap-3 w-full py-3.5 bg-brand-gold/5 border border-brand-gold/10 rounded-2xl text-[10px] font-black uppercase tracking-[0.3em] text-brand-gold hover:bg-brand-gold hover:text-black transition-all duration-300">
-            Suporte e Ajuda
-          </button>
+            Central de Operações
+          </a>
           <button
             onClick={() => useAuthStore.getState().logout()}
             className="flex items-center gap-3 w-full px-5 py-3 rounded-2xl text-[10px] font-black uppercase tracking-[0.3em] text-white/20 hover:text-red-400 hover:bg-red-500/5 transition-all"

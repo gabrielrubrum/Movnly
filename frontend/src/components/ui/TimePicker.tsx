@@ -50,6 +50,7 @@ export function TimePicker({ value, onChange, variant = "default" }: { value: st
                         <button
                             key={t}
                             type="button"
+                            data-testid={`time-${t}`}
                             onClick={() => { onChange(t); setOpen(false); }}
                             className={cn(
                                 "w-full px-6 py-4 text-[11px] font-black uppercase tracking-widest text-left rounded-2xl transition-all font-sans",

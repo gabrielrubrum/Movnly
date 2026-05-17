@@ -183,10 +183,10 @@ export default function ToursPage() {
                                     style={{ background: "#D4AF37" }}>
                                     Reservar Agora <ChevronRight className="w-4 h-4" />
                                 </Link>
-                                <a href="tel:+351210000000"
+                                <a href="tel:+351924851105"
                                     className="inline-flex items-center justify-center gap-3 px-10 py-4 rounded-2xl font-bold uppercase text-[11px] tracking-[0.3em] text-white/50 hover:text-white transition-all"
                                     style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.08)" }}>
-                                    +351 21 000 0000
+                                    +351 924 851 105
                                 </a>
                             </div>
                         </div>

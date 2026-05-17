@@ -32,7 +32,7 @@ export function TestimonialsSection() {
               className="text-5xl md:text-7xl font-bold mt-8 text-white tracking-tight leading-[1.1]"
             >
               {t("testimonials.title1")} <br />
-              <span className="text-serif italic font-medium text-white/40">{t("testimonials.title2")}</span>
+              <span className="font-medium text-white/40">{t("testimonials.title2")}</span>
             </motion.h2>
           </div>
           <motion.p
@@ -63,7 +63,7 @@ export function TestimonialsSection() {
                 ))}
               </div>
 
-              <p className="text-xl md:text-2xl text-white font-medium leading-relaxed mb-14 flex-1 tracking-tight italic font-serif">
+              <p className="text-xl md:text-2xl text-white font-medium leading-relaxed mb-14 flex-1 tracking-tight">
                 "{item.text}"
               </p>
 
@@ -88,7 +88,7 @@ export function TestimonialsSection() {
         >
           {tArray("testimonials.socialProof").map((badge: string, i: number) => (
             <div key={badge} className="flex items-center gap-16 group/badge">
-              <span className="text-[10px] md:text-[11px] font-bold uppercase tracking-[0.5em] text-white/20 group-hover/badge:text-brand-gold transition-all duration-700 text-center whitespace-nowrap italic">
+              <span className="text-[10px] md:text-[11px] font-bold uppercase tracking-[0.5em] text-white/20 group-hover/badge:text-brand-gold transition-all duration-700 text-center whitespace-nowrap">
                 {badge}
               </span>
               {i < tArray("testimonials.socialProof").length - 1 && (

@@ -46,7 +46,7 @@ export function CheckoutForm({ onConfirm, loading: parentLoading, total, booking
             <PaymentElement options={{ layout: "tabs" }} />
 
             {errorMessage && (
-                <div className="p-6 rounded-3xl bg-red-500/10 border border-red-500/20 flex items-center gap-4 text-red-500 text-sm font-sans italic">
+                <div className="p-6 rounded-3xl bg-red-500/10 border border-red-500/20 flex items-center gap-4 text-red-500 text-[10px] font-black uppercase tracking-widest font-sans">
                     <AlertCircle className="w-5 h-5 flex-shrink-0" />
                     {errorMessage}
                 </div>

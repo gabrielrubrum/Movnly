@@ -67,12 +67,15 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
         {user && (
           <div className="p-6 border-b border-white/5 flex items-center gap-4">
             <div className="flex items-center gap-4 p-4 rounded-3xl bg-white/[0.02] border border-white/5 hover:bg-white/[0.04] transition-all group flex-1 min-w-0">
-              <div className="w-12 h-12 rounded-2xl bg-brand-gold flex items-center justify-center text-black font-black text-lg shadow-xl shrink-0 group-hover:rotate-3 transition-transform">
+              <div className="w-12 h-12 rounded-2xl bg-brand-gold/10 border border-brand-gold/20 flex items-center justify-center text-brand-gold font-black text-lg shadow-[0_0_20px_-5px_rgba(212,175,55,0.3)] shrink-0 group-hover:scale-105 transition-transform">
                 {user.name.substring(0, 1).toUpperCase()}
               </div>
               <div className="flex-1 min-w-0">
                 <p className="text-sm font-bold text-white truncate">{user.name}</p>
-                <p className="text-[10px] text-white/20 uppercase tracking-widest font-black truncate">{user.role}</p>
+                <div className="flex items-center gap-1.5 mt-0.5">
+                  <span className="w-1.5 h-1.5 rounded-full bg-brand-gold animate-pulse" />
+                  <span className="text-[9px] font-black text-brand-gold uppercase tracking-widest truncate">{user.role}</span>
+                </div>
               </div>
             </div>
             <NotificationBell />
@@ -94,17 +97,17 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
                 key={href}
                 href={href}
                 className={cn(
-                  "flex items-center gap-4 px-4 py-3.5 rounded-[20px] text-[11px] font-black uppercase tracking-[0.15em] transition-all duration-300 relative group overflow-hidden",
+                  "flex items-center gap-4 px-4 py-3.5 rounded-2xl text-[11px] font-black uppercase tracking-[0.15em] transition-all duration-300 relative group overflow-hidden",
                   active
-                    ? "bg-brand-gold text-black shadow-[0_0_30px_-5px_rgba(212,175,55,0.3)]"
-                    : "bg-transparent border border-transparent text-white/40 hover:text-white hover:bg-white/[0.02] hover:border-white/5 hover:translate-x-1"
+                    ? "bg-brand-gold text-black shadow-[0_0_30px_-5px_rgba(212,175,55,0.4)]"
+                    : "bg-transparent border border-transparent text-white/40 hover:text-white hover:bg-white/[0.04] hover:translate-x-1"
                 )}
               >
                 {active && (
-                    <div className="absolute inset-0 bg-gradient-to-r from-white/20 to-transparent opacity-50" />
+                    <div className="absolute inset-0 bg-gradient-to-r from-white/20 to-transparent opacity-30" />
                 )}
                 <div className={cn(
-                  "w-9 h-9 rounded-[14px] flex items-center justify-center flex-shrink-0 transition-all duration-300 relative z-10",
+                  "w-9 h-9 rounded-[12px] flex items-center justify-center flex-shrink-0 transition-all duration-300 relative z-10",
                   active
                     ? "bg-black/10 text-black shadow-inner"
                     : "bg-white/5 text-white/30 group-hover:bg-brand-gold/10 group-hover:text-brand-gold group-hover:scale-110"
@@ -112,7 +115,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
                   <Icon className="w-4 h-4" />
                 </div>
                 <span className="relative z-10 flex-1 whitespace-nowrap">{label}</span>
-                {active && <div className="absolute right-5 w-1.5 h-1.5 rounded-full bg-black/40 relative z-10 animate-pulse" />}
+                {active && <div className="absolute right-4 w-1.5 h-1.5 rounded-full bg-black/40 relative z-10" />}
                 {!active && <ChevronRight className="w-4 h-4 text-white/10 opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300" />}
               </Link>
             );
@@ -121,7 +124,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
 
         {/* Footer Sidebar */}
         <div className="p-6 border-t border-white/5 space-y-4">
-          <LanguageSwitcher variant="navbar" />
+          <LanguageSwitcher variant="sidebar" />
           <Link href="/book" className="flex items-center justify-center gap-3 w-full py-4 bg-white/5 border border-white/10 rounded-2xl text-[10px] font-black uppercase tracking-[0.3em] text-white hover:bg-brand-gold hover:text-black hover:border-brand-gold transition-all duration-300 group">
             <Plus className="w-4 h-4 group-hover:rotate-90 transition-transform duration-300" /> Nova Reserva
           </Link>
