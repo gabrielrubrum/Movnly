@@ -70,7 +70,7 @@ export const metadata: Metadata = {
       },
     ],
     locale: "pt_PT",
-    alternateLocales: ["en_GB", "es_ES", "fr_FR"],
+    alternateLocale: ["en_GB", "es_ES", "fr_FR"],
     type: "website",
   },
   twitter: {
