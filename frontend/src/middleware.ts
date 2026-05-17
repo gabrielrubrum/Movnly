@@ -55,6 +55,7 @@ export function middleware(req: NextRequest) {
     case "admin":
       return NextResponse.rewrite(new URL(`/admin${pathname}${search}`, req.url));
     case "driver":
+    case "drive":
       return NextResponse.rewrite(new URL(`/motorista${pathname}${search}`, req.url));
     case "partner":
       return NextResponse.rewrite(new URL(`/parceiros${pathname}${search}`, req.url));
