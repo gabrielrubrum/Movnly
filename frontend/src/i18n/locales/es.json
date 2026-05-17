@@ -820,6 +820,12 @@
       "tag": "Más Popular",
       "desc": "La ruta clásica por los palacios de Sintra. Salida de Lisboa al amanecer, paradas en los tres palacios históricos y regreso al anochecer."
     },
+    "cascais-estoril": {
+      "title": "Cascais y Riviera",
+      "sub": "Boca do Inferno, Estoril y Playa de Guincho",
+      "tag": "COSTA DORADA",
+      "desc": "La villa más sofisticada de la Riviera Portuguesa. De la Boca do Inferno al Casino más antiguo de Europa, pasando por las playas salvajes de Guincho."
+    },
     "alentejo-wine": {
       "title": "Alentejo & Bodegas",
       "sub": "Évora · Herdades · Inmersión en el Vino",
@@ -850,11 +856,17 @@
       "tag": "Fuga a la Naturaleza",
       "desc": "Relájese por las montañas de la Serra da Arrábida hasta bañarse en aguas cristalinas inolvidables, con el refinamiento de una cata premium de Moscatel de Setúbal."
     },
+    "lisbon-highlights": {
+      "title": "Lisboa Esencial",
+      "sub": "Belém, Alfama y Castillo de San Jorge",
+      "tag": "CLÁSICO",
+      "desc": "Los puntos más emblemáticos de Lisboa en un solo día. Del Monasterio de los Jerónimos al Castillo de San Jorge."
+    },
     "summer-tour": {
-      "title": "Tour de Verano: Costa de Estoril",
-      "sub": "Cascais · Boca do Inferno · Cabo da Roca",
-      "tag": "Premium de Verano",
-      "desc": "Un inolvidable viaje soleado por el fin del mundo europeo occidental y por las aristocráticas villas balnearias de la Riviera de Lisboa y el Casino de Estoril."
+      "title": "Comporta y Melides",
+      "sub": "Campos de Arroz, Playas Vírgenes y Alentejo Costero",
+      "tag": "VERANO",
+      "desc": "El secreto mejor guardado de Portugal. Comporta y Melides son el destino favorito de la realeza y celebridades europeas."
     }
   }
 }

@@ -212,6 +212,21 @@
       "sub": "Pena, Quinta da Regaleira e Cabo da Roca",
       "tag": "HISTÓRIA"
     },
+    "cascais-estoril": {
+      "title": "Cascais & Riviera",
+      "sub": "Boca do Inferno, Estoril e Praia do Guincho",
+      "tag": "COSTA DOURADA"
+    },
+    "obidos-nazare": {
+      "title": "Óbidos & Nazaré",
+      "sub": "Vila Medieval e as Ondas Gigantes",
+      "tag": "COSTA"
+    },
+    "setubal-arrabida": {
+      "title": "Serra da Arrábida",
+      "sub": "Praias Cristalinas, Moscatel e Natureza",
+      "tag": "TURQUESA"
+    },
     "alentejo-wine": {
       "title": "Évora & Vinhos",
       "sub": "Cultura e Gastronomia do Alentejo",
@@ -222,10 +237,20 @@
       "sub": "Cruzeiro e Degustação no Vale do Douro",
       "tag": "VINHOS"
     },
-    "obidos-nazare": {
-      "title": "Óbidos & Nazaré",
-      "sub": "Vila Medieval e as Ondas Gigantes",
-      "tag": "COSTA"
+    "algarve-private": {
+      "title": "Algarve Privado",
+      "sub": "Lagos, Sagres e Grutas de Benagil",
+      "tag": "EXCLUSIVO"
+    },
+    "lisbon-highlights": {
+      "title": "Lisboa Essencial",
+      "sub": "Belém, Alfama e Castelo de São Jorge",
+      "tag": "CLÁSSICO"
+    },
+    "summer-tour": {
+      "title": "Comporta & Melides",
+      "sub": "Arrozais, Praias Virgens e Alentejo Costeiro",
+      "tag": "VERÃO"
     }
   },
   "cta": {

@@ -212,6 +212,21 @@
       "sub": "Pena, Quinta da Regaleira and Cabo da Roca",
       "tag": "HISTORY"
     },
+    "cascais-estoril": {
+      "title": "Cascais & Riviera",
+      "sub": "Boca do Inferno, Estoril, and Guincho Beach",
+      "tag": "GOLDEN COAST"
+    },
+    "obidos-nazare": {
+      "title": "Óbidos & Nazaré",
+      "sub": "Medieval Village and Giant Waves",
+      "tag": "COAST"
+    },
+    "setubal-arrabida": {
+      "title": "Serra da Arrábida",
+      "sub": "Crystal Beaches, Moscatel Wine, and Nature",
+      "tag": "TURQUOISE"
+    },
     "alentejo-wine": {
       "title": "Évora & Wines",
       "sub": "Alentejo Culture and Gastronomy",
@@ -222,10 +237,20 @@
       "sub": "Cruise and Tasting in the Douro Valley",
       "tag": "WINES"
     },
-    "obidos-nazare": {
-      "title": "Óbidos & Nazaré",
-      "sub": "Medieval Village and Giant Waves",
-      "tag": "COAST"
+    "algarve-private": {
+      "title": "Private Algarve",
+      "sub": "Lagos, Sagres, and Benagil Caves",
+      "tag": "EXCLUSIVE"
+    },
+    "lisbon-highlights": {
+      "title": "Essential Lisbon",
+      "sub": "Belém, Alfama, and São Jorge Castle",
+      "tag": "CLASSIC"
+    },
+    "summer-tour": {
+      "title": "Comporta & Melides",
+      "sub": "Rice Fields, Pristine Beaches, and Coastal Alentejo",
+      "tag": "SUMMER"
     }
   },
   "cta": {

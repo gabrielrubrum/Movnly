@@ -88,11 +88,11 @@ export function TestimonialsSection() {
         >
           {tArray("testimonials.socialProof").map((badge: string, i: number) => (
             <div key={badge} className="flex items-center gap-16 group/badge">
-              <span className="text-[10px] md:text-[11px] font-bold uppercase tracking-[0.5em] text-white/20 group-hover/badge:text-brand-gold transition-all duration-700 text-center whitespace-nowrap">
+              <span className="text-[10px] md:text-[11px] font-bold uppercase tracking-[0.5em] text-white/50 group-hover/badge:text-brand-gold transition-all duration-700 text-center whitespace-nowrap">
                 {badge}
               </span>
               {i < tArray("testimonials.socialProof").length - 1 && (
-                <div className="hidden md:block w-px h-6 bg-white/5 rotate-12" />
+                <div className="hidden md:block w-px h-6 bg-white/15 rotate-12" />
               )}
             </div>
           ))}
