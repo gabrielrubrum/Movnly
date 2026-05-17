@@ -1,6 +1,7 @@
 "use client";
 
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, useCallback } from "react";
+import { createPortal } from "react-dom";
 import { useRouter } from "next/navigation";
 import { cn } from "@/lib/utils";
 import {
@@ -32,17 +33,50 @@ export function BookingEngine() {
   const [flight, setFlight] = useState("");
   const [showPax, setShowPax] = useState(false);
   const [errors, setErrors] = useState<Record<string, boolean>>({});
-  const paxRef = useRef<HTMLDivElement>(null);
+  const paxTriggerRef = useRef<HTMLButtonElement>(null);
+  const [paxPopoverStyle, setPaxPopoverStyle] = useState({ top: 0, left: 0, width: 0 });
   const originRef = useRef<HTMLDivElement>(null);
   const destRef = useRef<HTMLDivElement>(null);
 
+  const openPaxPortal = useCallback(() => {
+    if (!paxTriggerRef.current) return;
+    const rect = paxTriggerRef.current.getBoundingClientRect();
+    const popoverHeight = 220;
+    const popoverWidth = Math.min(288, window.innerWidth - 32);
+    let top = rect.bottom + 8;
+    if (rect.bottom + popoverHeight > window.innerHeight) {
+      top = rect.top - popoverHeight - 8;
+    }
+    let left = rect.left;
+    if (left + popoverWidth > window.innerWidth) {
+      left = window.innerWidth - popoverWidth - 8;
+    }
+    if (left < 0) left = 0;
+    setPaxPopoverStyle({ top, left, width: popoverWidth });
+    setShowPax(true);
+  }, []);
+
+  // Close pax panel on scroll
   useEffect(() => {
+    if (!showPax) return;
+    const handleScroll = () => setShowPax(false);
+    window.addEventListener("scroll", handleScroll, { capture: true });
+    return () => window.removeEventListener("scroll", handleScroll, { capture: true });
+  }, [showPax]);
+
+  // Click-outside for pax panel
+  useEffect(() => {
+    if (!showPax) return;
     const handler = (e: MouseEvent) => {
-      if (paxRef.current && !paxRef.current.contains(e.target as Node)) setShowPax(false);
+      const target = e.target as Node;
+      if (paxTriggerRef.current && paxTriggerRef.current.contains(target)) return;
+      const portalEl = document.querySelector("[data-movnly-pax]");
+      if (portalEl && portalEl.contains(target)) return;
+      setShowPax(false);
     };
     document.addEventListener("mousedown", handler);
     return () => document.removeEventListener("mousedown", handler);
-  }, []);
+  }, [showPax]);
 
   const today = new Date().toISOString().split("T")[0];
 
@@ -287,13 +321,26 @@ export function BookingEngine() {
       <div className="mt-4 flex flex-col lg:flex-row items-center justify-between gap-4 w-full relative z-30">
         
         <div className="flex flex-col sm:flex-row items-center gap-4 w-full lg:w-auto">
-          <div ref={paxRef} className="relative w-full sm:w-auto">
-            <button onClick={() => setShowPax(!showPax)} className="w-full sm:w-auto flex items-center justify-center sm:justify-start gap-4 text-[10px] font-black uppercase tracking-[0.2rem] text-white hover:bg-white/5 transition-all bg-white/[0.02] px-8 py-4 rounded-full border border-white/[0.06] font-sans shadow-lg backdrop-blur-md">
+          <div className="relative w-full sm:w-auto">
+            <button
+              ref={paxTriggerRef}
+              onClick={() => showPax ? setShowPax(false) : openPaxPortal()}
+              className="w-full sm:w-auto flex items-center justify-center sm:justify-start gap-4 text-[10px] font-black uppercase tracking-[0.2rem] text-white hover:bg-white/5 transition-all bg-white/[0.02] px-8 py-4 rounded-full border border-white/[0.06] font-sans shadow-lg backdrop-blur-md">
               <Users className="w-4 h-4 text-white/40" />
               {passengers} {t("booking.passengersUpper")} <span className="text-white/10">•</span> <Briefcase className="w-4 h-4 text-white/40" /> {luggage} {t("booking.luggageUpper")}
             </button>
-            {showPax && (
-              <div className="absolute top-[calc(100%+16px)] left-0 right-0 sm:left-0 w-[calc(100vw-32px)] sm:w-72 bg-[#0A0A0F] border border-white/[0.08] p-8 z-50 shadow-2xl animate-in fade-in zoom-in-95 rounded-[24px]">
+            {typeof document !== "undefined" && showPax && createPortal(
+              <div
+                data-movnly-pax
+                style={{
+                  position: "fixed",
+                  top: paxPopoverStyle.top,
+                  left: paxPopoverStyle.left,
+                  width: paxPopoverStyle.width,
+                  zIndex: 9999,
+                }}
+                className="bg-[#0A0A0F] border border-white/[0.08] p-8 shadow-2xl animate-in fade-in zoom-in-95 rounded-[24px]"
+              >
                 {[
                   { label: t("booking.passengers"), val: passengers, set: setPassengers, min: 1, max: 8 },
                   { label: t("booking.luggage"), val: luggage, set: setLuggage, min: 0, max: 10 },
@@ -307,7 +354,8 @@ export function BookingEngine() {
                     </div>
                   </div>
                 ))}
-              </div>
+              </div>,
+              document.body
             )}
           </div>
 

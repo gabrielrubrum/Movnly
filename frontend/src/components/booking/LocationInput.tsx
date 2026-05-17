@@ -120,6 +120,8 @@ export function LocationInput({ value, onChange, placeholder, variant = "standal
                         if (val) onChange(val.label);
                     },
                     placeholder: placeholder,
+                    menuPortalTarget: typeof document !== "undefined" ? document.body : undefined,
+                    menuPosition: "fixed" as const,
                     styles: {
                         control: (provided: any) => ({
                             ...provided,
@@ -154,7 +156,7 @@ export function LocationInput({ value, onChange, placeholder, variant = "standal
                             border: "1px solid rgba(255, 255, 255, 0.1)",
                             borderRadius: "16px",
                             padding: "8px",
-                            zIndex: 1000,
+                            zIndex: 9999,
                             boxShadow: "0 40px 80px rgba(0,0,0,0.8)",
                         }),
                         option: (provided: any, state: any) => ({

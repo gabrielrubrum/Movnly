@@ -6,8 +6,10 @@ import { type BookingFormData } from "../BookingSteps";
 import { cn } from "@/lib/utils";
 import { DatePicker } from "@/components/ui/DatePicker";
 import { TimePicker } from "@/components/ui/TimePicker";
-import { useState, useRef, useEffect, ReactNode } from "react";
+import { useState, ReactNode } from "react";
+import { createPortal } from "react-dom";
 import { LocationInput } from "../LocationInput";
+import { usePortalDropdown } from "@/hooks/usePortalDropdown";
 
 interface Props {
   form: BookingFormData;
@@ -34,52 +36,64 @@ function FieldWrapper({ label, icon: Icon, children, className }: { label: strin
   );
 }
 
-function LuxurySelect({ label, value, options, icon: Icon, onChange }: { label: string; value: number; options: number[]; icon: any; onChange: (v: number) => void }) {
-  const [open, setOpen] = useState(false);
-  const containerRef = useRef<HTMLDivElement>(null);
+const LUXURY_SELECT_HEIGHT = 320; // max-h-60 = 240px + padding
+const LUXURY_SELECT_WIDTH = 200;
 
-  useEffect(() => {
-    const handler = (e: MouseEvent) => {
-      if (containerRef.current && !containerRef.current.contains(e.target as Node)) {
-        setOpen(false);
-      }
-    };
-    document.addEventListener("mousedown", handler);
-    return () => document.removeEventListener("mousedown", handler);
-  }, []);
+function LuxurySelect({ label, value, options, icon: Icon, onChange }: { label: string; value: number; options: number[]; icon: any; onChange: (v: number) => void }) {
+  const { triggerRef, open, setOpen, popoverStyle, togglePortal } = usePortalDropdown({
+    popoverHeight: LUXURY_SELECT_HEIGHT,
+    popoverWidth: LUXURY_SELECT_WIDTH,
+    gap: 8,
+    portalDataAttribute: "data-movnly-luxuryselect",
+  });
+
+  const dropdown = open ? (
+    <div
+      data-movnly-luxuryselect
+      style={{
+        position: "fixed",
+        top: popoverStyle.top,
+        left: popoverStyle.left,
+        zIndex: 9999,
+        width: Math.max(popoverStyle.width, LUXURY_SELECT_WIDTH),
+      }}
+      className="bg-[#050508] border border-white/10 rounded-2xl shadow-[0_40px_100px_rgba(0,0,0,0.9)] p-2 animate-luxury-reveal max-h-60 overflow-y-auto scrollbar-hide backdrop-blur-3xl"
+    >
+      {options.map((opt) => (
+        <button
+          key={opt}
+          type="button"
+          onClick={() => {
+            onChange(opt);
+            setOpen(false);
+          }}
+          className={cn(
+            "w-full text-left px-5 py-4 text-xs font-semibold rounded-xl transition-all font-sans uppercase tracking-[0.15em] mb-1 last:mb-0",
+            value === opt ? "bg-brand-gold text-black shadow-lg" : "text-white/40 hover:text-white hover:bg-white/[0.05]"
+          )}
+        >
+          {opt}
+        </button>
+      ))}
+    </div>
+  ) : null;
 
   return (
     <FieldWrapper label={label} icon={Icon} className="relative">
-      <div ref={containerRef} className="relative w-full">
+      <div className="relative w-full">
         <button
+          ref={triggerRef}
           type="button"
-          onClick={() => setOpen(!open)}
+          onClick={togglePortal}
           className="w-full flex items-center justify-between nx-input hover:border-white/20 h-[64px] px-6 transition-all text-sm font-bold"
         >
           <span>{value}</span>
           <ChevronDown className={cn("w-4 h-4 text-white/30 transition-transform duration-500", open && "rotate-180")} />
         </button>
 
-        {open && (
-          <div className="absolute top-[calc(100%+16px)] left-0 w-full bg-[#050508] border border-white/10 rounded-2xl shadow-[0_40px_100px_rgba(0,0,0,0.9)] p-2 z-[110] animate-luxury-reveal max-h-60 overflow-y-auto scrollbar-hide backdrop-blur-3xl">
-            {options.map((opt) => (
-              <button
-                key={opt}
-                type="button"
-                onClick={() => { 
-                  onChange(opt); 
-                  setOpen(false); 
-                }}
-                className={cn(
-                  "w-full text-left px-5 py-4 text-xs font-semibold rounded-xl transition-all font-sans uppercase tracking-[0.15em] mb-1 last:mb-0",
-                  value === opt ? "bg-brand-gold text-black shadow-lg" : "text-white/40 hover:text-white hover:bg-white/[0.05]"
-                )}
-              >
-                {opt}
-              </button>
-            ))}
-          </div>
-        )}
+        {typeof document !== "undefined" && dropdown
+          ? createPortal(dropdown, document.body)
+          : null}
       </div>
     </FieldWrapper>
   );

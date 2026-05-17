@@ -1,22 +1,24 @@
 "use client";
 
-import { useState, useRef, useEffect } from "react";
+import { createPortal } from "react-dom";
 import { cn } from "@/lib/utils";
 import { Clock } from "lucide-react";
 import { useI18n } from "@/i18n/context";
+import { usePortalDropdown } from "@/hooks/usePortalDropdown";
+
+// Approximate time menu height for collision detection
+const MENU_HEIGHT = 288; // max-h-72 = 288px
+const MENU_WIDTH = 256;  // w-64 = 256px
 
 export function TimePicker({ value, onChange, variant = "default" }: { value: string; onChange: (v: string) => void; variant?: "default" | "ghost" }) {
     const { t } = useI18n();
-    const [open, setOpen] = useState(false);
-    const ref = useRef<HTMLDivElement>(null);
 
-    useEffect(() => {
-        const handler = (e: MouseEvent) => {
-            if (ref.current && !ref.current.contains(e.target as Node)) setOpen(false);
-        };
-        document.addEventListener("mousedown", handler);
-        return () => document.removeEventListener("mousedown", handler);
-    }, []);
+    const { triggerRef, open, setOpen, popoverStyle, togglePortal } = usePortalDropdown({
+        popoverHeight: MENU_HEIGHT,
+        popoverWidth: MENU_WIDTH,
+        gap: 16,
+        portalDataAttribute: "data-movnly-timepicker",
+    });
 
     const times = Array.from({ length: 24 * 4 }).map((_, i) => {
         const h = Math.floor(i / 4).toString().padStart(2, "0");
@@ -24,11 +26,41 @@ export function TimePicker({ value, onChange, variant = "default" }: { value: st
         return `${h}:${m}`;
     });
 
+    const menu = open ? (
+        <div
+            data-movnly-timepicker
+            style={{
+                position: "fixed",
+                top: popoverStyle.top,
+                left: popoverStyle.left,
+                zIndex: 9999,
+                width: MENU_WIDTH,
+            }}
+            className="max-h-72 overflow-y-auto !bg-[#07070A] !opacity-100 rounded-[32px] border border-white/20 shadow-[0_40px_80px_rgba(0,0,0,0.9)] animate-luxury-reveal p-4 scrollbar-hide"
+        >
+            {times.map((t) => (
+                <button
+                    key={t}
+                    type="button"
+                    data-testid={`time-${t}`}
+                    onClick={() => { onChange(t); setOpen(false); }}
+                    className={cn(
+                        "w-full px-6 py-4 text-[11px] font-black uppercase tracking-widest text-left rounded-2xl transition-all font-sans",
+                        value === t ? "bg-brand-gold text-black shadow-luxury-gold" : "text-white/40 hover:text-white hover:bg-white/[0.05]"
+                    )}
+                >
+                    {t}
+                </button>
+            ))}
+        </div>
+    ) : null;
+
     return (
-        <div ref={ref} className="relative w-full">
+        <div className="relative w-full">
             <button
+                ref={triggerRef}
                 type="button"
-                onClick={() => setOpen(!open)}
+                onClick={togglePortal}
                 className={cn(
                     "w-full flex items-center justify-between transition-all font-sans h-[64px] px-4",
                     variant === "default" && "nx-input hover:border-white/20 text-sm font-bold",
@@ -44,24 +76,9 @@ export function TimePicker({ value, onChange, variant = "default" }: { value: st
                 </div>
             </button>
 
-            {open && (
-                <div className="absolute top-[calc(100%+16px)] left-1/2 -translate-x-1/2 md:left-0 md:translate-x-0 w-64 max-h-72 overflow-y-auto !bg-[#07070A] !opacity-100 rounded-[32px] border border-white/20 shadow-[0_40px_80px_rgba(0,0,0,0.9)] z-[100] animate-luxury-reveal p-4 scrollbar-hide">
-                    {times.map((t) => (
-                        <button
-                            key={t}
-                            type="button"
-                            data-testid={`time-${t}`}
-                            onClick={() => { onChange(t); setOpen(false); }}
-                            className={cn(
-                                "w-full px-6 py-4 text-[11px] font-black uppercase tracking-widest text-left rounded-2xl transition-all font-sans",
-                                value === t ? "bg-brand-gold text-black shadow-luxury-gold" : "text-white/40 hover:text-white hover:bg-white/[0.05]"
-                            )}
-                        >
-                            {t}
-                        </button>
-                    ))}
-                </div>
-            )}
+            {typeof document !== "undefined" && menu
+                ? createPortal(menu, document.body)
+                : null}
         </div>
     );
 }
