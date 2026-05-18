@@ -92,9 +92,23 @@ export function CheckoutForm({ loading: parentLoading, total, bookingId, custome
 
     return (
         <form onSubmit={handleSubmit} className="space-y-8 animate-luxury-reveal">
-            <p className="text-[10px] font-black uppercase tracking-[0.35em] text-brand-gold/70 text-center">
-                {t("bookingFlow.payment.currencyNotice", { amount: formatCurrency(total, "EUR") })}
-            </p>
+            <div className="space-y-4">
+                <p className="text-[10px] font-black uppercase tracking-[0.35em] text-brand-gold/70 text-center">
+                    {t("bookingFlow.payment.currencyNotice", { amount: formatCurrency(total, "EUR") })}
+                </p>
+
+                <div className="p-5 rounded-3xl bg-white/[0.01] border border-white/5 flex gap-4 text-white/50 text-[9px] font-medium leading-relaxed font-sans max-w-xl mx-auto backdrop-blur-sm shadow-xl">
+                    <AlertCircle className="w-4 h-4 text-brand-gold/40 flex-shrink-0 mt-0.5" />
+                    <div className="space-y-1 text-left">
+                        <span className="font-black uppercase tracking-[0.15em] text-brand-gold/60 block text-[9px]">
+                            {t("bookingFlow.payment.brazilCardNoticeTitle")}
+                        </span>
+                        <p className="leading-relaxed opacity-60 uppercase tracking-widest text-[8px]">
+                            {t("bookingFlow.payment.brazilCardNotice")}
+                        </p>
+                    </div>
+                </div>
+            </div>
 
             <div className="space-y-4">
                 <label className="flex items-center gap-3 text-[10px] font-black uppercase tracking-[0.4em] text-white/30 ml-2 font-sans">

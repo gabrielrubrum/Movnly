@@ -358,7 +358,14 @@
       "confirm": "Confirmer Réservation",
       "verify": "Valider Données",
       "notesPlaceholder": "Ex: Siège bébé, bagages extra, etc.",
-      "expiryPlaceholder": "MM/AA"
+      "expiryPlaceholder": "MM/AA",
+      "currencyNotice": "Montant à facturer : {amount} (Euros — EUR)",
+      "brazilCardNoticeTitle": "Avis sur les Cartes du Brésil",
+      "brazilCardNotice": "Les cartes émises au Brésil fonctionnant uniquement en Real brésilien (BRL) peuvent être refusées par votre banque en raison de limites locales (il s'agit d'une restriction bancaire, et non de la plateforme). Veuillez vous assurer d'utiliser une carte activée pour les transactions internationales en Euros (EUR).",
+      "stripeNotConfigured": "Paiements réels indisponibles. Configurez les clés Stripe live (pk_live_ / sk_live_) sur le serveur.",
+      "cardholderName": "Nom sur la carte",
+      "cardholderNamePlaceholder": "Comme indiqué sur la carte",
+      "cardholderNameRequired": "Veuillez indiquer le nom sur la carte."
     },
     "extras": {
       "baby_seat": "Siège Bébé",

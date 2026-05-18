@@ -461,6 +461,8 @@
       "waitingDetails": "Aguardando detalhes...",
       "initialize": "Ativar Pagamento",
       "currencyNotice": "Valor a cobrar: {amount} (Euros — EUR)",
+      "brazilCardNoticeTitle": "Aviso sobre Cartões do Brasil",
+      "brazilCardNotice": "Cartões emitidos no Brasil que operam apenas em Real (BRL) podem ser recusados pelo seu banco devido a limites locais (esta é uma restrição de segurança do seu banco, não da plataforma). Certifique-se de que o seu cartão está habilitado para transações internacionais em Euros (EUR).",
       "stripeNotConfigured": "Pagamentos reais indisponíveis. Configure as chaves Stripe live (pk_live_ / sk_live_) no servidor.",
       "cardholderName": "Nome no cartão",
       "cardholderNamePlaceholder": "Como está impresso no cartão",

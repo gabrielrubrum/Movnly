@@ -461,6 +461,8 @@
       "waitingDetails": "Waiting for details...",
       "initialize": "Activate Payment",
       "currencyNotice": "Amount to charge: {amount} (Euros — EUR)",
+      "brazilCardNoticeTitle": "Notice for Brazilian Cards",
+      "brazilCardNotice": "Cards issued in Brazil that only operate in Brazilian Real (BRL) may be declined by your bank due to local limits (this is a banking restriction, not a site issue). Please ensure you are using a card enabled for international transactions in Euros (EUR).",
       "stripeNotConfigured": "Live payments unavailable. Configure Stripe live keys (pk_live_ / sk_live_) on the server.",
       "cardholderName": "Name on card",
       "cardholderNamePlaceholder": "As printed on your card",
