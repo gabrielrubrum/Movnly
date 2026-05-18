@@ -71,7 +71,7 @@ export function HeroSection() {
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 1, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
-              className="text-4xl md:text-5xl lg:text-[3.5rem] mb-6 leading-[1.1] tracking-tight relative"
+              className="text-4xl md:text-5xl lg:text-[3.5rem] mb-6 leading-[1.25] tracking-tight relative"
             >
               <span className="text-white font-light drop-shadow-xl">{t("hero.headline1")}</span>{" "}
               <br className="hidden lg:block" />
