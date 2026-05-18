@@ -109,13 +109,22 @@ export function usePortalDropdown({
   }, [open, calculatePosition]);
 
   // Close on scroll (capture phase to catch all scroll events)
+  // But ignore scroll events that happen inside the portal itself
   useEffect(() => {
     if (!open) return;
 
-    const handleScroll = () => setOpen(false);
+    const handleScroll = (e: Event) => {
+      // If the scroll happened inside the portal element, don't close
+      if (portalDataAttribute) {
+        const portalEl = document.querySelector(`[${portalDataAttribute}]`);
+        if (portalEl && portalEl.contains(e.target as Node)) return;
+      }
+      setOpen(false);
+    };
+
     window.addEventListener("scroll", handleScroll, { capture: true });
     return () => window.removeEventListener("scroll", handleScroll, { capture: true });
-  }, [open]);
+  }, [open, portalDataAttribute]);
 
   // Click-outside detection
   useEffect(() => {
