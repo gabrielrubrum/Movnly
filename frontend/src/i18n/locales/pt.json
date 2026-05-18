@@ -461,7 +461,10 @@
       "waitingDetails": "Aguardando detalhes...",
       "initialize": "Ativar Pagamento",
       "currencyNotice": "Valor a cobrar: {amount} (Euros — EUR)",
-      "stripeNotConfigured": "Pagamentos reais indisponíveis. Configure as chaves Stripe live (pk_live_ / sk_live_) no servidor."
+      "stripeNotConfigured": "Pagamentos reais indisponíveis. Configure as chaves Stripe live (pk_live_ / sk_live_) no servidor.",
+      "cardholderName": "Nome no cartão",
+      "cardholderNamePlaceholder": "Como está impresso no cartão",
+      "cardholderNameRequired": "Indique o nome impresso no cartão."
     },
     "extras": {
       "baby_seat": "Cadeira de Bebé",

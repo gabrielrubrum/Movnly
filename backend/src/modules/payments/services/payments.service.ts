@@ -157,6 +157,13 @@ export class PaymentsService {
         }
 
         const passenger = booking.passenger as { id: string; email: string; name: string; stripeCustomerId?: string | null };
+        if (name && name !== passenger.name) {
+            await this.prisma.user.update({
+                where: { id: passenger.id },
+                data: { name },
+            });
+            passenger.name = name;
+        }
         const stripeCustomerId = await this.getOrCreateStripeCustomer(passenger);
 
         const paymentIntent = await this.stripe.paymentIntents.create({

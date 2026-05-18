@@ -461,7 +461,10 @@
       "waitingDetails": "Waiting for details...",
       "initialize": "Activate Payment",
       "currencyNotice": "Amount to charge: {amount} (Euros — EUR)",
-      "stripeNotConfigured": "Live payments unavailable. Configure Stripe live keys (pk_live_ / sk_live_) on the server."
+      "stripeNotConfigured": "Live payments unavailable. Configure Stripe live keys (pk_live_ / sk_live_) on the server.",
+      "cardholderName": "Name on card",
+      "cardholderNamePlaceholder": "As printed on your card",
+      "cardholderNameRequired": "Please enter the name on your card."
     },
     "extras": {
       "baby_seat": "Baby Seat",
