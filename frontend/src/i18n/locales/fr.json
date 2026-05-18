@@ -370,6 +370,10 @@
       "extra_stop": "Arrêt en Chemin",
       "extra_wait": "Temps d'Attente Extra"
     },
+    "extrasDesc": {
+      "extra_wait": "Nous attendons le temps supplémentaire nécessaire pour votre confort.",
+      "extra_stop": "Ajoutez des arrêts en cours de route."
+    },
     "stepExtras": {
       "title": "Services Additionnels",
       "sub": "Personnalisez votre voyage selon vos envies",

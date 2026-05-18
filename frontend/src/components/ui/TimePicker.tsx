@@ -36,22 +36,24 @@ export function TimePicker({ value, onChange, variant = "default" }: { value: st
                 zIndex: 9999,
                 width: MENU_WIDTH,
             }}
-            className="max-h-72 overflow-y-auto !bg-[#07070A] !opacity-100 rounded-[32px] border border-white/20 shadow-[0_40px_80px_rgba(0,0,0,0.9)] animate-luxury-reveal p-4 scrollbar-hide"
+            className="max-h-72 overflow-y-auto !bg-[#07070A] !opacity-100 rounded-[32px] border border-white/20 shadow-[0_40px_80px_rgba(0,0,0,0.9)] animate-luxury-reveal scrollbar-hide"
         >
-            {times.map((t) => (
-                <button
-                    key={t}
-                    type="button"
-                    data-testid={`time-${t}`}
-                    onClick={() => { onChange(t); setOpen(false); }}
-                    className={cn(
-                        "w-full px-6 py-4 text-[11px] font-black uppercase tracking-widest text-left rounded-2xl transition-all font-sans",
-                        value === t ? "bg-brand-gold text-black shadow-luxury-gold" : "text-white/40 hover:text-white hover:bg-white/[0.05]"
-                    )}
-                >
-                    {t}
-                </button>
-            ))}
+            <div className="p-4 flex flex-col">
+                {times.map((t) => (
+                    <button
+                        key={t}
+                        type="button"
+                        data-testid={`time-${t}`}
+                        onClick={() => { onChange(t); setOpen(false); }}
+                        className={cn(
+                            "w-full px-6 py-4 text-[11px] font-black uppercase tracking-widest text-left rounded-2xl transition-all font-sans shrink-0",
+                            value === t ? "bg-brand-gold text-black shadow-luxury-gold" : "text-white/40 hover:text-white hover:bg-white/[0.05]"
+                        )}
+                    >
+                        {t}
+                    </button>
+                ))}
+            </div>
         </div>
     ) : null;
 

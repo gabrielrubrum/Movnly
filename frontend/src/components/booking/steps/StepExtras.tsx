@@ -110,12 +110,16 @@ export function StepExtras({ form, update, onNext, onBack }: Props) {
       <div className="grid md:grid-cols-2 gap-6">
         {EXTRAS.filter(e => e.id !== "meet_greet").map((extra) => {
           const selected = form.extras.includes(extra.id);
+          const descKey = `bookingFlow.extrasDesc.${extra.id}`;
+          const descText = t(descKey);
+          const hasDesc = descText !== descKey && descText !== "";
+
           return (
             <button
               key={extra.id}
               onClick={() => toggle(extra.id)}
               className={cn(
-                "p-8 text-left flex items-center gap-6 transition-all duration-500 rounded-[32px] border group",
+                "p-8 text-left flex items-start gap-6 transition-all duration-500 rounded-[32px] border group",
                 selected
                   ? "bg-brand-gold/[0.03] border-brand-gold/30"
                   : "bg-white/[0.02] border-white/5 hover:border-brand-gold/20"
@@ -123,14 +127,26 @@ export function StepExtras({ form, update, onNext, onBack }: Props) {
             >
               <div className={cn(
                 "w-12 h-12 rounded-2xl flex items-center justify-center flex-shrink-0 transition-all duration-500",
+                hasDesc ? "mt-1" : "",
                 selected ? "bg-brand-gold text-black shadow-lg shadow-brand-gold/20" : "bg-white/[0.06] text-white/30 group-hover:bg-white/10"
               )}>
                 {selected ? <Check className="w-5 h-5" /> : <Plus className="w-5 h-5" />}
               </div>
               <div className="flex-1">
                 <p className="text-[12px] font-bold uppercase tracking-[0.2em] text-white/80 group-hover:text-white transition-colors font-sans">{t(`bookingFlow.extras.${extra.id}`)}</p>
+                {hasDesc && (
+                  <p className="text-[10px] tracking-[0.05em] text-white/40 mt-3 font-sans group-hover:text-white/60 transition-colors leading-relaxed">
+                    {descText}
+                  </p>
+                )}
               </div>
-              <span className="text-xl font-black text-brand-gold font-sans tracking-tighter">+{formatCurrency(extra.price)}</span>
+              <span className={cn(
+                "font-black font-sans tracking-tighter", 
+                hasDesc ? "self-start mt-1" : "",
+                extra.price === 0 ? "text-sm text-brand-gold/80 uppercase tracking-widest" : "text-xl text-brand-gold"
+              )}>
+                {extra.price === 0 ? "INCLUÍDO" : `+${formatCurrency(extra.price)}`}
+              </span>
             </button>
           );
         })}

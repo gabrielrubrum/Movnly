@@ -32,14 +32,15 @@ export function Navbar() {
   ];
 
   return (
-    <nav
-      className={cn(
-        "fixed top-0 left-0 right-0 z-[100] transition-all duration-1000 h-[110px] flex items-center",
-        scrolled
-          ? "bg-black/40 backdrop-blur-2xl border-b border-white/[0.05] h-[85px] shadow-[0_10px_40px_rgba(0,0,0,0.3)]"
-          : "bg-transparent h-[110px]"
-      )}
-    >
+    <>
+      <nav
+        className={cn(
+          "fixed top-0 left-0 right-0 z-[100] transition-all duration-1000 h-[110px] flex items-center",
+          scrolled
+            ? "bg-black/40 backdrop-blur-2xl border-b border-white/[0.05] h-[85px] shadow-[0_10px_40px_rgba(0,0,0,0.3)]"
+            : "bg-transparent h-[110px]"
+        )}
+      >
       {/* Dynamic Glow Line */}
       <div className={cn(
         "absolute bottom-0 left-0 h-[1px] bg-gradient-to-r from-transparent via-brand-gold/20 to-transparent transition-all duration-1000",
@@ -104,7 +105,7 @@ export function Navbar() {
             {mobileMenuOpen ? <X /> : <Menu />}
           </button>
         </div>
-      </div>
+      </nav>
 
       {/* Mobile Menu */}
       {mobileMenuOpen && (
@@ -140,6 +141,6 @@ export function Navbar() {
           </div>
         </div>
       )}
-    </nav>
+    </>
   );
 }

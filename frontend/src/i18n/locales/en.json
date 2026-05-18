@@ -471,6 +471,10 @@
       "extra_stop": "Extra Stop",
       "extra_wait": "Extended Wait"
     },
+    "extrasDesc": {
+      "extra_wait": "We wait the additional time needed for your comfort.",
+      "extra_stop": "Add stops along the way."
+    },
     "stepExtras": {
       "title": "Would you like to add anything?",
       "sub": "Personalize your trip with our extras",

@@ -379,6 +379,10 @@
       "extra_stop": "Parada en Tránsito",
       "extra_wait": "Tiempo de Espera Extra"
     },
+    "extrasDesc": {
+      "extra_wait": "Esperamos el tiempo adicional necesario para su comodidad.",
+      "extra_stop": "Añada paradas durante el viaje."
+    },
     "stepExtras": {
       "title": "Servicios Adicionales",
       "sub": "Personalice su viaje como prefiera",

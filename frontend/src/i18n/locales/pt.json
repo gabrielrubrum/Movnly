@@ -39,7 +39,7 @@
     "learnMore": "Conheça os Nossos Serviços",
     "headline1": "A Sua Referência em",
     "headline2": "Mobilidade de Prestígio.",
-    "sub": "Transporte privado com foco na pontualidade, discrição e conforto absoluto para passageiros exigentes.",
+    "sub": "Chegue sempre a tempo. Viaje sempre em conforto.",
     "trust": {
       "drivers": "Motoristas Profissionais",
       "rating": "Excelência",
@@ -470,6 +470,10 @@
       "wifi": "Wi-Fi a Bordo",
       "extra_stop": "Paragem Extra",
       "extra_wait": "Espera Prolongada"
+    },
+    "extrasDesc": {
+      "extra_wait": "Aguardamos o tempo adicional necessário para o seu conforto.",
+      "extra_stop": "Adicione paragens ao longo do trajeto."
     },
     "stepExtras": {
       "title": "Deseja adicionar algo?",

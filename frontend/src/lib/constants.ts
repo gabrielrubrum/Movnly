@@ -107,7 +107,7 @@ export const EXTRAS = [
   { id: "baby_seat", name: "Cadeira de bebé", price: 10, icon: "baby" },
   { id: "booster", name: "Assento elevatório", price: 8, icon: "child" },
   { id: "meet_greet", name: "Meet & Greet", price: 0, icon: "handshake" },
-  { id: "name_board", name: "Placa personalizada", price: 5, icon: "sign" },
+  { id: "name_board", name: "Placa personalizada", price: 0, icon: "sign" },
   { id: "water", name: "Água a bordo", price: 5, icon: "droplet" },
   { id: "wifi", name: "Wi-Fi de Alta Velocidade", price: 8, icon: "wifi" },
   { id: "extra_stop", name: "Paragem adicional", price: 20, icon: "map-pin" },

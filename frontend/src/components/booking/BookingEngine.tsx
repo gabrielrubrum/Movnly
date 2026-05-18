@@ -56,14 +56,6 @@ export function BookingEngine() {
     setShowPax(true);
   }, []);
 
-  // Close pax panel on scroll
-  useEffect(() => {
-    if (!showPax) return;
-    const handleScroll = () => setShowPax(false);
-    window.addEventListener("scroll", handleScroll, { capture: true });
-    return () => window.removeEventListener("scroll", handleScroll, { capture: true });
-  }, [showPax]);
-
   // Click-outside for pax panel
   useEffect(() => {
     if (!showPax) return;

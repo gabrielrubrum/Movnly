@@ -135,10 +135,9 @@ export default function ToursPage() {
                                     </div>
 
                                     <div className="flex items-center justify-between mt-10">
-                                        <div>
-                                            <p className="text-[10px] text-white/20 uppercase tracking-[0.3em] mb-1 font-bold">{t("tours_section.from")}</p>
-                                            <p className="text-4xl font-bold text-white tracking-tighter">{tour.price}€</p>
-                                        </div>
+                                        <span className="text-[10px] text-brand-gold/60 group-hover:text-brand-gold transition-colors uppercase tracking-[0.4em] font-black">
+                                            Simular Valor
+                                        </span>
                                         <Link
                                             href={`/book?tour=${tour.id}`}
                                             className="w-16 h-16 rounded-full bg-brand-gold text-black flex items-center justify-center hover:scale-110 transition-all duration-500 shadow-glow"

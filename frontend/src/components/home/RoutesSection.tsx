@@ -127,13 +127,10 @@ export function RoutesSection() {
                   </div>
 
                   {/* Footer (Price & Button) */}
-                  <div className="flex items-end justify-between pt-6 border-t border-white/[0.06] mt-2">
-                    <div>
-                      <p className="text-[8px] font-black uppercase tracking-[0.4em] text-white/20 mb-1 font-sans">Desde</p>
-                      <span className="text-3xl font-bold text-white tracking-tighter leading-none group-hover:text-brand-gold transition-colors duration-500">
-                        {route.price}€
-                      </span>
-                    </div>
+                  <div className="flex items-center justify-between pt-6 border-t border-white/[0.06] mt-2">
+                    <span className="text-[8px] font-black uppercase tracking-[0.4em] text-white/30 group-hover:text-brand-gold transition-colors duration-500">
+                      Simular Rota
+                    </span>
 
                     <Link
                       href={`/book?origin=${route.from}&destination=${route.to}`}
