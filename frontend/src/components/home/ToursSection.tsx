@@ -102,15 +102,12 @@ export function ToursSection() {
                                     </div>
 
                                     {/* Footer (Price & Button) */}
-                                    <div className="flex items-end justify-between mt-2">
-                                        <div>
-                                            <p className="text-[8px] font-black uppercase tracking-[0.4em] text-white/20 mb-1 font-sans">{t("tours_section.from")}</p>
-                                            <span className="text-3xl font-bold text-white tracking-tighter leading-none group-hover:text-brand-gold transition-colors duration-500">
-                                                €{tour.price}
-                                            </span>
-                                        </div>
+                                    <div className="flex items-center justify-between mt-4 pt-4 border-t border-white/[0.06]">
+                                        <span className="text-[10px] font-black uppercase tracking-[0.3em] text-brand-gold/60 group-hover:text-brand-gold transition-colors duration-500">
+                                            {t("tours_section.simulatePrice")}
+                                        </span>
 
-                                        <div className="w-12 h-12 rounded-full flex items-center justify-center transition-all duration-500 bg-white/5 border border-white/10 text-white group-hover:bg-brand-gold group-hover:text-black group-hover:border-brand-gold group-hover:scale-110">
+                                        <div className="w-12 h-12 rounded-full flex items-center justify-center transition-all duration-500 bg-white/5 border border-white/10 text-white group-hover:bg-brand-gold group-hover:text-black group-hover:border-brand-gold group-hover:scale-110 shrink-0">
                                             <ArrowRight className="w-5 h-5 -rotate-45" />
                                         </div>
                                     </div>

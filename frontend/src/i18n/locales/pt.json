@@ -203,6 +203,7 @@
     "sub": "Passeios privados com motorista para que possa desfrutar da paisagem sem preocupações.",
     "viewAll": "Ver Todos os Passeios",
     "from": "Desde",
+    "simulatePrice": "Simular Valor",
     "customTitle": "Deseja um Passeio Personalizado?",
     "customDesc": "Fale com o nosso suporte para criar um itinerário exclusivo à sua medida."
   },
@@ -461,8 +462,8 @@
       "waitingDetails": "Aguardando detalhes...",
       "initialize": "Ativar Pagamento",
       "currencyNotice": "Valor a cobrar: {amount} (Euros — EUR)",
-      "brazilCardNoticeTitle": "Aviso sobre Cartões do Brasil",
-      "brazilCardNotice": "Cartões emitidos no Brasil que operam apenas em Real (BRL) podem ser recusados pelo seu banco devido a limites locais (esta é uma restrição de segurança do seu banco, não da plataforma). Certifique-se de que o seu cartão está habilitado para transações internacionais em Euros (EUR).",
+      "brazilCardNoticeTitle": "Importante: Cartões do Brasil",
+      "brazilCardNotice": "Atenção: Apenas cartões de crédito brasileiros habilitados para transações internacionais em Euros (EUR) serão aceitos. Cartões que transacionam apenas em Real (BRL) ou de débito local serão recusados pelo banco emissor.",
       "stripeNotConfigured": "Pagamentos reais indisponíveis. Configure as chaves Stripe live (pk_live_ / sk_live_) no servidor.",
       "cardholderName": "Nome no cartão",
       "cardholderNamePlaceholder": "Como está impresso no cartão",

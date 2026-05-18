@@ -35,7 +35,7 @@ export function Navbar() {
     <>
       <nav
         className={cn(
-          "fixed top-0 left-0 right-0 z-[100] transition-all duration-1000 h-[110px] flex items-center",
+          "fixed top-0 left-0 right-0 z-[200] transition-all duration-1000 h-[110px] flex items-center",
           scrolled
             ? "bg-black/40 backdrop-blur-2xl border-b border-white/[0.05] h-[85px] shadow-[0_10px_40px_rgba(0,0,0,0.3)]"
             : "bg-transparent h-[110px]"
@@ -110,7 +110,7 @@ export function Navbar() {
 
       {/* Mobile Menu */}
       {mobileMenuOpen && (
-        <div className="fixed inset-0 bg-[#07070A]/95 backdrop-blur-2xl z-[90] lg:hidden animate-luxury-reveal flex flex-col pt-32 px-10">
+        <div className="fixed inset-0 bg-[#07070A]/95 backdrop-blur-2xl z-[190] lg:hidden animate-luxury-reveal flex flex-col pt-32 px-10">
           <div className="flex flex-col gap-8">
             {navItems.map((item, i) => (
               <Link

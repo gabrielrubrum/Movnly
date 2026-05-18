@@ -74,9 +74,6 @@ export function CheckoutForm({ loading: parentLoading, total, bookingId, custome
                     billing_details: {
                         name,
                         email: customerEmail.trim() || undefined,
-                        address: {
-                            country: "PT",
-                        },
                     },
                 },
             },

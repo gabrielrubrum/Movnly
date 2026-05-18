@@ -203,6 +203,7 @@
     "sub": "Private tours with a driver so you can enjoy the scenery without worries.",
     "viewAll": "See All Tours",
     "from": "From",
+    "simulatePrice": "Simulate Price",
     "customTitle": "Want a Custom Tour?",
     "customDesc": "Talk to our support to create an exclusive itinerary tailored to you."
   },
@@ -461,8 +462,8 @@
       "waitingDetails": "Waiting for details...",
       "initialize": "Activate Payment",
       "currencyNotice": "Amount to charge: {amount} (Euros — EUR)",
-      "brazilCardNoticeTitle": "Notice for Brazilian Cards",
-      "brazilCardNotice": "Cards issued in Brazil that only operate in Brazilian Real (BRL) may be declined by your bank due to local limits (this is a banking restriction, not a site issue). Please ensure you are using a card enabled for international transactions in Euros (EUR).",
+      "brazilCardNoticeTitle": "Important: Brazilian Cards",
+      "brazilCardNotice": "Notice: Only Brazilian credit cards enabled for international transactions in Euros (EUR) will be accepted. Cards that only support local currency (BRL) or local debit cards will be declined by your issuing bank.",
       "stripeNotConfigured": "Live payments unavailable. Configure Stripe live keys (pk_live_ / sk_live_) on the server.",
       "cardholderName": "Name on card",
       "cardholderNamePlaceholder": "As printed on your card",

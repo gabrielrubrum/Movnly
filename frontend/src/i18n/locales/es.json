@@ -369,8 +369,8 @@
       "notesPlaceholder": "Ej: Silla de bebé, maletas extra, etc.",
       "expiryPlaceholder": "MM/AA",
       "currencyNotice": "Valor a cobrar: {amount} (Euros — EUR)",
-      "brazilCardNoticeTitle": "Aviso sobre Tarjetas de Brasil",
-      "brazilCardNotice": "Las tarjetas emitidas en Brasil que operan únicamente en Real brasileño (BRL) pueden ser rechazadas por su banco debido a límites locales (esta es una restricción bancaria, no de la plataforma). Asegúrese de utilizar una tarjeta habilitada para transacciones internacionales en Euros (EUR).",
+      "brazilCardNoticeTitle": "Importante: Tarjetas de Brasil",
+      "brazilCardNotice": "Aviso: Solo se aceptarán tarjetas de crédito brasileñas habilitadas para transacciones internacionales en Euros (EUR). Las tarjetas que solo admiten moneda local (BRL) o de débito local serán rechazadas por su banco emisor.",
       "stripeNotConfigured": "Pagos reales no disponibles. Configure las claves Stripe live (pk_live_ / sk_live_) en el servidor.",
       "cardholderName": "Nombre en la tarjeta",
       "cardholderNamePlaceholder": "Como figura en la tarjeta",
@@ -639,6 +639,7 @@
     "sub": "Rutas exclusivas a bordo de vehículos de lujo. Conductor guía bilingüe, itinerario a medida.",
     "viewAll": "Ver todos los tours",
     "from": "desde",
+    "simulatePrice": "Simular Precio",
     "bookNow": "Reservar ahora",
     "customTitle": "¿Itinerario personalizado?",
     "customDesc": "Creamos el tour ideal para su grupo, celebración o evento."
