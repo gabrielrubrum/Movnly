@@ -160,6 +160,11 @@ export function BookingSteps() {
         amount: total,
       }, { headers: getFraudHeaders() });
 
+      if (res.data.mock) {
+        console.error("Stripe is in mock mode — configure live keys on the server.");
+        return;
+      }
+
       if (res.data.clientSecret) {
         setClientSecret(res.data.clientSecret);
         setLastBookingId(res.data.bookingId);

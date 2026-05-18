@@ -16,6 +16,13 @@ async function bootstrap() {
     if (process.env.JWT_SECRET === 'super-secret-key-change-me-in-production') {
       throw new Error('[FATAL] JWT_SECRET não pode ser o valor padrão em produção.');
     }
+    const stripeKey = process.env.STRIPE_SECRET_KEY || '';
+    if (!stripeKey.startsWith('sk_live_')) {
+      throw new Error('[FATAL] STRIPE_SECRET_KEY deve ser uma chave live (sk_live_...) em produção.');
+    }
+    if (!process.env.STRIPE_WEBHOOK_SECRET?.startsWith('whsec_')) {
+      throw new Error('[FATAL] STRIPE_WEBHOOK_SECRET deve ser o secret do webhook Stripe (whsec_...).');
+    }
   }
 
   // Sentry — inicializar antes de tudo

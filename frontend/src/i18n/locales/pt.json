@@ -459,7 +459,9 @@
       "notesPlaceholder": "Ex: Cadeirinha de bebé, paragem extra, etc.",
       "expiryPlaceholder": "MM/AA",
       "waitingDetails": "Aguardando detalhes...",
-      "initialize": "Ativar Pagamento"
+      "initialize": "Ativar Pagamento",
+      "currencyNotice": "Valor a cobrar: {amount} (Euros — EUR)",
+      "stripeNotConfigured": "Pagamentos reais indisponíveis. Configure as chaves Stripe live (pk_live_ / sk_live_) no servidor."
     },
     "extras": {
       "baby_seat": "Cadeira de Bebé",

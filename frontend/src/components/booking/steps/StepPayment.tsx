@@ -13,8 +13,10 @@ import { loadStripe } from "@stripe/stripe-js";
 import { Elements } from "@stripe/react-stripe-js";
 import { CheckoutForm } from "./CheckoutForm";
 import { motion, AnimatePresence } from "framer-motion";
+import { isMockStripeSecret } from "@/lib/stripe-errors";
 
-const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!);
+const stripePublishableKey = process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY;
+const stripePromise = stripePublishableKey ? loadStripe(stripePublishableKey) : null;
 
 interface Props {
   form: BookingFormData;
@@ -34,6 +36,7 @@ export function StepPayment({ form, update, onConfirm, onBack, loading, total, c
   const [authForm, setAuthForm] = useState({ name: "", email: "" });
   const [clientSecret, setClientSecret] = useState<string | null>(propClientSecret);
   const [isRegistering, setIsRegistering] = useState(false);
+  const [paymentConfigError, setPaymentConfigError] = useState<string | null>(null);
 
   useEffect(() => {
     if (user && (!form.name || !form.email)) {
@@ -52,7 +55,18 @@ export function StepPayment({ form, update, onConfirm, onBack, loading, total, c
 
   useEffect(() => {
     setClientSecret(propClientSecret);
-  }, [propClientSecret]);
+    if (propClientSecret && isMockStripeSecret(propClientSecret)) {
+      setPaymentConfigError(t("bookingFlow.payment.stripeNotConfigured"));
+    } else {
+      setPaymentConfigError(null);
+    }
+  }, [propClientSecret, t]);
+
+  useEffect(() => {
+    if (!stripePublishableKey) {
+      setPaymentConfigError(t("bookingFlow.payment.stripeNotConfigured"));
+    }
+  }, [t]);
 
   const handleInstantRegister = async () => {
     if (!authForm.name || !authForm.email) {
@@ -277,7 +291,15 @@ export function StepPayment({ form, update, onConfirm, onBack, loading, total, c
                             <Loader2 className="w-16 h-16 text-brand-gold animate-spin" strokeWidth={1} />
                             <p className="text-[10px] uppercase font-black tracking-[0.5em] text-white/30 animate-pulse">{t("bookingFlow.payment.processing")}</p>
                         </motion.div>
-                    ) : clientSecret ? (
+                    ) : paymentConfigError ? (
+                        <motion.div
+                            key="config-error"
+                            initial={{ opacity: 0 }} animate={{ opacity: 1 }}
+                            className="flex flex-col items-center justify-center text-center space-y-8 my-16 px-6"
+                        >
+                            <p className="text-red-400 text-sm font-bold uppercase tracking-widest max-w-lg">{paymentConfigError}</p>
+                        </motion.div>
+                    ) : clientSecret && stripePromise ? (
                         <motion.div 
                             key="stripe"
                             initial={{ opacity: 0, scale: 0.98 }} animate={{ opacity: 1, scale: 1 }}
@@ -288,7 +310,8 @@ export function StepPayment({ form, update, onConfirm, onBack, loading, total, c
                                     <Elements 
                                         stripe={stripePromise} 
                                         options={{ 
-                                            clientSecret, 
+                                            clientSecret,
+                                            locale: 'pt',
                                             appearance: { 
                                                 theme: 'night',
                                                 variables: { 
@@ -327,7 +350,14 @@ export function StepPayment({ form, update, onConfirm, onBack, loading, total, c
                                             } 
                                         }}
                                     >
-                                        <CheckoutForm onConfirm={onConfirm} loading={loading} total={total} bookingId={bookingId} />
+                                        <CheckoutForm
+                                            onConfirm={onConfirm}
+                                            loading={loading}
+                                            total={total}
+                                            bookingId={bookingId}
+                                            customerName={user.name || form.name || ""}
+                                            customerEmail={user.email || form.email || ""}
+                                        />
                                     </Elements>
                                 </div>
                             </div>

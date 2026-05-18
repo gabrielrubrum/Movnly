@@ -459,7 +459,9 @@
       "notesPlaceholder": "E.g.: Baby seat, extra stop, etc.",
       "expiryPlaceholder": "MM/YY",
       "waitingDetails": "Waiting for details...",
-      "initialize": "Activate Payment"
+      "initialize": "Activate Payment",
+      "currencyNotice": "Amount to charge: {amount} (Euros — EUR)",
+      "stripeNotConfigured": "Live payments unavailable. Configure Stripe live keys (pk_live_ / sk_live_) on the server."
     },
     "extras": {
       "baby_seat": "Baby Seat",

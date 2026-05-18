@@ -105,6 +105,7 @@ export function Navbar() {
             {mobileMenuOpen ? <X /> : <Menu />}
           </button>
         </div>
+      </div>
       </nav>
 
       {/* Mobile Menu */}

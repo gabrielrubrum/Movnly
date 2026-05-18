@@ -18,14 +18,58 @@ export class PaymentsService {
         private mail: MailService,
     ) {
         const secretKey = this.configService.get<string>('STRIPE_SECRET_KEY');
-        if (!secretKey || secretKey.includes('sk_test_...')) {
+        const isProduction = this.configService.get<string>('NODE_ENV') === 'production';
+        const isPlaceholder = !secretKey
+            || secretKey.includes('sk_test_...')
+            || secretKey.includes('sk_live_...')
+            || secretKey.includes('<PREENCHER>');
+
+        if (isPlaceholder) {
+            if (isProduction) {
+                throw new Error('[FATAL] STRIPE_SECRET_KEY must be set to a live key (sk_live_...) in production.');
+            }
             this.logger.warn('STRIPE_SECRET_KEY is a placeholder or undefined. Enabling MOCK MODE.');
             this.stripe = null;
         } else {
+            if (isProduction && secretKey.startsWith('sk_test_')) {
+                this.logger.warn('STRIPE_SECRET_KEY is a test key while NODE_ENV=production. Use sk_live_... for real charges.');
+            }
             this.stripe = new Stripe(secretKey, {
                 apiVersion: '2025-01-27.acacia',
             });
         }
+    }
+
+    private async getOrCreateStripeCustomer(passenger: { id: string; email: string; name: string; stripeCustomerId?: string | null }) {
+        if (!this.stripe) return null;
+
+        if (passenger.stripeCustomerId) {
+            try {
+                await this.stripe.customers.update(passenger.stripeCustomerId, {
+                    email: passenger.email,
+                    name: passenger.name,
+                    preferred_locales: ['pt'],
+                });
+            } catch (err) {
+                this.logger.warn(`Stripe customer update failed for ${passenger.stripeCustomerId}: ${err.message}`);
+            }
+            return passenger.stripeCustomerId;
+        }
+
+        const customer = await this.stripe.customers.create({
+            email: passenger.email,
+            name: passenger.name,
+            preferred_locales: ['pt'],
+            address: { country: 'PT' },
+            metadata: { movnlyUserId: passenger.id },
+        });
+
+        await this.prisma.user.update({
+            where: { id: passenger.id },
+            data: { stripeCustomerId: customer.id },
+        });
+
+        return customer.id;
     }
 
     async createPaymentIntent(data: any, fraudSignals?: any) {
@@ -96,12 +140,9 @@ export class PaymentsService {
 
         if (!this.stripe) {
             this.logger.warn(`MOCK FALLBACK for booking ${booking.id}`);
-            // Em dev, emitir notificação imediatamente (simula webhook)
             setTimeout(async () => {
                 this.eventsGateway.emitNewRideAvailable(booking);
                 this.eventsGateway.emitPaymentStatus(booking.id, 'PAID');
-                
-                // Simulação de e-mails em modo mock
                 if (booking.passenger?.email) {
                     await this.mail.sendReceiptEmail(booking.passenger.email, booking, { amount: finalPrice, id: 'pi_mock_' + booking.id });
                 }
@@ -110,23 +151,36 @@ export class PaymentsService {
                 clientSecret: 'pi_mock_secret_' + Math.random().toString(36).substring(7),
                 paymentIntentId: 'pi_mock_' + booking.id,
                 amount: finalPrice,
-                mock: true
+                currency: 'eur',
+                mock: true,
             };
         }
+
+        const passenger = booking.passenger as { id: string; email: string; name: string; stripeCustomerId?: string | null };
+        const stripeCustomerId = await this.getOrCreateStripeCustomer(passenger);
 
         const paymentIntent = await this.stripe.paymentIntents.create({
             amount: priceInCents,
             currency: 'eur',
-            receipt_email: (booking.passenger as any).email,
+            customer: stripeCustomerId || undefined,
+            receipt_email: passenger.email,
+            description: `MOVNLY — Reserva ${booking.id.slice(0, 8)}`,
+            statement_descriptor_suffix: 'MOVNLY',
             payment_method_types: ['card'],
             transfer_group: booking.id,
+            payment_method_options: {
+                card: {
+                    request_three_d_secure: 'automatic',
+                },
+            },
             metadata: {
                 bookingId: booking.id,
+                currency: 'eur',
                 platformFee: platformFeeInCents.toString(),
                 driverAmount: driverAmountInCents.toString(),
-                passengerName: (booking.passenger as any).name,
+                passengerName: passenger.name,
+                passengerEmail: passenger.email,
                 surgeReasons: finances.appliedSurges.join(', '),
-                // Stripe Radar — fraud signals
                 client_ip: fraudSignals?.ip || 'unknown',
                 user_agent: (fraudSignals?.userAgent || '').substring(0, 200),
                 browser_fingerprint: fraudSignals?.fingerprint || 'none',
@@ -150,7 +204,9 @@ export class PaymentsService {
         return {
             clientSecret: paymentIntent.client_secret,
             paymentIntentId: paymentIntent.id,
-            bookingId: booking.id
+            bookingId: booking.id,
+            currency: 'eur',
+            amount: finalPrice,
         };
     }
 

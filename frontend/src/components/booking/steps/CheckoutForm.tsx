@@ -4,15 +4,19 @@ import { useState } from "react";
 import { useStripe, useElements, PaymentElement } from "@stripe/react-stripe-js";
 import { Loader2, ChevronRight, AlertCircle } from "lucide-react";
 import { useI18n } from "@/i18n/context";
+import { translateStripeError } from "@/lib/stripe-errors";
+import { formatCurrency } from "@/lib/utils";
 
 interface Props {
     onConfirm: () => Promise<void>;
     loading: boolean;
     total: number;
     bookingId: string | null;
+    customerName: string;
+    customerEmail: string;
 }
 
-export function CheckoutForm({ onConfirm, loading: parentLoading, total, bookingId }: Props) {
+export function CheckoutForm({ onConfirm, loading: parentLoading, total, bookingId, customerName, customerEmail }: Props) {
     const stripe = useStripe();
     const elements = useElements();
     const { t } = useI18n();
@@ -31,25 +35,45 @@ export function CheckoutForm({ onConfirm, loading: parentLoading, total, booking
             elements,
             confirmParams: {
                 return_url: `${window.location.origin}/booking/confirmation/${bookingId || 'processing'}`,
+                payment_method_data: {
+                    billing_details: {
+                        name: customerName.trim() || undefined,
+                        email: customerEmail.trim() || undefined,
+                    },
+                },
             },
         });
 
         if (error) {
-            setErrorMessage(error.message || "An unexpected error occurred.");
+            setErrorMessage(translateStripeError(error.message, error.code));
             setLoading(false);
+            return;
         }
         setLoading(false);
     };
 
     return (
         <form onSubmit={handleSubmit} className="space-y-12 animate-luxury-reveal">
-            <PaymentElement options={{ 
+            <p className="text-[10px] font-black uppercase tracking-[0.35em] text-brand-gold/70 text-center">
+                {t("bookingFlow.payment.currencyNotice", { amount: formatCurrency(total, "EUR") })}
+            </p>
+
+            <PaymentElement options={{
                 layout: "tabs",
                 fields: {
                     billingDetails: {
-                        name: 'auto'
-                    }
-                }
+                        name: "always" as "auto",
+                        email: "never",
+                        phone: "never",
+                        address: "never",
+                    },
+                },
+                defaultValues: {
+                    billingDetails: {
+                        name: customerName,
+                        email: customerEmail,
+                    },
+                },
             }} />
 
             {errorMessage && (
