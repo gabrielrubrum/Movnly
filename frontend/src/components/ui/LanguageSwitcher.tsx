@@ -77,7 +77,7 @@ export function LanguageSwitcher({ variant = "navbar" }: LanguageSwitcherProps) 
         {open && (
           <>
             <div className="fixed inset-0 z-40" onClick={closeMenu} />
-            <div className="absolute bottom-full left-0 mb-2 w-40 glass-dark rounded-xl border border-white/[0.08] shadow-nx-lg p-1.5 z-50 animate-scale-in">
+            <div className="absolute bottom-full left-0 mb-2 w-40 bg-[#0A0A0F]/95 backdrop-blur-2xl rounded-xl border border-white/[0.08] shadow-nx-lg p-1.5 z-50 animate-scale-in">
               {locales.map((l) => (
                 <button key={l} onClick={() => { setLocale(l); closeMenu(); }}
                   className={cn(
@@ -112,7 +112,7 @@ export function LanguageSwitcher({ variant = "navbar" }: LanguageSwitcherProps) 
         {open && (
           <>
             <div className="fixed inset-0 z-40" onClick={closeMenu} />
-            <div className="absolute bottom-full left-0 mb-2 w-44 glass-dark rounded-xl border border-white/[0.08] shadow-nx-lg p-1.5 z-50 animate-scale-in">
+            <div className="absolute bottom-full left-0 mb-2 w-44 bg-[#0A0A0F]/95 backdrop-blur-2xl rounded-xl border border-white/[0.08] shadow-nx-lg p-1.5 z-50 animate-scale-in">
               {locales.map((l) => (
                 <button key={l} onClick={() => { setLocale(l); closeMenu(); }}
                   className={cn(
@@ -148,7 +148,7 @@ export function LanguageSwitcher({ variant = "navbar" }: LanguageSwitcherProps) 
       {open && (
         <>
           <div className="fixed inset-0 z-40" onClick={closeMenu} />
-          <div className="absolute top-full right-0 mt-2 w-48 glass-dark rounded-2xl border border-white/[0.08] shadow-nx-xl p-2 z-50 animate-scale-in">
+          <div className="absolute top-full right-0 mt-2 w-48 bg-[#0A0A0F]/95 backdrop-blur-2xl rounded-2xl border border-white/[0.08] shadow-nx-xl p-2 z-50 animate-scale-in">
             <p className="text-[0.6rem] font-bold text-white/25 uppercase tracking-[0.1em] px-3 py-1.5">
               {t("languageSwitcher.label")}
             </p>
