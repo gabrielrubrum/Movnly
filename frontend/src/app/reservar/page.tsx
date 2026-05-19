@@ -9,7 +9,7 @@ function ReservarContent() {
   return (
     <>
       <Navbar />
-      <main className="min-h-screen pt-24 pb-20" style={{ background: "#08080f" }}>
+      <main className="min-h-screen pt-24 pb-20 overflow-x-hidden" style={{ background: "#08080f" }}>
         <BookingSteps />
       </main>
       <Footer />

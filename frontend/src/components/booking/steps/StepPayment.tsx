@@ -108,7 +108,7 @@ export function StepPayment({ form, update, onConfirm, onBack, loading, total, c
   };
 
   return (
-    <div className="animate-luxury-reveal space-y-8 sm:space-y-12 pb-12">
+    <div className="animate-luxury-reveal space-y-8 sm:space-y-12 pb-12 overflow-hidden">
       {/* 1. Header Section - Clean & Minimal */}
       <div className="flex flex-col gap-6 pb-8 sm:pb-12 border-b border-white/5">
         <div className="flex flex-wrap items-center gap-3 sm:gap-4">
@@ -120,7 +120,7 @@ export function StepPayment({ form, update, onConfirm, onBack, loading, total, c
             </div>
         </div>
         <div className="flex flex-col gap-4">
-            <h2 className="text-2xl xs:text-3xl sm:text-5xl md:text-7xl font-black text-white uppercase tracking-tight leading-tight font-sans pr-2">
+            <h2 className="text-xl sm:text-4xl md:text-6xl font-black text-white uppercase tracking-tight leading-tight font-sans">
                 {t("bookingFlow.payment.title")}
             </h2>
             <p className="text-white/40 text-[10px] sm:text-xs md:text-sm font-bold uppercase tracking-[0.2em] sm:tracking-[0.3em] max-w-xl font-sans mt-1 sm:mt-2">
@@ -191,7 +191,7 @@ export function StepPayment({ form, update, onConfirm, onBack, loading, total, c
           
           {/* 2. Client Dossier - Full Width Top */}
           <div className="relative p-5 sm:p-10 md:p-12 rounded-[2rem] sm:rounded-[56px] bg-[#0A0A0F] border border-white/5 overflow-hidden group shadow-2xl">
-              <div className="absolute top-0 right-0 w-96 h-96 bg-brand-gold/5 rounded-full blur-[120px] -translate-y-1/2 translate-x-1/2" />
+              <div className="absolute top-0 right-0 w-48 h-48 sm:w-96 sm:h-96 bg-brand-gold/5 rounded-full blur-[80px] sm:blur-[120px] -translate-y-1/4 translate-x-1/4" />
               
               <div className="relative z-10 grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12">
                   <div className="space-y-8 sm:space-y-12">
@@ -258,7 +258,7 @@ export function StepPayment({ form, update, onConfirm, onBack, loading, total, c
           <motion.div 
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="flex flex-col rounded-[2rem] sm:rounded-[56px] overflow-hidden bg-[#0C0C11] border border-white/5 shadow-luxury"
+            className="flex flex-col rounded-[2rem] sm:rounded-[56px] overflow-hidden bg-[#0C0C11] border border-white/5 shadow-luxury w-full"
           >
             <div className="p-5 sm:p-10 md:p-14 border-b border-white/5 flex flex-col md:flex-row md:items-center justify-between gap-6 sm:gap-8">
                 <div className="flex items-center gap-4 sm:gap-8 w-full">
@@ -266,7 +266,7 @@ export function StepPayment({ form, update, onConfirm, onBack, loading, total, c
                         <CreditCard className="w-6 h-6 sm:w-10 sm:h-10 text-brand-gold" />
                     </div>
                     <div className="flex-1 min-w-0">
-                        <h3 className="text-xl xs:text-2xl sm:text-4xl font-black text-white uppercase tracking-tight leading-tight font-sans pr-2">{t("bookingFlow.payment.transaction")}</h3>
+                        <h3 className="text-base sm:text-3xl font-black text-white uppercase tracking-tight leading-tight font-sans">{t("bookingFlow.payment.transaction")}</h3>
                         <p className="text-[8px] sm:text-[10px] text-brand-gold/40 uppercase tracking-[0.2em] sm:tracking-[0.4em] font-black mt-2">Transação Segura Protegida por SSL</p>
                     </div>
                 </div>

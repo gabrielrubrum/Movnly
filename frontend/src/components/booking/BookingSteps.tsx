@@ -187,7 +187,7 @@ export function BookingSteps() {
   if (!hasHydrated) return <div className="min-h-[400px] flex items-center justify-center"><Check className="w-8 h-8 animate-spin text-brand-gold" /></div>;
 
   return (
-    <div className="nx-container max-w-[1440px] animate-luxury-reveal relative">
+    <div className="nx-container max-w-[1440px] animate-luxury-reveal relative overflow-x-hidden">
       {/* Background Atmosphere */}
       <div className="absolute -top-40 left-0 w-full h-[1000px] pointer-events-none z-0">
           <div className="absolute top-1/4 left-1/4 w-[600px] h-[600px] bg-brand-gold/5 blur-[160px] rounded-full animate-pulse" />
