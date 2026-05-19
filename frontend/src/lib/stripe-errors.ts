@@ -4,13 +4,27 @@ export function translateStripeError(message: string | undefined, code?: string)
 
   const lower = message.toLowerCase();
 
+  // Test card used in live mode
   if (
-    code === "card_declined" ||
-    lower.includes("does not support") ||
-    lower.includes("não aceita essa moeda") ||
-    lower.includes("currency")
+    lower.includes("test mode") ||
+    lower.includes("valid for test") ||
+    lower.includes("válido apenas para testes") ||
+    lower.includes("test card")
+  ) {
+    return "Este é um cartão de teste e não pode ser usado em modo real. Use um cartão real para finalizar a reserva.";
+  }
+
+  if (
+    code === "card_declined" &&
+    (lower.includes("does not support") ||
+     lower.includes("não aceita essa moeda") ||
+     lower.includes("currency"))
   ) {
     return "Este cartão não aceita pagamentos em Euros (EUR). Utilize um cartão internacional/Visa ou Mastercard habilitado para compras no estrangeiro.";
+  }
+
+  if (code === "card_declined") {
+    return "O cartão foi recusado pelo banco. Verifique os dados ou utilize outro cartão.";
   }
 
   if (lower.includes("insufficient")) {
