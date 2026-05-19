@@ -59,32 +59,36 @@ export function CheckoutForm({ loading: parentLoading, total, bookingId, custome
         setLoading(true);
         setErrorMessage(null);
 
-        const { error: submitError } = await elements.submit();
-        if (submitError) {
-            setErrorMessage(translateStripeError(submitError.message, submitError.code));
-            setLoading(false);
-            return;
-        }
+        try {
+            const { error: submitError } = await elements.submit();
+            if (submitError) {
+                setErrorMessage(translateStripeError(submitError.message, submitError.code));
+                return;
+            }
 
-        const { error } = await stripe.confirmPayment({
-            elements,
-            confirmParams: {
-                return_url: `${window.location.origin}/booking/confirmation/${bookingId || "processing"}`,
-                payment_method_data: {
-                    billing_details: {
-                        name,
-                        email: customerEmail.trim() || undefined,
+            const { error } = await stripe.confirmPayment({
+                elements,
+                confirmParams: {
+                    return_url: `${window.location.origin}/booking/confirmation/${bookingId || "processing"}`,
+                    payment_method_data: {
+                        billing_details: {
+                            name,
+                            email: customerEmail.trim() || undefined,
+                        },
                     },
                 },
-            },
-        });
+            });
 
-        if (error) {
-            setErrorMessage(translateStripeError(error.message, error.code));
+            if (error) {
+                setErrorMessage(translateStripeError(error.message, error.code));
+                return;
+            }
+        } catch (err: any) {
+            console.error("Stripe payment submission failed:", err);
+            setErrorMessage(err?.message || "Ocorreu um erro ao processar o pagamento.");
+        } finally {
             setLoading(false);
-            return;
         }
-        setLoading(false);
     };
 
     return (
