@@ -462,12 +462,17 @@
       "waitingDetails": "Aguardando detalhes...",
       "initialize": "Ativar Pagamento",
       "currencyNotice": "Valor a cobrar: {amount} (Euros — EUR)",
-      "brazilCardNoticeTitle": "Importante: Cartões do Brasil",
-      "brazilCardNotice": "Atenção: Apenas cartões de crédito brasileiros habilitados para transações internacionais em Euros (EUR) serão aceitos. Cartões que transacionam apenas em Real (BRL) ou de débito local serão recusados pelo banco emissor.",
+      "securePaymentNoticeTitle": "Pagamento Internacional Seguro em Euro (€)",
+      "securePaymentNotice": "Aceitamos pagamentos globais através de cartões internacionais habilitados para compras online e transações em EUR (€), incluindo clientes de Portugal, Brasil, França e outros países.",
       "stripeNotConfigured": "Pagamentos reais indisponíveis. Configure as chaves Stripe live (pk_live_ / sk_live_) no servidor.",
       "cardholderName": "Nome no cartão",
       "cardholderNamePlaceholder": "Como está impresso no cartão",
-      "cardholderNameRequired": "Indique o nome impresso no cartão."
+      "cardholderNameRequired": "Indique o nome impresso no cartão.",
+      "failedTitle": "Pagamento Não Concluído",
+      "failedDesc": "O processamento da sua transação falhou ou foi cancelado. Nenhuma cobrança foi efetuada no seu cartão.",
+      "failedActionRetry": "Tentar Novamente",
+      "failedActionSupport": "Concierge 24/7",
+      "failedActionDashboard": "Ir para Painel de Cliente"
     },
     "extras": {
       "baby_seat": "Cadeira de Bebé",

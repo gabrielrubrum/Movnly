@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import { useStripe, useElements, PaymentElement } from "@stripe/react-stripe-js";
 import type { StripePaymentElementOptions } from "@stripe/stripe-js";
-import { Loader2, ChevronRight, AlertCircle, User } from "lucide-react";
+import { Loader2, ChevronRight, AlertCircle, User, Globe } from "lucide-react";
 import { useI18n } from "@/i18n/context";
 import { translateStripeError } from "@/lib/stripe-errors";
 import { formatCurrency } from "@/lib/utils";
@@ -94,14 +94,14 @@ export function CheckoutForm({ loading: parentLoading, total, bookingId, custome
                     {t("bookingFlow.payment.currencyNotice", { amount: formatCurrency(total, "EUR") })}
                 </p>
 
-                <div className="p-5 rounded-3xl bg-white/[0.01] border border-white/5 flex gap-4 text-white/50 text-[9px] font-medium leading-relaxed font-sans max-w-xl mx-auto backdrop-blur-sm shadow-xl">
-                    <AlertCircle className="w-4 h-4 text-brand-gold/40 flex-shrink-0 mt-0.5" />
-                    <div className="space-y-1 text-left">
-                        <span className="font-black uppercase tracking-[0.15em] text-brand-gold/60 block text-[9px]">
-                            {t("bookingFlow.payment.brazilCardNoticeTitle")}
+                <div className="p-4 rounded-2xl bg-black/40 border border-brand-gold/10 flex gap-3 text-white/70 text-[10px] font-normal leading-relaxed font-sans max-w-xl mx-auto backdrop-blur-md shadow-[0_4px_20px_rgba(0,0,0,0.3)] hover:border-brand-gold/20 hover:shadow-[0_0_15px_rgba(197,160,40,0.05)] transition-all duration-500 text-left">
+                    <Globe className="w-4 h-4 text-brand-gold/70 flex-shrink-0 mt-0.5" />
+                    <div className="space-y-0.5">
+                        <span className="font-semibold text-brand-gold/90 block text-[10px] tracking-wide">
+                            {t("bookingFlow.payment.securePaymentNoticeTitle")}
                         </span>
-                        <p className="leading-relaxed opacity-60 uppercase tracking-widest text-[8px]">
-                            {t("bookingFlow.payment.brazilCardNotice")}
+                        <p className="text-white/50 text-[9px] leading-relaxed">
+                            {t("bookingFlow.payment.securePaymentNotice")}
                         </p>
                     </div>
                 </div>

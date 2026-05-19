@@ -462,12 +462,17 @@
       "waitingDetails": "Waiting for details...",
       "initialize": "Activate Payment",
       "currencyNotice": "Amount to charge: {amount} (Euros — EUR)",
-      "brazilCardNoticeTitle": "Important: Brazilian Cards",
-      "brazilCardNotice": "Notice: Only Brazilian credit cards enabled for international transactions in Euros (EUR) will be accepted. Cards that only support local currency (BRL) or local debit cards will be declined by your issuing bank.",
+      "securePaymentNoticeTitle": "Secure International Payment in Euro (€)",
+      "securePaymentNotice": "We accept global payments via international cards enabled for online purchases and transactions in EUR (€), including clients from Portugal, Brazil, France, and other countries.",
       "stripeNotConfigured": "Live payments unavailable. Configure Stripe live keys (pk_live_ / sk_live_) on the server.",
       "cardholderName": "Name on card",
       "cardholderNamePlaceholder": "As printed on your card",
-      "cardholderNameRequired": "Please enter the name on your card."
+      "cardholderNameRequired": "Please enter the name on your card.",
+      "failedTitle": "Payment Failed",
+      "failedDesc": "Your transaction could not be processed or was cancelled. No charges were made to your card.",
+      "failedActionRetry": "Try Again",
+      "failedActionSupport": "Concierge 24/7",
+      "failedActionDashboard": "Go to Client Portal"
     },
     "extras": {
       "baby_seat": "Baby Seat",

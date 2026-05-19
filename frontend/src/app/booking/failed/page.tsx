@@ -7,7 +7,7 @@ import { Footer } from "@/components/layout/Footer";
 import { ShieldAlert, RefreshCcw, Headset, ArrowLeft } from "lucide-react";
 import { useI18n } from "@/i18n/context";
 
-export default function PaymentCancelledPage() {
+export default function PaymentFailedPage() {
     const { t } = useI18n();
 
     return (

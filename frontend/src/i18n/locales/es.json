@@ -369,12 +369,17 @@
       "notesPlaceholder": "Ej: Silla de bebé, maletas extra, etc.",
       "expiryPlaceholder": "MM/AA",
       "currencyNotice": "Valor a cobrar: {amount} (Euros — EUR)",
-      "brazilCardNoticeTitle": "Importante: Tarjetas de Brasil",
-      "brazilCardNotice": "Aviso: Solo se aceptarán tarjetas de crédito brasileñas habilitadas para transacciones internacionales en Euros (EUR). Las tarjetas que solo admiten moneda local (BRL) o de débito local serán rechazadas por su banco emisor.",
+      "securePaymentNoticeTitle": "Pago Internacional Seguro en Euros (€)",
+      "securePaymentNotice": "Aceptamos pagos globales a través de tarjetas internacionales habilitadas para compras online y transacciones en EUR (€), incluyendo clientes de Portugal, Brasil, Francia y otros países.",
       "stripeNotConfigured": "Pagos reales no disponibles. Configure las claves Stripe live (pk_live_ / sk_live_) en el servidor.",
       "cardholderName": "Nombre en la tarjeta",
       "cardholderNamePlaceholder": "Como figura en la tarjeta",
-      "cardholderNameRequired": "Indique el nombre impreso en la tarjeta."
+      "cardholderNameRequired": "Indique el nombre impreso en la tarjeta.",
+      "failedTitle": "Pago No Completado",
+      "failedDesc": "El procesamiento de su transacción falló o fue cancelado. No se ha realizado ningún cargo en su tarjeta.",
+      "failedActionRetry": "Intentar de Nuevo",
+      "failedActionSupport": "Concierge 24/7",
+      "failedActionDashboard": "Ir al Panel de Cliente"
     },
     "extras": {
       "baby_seat": "Silla de Bebé",
