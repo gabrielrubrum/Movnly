@@ -28,10 +28,28 @@
       "placeholder": "Selecionar Data",
       "placeholder_time": "Horário",
       "months": [
-        "Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho",
-        "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"
+        "Janeiro",
+        "Fevereiro",
+        "Março",
+        "Abril",
+        "Maio",
+        "Junho",
+        "Julho",
+        "Agosto",
+        "Setembro",
+        "Outubro",
+        "Novembro",
+        "Dezembro"
       ],
-      "days": ["Dom", "Seg", "Ter", "Qua", "Qui", "Sex", "Sáb"]
+      "days": [
+        "Dom",
+        "Seg",
+        "Ter",
+        "Qua",
+        "Qui",
+        "Sex",
+        "Sáb"
+      ]
     }
   },
   "hero": {
@@ -77,31 +95,52 @@
       "label": "Transfer de Aeroporto",
       "desc": "Recepção personalizada no Aeroporto de Lisboa",
       "full_desc": "Serviço de Meet & Greet com monitorização de voo em tempo real para garantir que o seu motorista está lá à sua chegada.",
-      "features": ["Monitorização de Voo", "Recepção no Terminal", "Apoio com Bagagem", "Sem Esperas"]
+      "features": [
+        "Monitorização de Voo",
+        "Recepção no Terminal",
+        "Apoio com Bagagem",
+        "Sem Esperas"
+      ]
     },
     "hotels": {
       "label": "Serviço Hoteleiro",
       "desc": "Mobilidade dedicada para unidades hoteleiras",
       "full_desc": "Soluções de transporte para hóspedes, garantindo um serviço à altura dos melhores hotéis de Portugal.",
-      "features": ["Disponibilidade 24h", "Viaturas Modernas", "Protocolo Profissional"]
+      "features": [
+        "Disponibilidade 24h",
+        "Viaturas Modernas",
+        "Protocolo Profissional"
+      ]
     },
     "corporate": {
       "label": "Mobilidade Empresarial",
       "desc": "Apoio logístico para o setor corporativo",
       "full_desc": "Transporte para reuniões, eventos e deslocações diárias com faturação mensal e prioridade de reserva.",
-      "features": ["Faturação Mensal", "Gestor de Conta", "Wi-Fi a Bordo"]
+      "features": [
+        "Faturação Mensal",
+        "Gestor de Conta",
+        "Wi-Fi a Bordo"
+      ]
     },
     "groups": {
       "label": "Viagens em Grupo",
       "desc": "Vans de passageiros até 8 lugares",
       "full_desc": "Conforto para famílias ou equipas de trabalho com viaturas espaçosas e seguras.",
-      "features": ["Grande Capacidade", "Vans Recentes", "Ar Condicionado Bizona"]
+      "features": [
+        "Grande Capacidade",
+        "Vans Recentes",
+        "Ar Condicionado Bizona"
+      ]
     },
     "citytour": {
       "label": "Passeios Privados",
       "desc": "Descubra Portugal com conforto",
       "full_desc": "Itinerários personalizados por Sintra, Cascais, Fátima ou qualquer outro destino à sua escolha.",
-      "features": ["Guia Motorista", "Flexibilidade de Horário", "Conforto Total"]
+      "features": [
+        "Guia Motorista",
+        "Flexibilidade de Horário",
+        "Conforto Total"
+      ]
     }
   },
   "categories_list": {
@@ -462,8 +501,8 @@
       "waitingDetails": "Aguardando detalhes...",
       "initialize": "Ativar Pagamento",
       "currencyNotice": "Valor a cobrar: {amount} (Euros — EUR)",
-      "securePaymentNoticeTitle": "Pagamento Internacional Seguro em Euro (€)",
-      "securePaymentNotice": "Aceitamos pagamentos globais através de cartões internacionais habilitados para compras online e transações em EUR (€), incluindo clientes de Portugal, Brasil, França e outros países.",
+      "securePaymentNoticeTitle": "Pagamento em Euros (€)",
+      "securePaymentNotice": "Aceitamos cartões de crédito e débito internacionais. Toda a transação é processada de forma segura e em conformidade com os padrões de segurança do setor.",
       "stripeNotConfigured": "Pagamentos reais indisponíveis. Configure as chaves Stripe live (pk_live_ / sk_live_) no servidor.",
       "cardholderName": "Nome no cartão",
       "cardholderNamePlaceholder": "Como está impresso no cartão",
@@ -472,7 +511,8 @@
       "failedDesc": "O banco ou emissor do cartão recusou a transação. Verifique se os dados estão corretos ou tente utilizar outro cartão. Nenhuma cobrança foi efetuada.",
       "failedActionRetry": "Tentar Novamente",
       "failedActionSupport": "Contactar Concierge 24/7",
-      "failedActionDashboard": "Aceder ao MyMOVNLY"
+      "failedActionDashboard": "Aceder ao MyMOVNLY",
+      "securityNotice": "Ligação encriptada de ponta a ponta"
     },
     "extras": {
       "baby_seat": "Cadeira de Bebé",
@@ -639,19 +679,39 @@
     "cols": {
       "services": {
         "title": "Serviços",
-        "links": ["Aeroporto", "Hotéis", "Empresas", "Grupos", "Tours"]
+        "links": [
+          "Aeroporto",
+          "Hotéis",
+          "Empresas",
+          "Grupos",
+          "Tours"
+        ]
       },
       "company": {
         "title": "Institucional",
-        "links": ["Sobre Nós", "Frota", "Carreiras", "Parceiros"]
+        "links": [
+          "Sobre Nós",
+          "Frota",
+          "Carreiras",
+          "Parceiros"
+        ]
       },
       "support": {
         "title": "Suporte",
-        "links": ["Ajuda", "Contactos", "Privacidade", "Termos"]
+        "links": [
+          "Ajuda",
+          "Contactos",
+          "Privacidade",
+          "Termos"
+        ]
       }
     },
     "copyright": "© {year} MOVNLY. Todos os direitos reservados.",
-    "legal": ["Privacidade", "Termos", "Como Funciona"],
+    "legal": [
+      "Privacidade",
+      "Termos",
+      "Como Funciona"
+    ],
     "subscribe": "Subscrever",
     "allRights": "Todos os direitos reservados.",
     "developedBy": "Desenvolvido por"

@@ -369,8 +369,8 @@
       "notesPlaceholder": "Ej: Silla de bebé, maletas extra, etc.",
       "expiryPlaceholder": "MM/AA",
       "currencyNotice": "Valor a cobrar: {amount} (Euros — EUR)",
-      "securePaymentNoticeTitle": "Pago Internacional Seguro en Euros (€)",
-      "securePaymentNotice": "Aceptamos pagos globales a través de tarjetas internacionales habilitadas para compras online y transacciones en EUR (€), incluyendo clientes de Portugal, Brasil, Francia y otros países.",
+      "securePaymentNoticeTitle": "Pago en Euros (€)",
+      "securePaymentNotice": "Aceptamos tarjetas de crédito y débito internacionales. Todas las transacciones se procesan de forma segura de acuerdo con las normativas del sector.",
       "stripeNotConfigured": "Pagos reales no disponibles. Configure las claves Stripe live (pk_live_ / sk_live_) en el servidor.",
       "cardholderName": "Nombre en la tarjeta",
       "cardholderNamePlaceholder": "Como figura en la tarjeta",
@@ -379,7 +379,8 @@
       "failedDesc": "El banco o emisor de la tarjeta rechazó la transacción. Por favor, verifique los datos introducidos o intente con otra tarjeta. No se ha realizado ningún cargo.",
       "failedActionRetry": "Intentar de Nuevo",
       "failedActionSupport": "Contactar Concierge 24/7",
-      "failedActionDashboard": "Acceder a MyMOVNLY"
+      "failedActionDashboard": "Acceder a MyMOVNLY",
+      "securityNotice": "Conexión encriptada de extremo a extremo"
     },
     "extras": {
       "baby_seat": "Silla de Bebé",

@@ -267,16 +267,14 @@ export function StepPayment({ form, update, onConfirm, onBack, loading, total, c
                     </div>
                     <div className="flex-1 min-w-0">
                         <h3 className="text-base sm:text-3xl font-black text-white uppercase tracking-tight leading-tight font-sans">{t("bookingFlow.payment.transaction")}</h3>
-                        <p className="text-[8px] sm:text-[10px] text-brand-gold/40 uppercase tracking-[0.2em] sm:tracking-[0.4em] font-black mt-2">Transação Segura Protegida por SSL</p>
+                        <p className="text-[8px] sm:text-[10px] text-brand-gold/40 uppercase tracking-[0.2em] sm:tracking-[0.4em] font-black mt-2">{t("bookingFlow.payment.securityNotice")}</p>
                     </div>
                 </div>
                 <div className="hidden sm:flex flex-col items-end gap-3 shrink-0">
-                    <div className="flex items-center gap-5 mb-1 opacity-80">
-                        <img src="https://upload.wikimedia.org/wikipedia/commons/d/d6/Visa_2021.svg" alt="Visa" className="h-4 md:h-5" />
-                        <img src="https://upload.wikimedia.org/wikipedia/commons/2/2a/Mastercard-logo.svg" alt="Mastercard" className="h-6 md:h-8" />
-                        <img src="https://upload.wikimedia.org/wikipedia/commons/b/ba/Stripe_Logo%2C_revised_2016.svg" alt="Stripe" className="h-6 md:h-7 ml-2" />
+                    <div className="flex items-center gap-5 mb-1 opacity-30 grayscale hover:opacity-60 transition-opacity">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/d/d6/Visa_2021.svg" alt="Visa" className="h-3" />
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/2/2a/Mastercard-logo.svg" alt="Mastercard" className="h-5" />
                     </div>
-                    <span className="text-[8px] font-black tracking-[0.2em] uppercase text-brand-gold/40">Pagamento Processado via Stripe</span>
                 </div>
             </div>
 
@@ -363,9 +361,9 @@ export function StepPayment({ form, update, onConfirm, onBack, loading, total, c
                             </div>
 
                             {/* Security Seal */}
-                            <div className="pt-6 flex items-center justify-center gap-4 opacity-20">
-                                <ShieldCheck className="w-4 h-4" />
-                                <span className="text-[8px] font-black uppercase tracking-[0.5em]">Transação Segura via Encriptação SSL</span>
+                            <div className="pt-6 flex items-center justify-center gap-2 opacity-10">
+                                <Lock className="w-3.5 h-3.5" />
+                                <span className="text-[8px] font-black uppercase tracking-[0.3em]">{t("bookingFlow.payment.securityNotice")}</span>
                             </div>
                         </motion.div>
                     ) : (

@@ -28,10 +28,28 @@
       "placeholder": "Select Date",
       "placeholder_time": "Time",
       "months": [
-        "January", "February", "March", "April", "May", "June",
-        "July", "August", "September", "October", "November", "December"
+        "January",
+        "February",
+        "March",
+        "April",
+        "May",
+        "June",
+        "July",
+        "August",
+        "September",
+        "October",
+        "November",
+        "December"
       ],
-      "days": ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"]
+      "days": [
+        "Sun",
+        "Mon",
+        "Tue",
+        "Wed",
+        "Thu",
+        "Fri",
+        "Sat"
+      ]
     }
   },
   "hero": {
@@ -77,31 +95,52 @@
       "label": "Airport Transfer",
       "desc": "Personalized reception at Lisbon Airport",
       "full_desc": "Meet & Greet service with real-time flight monitoring to ensure your chauffeur is there upon arrival.",
-      "features": ["Flight Monitoring", "Terminal Reception", "Luggage Support", "No Waiting"]
+      "features": [
+        "Flight Monitoring",
+        "Terminal Reception",
+        "Luggage Support",
+        "No Waiting"
+      ]
     },
     "hotels": {
       "label": "Hotel Service",
       "desc": "Dedicated mobility for hotel units",
       "full_desc": "Transport solutions for guests, ensuring a service that matches Portugal's best hotels.",
-      "features": ["24h Availability", "Modern Vehicles", "Professional Protocol"]
+      "features": [
+        "24h Availability",
+        "Modern Vehicles",
+        "Professional Protocol"
+      ]
     },
     "corporate": {
       "label": "Corporate Mobility",
       "desc": "Logistical support for the business sector",
       "full_desc": "Transport for meetings, events, and daily travels with monthly billing and booking priority.",
-      "features": ["Monthly Billing", "Account Manager", "On-board Wi-Fi"]
+      "features": [
+        "Monthly Billing",
+        "Account Manager",
+        "On-board Wi-Fi"
+      ]
     },
     "groups": {
       "label": "Group Travel",
       "desc": "Passenger vans up to 8 seats",
       "full_desc": "Comfort for families or work teams with spacious and safe vehicles.",
-      "features": ["High Capacity", "Recent Vans", "Dual-zone AC"]
+      "features": [
+        "High Capacity",
+        "Recent Vans",
+        "Dual-zone AC"
+      ]
     },
     "citytour": {
       "label": "Private Tours",
       "desc": "Discover Portugal in comfort",
       "full_desc": "Custom itineraries through Sintra, Cascais, Fátima, or any other destination of your choice.",
-      "features": ["Driver Guide", "Flexible Schedule", "Total Comfort"]
+      "features": [
+        "Driver Guide",
+        "Flexible Schedule",
+        "Total Comfort"
+      ]
     }
   },
   "categories_list": {
@@ -462,8 +501,8 @@
       "waitingDetails": "Waiting for details...",
       "initialize": "Activate Payment",
       "currencyNotice": "Amount to charge: {amount} (Euros — EUR)",
-      "securePaymentNoticeTitle": "Secure International Payment in Euro (€)",
-      "securePaymentNotice": "We accept global payments via international cards enabled for online purchases and transactions in EUR (€), including clients from Portugal, Brazil, France, and other countries.",
+      "securePaymentNoticeTitle": "Payment in Euros (€)",
+      "securePaymentNotice": "We accept international credit and debit cards. All transactions are processed securely under strict industry compliance standards.",
       "stripeNotConfigured": "Live payments unavailable. Configure Stripe live keys (pk_live_ / sk_live_) on the server.",
       "cardholderName": "Name on card",
       "cardholderNamePlaceholder": "As printed on your card",
@@ -472,7 +511,8 @@
       "failedDesc": "The bank or card issuer declined the transaction. Please check if your details are correct or try another card. No charges were made.",
       "failedActionRetry": "Try Again",
       "failedActionSupport": "Contact Concierge 24/7",
-      "failedActionDashboard": "Access MyMOVNLY"
+      "failedActionDashboard": "Access MyMOVNLY",
+      "securityNotice": "End-to-end encrypted connection"
     },
     "extras": {
       "baby_seat": "Baby Seat",
@@ -639,19 +679,39 @@
     "cols": {
       "services": {
         "title": "Services",
-        "links": ["Airport", "Hotels", "Corporate", "Groups", "Tours"]
+        "links": [
+          "Airport",
+          "Hotels",
+          "Corporate",
+          "Groups",
+          "Tours"
+        ]
       },
       "company": {
         "title": "Institutional",
-        "links": ["About Us", "Fleet", "Careers", "Partners"]
+        "links": [
+          "About Us",
+          "Fleet",
+          "Careers",
+          "Partners"
+        ]
       },
       "support": {
         "title": "Support",
-        "links": ["Help", "Contacts", "Privacy", "Terms"]
+        "links": [
+          "Help",
+          "Contacts",
+          "Privacy",
+          "Terms"
+        ]
       }
     },
     "copyright": "© {year} MOVNLY. All rights reserved.",
-    "legal": ["Privacy", "Terms", "How it Works"],
+    "legal": [
+      "Privacy",
+      "Terms",
+      "How it Works"
+    ],
     "subscribe": "Subscribe",
     "allRights": "All rights reserved.",
     "developedBy": "Developed by"
