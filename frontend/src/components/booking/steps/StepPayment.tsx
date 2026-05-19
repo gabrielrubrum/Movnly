@@ -120,7 +120,7 @@ export function StepPayment({ form, update, onConfirm, onBack, loading, total, c
             </div>
         </div>
         <div className="flex flex-col gap-4">
-            <h2 className="text-3xl sm:text-5xl md:text-7xl font-black text-white uppercase tracking-tighter leading-none font-sans">
+            <h2 className="text-2xl xs:text-3xl sm:text-5xl md:text-7xl font-black text-white uppercase tracking-tight leading-tight font-sans pr-2">
                 {t("bookingFlow.payment.title")}
             </h2>
             <p className="text-white/40 text-[10px] sm:text-xs md:text-sm font-bold uppercase tracking-[0.2em] sm:tracking-[0.3em] max-w-xl font-sans mt-1 sm:mt-2">
@@ -139,7 +139,7 @@ export function StepPayment({ form, update, onConfirm, onBack, loading, total, c
           <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-full bg-brand-gold/10 flex items-center justify-center mx-auto mb-6 sm:mb-10 border border-brand-gold/20 shadow-xl">
             <Key className="w-10 h-10 sm:w-12 sm:h-12 text-brand-gold animate-pulse" />
           </div>
-          <h3 className="text-2xl sm:text-4xl font-black text-white uppercase tracking-tighter font-sans mb-4 sm:mb-6">{t("bookingFlow.payment.authRequired")}</h3>
+          <h3 className="text-2xl sm:text-4xl font-black text-white uppercase tracking-tight leading-tight font-sans mb-4 sm:mb-6">{t("bookingFlow.payment.authRequired")}</h3>
           <p className="text-white/40 text-xs sm:text-sm max-w-sm mx-auto mb-10 sm:mb-16 font-sans">{t("bookingFlow.payment.authDesc")}</p>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-10 text-left max-w-2xl mx-auto">
             <div className="space-y-4">
@@ -204,7 +204,7 @@ export function StepPayment({ form, update, onConfirm, onBack, loading, total, c
                                   </div>
                               </div>
                               <div>
-                                  <h3 className="text-2xl sm:text-4xl font-black text-white uppercase tracking-tighter font-sans leading-none">{user.name}</h3>
+                                  <h3 className="text-2xl sm:text-4xl font-black text-white uppercase tracking-tight leading-tight font-sans leading-none">{user.name}</h3>
                                   <p className="text-[9px] sm:text-[10px] text-brand-gold/60 uppercase tracking-[0.3em] sm:tracking-[0.4em] font-black mt-2">Sua Conta MOVNLY</p>
                               </div>
                           </div>
@@ -261,12 +261,12 @@ export function StepPayment({ form, update, onConfirm, onBack, loading, total, c
             className="flex flex-col rounded-[2rem] sm:rounded-[56px] overflow-hidden bg-[#0C0C11] border border-white/5 shadow-luxury"
           >
             <div className="p-5 sm:p-10 md:p-14 border-b border-white/5 flex flex-col md:flex-row md:items-center justify-between gap-6 sm:gap-8">
-                <div className="flex items-center gap-4 sm:gap-8">
+                <div className="flex items-center gap-4 sm:gap-8 w-full">
                     <div className="w-12 h-12 sm:w-20 sm:h-20 rounded-2xl sm:rounded-[2.5rem] bg-brand-gold/10 flex items-center justify-center border border-brand-gold/20 shadow-glow shrink-0">
                         <CreditCard className="w-6 h-6 sm:w-10 sm:h-10 text-brand-gold" />
                     </div>
-                    <div>
-                        <h3 className="text-2xl sm:text-4xl font-black text-white uppercase tracking-tighter font-sans leading-none">{t("bookingFlow.payment.transaction")}</h3>
+                    <div className="flex-1 min-w-0">
+                        <h3 className="text-xl xs:text-2xl sm:text-4xl font-black text-white uppercase tracking-tight leading-tight font-sans pr-2">{t("bookingFlow.payment.transaction")}</h3>
                         <p className="text-[8px] sm:text-[10px] text-brand-gold/40 uppercase tracking-[0.2em] sm:tracking-[0.4em] font-black mt-2">Transação Segura Protegida por SSL</p>
                     </div>
                 </div>
