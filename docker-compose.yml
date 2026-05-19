@@ -1,6 +1,6 @@
 services:
   movnly-db:
-    image: postgres:15-alpine
+    image: postgres:15
     container_name: movnly-db
     restart: always
     environment:
@@ -9,6 +9,8 @@ services:
       POSTGRES_DB: ${POSTGRES_DB:-movnly}
     volumes:
       - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
     networks:
       - movnly-network
 

@@ -5,19 +5,22 @@ import { Shield, Lock, Clock, UserCheck, Star, CheckCircle2 } from "lucide-react
 import { motion } from "framer-motion";
 import { useState, useEffect } from "react";
 
+import api from "@/lib/api";
+
 export function TrustSection() {
   const { t, tArray } = useI18n();
   const [ratingStr, setRatingStr] = useState("4.9");
 
   useEffect(() => {
-    fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3002'}/ratings/stats/public`)
-      .then(res => res.json())
-      .then(data => {
-        if (data.avg) {
-          setRatingStr(data.avg.toFixed(1));
+    api.get("/ratings/stats/public")
+      .then(res => {
+        if (res.data && res.data.avg) {
+          setRatingStr(res.data.avg.toFixed(1));
         }
       })
-      .catch(console.error);
+      .catch(err => {
+        console.warn("Ratings stats not available, using fallback:", err.message);
+      });
   }, []);
 
   return (
