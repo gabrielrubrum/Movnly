@@ -370,6 +370,7 @@ export function StepPayment({ form, update, onConfirm, onBack, loading, total, c
                                             bookingId={bookingId}
                                             customerName={user.name || form.name || ""}
                                             customerEmail={user.email || form.email || ""}
+                                            customerPhone={form.phone || ""}
                                         />
                                     </Elements>
                                 </div>

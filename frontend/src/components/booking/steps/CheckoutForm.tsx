@@ -29,9 +29,10 @@ interface Props {
     bookingId: string | null;
     customerName: string;
     customerEmail: string;
+    customerPhone?: string;
 }
 
-export function CheckoutForm({ loading: parentLoading, total, bookingId, customerName, customerEmail }: Props) {
+export function CheckoutForm({ loading: parentLoading, total, bookingId, customerName, customerEmail, customerPhone }: Props) {
     const stripe = useStripe();
     const elements = useElements();
     const { t } = useI18n();
@@ -74,6 +75,7 @@ export function CheckoutForm({ loading: parentLoading, total, bookingId, custome
                         billing_details: {
                             name,
                             email: customerEmail.trim() || undefined,
+                            phone: customerPhone?.trim() || "+351910000000",
                         },
                     },
                 },
