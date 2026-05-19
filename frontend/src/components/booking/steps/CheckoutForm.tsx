@@ -76,6 +76,12 @@ export function CheckoutForm({ loading: parentLoading, total, bookingId, custome
                             name,
                             email: customerEmail.trim() || undefined,
                             phone: customerPhone?.trim() || "+351910000000",
+                            address: {
+                                country: "PT",
+                                line1: "N/A",
+                                city: "Lisboa",
+                                postal_code: "1000-001",
+                            },
                         },
                     },
                 },
