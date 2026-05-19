@@ -33,8 +33,8 @@ export default function PaymentCancelledPage() {
                             <ShieldAlert className="w-10 h-10 text-red-500/80 drop-shadow-[0_0_15px_rgba(239,68,68,0.3)] animate-pulse" />
                         </div>
 
-                        <span className="text-[10px] font-black uppercase tracking-[0.5em] text-red-500/60 block mb-3">
-                            Elite Security Protocols
+                        <span className="text-[9px] font-black uppercase tracking-[0.35em] text-white/20 block mb-3">
+                            {t("bookingFlow.payment.title")}
                         </span>
                         
                         <h1 className="text-4xl md:text-5xl font-light text-white mb-5 tracking-tight font-sans">
@@ -74,8 +74,8 @@ export default function PaymentCancelledPage() {
                         </div>
                     </motion.div>
 
-                    <p className="text-center text-[8px] text-white/10 uppercase tracking-[0.5em] mt-10 font-black">
-                        MOVNLY GLOBAL SECURE GATEWAY
+                    <p className="text-center text-[9px] text-white/20 uppercase tracking-[0.3em] mt-10 font-medium">
+                        MOVNLY — Private Chauffeur Services
                     </p>
                 </div>
             </main>
