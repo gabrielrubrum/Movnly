@@ -8,18 +8,10 @@ import { useI18n } from "@/i18n/context";
 import { translateStripeError } from "@/lib/stripe-errors";
 import { formatCurrency } from "@/lib/utils";
 
-/** Stripe Payment Element — só cartão; nome e país são enviados no confirmPayment */
+/** Stripe Payment Element — só cartão, deixa o Stripe coletar os dados necessários */
 const PAYMENT_ELEMENT_OPTIONS: StripePaymentElementOptions = {
     layout: "tabs",
     paymentMethodOrder: ["card"],
-    fields: {
-        billingDetails: {
-            name: "never",
-            email: "never",
-            phone: "never",
-            address: "never",
-        },
-    },
 };
 
 interface Props {
@@ -71,19 +63,6 @@ export function CheckoutForm({ loading: parentLoading, total, bookingId, custome
                 elements,
                 confirmParams: {
                     return_url: `${window.location.origin}/booking/confirmation/${bookingId || "processing"}`,
-                    payment_method_data: {
-                        billing_details: {
-                            name,
-                            email: customerEmail.trim() || undefined,
-                            phone: customerPhone?.trim() || "+351910000000",
-                            address: {
-                                country: "PT",
-                                line1: "N/A",
-                                city: "Lisboa",
-                                postal_code: "1000-001",
-                            },
-                        },
-                    },
                 },
             });
 
