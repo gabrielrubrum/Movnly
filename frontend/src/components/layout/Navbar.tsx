@@ -53,7 +53,7 @@ export function Navbar() {
         {/* Logo */}
         <Link href="/" className="flex items-center gap-4 group shrink-0 mr-8">
           <div className="relative">
-            <img src="/logoMov.png" alt="MOVNLY" className="h-10 sm:h-14 md:h-[65px] w-auto transition-all duration-700 group-hover:scale-105" />
+            <img src="/logoMov.png" alt="MOVNLY" className="h-[52px] sm:h-[62px] md:h-[70px] w-auto transition-all duration-700 group-hover:scale-105" />
             <div className="absolute inset-0 bg-brand-gold/20 blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
           </div>
         </Link>
