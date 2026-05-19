@@ -140,9 +140,9 @@ export function LanguageSwitcher({ variant = "navbar" }: LanguageSwitcherProps) 
         className="flex items-center gap-1.5 px-3 py-2 rounded-lg text-sm text-white/50 hover:text-white/80 hover:bg-white/[0.05] transition-all"
         aria-label={t("languageSwitcher.label")}
       >
-        <img src={`https://flagcdn.com/w40/${localeFlags[locale]}.png`} alt={locale} className="w-5 h-auto rounded-[2px] object-cover shadow-sm" />
+        <img src={`https://flagcdn.com/w40/${localeFlags[locale]}.png`} alt={locale} className="w-5 h-3.5 rounded-[2px] object-cover shadow-sm shrink-0" />
         <span className="font-semibold uppercase tracking-wide text-xs ml-0.5">{locale}</span>
-        <ChevronDown className={cn("w-3 h-3 transition-transform duration-200", open && "rotate-180")} />
+        <ChevronDown className={cn("w-3.5 h-3.5 transition-transform duration-200 shrink-0 opacity-40", open && "rotate-180")} />
       </button>
 
       {open && (

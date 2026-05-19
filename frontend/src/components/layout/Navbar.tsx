@@ -35,23 +35,25 @@ export function Navbar() {
     <>
       <nav
         className={cn(
-          "fixed top-0 left-0 right-0 z-[200] transition-all duration-1000 h-[110px] flex items-center",
-          scrolled
-            ? "bg-black/40 backdrop-blur-2xl border-b border-white/[0.05] h-[85px] shadow-[0_10px_40px_rgba(0,0,0,0.3)]"
-            : "bg-transparent h-[110px]"
+          "fixed top-0 left-0 right-0 z-[200] transition-all duration-700 flex items-center",
+          mobileMenuOpen
+            ? "bg-[#07070A]/95 backdrop-blur-2xl border-b border-white/[0.05] h-[80px]"
+            : scrolled
+              ? "bg-black/40 backdrop-blur-2xl border-b border-white/[0.05] h-[80px] sm:h-[85px] shadow-[0_10px_40px_rgba(0,0,0,0.3)]"
+              : "bg-transparent h-[80px] sm:h-[110px]"
         )}
       >
       {/* Dynamic Glow Line */}
       <div className={cn(
-        "absolute bottom-0 left-0 h-[1px] bg-gradient-to-r from-transparent via-brand-gold/20 to-transparent transition-all duration-1000",
-        scrolled ? "opacity-100 w-full" : "opacity-0 w-0"
+        "absolute bottom-0 left-0 h-[1px] bg-gradient-to-r from-transparent via-brand-gold/20 to-transparent transition-all duration-700",
+        (scrolled && !mobileMenuOpen) ? "opacity-100 w-full" : "opacity-0 w-0"
       )} />
       <div className="nx-container flex items-center justify-between">
 
         {/* Logo */}
         <Link href="/" className="flex items-center gap-4 group shrink-0 mr-8">
           <div className="relative">
-            <img src="/logoMov.png" alt="MOVNLY" className="h-14 md:h-[65px] w-auto transition-all duration-700 group-hover:scale-105" />
+            <img src="/logoMov.png" alt="MOVNLY" className="h-10 sm:h-14 md:h-[65px] w-auto transition-all duration-700 group-hover:scale-105" />
             <div className="absolute inset-0 bg-brand-gold/20 blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
           </div>
         </Link>
@@ -69,8 +71,8 @@ export function Navbar() {
           ))}
         </div>
 
-        {/* Action Group */}
-        <div className="flex items-center gap-8">
+        {/* Action Group - Responsive gap to prevent squeezing on narrow screens */}
+        <div className="flex items-center gap-2 sm:gap-8">
           <LanguageSwitcher variant="navbar" />
 
           {hasHydrated && user ? (
@@ -99,10 +101,10 @@ export function Navbar() {
           </Link>
 
           <button
-            className="lg:hidden text-white p-2"
+            className="lg:hidden text-white p-2 flex items-center justify-center rounded-lg hover:bg-white/[0.05] transition-all"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
           >
-            {mobileMenuOpen ? <X /> : <Menu />}
+            {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
           </button>
         </div>
       </div>
