@@ -183,7 +183,7 @@ export function StepVehicle({ form, update, onNext, onBack }: Props) {
                   </div>
 
                   {/* Content Panel - Bottom Half */}
-                  <div className="flex-1 flex flex-col p-10 space-y-10 border-t border-white/[0.05]">
+                  <div className="flex-1 flex flex-col p-6 sm:p-10 space-y-10 border-t border-white/[0.05]">
                     
                     <div className="flex flex-col gap-4">
                       <div>
@@ -207,8 +207,8 @@ export function StepVehicle({ form, update, onNext, onBack }: Props) {
                       </p>
                     </div>
 
-                    {/* Features Grid */}
-                    <div className="grid grid-cols-2 gap-x-8 gap-y-5 py-8 border-y border-white/[0.03]">
+                    {/* Features Grid - Responsive Columns to prevent truncation */}
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-4 sm:gap-x-8 gap-y-5 py-8 border-y border-white/[0.03]">
                       {(cat.features || []).slice(0, 4).map((f, fi) => (
                         <div key={fi} className="flex items-center gap-4 group/feat">
                           <div className={cn(
@@ -222,56 +222,56 @@ export function StepVehicle({ form, update, onNext, onBack }: Props) {
 
                     {/* Bottom row: Specs + Price & CTA */}
                     <div className="flex flex-col gap-10">
-                      {/* Specs Row */}
-                      <div className="flex items-center gap-8">
+                      {/* Specs Row - Wrapping enabled */}
+                      <div className="flex flex-wrap items-center gap-4 sm:gap-8">
                         <div className="flex items-center gap-3">
                           <Users className="w-4 h-4 text-white/20" />
                           <span className="text-[11px] font-black text-white/40 uppercase tracking-widest font-sans">
                             {cat.passengers} PAX
                           </span>
                         </div>
-                        <div className="w-px h-4 bg-white/10" />
+                        <div className="hidden sm:block w-px h-4 bg-white/10" />
                         <div className="flex items-center gap-3">
                           <Briefcase className="w-4 h-4 text-white/20" />
                           <span className="text-[11px] font-black text-white/40 uppercase tracking-widest font-sans">
                             {cat.luggage} MALAS
                           </span>
                         </div>
-                        <div className="w-px h-4 bg-white/10" />
+                        <div className="hidden sm:block w-px h-4 bg-white/10" />
                         <div className="flex items-center gap-2">
                           <Star className="w-3.5 h-3.5 fill-brand-gold text-brand-gold" />
                           <span className="text-[11px] font-black text-brand-gold/60 font-sans">5.0</span>
                         </div>
                       </div>
 
-                      {/* Financials & CTA */}
-                      <div className="flex items-center justify-between gap-4 pt-6">
-                        <div className="flex flex-col min-w-[120px]">
-                          <span className="text-[9px] font-black uppercase tracking-[0.3em] text-white/20 font-sans mb-2">
+                      {/* Financials & CTA - Optimized for compact layouts */}
+                      <div className="flex flex-row items-center justify-between gap-2 sm:gap-4 pt-6">
+                        <div className="flex flex-col min-w-[100px] sm:min-w-[120px]">
+                          <span className="text-[8px] sm:text-[9px] font-black uppercase tracking-[0.3em] text-white/20 font-sans mb-2">
                             {form.tripType === "roundtrip" ? "Total (Ida e Volta)" : "Valor Total"}
                           </span>
-                          <div className="flex items-baseline gap-2">
+                          <div className="flex items-baseline gap-1 sm:gap-2">
                             <span className={cn(
-                              "text-5xl font-black tracking-tighter font-sans transition-colors duration-700",
-                              selected ? "text-brand-gold" : "text-white"
-                            )}>
+                               "text-3xl sm:text-5xl font-black tracking-tighter font-sans transition-colors duration-700",
+                               selected ? "text-brand-gold" : "text-white"
+                             )}>
                               {finalPrice}
                             </span>
-                            <span className="text-base font-black text-white/10 tracking-widest uppercase">EUR</span>
+                            <span className="text-[10px] sm:text-base font-black text-white/10 tracking-widest uppercase">EUR</span>
                           </div>
                         </div>
 
                         {/* CTA Button */}
                         <div className={cn(
-                          "flex items-center gap-4 px-8 py-5 rounded-2xl transition-all duration-700 shrink-0 isolate relative overflow-hidden",
+                          "flex items-center gap-2 sm:gap-4 px-4 sm:px-8 py-3.5 sm:py-5 rounded-[1.2rem] sm:rounded-2xl transition-all duration-700 shrink-0 isolate relative overflow-hidden cursor-pointer",
                           selected 
                             ? "bg-brand-gold text-black shadow-[0_20px_40px_rgba(212,175,55,0.4)]" 
                             : "bg-white/[0.04] border border-white/10 text-white/40 group-hover/card:border-brand-gold/50 group-hover/card:text-white group-hover/card:bg-brand-gold/10"
                         )}>
-                          <span className="text-[11px] font-black uppercase tracking-[0.4em] font-sans relative z-10">
+                          <span className="text-[9px] sm:text-[11px] font-black uppercase tracking-[0.4em] font-sans relative z-10">
                             {selected ? "Reservado" : "Escolher"}
                           </span>
-                          <ChevronRight className={cn("w-5 h-5 transition-transform relative z-10", selected ? "translate-x-1.5" : "group-hover/card:translate-x-1.5")} />
+                          <ChevronRight className={cn("w-4 h-4 sm:w-5 sm:h-5 transition-transform relative z-10", selected ? "translate-x-1.5" : "group-hover/card:translate-x-1.5")} />
                           {selected && (
                             <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/50 to-transparent -translate-x-[200%] animate-[shimmer_1.5s_infinite] z-0" />
                           )}

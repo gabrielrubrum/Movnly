@@ -25,7 +25,7 @@ export function BookingSummaryPanel({ form, total, extrasTotal, calculatedBasePr
       <div className="sticky top-24 font-sans">
         <div className="glass-bento-luxury border-white/5 overflow-hidden animate-luxury-reveal bg-[#0A0A0F]/60 backdrop-blur-[40px] shadow-[0_50px_120px_-30px_rgba(0,0,0,0.9)]">
           {/* God-Tier Header */}
-          <div className="p-12 pb-6 space-y-6">
+          <div className="p-6 sm:p-12 pb-6 space-y-6">
             <div className="flex items-center justify-between">
               <h3 className="text-4xl font-black text-white uppercase tracking-tighter leading-none">{t("bookingFlow.summary.title")}</h3>
               <div className="w-14 h-14 rounded-2xl border border-brand-gold/10 flex items-center justify-center bg-brand-gold/5 shadow-[0_0_30px_rgba(212,175,55,0.1)]">
@@ -38,10 +38,10 @@ export function BookingSummaryPanel({ form, total, extrasTotal, calculatedBasePr
             </p>
           </div>
 
-          <div className="p-12 pt-6 space-y-10">
+          <div className="p-6 sm:p-12 pt-6 space-y-10">
             {/* Immersive Vehicle Identity */}
             {step > 1 && (
-              <div className="group relative overflow-hidden rounded-[2rem] border border-white/5 bg-white/[0.01] p-8 transition-all hover:border-brand-gold/20">
+              <div className="group relative overflow-hidden rounded-[2rem] border border-white/5 bg-white/[0.01] p-5 sm:p-8 transition-all hover:border-brand-gold/20">
                 <div className="flex items-center gap-8 relative z-10">
                   <div className="w-28 h-20 rounded-xl overflow-hidden border border-white/10 bg-black/40">
                     <img
@@ -166,7 +166,7 @@ export function BookingSummaryPanel({ form, total, extrasTotal, calculatedBasePr
 
                 <div className="mt-12 group/seal relative">
                   <div className="absolute -inset-4 bg-brand-gold/5 rounded-[2rem] blur-xl opacity-0 group-hover/seal:opacity-100 transition-opacity" />
-                  <div className="relative flex items-center gap-6 p-8 rounded-[2rem] bg-white/[0.02] border border-white/5 overflow-hidden">
+                  <div className="relative flex items-center gap-6 p-5 sm:p-8 rounded-[2rem] bg-white/[0.02] border border-white/5 overflow-hidden">
                     <div className="w-12 h-12 rounded-full bg-brand-gold/10 flex items-center justify-center shrink-0 border border-brand-gold/10">
                       <ShieldCheck className="w-6 h-6 text-brand-gold" />
                     </div>

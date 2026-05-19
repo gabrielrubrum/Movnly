@@ -75,13 +75,13 @@ export function Footer() {
                 </div>
               ) : (
                 <form onSubmit={handleSubscribe}>
-                  <div className="flex bg-black/40 rounded-2xl border border-white/5 p-2 focus-within:border-brand-gold/30 transition-all shadow-inner">
+                  <div className="flex flex-col sm:flex-row bg-transparent sm:bg-black/40 rounded-2xl border border-transparent sm:border-white/5 p-0 sm:p-2 gap-3 sm:gap-0 focus-within:border-brand-gold/30 transition-all shadow-inner">
                     <input
                       type="email"
                       value={email}
                       onChange={e => setEmail(e.target.value)}
                       placeholder={t("footer.newsletter.placeholder")}
-                      className="bg-transparent border-none focus:ring-0 text-white text-sm px-6 flex-1 font-medium outline-none"
+                      className="bg-black/40 sm:bg-transparent border border-white/5 sm:border-none focus:ring-0 text-white text-sm px-6 py-4 sm:py-0 rounded-xl sm:rounded-none flex-1 font-medium outline-none"
                       required
                     />
                     <button

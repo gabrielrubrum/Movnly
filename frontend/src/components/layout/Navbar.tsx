@@ -110,7 +110,7 @@ export function Navbar() {
 
       {/* Mobile Menu */}
       {mobileMenuOpen && (
-        <div className="fixed inset-0 bg-[#07070A]/95 backdrop-blur-2xl z-[190] lg:hidden animate-luxury-reveal flex flex-col pt-32 px-10">
+        <div className="fixed inset-0 bg-[#07070A]/95 backdrop-blur-2xl z-[190] lg:hidden animate-luxury-reveal flex flex-col pt-32 pb-10 px-10 overflow-y-auto">
           <div className="flex flex-col gap-8">
             {navItems.map((item, i) => (
               <Link
