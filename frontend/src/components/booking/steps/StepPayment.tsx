@@ -321,6 +321,7 @@ export function StepPayment({ form, update, onConfirm, onBack, loading, total, c
                             <div className="p-1 md:p-2 bg-gradient-to-b from-white/[0.05] to-transparent rounded-[2.5rem] sm:rounded-[48px] border border-white/5 shadow-2xl">
                                 <div className="p-4 sm:p-8 md:p-12 bg-[#0C0C11] rounded-[2rem] sm:rounded-[44px] shadow-inner">
                                     <Elements 
+                                        key={clientSecret}
                                         stripe={stripePromise} 
                                         options={{ 
                                             clientSecret,
