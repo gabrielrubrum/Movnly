@@ -55,18 +55,16 @@ export function StepPayment({ form, update, onConfirm, onBack, loading, total, c
 
   useEffect(() => {
     setClientSecret(propClientSecret);
-    if (propClientSecret && isMockStripeSecret(propClientSecret)) {
+    setPaymentConfigError(null);
+  }, [propClientSecret]);
+
+  useEffect(() => {
+    if (!stripePublishableKey && (!clientSecret || !isMockStripeSecret(clientSecret))) {
       setPaymentConfigError(t("bookingFlow.payment.stripeNotConfigured"));
     } else {
       setPaymentConfigError(null);
     }
-  }, [propClientSecret, t]);
-
-  useEffect(() => {
-    if (!stripePublishableKey) {
-      setPaymentConfigError(t("bookingFlow.payment.stripeNotConfigured"));
-    }
-  }, [t]);
+  }, [clientSecret, t]);
 
   const handleInstantRegister = async () => {
     if (!authForm.name || !authForm.email) {
@@ -297,6 +295,23 @@ export function StepPayment({ form, update, onConfirm, onBack, loading, total, c
                         >
                             <p className="text-red-400 text-sm font-bold uppercase tracking-widest max-w-lg">{paymentConfigError}</p>
                         </motion.div>
+                    ) : clientSecret && isMockStripeSecret(clientSecret) ? (
+                        <motion.div 
+                            key="mock-payment"
+                            initial={{ opacity: 0, scale: 0.98 }} animate={{ opacity: 1, scale: 1 }}
+                            className="w-full max-w-4xl mx-auto space-y-12"
+                        >
+                            <div className="p-1 md:p-2 bg-gradient-to-b from-white/[0.05] to-transparent rounded-[2.5rem] sm:rounded-[48px] border border-white/5 shadow-2xl">
+                                <div className="p-4 sm:p-8 md:p-12 bg-[#0C0C11] rounded-[2rem] sm:rounded-[44px] shadow-inner">
+                                    <MockCheckoutForm
+                                        total={total}
+                                        bookingId={bookingId}
+                                        onConfirm={onConfirm}
+                                        customerName={user?.name || form.name || ""}
+                                    />
+                                </div>
+                            </div>
+                        </motion.div>
                     ) : clientSecret && stripePromise ? (
                         <motion.div 
                             key="stripe"
@@ -397,4 +412,113 @@ export function StepPayment({ form, update, onConfirm, onBack, loading, total, c
       </div>
     </div>
   );
+}
+
+interface MockCheckoutProps {
+    total: number;
+    bookingId: string | null;
+    onConfirm: () => Promise<void>;
+    customerName: string;
+}
+
+function MockCheckoutForm({ total, bookingId, customerName }: MockCheckoutProps) {
+    const { t } = useI18n();
+    const [loading, setLoading] = useState(false);
+    const [name, setName] = useState(customerName);
+    const [cardNumber, setCardNumber] = useState("");
+    const [expiry, setExpiry] = useState("");
+    const [cvc, setCvc] = useState("");
+
+    const handleSubmit = async (e: React.FormEvent) => {
+        e.preventDefault();
+        setLoading(true);
+        // Simulate a high-end processing delay
+        setTimeout(() => {
+            setLoading(false);
+            window.location.href = `/booking/confirmation/${bookingId || "processing"}?mock=true`;
+        }, 1800);
+    };
+
+    return (
+        <form onSubmit={handleSubmit} className="space-y-8 animate-luxury-reveal text-left">
+            <div className="p-4 rounded-2xl bg-amber-500/10 border border-amber-500/20 text-amber-500 text-[10px] font-black uppercase tracking-widest text-center">
+                Modo de Simulação Ativo (Sem Cobrança Real)
+            </div>
+            
+            <div className="space-y-4">
+                <label className="text-[10px] font-black uppercase tracking-[0.4em] text-white/30 ml-2">
+                    Nome no Cartão
+                </label>
+                <input
+                    type="text"
+                    required
+                    className="w-full bg-white/[0.03] border border-white/10 rounded-[20px] py-5 px-6 text-white focus:border-brand-gold/50 transition-all text-sm"
+                    placeholder="Gabriel Rubrum"
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
+                />
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className="space-y-4">
+                    <label className="text-[10px] font-black uppercase tracking-[0.4em] text-white/30 ml-2">
+                        Número do Cartão
+                    </label>
+                    <input
+                        type="text"
+                        required
+                        className="w-full bg-white/[0.03] border border-white/10 rounded-[20px] py-5 px-6 text-white focus:border-brand-gold/50 transition-all text-sm"
+                        placeholder="4242 4242 4242 4242"
+                        value={cardNumber}
+                        onChange={(e) => setCardNumber(e.target.value)}
+                    />
+                </div>
+                <div className="grid grid-cols-2 gap-4">
+                    <div className="space-y-4">
+                        <label className="text-[10px] font-black uppercase tracking-[0.4em] text-white/30 ml-2">
+                            Validade
+                        </label>
+                        <input
+                            type="text"
+                            required
+                            className="w-full bg-white/[0.03] border border-white/10 rounded-[20px] py-5 px-6 text-white focus:border-brand-gold/50 transition-all text-sm"
+                            placeholder="12/30"
+                            value={expiry}
+                            onChange={(e) => setExpiry(e.target.value)}
+                        />
+                    </div>
+                    <div className="space-y-4">
+                        <label className="text-[10px] font-black uppercase tracking-[0.4em] text-white/30 ml-2">
+                            CVC
+                        </label>
+                        <input
+                            type="text"
+                            required
+                            className="w-full bg-white/[0.03] border border-white/10 rounded-[20px] py-5 px-6 text-white focus:border-brand-gold/50 transition-all text-sm"
+                            placeholder="123"
+                            value={cvc}
+                            onChange={(e) => setCvc(e.target.value)}
+                        />
+                    </div>
+                </div>
+            </div>
+
+            <button
+                type="submit"
+                disabled={loading}
+                className="w-full py-5 md:py-6 bg-gradient-to-br from-brand-gold via-[#C5A028] to-brand-gold text-black text-xs md:text-sm font-black uppercase tracking-[0.2em] md:tracking-[0.3em] rounded-full hover:scale-[1.02] active:scale-[0.98] transition-all duration-700 shadow-luxury-gold flex items-center justify-center gap-3"
+            >
+                {loading ? (
+                    <>
+                        <Loader2 className="w-5 h-5 animate-spin" />
+                        A PROCESSAR SIMULAÇÃO...
+                    </>
+                ) : (
+                    <>
+                        CONFIRMAR RESERVA (SIMULAÇÃO)
+                    </>
+                )}
+            </button>
+        </form>
+    );
 }
