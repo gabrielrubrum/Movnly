@@ -32,6 +32,7 @@ model User {
   bookings           Booking[]
   chatMessages       ChatMessage[]
   driverProfile      DriverProfile?
+  driverPayouts      DriverPayout[]
 }
 
 model DriverProfile {
@@ -89,6 +90,11 @@ model Booking {
   auditLogs       AuditLog[]
   chatMessages    ChatMessage[]
   rating          Rating?
+  payments        Payment[]
+  driverPayouts   DriverPayout[]
+  bookingPricing  BookingPricing?
+  bookingExtras   BookingExtra[]
+  passengerData   BookingPassenger?
 }
 
 model Transaction {
@@ -152,4 +158,85 @@ model Rating {
   comment     String?
   createdAt   DateTime @default(now())
   booking     Booking  @relation(fields: [bookingId], references: [id])
+}
+
+model Payment {
+  id                    String   @id @default(uuid())
+  bookingId             String
+  stripePaymentIntentId String?  @unique
+  stripeChargeId        String?  @unique
+  amount                Int
+  currency              String   @default("eur")
+  status                String   @default("pending") // pending, succeeded, failed
+  paymentMethod         String?
+  riskLevel             String?
+  failureCode           String?
+  failureMessage        String?
+  createdAt             DateTime @default(now())
+  updatedAt             DateTime @updatedAt
+  booking               Booking  @relation(fields: [bookingId], references: [id])
+}
+
+model DriverPayout {
+  id              String   @id @default(uuid())
+  bookingId       String
+  driverId        String
+  stripeAccountId String
+  amount          Int
+  currency        String   @default("eur")
+  status          String   @default("pending")
+  transferId      String?  @unique
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+  booking         Booking  @relation(fields: [bookingId], references: [id])
+  driver          User     @relation(fields: [driverId], references: [id])
+}
+
+model StripeEvent {
+  id        String   @id @default(uuid())
+  eventId   String   @unique
+  type      String
+  data      String   // JSON stringified
+  processed Boolean  @default(false)
+  createdAt DateTime @default(now())
+}
+
+model BookingPricing {
+  id           String   @id @default(uuid())
+  bookingId    String   @unique
+  baseFare     Int
+  vehicleClass String
+  extras       Int      @default(0)
+  nightFee     Int      @default(0)
+  weekendFee   Int      @default(0)
+  holidayFee   Int      @default(0)
+  distanceFee  Int      @default(0)
+  platformFee  Int      @default(0)
+  driverAmount Int      @default(0)
+  totalAmount  Int
+  currency     String   @default("eur")
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+  booking      Booking  @relation(fields: [bookingId], references: [id])
+}
+
+model BookingExtra {
+  id        String   @id @default(uuid())
+  bookingId String
+  extraId   String
+  price     Int
+  name      String
+  createdAt DateTime @default(now())
+  booking   Booking  @relation(fields: [bookingId], references: [id])
+}
+
+model BookingPassenger {
+  id        String   @id @default(uuid())
+  bookingId String   @unique
+  name      String
+  email     String
+  phone     String?
+  notes     String?
+  createdAt DateTime @default(now())
+  booking   Booking  @relation(fields: [bookingId], references: [id])
 }

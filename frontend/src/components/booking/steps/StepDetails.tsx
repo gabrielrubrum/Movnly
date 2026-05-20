@@ -1,15 +1,16 @@
 "use client";
 
 import { useI18n } from "@/i18n/context";
-import { MapPin, Calendar, Clock, Users, Briefcase, ArrowRight, PlaneTakeoff, ChevronDown } from "lucide-react";
+import { MapPin, Calendar, Clock, Users, Briefcase, ArrowRight, PlaneTakeoff, ChevronDown, Route, Car } from "lucide-react";
 import { type BookingFormData } from "../BookingSteps";
 import { cn } from "@/lib/utils";
 import { DatePicker } from "@/components/ui/DatePicker";
 import { TimePicker } from "@/components/ui/TimePicker";
-import { useState, ReactNode } from "react";
+import { ReactNode } from "react";
 import { createPortal } from "react-dom";
 import { LocationInput } from "../LocationInput";
 import { usePortalDropdown } from "@/hooks/usePortalDropdown";
+import { motion, AnimatePresence } from "framer-motion";
 
 interface Props {
   form: BookingFormData;
@@ -36,7 +37,7 @@ function FieldWrapper({ label, icon: Icon, children, className }: { label: strin
   );
 }
 
-const LUXURY_SELECT_HEIGHT = 320; // max-h-60 = 240px + padding
+const LUXURY_SELECT_HEIGHT = 320;
 const LUXURY_SELECT_WIDTH = 200;
 
 function LuxurySelect({ label, value, options, icon: Icon, onChange }: { label: string; value: number; options: number[]; icon: any; onChange: (v: number) => void }) {
@@ -101,15 +102,32 @@ function LuxurySelect({ label, value, options, icon: Icon, onChange }: { label: 
 
 export function StepDetails({ form, update, onNext }: Props) {
   const { t } = useI18n();
+  const today = new Date().toISOString().split("T")[0];
+
+  // Airport detection — only from the origin/destination text, NOT from pre-filled flight data
+  const isAirportRoute =
+    form.origin.toLowerCase().includes("aeroporto") ||
+    form.origin.toLowerCase().includes("airport") ||
+    form.destination.toLowerCase().includes("aeroporto") ||
+    form.destination.toLowerCase().includes("airport");
+
+  const isReady = !!form.origin && !!form.destination && !!form.date && !!form.time;
 
   return (
     <div className="animate-luxury-reveal space-y-16 pb-12">
 
-      <div className="flex flex-col gap-3 mb-16">
-        <span className="badge-editorial w-fit">{t("bookingFlow.steps.details")}</span>
-        <h2 className="text-5xl font-bold tracking-tight text-white mt-4 uppercase font-sans leading-none">{t("booking.personalDetails")}</h2>
+      {/* Page Header */}
+      <div className="flex flex-col gap-3 mb-4">
+        <div className="flex items-center gap-4">
+          <span className="badge-editorial w-fit">Etapa 1 · Trajeto</span>
+        </div>
+        <h2 className="text-5xl font-bold tracking-tight text-white mt-4 uppercase font-sans leading-none">
+          Planeje sua viagem
+        </h2>
+        <p className="text-white/25 text-xs font-bold uppercase tracking-[0.25em] mt-3 font-sans max-w-md">
+          Indique o percurso, data e horário para ver os veículos disponíveis
+        </p>
       </div>
-
 
       {/* Primary Route Selection */}
       <div className="glass-bento-luxury p-8 md:p-12 mb-12">
@@ -132,32 +150,30 @@ export function StepDetails({ form, update, onNext }: Props) {
         </div>
       </div>
 
-      {/* Flight Info - Animated Conditional Section */}
-      {(() => {
-        const isAirport =
-          form.origin.toLowerCase().includes("aeroporto") ||
-          form.origin.toLowerCase().includes("airport") ||
-          form.destination.toLowerCase().includes("aeroporto") ||
-          form.destination.toLowerCase().includes("airport") ||
-          form.flightNumber !== "" ||
-          form.airline !== "";
-
-        if (!isAirport) return null;
-
-        return (
-          <div className="animate-luxury-reveal space-y-8 p-10 rounded-[40px] bg-brand-gold/[0.03] border border-brand-gold/20 shadow-2xl relative overflow-hidden group">
+      {/* Flight Info — only shown if route includes an airport */}
+      <AnimatePresence>
+        {isAirportRoute && (
+          <motion.div
+            key="flight-info"
+            initial={{ opacity: 0, y: -12, scale: 0.98 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: -12, scale: 0.98 }}
+            transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+            className="space-y-8 p-10 rounded-[40px] bg-brand-gold/[0.03] border border-brand-gold/20 shadow-2xl relative overflow-hidden"
+          >
             <div className="absolute top-0 right-0 w-64 h-64 bg-brand-gold/5 rounded-full blur-[100px] -translate-y-1/2 translate-x-1/2" />
-            
+
             <div className="flex items-center gap-5 text-brand-gold relative z-10">
               <PlaneTakeoff className="w-6 h-6 animate-pulse" />
               <span className="text-[11px] font-bold uppercase tracking-[0.2em] font-sans">{t("booking.flightInfo")}</span>
+              <span className="ml-auto text-[9px] font-black uppercase tracking-[0.2em] text-white/20">Opcional</span>
             </div>
 
             <div className="grid md:grid-cols-2 gap-10 relative z-10">
               <div className="space-y-4">
                 <label className="text-[10px] font-black uppercase tracking-[0.3em] text-white/30 font-sans">{t("booking.airline")}</label>
                 <input
-                  className="w-full bg-transparent border-b border-white/10 text-white focus:border-brand-gold transition-colors text-base font-bold uppercase tracking-[0.2em] placeholder:text-white/5 outline-none pb-2"
+                  className="w-full bg-transparent border-b border-white/10 text-white focus:border-brand-gold transition-colors text-base font-bold uppercase tracking-[0.2em] placeholder:text-white/10 outline-none pb-2"
                   placeholder={t("booking.airlinePlaceholder")}
                   value={form.airline}
                   onChange={(e) => update({ airline: e.target.value })}
@@ -167,22 +183,26 @@ export function StepDetails({ form, update, onNext }: Props) {
               <div className="space-y-4">
                 <label className="text-[10px] font-black uppercase tracking-[0.3em] text-white/30 font-sans">{t("booking.flightNumber")}</label>
                 <input
-                  className="w-full bg-transparent border-b border-white/10 text-white focus:border-brand-gold transition-colors text-base font-bold uppercase tracking-[0.2em] placeholder:text-white/5 outline-none pb-2"
+                  className="w-full bg-transparent border-b border-white/10 text-white focus:border-brand-gold transition-colors text-base font-bold uppercase tracking-[0.2em] placeholder:text-white/10 outline-none pb-2"
                   placeholder={t("booking.flightPlaceholder")}
                   value={form.flightNumber}
                   onChange={(e) => update({ flightNumber: e.target.value.toUpperCase() })}
                 />
               </div>
             </div>
-          </div>
-        );
-      })()}
+
+            <p className="text-[9px] font-black uppercase tracking-[0.25em] text-white/15 relative z-10">
+              O motorista monitorizará o voo em tempo real para ajustar o horário de chegada
+            </p>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       {/* DateTime & Specs Grid */}
       <div className="glass-bento-luxury p-8 md:p-12">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-4 gap-12 relative">
+        <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-12 relative">
           <FieldWrapper label={t("booking.date")} icon={Calendar}>
-            <DatePicker value={form.date} onChange={(v) => update({ date: v })} />
+            <DatePicker value={form.date} onChange={(v) => update({ date: v })} minDate={today} />
           </FieldWrapper>
 
           <FieldWrapper label={t("booking.time")} icon={Clock}>
@@ -200,47 +220,53 @@ export function StepDetails({ form, update, onNext }: Props) {
           <LuxurySelect
             label={t("booking.luggage")}
             value={form.luggage}
-            options={[1, 2, 3, 4, 5, 6, 7, 8]}
+            options={[0, 1, 2, 3, 4, 5, 6, 7, 8]}
             icon={Briefcase}
             onChange={(v) => update({ luggage: v })}
           />
         </div>
       </div>
 
-
       {/* Action CTA */}
-      <div className="pt-32">
+      <div className="pt-16">
         <button
-          id="btn-view-prices"
-          data-testid="btn-view-prices"
+          id="btn-view-vehicles"
+          data-testid="btn-view-vehicles"
           onClick={onNext}
-          disabled={!form.origin || !form.destination || !form.date || !form.time}
+          disabled={!isReady}
           className={cn(
             "w-full flex items-center justify-between px-16 py-10 rounded-[32px] transition-all duration-1000 group relative overflow-hidden isolate",
-            (!form.origin || !form.destination || !form.date || !form.time) 
-              ? "bg-white/[0.03] text-white/10 cursor-not-allowed border border-white/5" 
+            !isReady
+              ? "bg-white/[0.03] text-white/10 cursor-not-allowed border border-white/5"
               : "bg-brand-gold text-black shadow-[0_30px_100px_-20px_rgba(212,175,55,0.4)] hover:shadow-[0_40px_120px_-20px_rgba(212,175,55,0.6)] hover:scale-[1.01]"
           )}
         >
-          {/* Animated Background Shimmer */}
+          {/* Animated Shimmer */}
           <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/40 to-transparent -translate-x-[200%] group-hover:translate-x-[200%] transition-transform duration-[1500ms] ease-in-out z-0" />
-          
+
           <div className="relative z-10 flex items-center gap-8">
-             <div className="w-12 h-12 rounded-full border border-black/10 flex items-center justify-center bg-black/5 group-hover:bg-black group-hover:text-brand-gold transition-all duration-700">
-               <span className="text-xs font-black">01</span>
-             </div>
-             <span className="text-[14px] font-black uppercase tracking-[0.5em] font-sans">
-               {(!form.origin || !form.destination || !form.date || !form.time) ? "Preencha todos os campos" : t("booking.viewPrices")}
-             </span>
+            <div className="w-12 h-12 rounded-full border border-black/10 flex items-center justify-center bg-black/5 group-hover:bg-black group-hover:text-brand-gold transition-all duration-700">
+              <Car className="w-5 h-5" />
+            </div>
+            <span className="text-[13px] font-black uppercase tracking-[0.4em] font-sans">
+              {!isReady ? "Preencha todos os campos" : "Consultar tarifas"}
+            </span>
           </div>
 
           <div className={cn(
             "w-16 h-16 rounded-full flex items-center justify-center transition-all duration-700 relative z-10",
-            (!form.origin || !form.destination || !form.date || !form.time) ? "bg-white/5" : "bg-black/10 group-hover:bg-black group-hover:text-brand-gold group-hover:translate-x-4 group-hover:shadow-[0_0_40px_rgba(0,0,0,0.5)]"
+            !isReady ? "bg-white/5" : "bg-black/10 group-hover:bg-black group-hover:text-brand-gold group-hover:translate-x-4 group-hover:shadow-[0_0_40px_rgba(0,0,0,0.5)]"
           )}>
             <ArrowRight className="w-8 h-8" />
           </div>
         </button>
+
+        {/* Hint text */}
+        {isReady && (
+          <p className="text-center text-[9px] font-black uppercase tracking-[0.25em] text-white/15 mt-6">
+            Sem compromisso · Você escolhe o veículo na próxima etapa
+          </p>
+        )}
       </div>
 
     </div>

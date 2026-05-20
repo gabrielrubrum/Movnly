@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { useSearchParams, useRouter } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 import { useAuthStore } from "@/lib/auth-store";
 import api from "@/lib/api";
 import { cn, formatCurrency, getPricingMultiplier } from "@/lib/utils";
@@ -10,10 +10,12 @@ import { VEHICLE_CATEGORIES, EXTRAS, TOURS, getBasePrice } from "@/lib/constants
 import { StepDetails } from "./steps/StepDetails";
 import { StepVehicle } from "./steps/StepVehicle";
 import { StepExtras } from "./steps/StepExtras";
+import { StepCustomer } from "./steps/StepCustomer";
 import { StepPayment } from "./steps/StepPayment";
 import { BookingSummaryPanel } from "./BookingSummaryPanel";
-import { Check } from "lucide-react";
+import { Check, ChevronRight, Loader2 } from "lucide-react";
 import { useI18n } from "@/i18n/context";
+import { motion, AnimatePresence } from "framer-motion";
 
 export type BookingFormData = {
   tripType: "oneway" | "roundtrip";
@@ -33,10 +35,6 @@ export type BookingFormData = {
   email: string;
   phone: string;
   notes: string;
-  paymentMethod: "card" | "mbway" | "invoice";
-  cardNumber: string;
-  cardExpiry: string;
-  cardCvv: string;
   distance?: number;
   duration?: string;
 };
@@ -44,17 +42,17 @@ export type BookingFormData = {
 export function BookingSteps() {
   const { t } = useI18n();
   const params = useSearchParams();
-  const router = useRouter();
   const [step, setStep] = useState(1);
   const [loading, setLoading] = useState(false);
   const [clientSecret, setClientSecret] = useState<string | null>(null);
   const [lastBookingId, setLastBookingId] = useState<string | null>(null);
 
   const STEPS = [
-    { id: 1, label: t("bookingFlow.steps.details") },
-    { id: 2, label: t("bookingFlow.steps.vehicle") },
-    { id: 3, label: t("bookingFlow.steps.extras") },
-    { id: 4, label: t("bookingFlow.steps.payment") },
+    { id: 1, label: "Trajeto" },
+    { id: 2, label: "Veículo" },
+    { id: 3, label: "Opcionais" },
+    { id: 4, label: "Dados" },
+    { id: 5, label: "Pagamento" },
   ];
 
   const { user } = useAuthStore();
@@ -80,22 +78,16 @@ export function BookingSteps() {
     email: "",
     phone: "",
     notes: "",
-    paymentMethod: "card",
-    cardNumber: "",
-    cardExpiry: "",
-    cardCvv: "",
   });
 
   const update = (patch: Partial<BookingFormData>) =>
     setForm((f) => ({ ...f, ...patch }));
 
-  // Handle Hydration and Initial Sync
   useEffect(() => {
     setHasHydrated(true);
     if (user) {
       setForm(f => ({ ...f, name: user.name || "", email: user.email || "" }));
     }
-
     const tourId = params.get("tour");
     if (tourId) {
       const tour = TOURS.find(t => t.id === tourId);
@@ -105,7 +97,7 @@ export function BookingSteps() {
         setForm(f => ({
           ...f,
           destination: tour.title,
-          tripType: "oneway", // Tours are managed as full packages
+          tripType: "oneway",
           category: tourId === "douro-valley" ? "executive" : (params.get("category") as VehicleCategory || "group")
         }));
       }
@@ -115,38 +107,28 @@ export function BookingSteps() {
   const cat = VEHICLE_CATEGORIES.find((c) => c.id === form.category)!;
   const ratePerKm = { smart: 1.0, comfort: 1.5, group: 1.8, executive: 2.5 }[form.category] || 1.2;
 
-  // Calculate pricing multiplier for leg 1
   const leg1Pricing = getPricingMultiplier(form.date, form.time);
   const baseRate = getBasePrice(form.category, form.origin, form.destination);
   const leg1Base = form.distance ? Math.round(baseRate + (form.distance * ratePerKm)) : baseRate;
   const leg1Final = Math.round(leg1Base * leg1Pricing.multiplier);
 
-  // Calculate leg 2 if roundtrip
   let leg2Final = 0;
-  let leg2Pricing = { multiplier: 1, reasons: [] as string[] };
   if (form.tripType === "roundtrip" && form.returnDate && form.returnTime) {
-    leg2Pricing = getPricingMultiplier(form.returnDate, form.returnTime);
+    const leg2Pricing = getPricingMultiplier(form.returnDate, form.returnTime);
     leg2Final = Math.round(leg1Base * leg2Pricing.multiplier);
   }
 
   const isPathDefined = form.origin && form.destination && form.date && form.time;
-  
   const calculatedBasePrice = (!isPathDefined) ? 0 : (isTour && tourData ? tourData.price : (form.tripType === "roundtrip" ? (leg1Final + leg2Final) : leg1Final));
-
-  // Apply a small round-trip discount if applicable (e.g. 5% off base)
   const roundTripDiscount = (isPathDefined && !isTour && form.tripType === "roundtrip" && leg2Final > 0) ? Math.round(calculatedBasePrice * 0.05) : 0;
   const finalBasePrice = calculatedBasePrice - roundTripDiscount;
-
   const extrasTotal = form.extras.reduce((sum, id) => {
     const e = EXTRAS.find((x) => x.id === id);
     return sum + (e?.price || 0);
   }, 0);
-
   const total = isPathDefined ? (finalBasePrice + extrasTotal) : 0;
 
-  const handleConfirm = async () => {
-    // This is now handled by the Stripe completion flow
-  };
+  const handleConfirm = async () => {};
 
   const { token } = useAuthStore();
   const initPaymentIntent = async (forceEmail?: string, forceName?: string) => {
@@ -158,16 +140,13 @@ export function BookingSteps() {
         email: forceEmail || form.email,
         name: forceName || form.name,
         amount: total,
+        // Pass existing bookingId for idempotent retry — backend reuses existing PaymentIntent
+        bookingId: lastBookingId || undefined,
       }, { headers: getFraudHeaders() });
-
-      if (res.data.mock) {
-        console.error("Stripe is in mock mode — configure live keys on the server.");
-        return;
-      }
 
       if (res.data.clientSecret) {
         setClientSecret(res.data.clientSecret);
-        setLastBookingId(res.data.bookingId);
+        if (res.data.bookingId) setLastBookingId(res.data.bookingId);
       }
     } catch (err: any) {
       console.error("Payment init failed:", err);
@@ -177,82 +156,96 @@ export function BookingSteps() {
   };
 
   const nextStep = async () => {
-    if (step === 3) {
-      setStep(4);
-    } else {
-      setStep(step + 1);
-    }
+    if (step < 5) setStep(step + 1);
   };
 
-  if (!hasHydrated) return <div className="min-h-[400px] flex items-center justify-center"><Check className="w-8 h-8 animate-spin text-brand-gold" /></div>;
+  const selectedCategory = VEHICLE_CATEGORIES.find(c => c.id === form.category);
+
+  if (!hasHydrated) return (
+    <div className="min-h-[400px] flex items-center justify-center">
+      <div className="relative">
+        <Loader2 className="w-10 h-10 animate-spin text-brand-gold" strokeWidth={1} />
+        <div className="absolute inset-0 bg-brand-gold/10 blur-2xl rounded-full animate-pulse" />
+      </div>
+    </div>
+  );
 
   return (
     <div className="nx-container max-w-[1440px] animate-luxury-reveal relative overflow-x-hidden">
-      {/* Background Atmosphere */}
+      {/* Background atmosphere */}
       <div className="absolute -top-40 left-0 w-full h-[1000px] pointer-events-none z-0">
-          <div className="absolute top-1/4 left-1/4 w-[600px] h-[600px] bg-brand-gold/5 blur-[160px] rounded-full animate-pulse" />
-          <div className="absolute top-1/2 right-1/4 w-[400px] h-[400px] bg-emerald-500/5 blur-[120px] rounded-full" />
+        <div className="absolute top-1/4 left-1/4 w-[500px] h-[500px] bg-brand-gold/[0.04] blur-[160px] rounded-full animate-pulse" />
+        <div className="absolute top-1/2 right-1/4 w-[350px] h-[350px] bg-emerald-500/[0.04] blur-[120px] rounded-full" />
       </div>
 
       <div className="relative z-10">
-        {/* Cinematic Progress Bar */}
-        <div className="mb-24 relative px-4 md:px-12">
-          <div className="absolute top-1/2 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-y-1/2" />
-          
-          <div className="flex items-center justify-between relative z-10">
-            {STEPS.map((s, i) => {
+        {/* Progress indicator */}
+        <div className="mb-20 relative px-4 md:px-8">
+          <div className="absolute top-6 left-4 right-4 md:left-8 md:right-8 h-[1px] bg-white/[0.04] z-0" />
+
+          <div className="flex items-start justify-between relative z-10">
+            {STEPS.map((s) => {
               const isCompleted = step > s.id;
               const isActive = step === s.id;
-              
+
               return (
-                <div key={s.id} className="flex flex-col items-center group">
+                <div key={s.id} className="flex flex-col items-center gap-3">
                   <button
                     onClick={() => step > s.id && setStep(s.id)}
                     className={cn(
                       "w-12 h-12 rounded-full flex items-center justify-center transition-all duration-700 relative",
-                      isCompleted ? "bg-emerald-500 text-white shadow-[0_0_30px_rgba(16,185,129,0.3)]" :
-                        isActive ? "bg-brand-gold text-black shadow-[0_0_40px_rgba(212,175,55,0.6)] scale-110" :
-                          "bg-[#0A0A0F] text-white/20 border border-white/10 group-hover:border-white/30"
+                      isCompleted
+                        ? "bg-emerald-500 text-white shadow-[0_0_24px_rgba(16,185,129,0.3)] cursor-pointer hover:scale-105"
+                        : isActive
+                        ? "bg-brand-gold text-black shadow-[0_0_36px_rgba(212,175,55,0.5)] scale-110 cursor-default"
+                        : "bg-[#0A0A0F] text-white/15 border border-white/[0.08] cursor-default"
                     )}
                   >
                     {isActive && (
-                      <div className="absolute -inset-2 bg-brand-gold/20 rounded-full blur-md animate-pulse" />
+                      <div className="absolute -inset-2 bg-brand-gold/15 rounded-full blur-md animate-pulse" />
                     )}
                     {isCompleted ? (
-                      <Check className="w-5 h-5 relative z-10" />
+                      <Check className="w-5 h-5 relative z-10" strokeWidth={3} />
                     ) : (
-                      <span className="text-[11px] font-black font-sans relative z-10 tracking-tighter">0{s.id}</span>
+                      <span className="text-[11px] font-black font-sans relative z-10 tracking-tight">0{s.id}</span>
                     )}
                   </button>
-                  
-                  <div className="absolute -bottom-10 flex flex-col items-center">
-                    <span className={cn(
-                      "text-[10px] font-black uppercase tracking-[0.3em] font-sans transition-all duration-700 whitespace-nowrap",
-                      isActive ? "text-white opacity-100 translate-y-0" : "text-white/20 opacity-0 translate-y-2 group-hover:opacity-60 group-hover:translate-y-0"
-                    )}>
-                      {s.label}
-                    </span>
-                    {isActive && (
-                      <div className="w-1 h-1 rounded-full bg-brand-gold mt-2 animate-bounce" />
-                    )}
-                  </div>
+
+                  <span className={cn(
+                    "text-[9px] font-black uppercase tracking-[0.3em] font-sans transition-all duration-500 whitespace-nowrap hidden sm:block",
+                    isActive ? "text-white" : isCompleted ? "text-emerald-500/60" : "text-white/15"
+                  )}>
+                    {s.label}
+                  </span>
                 </div>
               );
             })}
           </div>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-[1fr_450px] gap-12 lg:gap-24 items-start">
+        {/* Main content */}
+        <div className="grid grid-cols-1 lg:grid-cols-[1fr_420px] gap-10 lg:gap-20 items-start">
           {/* Step content */}
-          <div className="relative min-h-[600px]">
-            {step === 1 && <StepDetails form={form} update={update} onNext={() => setStep(2)} />}
-            {step === 2 && <StepVehicle form={form} update={update} onNext={() => setStep(3)} onBack={() => setStep(1)} />}
-            {step === 3 && <StepExtras form={form} update={update} onNext={nextStep} onBack={() => setStep(2)} />}
-            {step === 4 && <StepPayment form={form} update={update} onConfirm={handleConfirm} onBack={() => setStep(3)} loading={loading} total={total} clientSecret={clientSecret} initPaymentIntent={initPaymentIntent} bookingId={lastBookingId} />}
+          <div className="relative min-h-[600px] pb-28 lg:pb-0">
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={step}
+                initial={{ opacity: 0, x: 20 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: -20 }}
+                transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
+              >
+                {step === 1 && <StepDetails form={form} update={update} onNext={() => setStep(2)} />}
+                {step === 2 && <StepVehicle form={form} update={update} onNext={() => setStep(3)} onBack={() => setStep(1)} />}
+                {step === 3 && <StepExtras form={form} update={update} onNext={nextStep} onBack={() => setStep(2)} />}
+                {step === 4 && <StepCustomer form={form} update={update} onNext={() => setStep(5)} onBack={() => setStep(3)} />}
+                {step === 5 && <StepPayment form={form} update={update} onConfirm={handleConfirm} onBack={() => setStep(4)} loading={loading} total={total} clientSecret={clientSecret} initPaymentIntent={initPaymentIntent} bookingId={lastBookingId} />}
+              </motion.div>
+            </AnimatePresence>
           </div>
 
-          {/* Summary - shows below content on mobile, on the right on lg */}
-          <div className="sticky top-24">
+          {/* Summary sidebar */}
+          <div className="sticky top-24 hidden lg:block">
             <BookingSummaryPanel
               form={form}
               total={total}
@@ -265,6 +258,67 @@ export function BookingSteps() {
           </div>
         </div>
       </div>
+
+      {/* ─── Mobile Sticky Bottom Bar ─────────────────────────────────── */}
+      {step < 5 && (
+        <div className="fixed bottom-0 left-0 right-0 z-50 lg:hidden">
+          {/* Blur backdrop */}
+          <div className="absolute inset-0 bg-[#08080f]/90 backdrop-blur-2xl border-t border-white/[0.06]" />
+
+          <div className="relative px-5 py-4 flex items-center gap-4">
+            {/* Info left */}
+            <div className="flex-1 min-w-0">
+              {step > 1 && selectedCategory ? (
+                <p className="text-[9px] font-black uppercase tracking-[0.25em] text-white/40 truncate">
+                  {t(`categories_list.${selectedCategory.id}.name`)}
+                  {form.extras.length > 0 && ` · ${form.extras.length} opcional${form.extras.length !== 1 ? "is" : ""}`}
+                </p>
+              ) : (
+                <p className="text-[9px] font-black uppercase tracking-[0.25em] text-white/25">
+                  {step === 1 ? "Preencha os detalhes" : "Selecione um veículo"}
+                </p>
+              )}
+              {total > 0 ? (
+                <motion.p
+                  key={total}
+                  initial={{ scale: 1.05 }}
+                  animate={{ scale: 1 }}
+                  className="text-2xl font-black text-brand-gold tracking-tighter leading-none mt-1"
+                >
+                  €{Math.round(total)} EUR
+                </motion.p>
+              ) : (
+                <p className="text-sm font-black text-white/20 tracking-tighter mt-1">—</p>
+              )}
+            </div>
+
+            {/* CTA right */}
+            <button
+              onClick={nextStep}
+              disabled={
+                (step === 1 && (!form.origin || !form.destination || !form.date || !form.time)) ||
+                (step === 2 && !form.category)
+              }
+              className={cn(
+                "flex items-center gap-3 px-8 py-4 rounded-2xl font-sans font-black text-[11px] uppercase tracking-[0.3em] transition-all duration-400 shrink-0",
+                ((step === 1 && (!form.origin || !form.destination || !form.date || !form.time)) ||
+                 (step === 2 && !form.category))
+                  ? "bg-white/[0.04] text-white/20 border border-white/[0.06] cursor-not-allowed"
+                  : "bg-brand-gold text-black shadow-[0_8px_30px_rgba(212,175,55,0.35)] hover:shadow-[0_12px_40px_rgba(212,175,55,0.5)] hover:scale-[1.02] active:scale-[0.98]"
+              )}
+            >
+              {step === 1 ? "Consultar tarifas" :
+               step === 2 ? "Selecionar veículo" :
+               step === 3 ? "Continuar" :
+               "Ir para pagamento"}
+              <ChevronRight className="w-4 h-4" />
+            </button>
+          </div>
+
+          {/* Safe area padding */}
+          <div className="h-safe-area-inset-bottom bg-[#08080f]/90" />
+        </div>
+      )}
     </div>
   );
 }

@@ -1,25 +1,39 @@
-import { Controller, Post, Headers, Req, UseGuards, Get } from '@nestjs/common';
-import { PaymentsService } from '../services/payments.service';
-import { FinancesService } from '../services/finances.service';
-import { JwtAuthGuard } from '../../auth/guards/jwt-auth.guard';
-import { RolesGuard } from '../../auth/guards/roles.guard';
-import { Roles } from '../../auth/decorators/roles.decorator';
-import { Role } from '../../auth/decorators/roles.enum';
+import {
+    Controller, Post, Headers, Req, UseGuards, Get,
+} from '@nestjs/common';
+import { SkipThrottle, Throttle } from '@nestjs/throttler';
+import { PaymentsService }  from '../services/payments.service';
+import { FinancesService }  from '../services/finances.service';
+import { JwtAuthGuard }     from '../../auth/guards/jwt-auth.guard';
+import { RolesGuard }       from '../../auth/guards/roles.guard';
+import { Roles }            from '../../auth/decorators/roles.decorator';
+import { Role }             from '../../auth/decorators/roles.enum';
 
 @Controller('payments')
 export class PaymentsController {
     constructor(
         private readonly paymentsService: PaymentsService,
-        private readonly financesService: FinancesService
-    ) { }
+        private readonly financesService: FinancesService,
+    ) {}
 
-    // Public: called by the frontend before user authenticates (guest checkout)
+    /**
+     * Public — creates / retrieves a Stripe PaymentIntent.
+     * Rate limited: max 10 calls per minute per IP (enforced in service as well).
+     */
+    @Throttle({ default: { ttl: 60000, limit: 10 } })
     @Post('create-intent')
     async createIntent(@Req() req: any) {
-        return this.paymentsService.createPaymentIntent(req.body, (req as any).fraudSignals);
+        return this.paymentsService.createPaymentIntent(
+            req.body,
+            (req as any).fraudSignals,
+        );
     }
 
-    // Public: called by Stripe servers, verified via HMAC signature internally
+    /**
+     * Public — called by Stripe servers, verified via HMAC signature internally.
+     * MUST skip throttling: Stripe retries webhooks and may send bursts.
+     */
+    @SkipThrottle()
     @Post('webhook')
     async webhook(
         @Headers('stripe-signature') signature: string,
@@ -28,7 +42,7 @@ export class PaymentsController {
         return this.paymentsService.handleWebhook(signature, req.rawBody);
     }
 
-    // Protected: only ADMIN can trigger manual transfers to drivers
+    /** Protected — only ADMIN can trigger manual transfers to drivers. */
     @UseGuards(JwtAuthGuard, RolesGuard)
     @Roles(Role.ADMIN)
     @Post('transfer/:bookingId')
@@ -36,7 +50,7 @@ export class PaymentsController {
         return this.paymentsService.transferToDriver(req.params.bookingId);
     }
 
-    // Protected: only the authenticated DRIVER can see their own stats
+    /** Protected — only the authenticated DRIVER can see their own stats. */
     @UseGuards(JwtAuthGuard, RolesGuard)
     @Roles(Role.DRIVER)
     @Get('stats/driver')
@@ -44,7 +58,7 @@ export class PaymentsController {
         return this.financesService.getDriverStats(req.user.userId);
     }
 
-    // Protected: only ADMIN can see global platform stats
+    /** Protected — only ADMIN can see global platform stats. */
     @UseGuards(JwtAuthGuard, RolesGuard)
     @Roles(Role.ADMIN)
     @Get('stats/admin')
