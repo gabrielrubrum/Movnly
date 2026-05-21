@@ -18,12 +18,23 @@ node_modules/
 .next/
 out/
 build/
+dist/
+.turbo/
+.cache/
 
 # ─── Editor ──────────────────────────────────────────────────
 .vscode/
 .idea/
+.kiro/
+.cursor/
+.continue/
+.zed/
+.fleet/
+.history/
 *.swp
 *.swo
+*.swn
+*~
 .DS_Store
 Thumbs.db
 
@@ -38,6 +49,9 @@ logs/
 # ─── Testing / Coverage ──────────────────────────────────────
 coverage/
 .nyc_output/
+playwright-report/
+test-results/
+.vitest/
 
 # ─── TypeScript ──────────────────────────────────────────────
 *.tsbuildinfo
@@ -45,8 +59,17 @@ next-env.d.ts
 
 # ─── Temp / Debug ────────────────────────────────────────────
 .tmp/
+tmp/
+temp/
 tools/scratch/
 tools/logs/
+
+# ─── Local Databases / Generated State ───────────────────────
+*.db
+*.db-journal
+*.sqlite
+*.sqlite3
+backend/prisma/prisma/dev.db
 
 # ─── Vercel ──────────────────────────────────────────────────
 .vercel
