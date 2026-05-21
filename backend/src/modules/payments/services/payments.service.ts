@@ -282,25 +282,6 @@ export class PaymentsService {
             passenger.name = name;
         }
 
-        if (phone || notes) {
-            await this.prisma.bookingPassenger.upsert({
-                where: { bookingId: booking.id },
-                update: {
-                    name: passenger.name,
-                    email: passenger.email,
-                    phone: phone || undefined,
-                    notes: notes || undefined,
-                },
-                create: {
-                    bookingId: booking.id,
-                    name: passenger.name,
-                    email: passenger.email,
-                    phone: phone || undefined,
-                    notes: notes || undefined,
-                },
-            });
-        }
-
         // ── IDEMPOTENCY — reuse existing PaymentIntent when retrying ──────────
         const existingPaymentIntentId = (booking as any).paymentIntentId;
         if (existingPaymentIntentId) {
@@ -364,6 +345,7 @@ export class PaymentsService {
                     destination:       toStripeMetadataValue(booking.to),
                     passengerName:     toStripeMetadataValue(passenger.name),
                     passengerEmail:    toStripeMetadataValue(passenger.email),
+                    passengerPhone:    toStripeMetadataValue(phone),
                     vehicleClass:      toStripeMetadataValue(booking.category || category || 'smart'),
                     totalAmount:       toStripeMetadataValue(finalPrice),
                     currency:          'eur',
