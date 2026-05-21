@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useI18n } from "@/i18n/context";
 import { type BookingFormData } from "../BookingSteps";
 import { Lock, ArrowLeft, Loader2, ShieldCheck, CreditCard, Globe, Shield, RefreshCw, AlertCircle, Smartphone, MapPin, CalendarClock, Users, Briefcase, Car } from "lucide-react";
@@ -35,11 +35,11 @@ const TRUST_BADGES = [
 ];
 
 const METHOD_BADGES = [
-  { src: "https://upload.wikimedia.org/wikipedia/commons/d/d6/Visa_2021.svg",         alt: "Visa",        h: "h-3" },
-  { src: "https://upload.wikimedia.org/wikipedia/commons/2/2a/Mastercard-logo.svg",   alt: "Mastercard",  h: "h-5" },
-  { src: "https://upload.wikimedia.org/wikipedia/commons/3/30/American_Express_logo.svg", alt: "Amex", h: "h-5" },
-  { src: "https://upload.wikimedia.org/wikipedia/commons/b/b0/Apple_Pay_logo.svg",    alt: "Apple Pay",   h: "h-4" },
-  { src: "https://upload.wikimedia.org/wikipedia/commons/f/f2/Google_Pay_Logo.svg",   alt: "Google Pay",  h: "h-5" },
+  { label: "Visa" },
+  { label: "Mastercard" },
+  { label: "Amex" },
+  { label: "Apple Pay" },
+  { label: "Google Pay" },
 ];
 
 const formatPickup = (date: string, time: string) => {
@@ -51,7 +51,7 @@ export function StepPayment({ form, onConfirm, onBack, loading, total, clientSec
   const { t } = useI18n();
   const [clientSecret,      setClientSecret]      = useState<string | null>(propClientSecret);
   const [paymentConfigError, setPaymentConfigError] = useState<string | null>(null);
-  const [attemptedPaymentKey, setAttemptedPaymentKey] = useState<string | null>(null);
+  const attemptedPaymentKeyRef = useRef<string | null>(null);
 
   useEffect(() => {
     setClientSecret(propClientSecret);
@@ -59,14 +59,14 @@ export function StepPayment({ form, onConfirm, onBack, loading, total, clientSec
   }, [propClientSecret]);
 
   useEffect(() => {
-    if (!clientSecret && !loading && !paymentError && attemptedPaymentKey !== paymentAttemptKey) {
-      setAttemptedPaymentKey(paymentAttemptKey);
+    if (!clientSecret && !loading && !paymentError && attemptedPaymentKeyRef.current !== paymentAttemptKey) {
+      attemptedPaymentKeyRef.current = paymentAttemptKey;
       const timer = setTimeout(() => {
         initPaymentIntent(form.email, form.name);
       }, 300);
       return () => clearTimeout(timer);
     }
-  }, [attemptedPaymentKey, clientSecret, form.email, form.name, initPaymentIntent, loading, paymentAttemptKey, paymentError]);
+  }, [clientSecret, form.email, form.name, initPaymentIntent, loading, paymentAttemptKey, paymentError]);
 
   useEffect(() => {
     if (!stripePublishableKey && (!clientSecret || !isMockStripeSecret(clientSecret))) {
@@ -177,10 +177,10 @@ export function StepPayment({ form, onConfirm, onBack, loading, total, clientSec
             <div className="flex items-center gap-2 sm:gap-3 flex-wrap justify-start md:justify-end">
               {METHOD_BADGES.map((b) => (
                 <span
-                  key={b.alt}
-                  className="h-8 min-w-14 px-2.5 rounded-lg bg-white/95 border border-white/10 flex items-center justify-center shadow-[0_8px_24px_rgba(0,0,0,0.22)]"
+                  key={b.label}
+                  className="h-8 min-w-14 px-3 rounded-lg bg-white/95 border border-white/10 flex items-center justify-center shadow-[0_8px_24px_rgba(0,0,0,0.22)] text-[10px] font-black text-black tracking-tight"
                 >
-                  <img src={b.src} alt={b.alt} className={`${b.h} max-w-[64px] object-contain`} />
+                  {b.label}
                 </span>
               ))}
             </div>
@@ -239,7 +239,7 @@ export function StepPayment({ form, onConfirm, onBack, loading, total, clientSec
                   <button
                     type="button"
                     onClick={() => {
-                      setAttemptedPaymentKey(paymentAttemptKey);
+                      attemptedPaymentKeyRef.current = paymentAttemptKey;
                       initPaymentIntent(form.email, form.name);
                     }}
                     className="px-8 py-4 bg-brand-gold text-black rounded-xl text-[10px] font-black uppercase tracking-[0.24em] hover:bg-[#e4c766] transition-all disabled:opacity-50"
@@ -319,7 +319,7 @@ export function StepPayment({ form, onConfirm, onBack, loading, total, clientSec
                   </div>
                   <button
                     onClick={() => {
-                      setAttemptedPaymentKey(paymentAttemptKey);
+                      attemptedPaymentKeyRef.current = paymentAttemptKey;
                       initPaymentIntent(form.email, form.name);
                     }}
                     className="px-12 py-5 bg-brand-gold text-black rounded-full text-[11px] font-black uppercase tracking-[0.4em] hover:scale-105 transition-all"

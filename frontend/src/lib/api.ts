@@ -25,6 +25,7 @@ api.interceptors.request.use(
 api.interceptors.response.use(
   (response) => response,
   (error) => {
+    const suppressGlobalToast = (error.config as any)?.suppressGlobalToast;
     const status = error.response?.status;
     const message = error.response?.data?.message || error.message;
 
@@ -51,7 +52,7 @@ api.interceptors.response.use(
     }
 
     // Show Toast
-    if (typeof window !== "undefined") {
+    if (typeof window !== "undefined" && !suppressGlobalToast) {
         toast.error("Protocolo de Erro", {
             description: userMessage,
             duration: 5000,

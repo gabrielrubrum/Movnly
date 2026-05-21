@@ -173,7 +173,7 @@ export function BookingSteps() {
         amount: total,
         // Pass existing bookingId for idempotent retry — backend reuses existing PaymentIntent
         bookingId: lastBookingId || undefined,
-      }, { headers: getFraudHeaders() });
+      }, { headers: getFraudHeaders(), suppressGlobalToast: true } as any);
 
       if (res.data.clientSecret) {
         setClientSecret(res.data.clientSecret);
