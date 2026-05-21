@@ -46,6 +46,7 @@ export function BookingSteps() {
   const [loading, setLoading] = useState(false);
   const [clientSecret, setClientSecret] = useState<string | null>(null);
   const [lastBookingId, setLastBookingId] = useState<string | null>(null);
+  const [paymentInitError, setPaymentInitError] = useState<string | null>(null);
 
   const STEPS = [
     { id: 1, label: "Trajeto" },
@@ -96,6 +97,7 @@ export function BookingSteps() {
     ];
     if (paymentAffectingFields.some((field) => field in patch)) {
       setClientSecret(null);
+      setPaymentInitError(null);
     }
     setForm((f) => ({ ...f, ...patch }));
   };
@@ -144,11 +146,23 @@ export function BookingSteps() {
     return sum + (e?.price || 0);
   }, 0);
   const total = isPathDefined ? (finalBasePrice + extrasTotal) : 0;
+  const paymentAttemptKey = JSON.stringify({
+    bookingId: lastBookingId || "new",
+    origin: form.origin,
+    destination: form.destination,
+    date: form.date,
+    time: form.time,
+    category: form.category,
+    passengers: form.passengers,
+    luggage: form.luggage,
+    total,
+  });
 
   const handleConfirm = async () => {};
 
   const { token } = useAuthStore();
   const initPaymentIntent = async (forceEmail?: string, forceName?: string) => {
+    setPaymentInitError(null);
     setLoading(true);
     try {
       const { getFraudHeaders } = await import('@/lib/fraud-signals');
@@ -167,6 +181,13 @@ export function BookingSteps() {
       }
     } catch (err: any) {
       console.error("Payment init failed:", err);
+      const status = err?.response?.status;
+      const backendMessage = err?.response?.data?.message;
+      setPaymentInitError(
+        status === 429 || String(backendMessage || "").toLowerCase().includes("too many")
+          ? "Recebemos muitas tentativas em pouco tempo. Aguarde alguns instantes e tente novamente."
+          : "Não conseguimos preparar o pagamento agora. Verifique os dados da reserva ou tente novamente."
+      );
       setClientSecret(null);
     } finally {
       setLoading(false);
@@ -257,7 +278,7 @@ export function BookingSteps() {
                 {step === 2 && <StepVehicle form={form} update={update} onNext={() => setStep(3)} onBack={() => setStep(1)} />}
                 {step === 3 && <StepExtras form={form} update={update} onNext={nextStep} onBack={() => setStep(2)} />}
                 {step === 4 && <StepCustomer form={form} update={update} onNext={() => setStep(5)} onBack={() => setStep(3)} />}
-                {step === 5 && <StepPayment form={form} update={update} onConfirm={handleConfirm} onBack={() => setStep(4)} loading={loading} total={total} clientSecret={clientSecret} initPaymentIntent={initPaymentIntent} bookingId={lastBookingId} />}
+                {step === 5 && <StepPayment form={form} update={update} onConfirm={handleConfirm} onBack={() => setStep(4)} loading={loading} total={total} clientSecret={clientSecret} initPaymentIntent={initPaymentIntent} bookingId={lastBookingId} paymentError={paymentInitError} paymentAttemptKey={paymentAttemptKey} />}
               </motion.div>
             </AnimatePresence>
           </div>

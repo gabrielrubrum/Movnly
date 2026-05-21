@@ -23,6 +23,8 @@ interface Props {
   clientSecret: string | null;
   bookingId: string | null;
   initPaymentIntent: (email?: string, name?: string) => Promise<void>;
+  paymentError: string | null;
+  paymentAttemptKey: string;
 }
 
 const TRUST_BADGES = [
@@ -45,10 +47,11 @@ const formatPickup = (date: string, time: string) => {
   return `${date || "Data por definir"} ${time ? `às ${time}` : ""}`.trim();
 };
 
-export function StepPayment({ form, onConfirm, onBack, loading, total, clientSecret: propClientSecret, initPaymentIntent, bookingId }: Props) {
+export function StepPayment({ form, onConfirm, onBack, loading, total, clientSecret: propClientSecret, initPaymentIntent, bookingId, paymentError, paymentAttemptKey }: Props) {
   const { t } = useI18n();
   const [clientSecret,      setClientSecret]      = useState<string | null>(propClientSecret);
   const [paymentConfigError, setPaymentConfigError] = useState<string | null>(null);
+  const [attemptedPaymentKey, setAttemptedPaymentKey] = useState<string | null>(null);
 
   useEffect(() => {
     setClientSecret(propClientSecret);
@@ -56,13 +59,14 @@ export function StepPayment({ form, onConfirm, onBack, loading, total, clientSec
   }, [propClientSecret]);
 
   useEffect(() => {
-    if (!clientSecret && !loading) {
+    if (!clientSecret && !loading && !paymentError && attemptedPaymentKey !== paymentAttemptKey) {
+      setAttemptedPaymentKey(paymentAttemptKey);
       const timer = setTimeout(() => {
         initPaymentIntent(form.email, form.name);
       }, 300);
       return () => clearTimeout(timer);
     }
-  }, [clientSecret, loading]);
+  }, [attemptedPaymentKey, clientSecret, form.email, form.name, initPaymentIntent, loading, paymentAttemptKey, paymentError]);
 
   useEffect(() => {
     if (!stripePublishableKey && (!clientSecret || !isMockStripeSecret(clientSecret))) {
@@ -221,6 +225,30 @@ export function StepPayment({ form, onConfirm, onBack, loading, total, clientSec
                   </div>
                 </motion.div>
 
+              ) : paymentError ? (
+                <motion.div
+                  key="payment-init-error"
+                  initial={{ opacity: 0 }} animate={{ opacity: 1 }}
+                  className="flex flex-col items-center justify-center text-center space-y-6 my-12 px-6"
+                >
+                  <AlertCircle className="w-10 h-10 text-amber-400/70" />
+                  <div>
+                    <p className="text-white/70 text-sm font-black uppercase tracking-widest mb-2">Pagamento não inicializado</p>
+                    <p className="text-white/45 text-xs font-bold max-w-md leading-relaxed">{paymentError}</p>
+                  </div>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setAttemptedPaymentKey(paymentAttemptKey);
+                      initPaymentIntent(form.email, form.name);
+                    }}
+                    className="px-8 py-4 bg-brand-gold text-black rounded-xl text-[10px] font-black uppercase tracking-[0.24em] hover:bg-[#e4c766] transition-all disabled:opacity-50"
+                    disabled={loading}
+                  >
+                    Tentar novamente
+                  </button>
+                </motion.div>
+
               ) : isMock ? (
                 /* Mock mode — no manual card fields */
                 <motion.div
@@ -290,7 +318,10 @@ export function StepPayment({ form, onConfirm, onBack, loading, total, clientSec
                     <p className="text-white/15 text-xs font-bold uppercase tracking-widest">Aguarde um momento</p>
                   </div>
                   <button
-                    onClick={() => initPaymentIntent(form.email, form.name)}
+                    onClick={() => {
+                      setAttemptedPaymentKey(paymentAttemptKey);
+                      initPaymentIntent(form.email, form.name);
+                    }}
                     className="px-12 py-5 bg-brand-gold text-black rounded-full text-[11px] font-black uppercase tracking-[0.4em] hover:scale-105 transition-all"
                   >
                     {t("bookingFlow.payment.initialize")}
