@@ -249,7 +249,7 @@ export function StepDetails({ form, update, onNext }: Props) {
               <Car className="w-5 h-5" />
             </div>
             <span className="text-[13px] font-black uppercase tracking-[0.4em] font-sans">
-              {!isReady ? "Preencha todos os campos" : "Consultar tarifas"}
+              {!isReady ? "Preencha todos os campos" : "Ver opções disponíveis"}
             </span>
           </div>
 

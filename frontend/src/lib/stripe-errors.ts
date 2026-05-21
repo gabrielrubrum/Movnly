@@ -4,7 +4,7 @@ export function translateStripeError(
   code?: string,
   declineCode?: string,
 ): string {
-  if (!message && !code) return "Ocorreu um erro inesperado no pagamento. Tente novamente.";
+  if (!message && !code) return "Não conseguimos concluir o pagamento agora. Tente outro método ou fale com o suporte MOVNLY.";
 
   const lower = (message || "").toLowerCase();
 
@@ -20,17 +20,18 @@ export function translateStripeError(
   // ── Currency not supported ──────────────────────────────────────
   if (
     declineCode === "currency_not_supported" ||
+    code === "currency_not_supported" ||
     lower.includes("does not support") ||
     lower.includes("currency") ||
     lower.includes("não aceita essa moeda")
   ) {
-    return "Este método não aceita EUR. Tente Apple Pay, Google Pay, Link ou outro cartão internacional.";
+    return "Este método não aceitou a transação em EUR. Tente outro cartão internacional ou carteira digital.";
   }
 
   // ── Card declined ───────────────────────────────────────────────
   if (code === "card_declined" || declineCode === "generic_decline" || declineCode === "do_not_honor") {
     if (declineCode === "insufficient_funds") {
-      return "Saldo insuficiente. Verifique o saldo disponível ou use outro método de pagamento.";
+      return "O cartão não possui saldo/limite suficiente para concluir o pagamento.";
     }
     if (declineCode === "lost_card" || declineCode === "stolen_card") {
       return "Este cartão não pode ser utilizado. Contacte o seu banco ou use outro método.";
@@ -41,7 +42,7 @@ export function translateStripeError(
     if (declineCode === "transaction_not_allowed") {
       return "Transação não permitida pelo seu banco. Tente Apple Pay, Google Pay ou outro cartão.";
     }
-    return "Seu banco recusou esta cobrança internacional em EUR. Tente Apple Pay, Google Pay, Link ou outro cartão.";
+    return "Não foi possível concluir o pagamento com este método. Tente outro cartão internacional, Apple Pay ou Google Pay.";
   }
 
   // ── Authentication required (3DS) ──────────────────────────────
@@ -51,7 +52,7 @@ export function translateStripeError(
     lower.includes("authentication_required") ||
     lower.includes("requires_action")
   ) {
-    return "Confirmação 3D Secure necessária. Confirme o pagamento no aplicativo do seu banco.";
+    return "Seu banco solicitou uma autenticação adicional. Conclua a verificação para finalizar a reserva.";
   }
 
   // ── Insufficient funds ──────────────────────────────────────────
@@ -60,7 +61,7 @@ export function translateStripeError(
     code === "insufficient_funds" ||
     declineCode === "insufficient_funds"
   ) {
-    return "Saldo insuficiente. Verifique o saldo disponível ou use outro método de pagamento.";
+    return "O cartão não possui saldo/limite suficiente para concluir o pagamento.";
   }
 
   // ── Card expired ────────────────────────────────────────────────
@@ -102,7 +103,7 @@ export function translateStripeError(
   }
 
   // ── Fallback ────────────────────────────────────────────────────
-  return message || "Ocorreu um erro inesperado no pagamento. Tente novamente.";
+  return "Não conseguimos concluir o pagamento agora. Tente outro método ou fale com o suporte MOVNLY.";
 }
 
 export function isMockStripeSecret(clientSecret: string | null): boolean {

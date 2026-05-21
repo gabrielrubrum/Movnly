@@ -29,6 +29,29 @@ function checkRateLimit(map: Map<string, { count: number; firstAt: number }>, ke
     }
 }
 
+const BOOKING_STATUS = {
+    DRAFT: 'DRAFT',
+    PENDING_PAYMENT: 'PENDING_PAYMENT',
+    PAYMENT_FAILED: 'PAYMENT_FAILED',
+    PAID: 'PAID',
+    CONFIRMED: 'CONFIRMED',
+    CANCELED: 'CANCELED',
+    REFUNDED: 'REFUNDED',
+} as const;
+
+function toStripeMetadataValue(value: unknown): string {
+    return String(value ?? '')
+        .replace(/[\r\n]/g, ' ')
+        .trim()
+        .substring(0, 500);
+}
+
+function buildBookingReference(bookingId: string): string {
+    const numeric = parseInt(bookingId.replace(/-/g, '').slice(0, 8), 16);
+    if (Number.isNaN(numeric)) return bookingId.slice(0, 8).toUpperCase();
+    return String((numeric % 900000) + 100000);
+}
+
 @Injectable()
 export class PaymentsService {
     private stripe: any = null;
@@ -110,8 +133,12 @@ export class PaymentsService {
             to,
             date,
             time,
-            amount,
             category,
+            passengers,
+            luggage,
+            flightNumber,
+            phone,
+            notes,
         } = data;
 
         const clientIp  = fraudSignals?.ip || 'unknown';
@@ -137,6 +164,10 @@ export class PaymentsService {
                 where: { id: incomingBookingId },
                 include: { passenger: true },
             });
+            if (!booking) throw new NotFoundException('Reserva inválida para pagamento.');
+            if (booking.paymentStatus === BOOKING_STATUS.PAID || booking.status === BOOKING_STATUS.CONFIRMED) {
+                throw new BadRequestException('Esta reserva já foi paga.');
+            }
         }
 
         if (!booking) {
@@ -160,12 +191,33 @@ export class PaymentsService {
                     from: from || data.origin,
                     to: to || data.destination,
                     pickupTime: isNaN(pickupDateTime.getTime()) ? new Date() : pickupDateTime,
-                    price: amount,
-                    status: 'PENDING',
+                    category: category || 'smart',
+                    passengers: Number.isFinite(Number(passengers)) ? Number(passengers) : undefined,
+                    luggage: Number.isFinite(Number(luggage)) ? Number(luggage) : undefined,
+                    flightNumber: flightNumber || undefined,
+                    status: BOOKING_STATUS.PENDING_PAYMENT,
+                    paymentStatus: BOOKING_STATUS.PENDING_PAYMENT,
                 },
                 include: { passenger: true },
             });
             this.logger.log(`New booking created: ${booking.id}`);
+        } else {
+            const nextPickupDateTime = isNaN(pickupDateTime.getTime()) ? booking.pickupTime : pickupDateTime;
+            booking = await this.prisma.booking.update({
+                where: { id: booking.id },
+                data: {
+                    from: from || data.origin || booking.from,
+                    to: to || data.destination || booking.to,
+                    pickupTime: nextPickupDateTime,
+                    category: category || booking.category || 'smart',
+                    passengers: Number.isFinite(Number(passengers)) ? Number(passengers) : booking.passengers,
+                    luggage: Number.isFinite(Number(luggage)) ? Number(luggage) : booking.luggage,
+                    flightNumber: flightNumber || booking.flightNumber,
+                    status: BOOKING_STATUS.PENDING_PAYMENT,
+                    paymentStatus: BOOKING_STATUS.PENDING_PAYMENT,
+                } as any,
+                include: { passenger: true },
+            });
         }
 
         if (!booking) {
@@ -183,6 +235,7 @@ export class PaymentsService {
         const finalPrice          = finances.totalPrice;
         const driverAmountEuro    = finances.driverAmount;
         const platformFeeEuro     = finances.platformFee;
+        // Critical: the amount sent to Stripe is recalculated server-side and never trusted from the browser.
         const priceInCents        = Math.round(finalPrice * 100);
         const driverAmountInCents = Math.round(driverAmountEuro * 100);
         const platformFeeInCents  = Math.round(platformFeeEuro * 100);
@@ -229,23 +282,52 @@ export class PaymentsService {
             passenger.name = name;
         }
 
+        if (phone || notes) {
+            await this.prisma.bookingPassenger.upsert({
+                where: { bookingId: booking.id },
+                update: {
+                    name: passenger.name,
+                    email: passenger.email,
+                    phone: phone || undefined,
+                    notes: notes || undefined,
+                },
+                create: {
+                    bookingId: booking.id,
+                    name: passenger.name,
+                    email: passenger.email,
+                    phone: phone || undefined,
+                    notes: notes || undefined,
+                },
+            });
+        }
+
         // ── IDEMPOTENCY — reuse existing PaymentIntent when retrying ──────────
         const existingPaymentIntentId = (booking as any).paymentIntentId;
         if (existingPaymentIntentId) {
             try {
                 const existingPI = await this.stripe.paymentIntents.retrieve(existingPaymentIntentId);
                 if (existingPI && !['succeeded', 'canceled'].includes(existingPI.status)) {
-                    this.logger.log(
-                        `Reusing existing PaymentIntent ${existingPI.id} ` +
-                        `(status: ${existingPI.status}) for booking ${booking.id}`,
-                    );
-                    return {
-                        clientSecret:    existingPI.client_secret,
-                        paymentIntentId: existingPI.id,
-                        bookingId:       booking.id,
-                        currency:        'eur',
-                        amount:          existingPI.amount / 100,
-                    };
+                    if (existingPI.amount !== priceInCents || existingPI.currency !== 'eur') {
+                        await this.stripe.paymentIntents.cancel(existingPI.id, {
+                            cancellation_reason: 'abandoned',
+                        });
+                        this.logger.log(
+                            `Canceled stale PaymentIntent ${existingPI.id} for booking ${booking.id} ` +
+                            `(old ${existingPI.amount} ${existingPI.currency}, new ${priceInCents} eur)`,
+                        );
+                    } else {
+                        this.logger.log(
+                            `Reusing existing PaymentIntent ${existingPI.id} ` +
+                            `(status: ${existingPI.status}) for booking ${booking.id}`,
+                        );
+                        return {
+                            clientSecret:    existingPI.client_secret,
+                            paymentIntentId: existingPI.id,
+                            bookingId:       booking.id,
+                            currency:        'eur',
+                            amount:          existingPI.amount / 100,
+                        };
+                    }
                 }
             } catch (err) {
                 this.logger.warn(
@@ -263,9 +345,9 @@ export class PaymentsService {
                 currency: 'eur',
                 customer: stripeCustomerId || undefined,
                 receipt_email: passenger.email,
-                description: `MOVNLY — Reserva ${booking.id.slice(0, 8)}`,
-                statement_descriptor_suffix: 'MOVNLY',
-                // ── Allow ALL payment methods: card, Apple Pay, Google Pay, Link ──
+                description: `MOVNLY — Reserva ${booking.id}`,
+                statement_descriptor: 'MOVNLY',
+                // Stripe BR will show eligible methods now; future EU/local methods can be enabled in Dashboard without a checkout rewrite.
                 automatic_payment_methods: {
                     enabled: true,
                 },
@@ -276,27 +358,30 @@ export class PaymentsService {
                 },
                 transfer_group: booking.id,
                 metadata: {
-                    bookingId:         booking.id,
-                    passengerName:     passenger.name,
-                    passengerEmail:    passenger.email,
-                    vehicleClass:      booking.category || category || 'smart',
-                    totalAmount:       String(finalPrice),
+                    bookingId:         toStripeMetadataValue(booking.id),
+                    route:             toStripeMetadataValue(`${booking.from} -> ${booking.to}`),
+                    origin:            toStripeMetadataValue(booking.from),
+                    destination:       toStripeMetadataValue(booking.to),
+                    passengerName:     toStripeMetadataValue(passenger.name),
+                    passengerEmail:    toStripeMetadataValue(passenger.email),
+                    vehicleClass:      toStripeMetadataValue(booking.category || category || 'smart'),
+                    totalAmount:       toStripeMetadataValue(finalPrice),
                     currency:          'eur',
-                    platformFee:       String(platformFeeInCents),
-                    driverAmount:      String(driverAmountInCents),
-                    surgeReasons:      finances.appliedSurges.join(', '),
+                    platformFee:       toStripeMetadataValue(platformFeeInCents),
+                    driverAmount:      toStripeMetadataValue(driverAmountInCents),
+                    surgeReasons:      toStripeMetadataValue(finances.appliedSurges.join(', ')),
                     // Stripe Radar / anti-fraud signals
-                    client_ip:         clientIp,
-                    user_agent:        (fraudSignals?.userAgent || '').substring(0, 200),
-                    browser_fingerprint: fraudSignals?.fingerprint || 'none',
+                    client_ip:         toStripeMetadataValue(clientIp),
+                    user_agent:        toStripeMetadataValue((fraudSignals?.userAgent || '').substring(0, 200)),
+                    browser_fingerprint: toStripeMetadataValue(fraudSignals?.fingerprint || 'none'),
                     risk_score:        String(fraudSignals?.riskScore || 0),
-                    risk_signals:      (fraudSignals?.riskSignals || []).join(', '),
-                    client_country:    fraudSignals?.country || 'unknown',
+                    risk_signals:      toStripeMetadataValue((fraudSignals?.riskSignals || []).join(', ')),
+                    client_country:    toStripeMetadataValue(fraudSignals?.country || 'unknown'),
                 },
             },
             {
                 // ── Idempotency key prevents duplicate charges on retry ────────
-                idempotencyKey: `pi-create-${booking.id}`,
+                idempotencyKey: `pi-create-${booking.id}-${priceInCents}-${existingPaymentIntentId || 'new'}`,
             },
         );
 
@@ -306,7 +391,8 @@ export class PaymentsService {
             data: {
                 price:          finalPrice,
                 paymentIntentId: paymentIntent.id,
-                paymentStatus:  'PENDING',
+                paymentStatus:  BOOKING_STATUS.PENDING_PAYMENT,
+                status:         BOOKING_STATUS.PENDING_PAYMENT,
                 platformFee:    platformFeeInCents / 100,
                 driverAmount:   driverAmountInCents / 100,
             } as any,
@@ -365,13 +451,21 @@ export class PaymentsService {
                 const pi        = event.data.object;
                 const bookingId = pi.metadata?.bookingId;
                 if (!bookingId) break;
+                const chargeId = typeof pi.latest_charge === 'string'
+                    ? pi.latest_charge
+                    : pi.latest_charge?.id;
+                const paymentMethod = Array.isArray(pi.payment_method_types)
+                    ? pi.payment_method_types.join(',')
+                    : (typeof pi.payment_method === 'string' ? pi.payment_method : undefined);
 
                 await this.prisma.$transaction([
                     this.prisma.booking.update({
                         where: { id: bookingId },
                         data: {
-                            paymentStatus: 'PAID',
-                            status:        'confirmed',
+                            paymentStatus: BOOKING_STATUS.PAID,
+                            status:        BOOKING_STATUS.CONFIRMED,
+                            paymentIntentId: pi.id,
+                            price: pi.amount / 100,
                         } as any,
                     }),
                     this.prisma.transaction.create({
@@ -382,18 +476,28 @@ export class PaymentsService {
                             status: 'SUCCESS',
                         },
                     }),
-                    this.prisma.payment.create({
-                        data: {
+                    this.prisma.payment.upsert({
+                        where: { stripePaymentIntentId: pi.id },
+                        update: {
+                            stripeChargeId: chargeId,
+                            amount: pi.amount,
+                            currency: pi.currency || 'eur',
+                            status: 'succeeded',
+                            paymentMethod,
+                        },
+                        create: {
                             bookingId,
                             stripePaymentIntentId: pi.id,
-                            amount:   pi.amount,
-                            currency: 'eur',
-                            status:   'succeeded',
+                            stripeChargeId: chargeId,
+                            amount: pi.amount,
+                            currency: pi.currency || 'eur',
+                            status: 'succeeded',
+                            paymentMethod,
                         },
                     }),
                 ]);
 
-                this.logger.log(`[PAID] Booking ${bookingId} confirmed. PI: ${pi.id}`);
+                this.logger.log(`[PAID] Booking ${bookingId} confirmed. PI: ${pi.id} | REF: ${buildBookingReference(bookingId)}`);
 
                 const booking = await this.prisma.booking.findUnique({
                     where: { id: bookingId },
@@ -433,16 +537,25 @@ export class PaymentsService {
 
                 await this.prisma.booking.update({
                     where: { id: bookingId },
-                    data: { paymentStatus: 'payment_failed', status: 'payment_failed' } as any,
+                    data: { paymentStatus: BOOKING_STATUS.PAYMENT_FAILED, status: BOOKING_STATUS.PAYMENT_FAILED } as any,
                 });
 
-                await this.prisma.payment.create({
-                    data: {
+                await this.prisma.payment.upsert({
+                    where: { stripePaymentIntentId: pi.id },
+                    update: {
+                        stripeChargeId: chargeId,
+                        amount: pi.amount,
+                        currency: pi.currency || 'eur',
+                        status: 'failed',
+                        failureCode,
+                        failureMessage: failureMsg,
+                    },
+                    create: {
                         bookingId,
                         stripePaymentIntentId: pi.id,
                         stripeChargeId: chargeId,
                         amount:   pi.amount,
-                        currency: 'eur',
+                        currency: pi.currency || 'eur',
                         status:   'failed',
                         failureCode,
                         failureMessage: failureMsg,
@@ -456,16 +569,63 @@ export class PaymentsService {
                 break;
             }
 
+            // ── payment_intent.canceled ──────────────────────────────────────
+            case 'payment_intent.canceled': {
+                const pi        = event.data.object;
+                const bookingId = pi.metadata?.bookingId;
+                if (!bookingId) break;
+
+                await this.prisma.booking.updateMany({
+                    where: {
+                        id: bookingId,
+                        paymentStatus: { not: BOOKING_STATUS.PAID },
+                    },
+                    data: {
+                        paymentStatus: BOOKING_STATUS.CANCELED,
+                        status: BOOKING_STATUS.CANCELED,
+                    } as any,
+                });
+
+                await this.prisma.payment.upsert({
+                    where: { stripePaymentIntentId: pi.id },
+                    update: {
+                        amount: pi.amount,
+                        currency: pi.currency || 'eur',
+                        status: 'canceled',
+                    },
+                    create: {
+                        bookingId,
+                        stripePaymentIntentId: pi.id,
+                        amount: pi.amount,
+                        currency: pi.currency || 'eur',
+                        status: 'canceled',
+                    },
+                });
+
+                this.logger.warn(`[CANCELED] Booking ${bookingId} — PI: ${pi.id}`);
+                this.eventsGateway.emitPaymentStatus(bookingId, 'payment_canceled');
+                break;
+            }
+
             // ── charge.refunded ──────────────────────────────────────────────
             case 'charge.refunded': {
                 const charge   = event.data.object;
                 const payment  = await this.prisma.payment.findFirst({
-                    where: { stripePaymentIntentId: charge.payment_intent },
+                    where: {
+                        OR: [
+                            { stripePaymentIntentId: charge.payment_intent },
+                            { stripeChargeId: charge.id },
+                        ],
+                    },
                 });
                 if (payment?.bookingId) {
                     await this.prisma.booking.update({
                         where: { id: payment.bookingId },
-                        data: { status: 'refunded', paymentStatus: 'refunded' } as any,
+                        data: { status: BOOKING_STATUS.REFUNDED, paymentStatus: BOOKING_STATUS.REFUNDED } as any,
+                    });
+                    await this.prisma.payment.update({
+                        where: { id: payment.id },
+                        data: { status: 'refunded', stripeChargeId: charge.id },
                     });
                     this.logger.log(`[REFUNDED] Booking ${payment.bookingId}`);
                 }
@@ -476,7 +636,12 @@ export class PaymentsService {
             case 'charge.dispute.created': {
                 const dispute  = event.data.object;
                 const payment  = await this.prisma.payment.findFirst({
-                    where: { stripePaymentIntentId: dispute.payment_intent },
+                    where: {
+                        OR: [
+                            { stripePaymentIntentId: dispute.payment_intent },
+                            { stripeChargeId: dispute.charge },
+                        ],
+                    },
                 });
                 if (payment?.bookingId) {
                     await this.prisma.booking.update({
@@ -492,7 +657,54 @@ export class PaymentsService {
                 this.logger.log(`Unhandled Stripe event type: ${event.type}`);
         }
 
+        await this.prisma.stripeEvent.update({
+            where: { eventId: event.id },
+            data: { processed: true },
+        });
+
         return { received: true };
+    }
+
+    async expireStalePendingBookings(maxAgeMinutes = 45) {
+        const cutoff = new Date(Date.now() - maxAgeMinutes * 60 * 1000);
+        const staleBookings = await this.prisma.booking.findMany({
+            where: {
+                status: BOOKING_STATUS.PENDING_PAYMENT,
+                paymentStatus: BOOKING_STATUS.PENDING_PAYMENT,
+                updatedAt: { lt: cutoff },
+            },
+            select: { id: true, paymentIntentId: true },
+            take: 100,
+        });
+
+        for (const booking of staleBookings) {
+            if (this.stripe && booking.paymentIntentId) {
+                try {
+                    const pi = await this.stripe.paymentIntents.retrieve(booking.paymentIntentId);
+                    if (pi && !['succeeded', 'canceled'].includes(pi.status)) {
+                        await this.stripe.paymentIntents.cancel(booking.paymentIntentId, {
+                            cancellation_reason: 'abandoned',
+                        });
+                    }
+                } catch (err) {
+                    this.logger.warn(`Could not cancel stale PI for booking ${booking.id}: ${err.message}`);
+                }
+            }
+        }
+
+        const result = await this.prisma.booking.updateMany({
+            where: {
+                id: { in: staleBookings.map((booking) => booking.id) },
+                paymentStatus: { not: BOOKING_STATUS.PAID },
+            },
+            data: {
+                status: BOOKING_STATUS.CANCELED,
+                paymentStatus: BOOKING_STATUS.CANCELED,
+            } as any,
+        });
+
+        this.logger.log(`Expired ${result.count} stale pending payment bookings.`);
+        return { expired: result.count };
     }
 
     // ─── Transfer to Driver ───────────────────────────────────────────────────

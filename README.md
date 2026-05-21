@@ -1,6 +1,6 @@
 <div align="center">
 
-<img src="https://github.com/gabrielrubrum/movnly/blob/main/public/preview.png?raw=true" width="100%" alt="MOVNLY" />
+<img src="./frontend/public/logoMov.png" width="220" alt="MOVNLY" />
 
 <br/><br/>
 

@@ -80,8 +80,25 @@ export function BookingSteps() {
     notes: "",
   });
 
-  const update = (patch: Partial<BookingFormData>) =>
+  const update = (patch: Partial<BookingFormData>) => {
+    const paymentAffectingFields: Array<keyof BookingFormData> = [
+      "tripType",
+      "origin",
+      "destination",
+      "date",
+      "time",
+      "returnDate",
+      "returnTime",
+      "category",
+      "extras",
+      "passengers",
+      "luggage",
+    ];
+    if (paymentAffectingFields.some((field) => field in patch)) {
+      setClientSecret(null);
+    }
     setForm((f) => ({ ...f, ...patch }));
+  };
 
   useEffect(() => {
     setHasHydrated(true);
@@ -150,6 +167,7 @@ export function BookingSteps() {
       }
     } catch (err: any) {
       console.error("Payment init failed:", err);
+      setClientSecret(null);
     } finally {
       setLoading(false);
     }
@@ -307,7 +325,7 @@ export function BookingSteps() {
                   : "bg-brand-gold text-black shadow-[0_8px_30px_rgba(212,175,55,0.35)] hover:shadow-[0_12px_40px_rgba(212,175,55,0.5)] hover:scale-[1.02] active:scale-[0.98]"
               )}
             >
-              {step === 1 ? "Consultar tarifas" :
+              {step === 1 ? "Ver opções disponíveis" :
                step === 2 ? "Selecionar veículo" :
                step === 3 ? "Continuar" :
                "Ir para pagamento"}

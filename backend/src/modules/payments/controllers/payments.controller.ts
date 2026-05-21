@@ -50,6 +50,14 @@ export class PaymentsController {
         return this.paymentsService.transferToDriver(req.params.bookingId);
     }
 
+    /** Protected — expires old pending bookings and cancels abandoned PaymentIntents. */
+    @UseGuards(JwtAuthGuard, RolesGuard)
+    @Roles(Role.ADMIN)
+    @Post('expire-pending')
+    async expirePendingPayments() {
+        return this.paymentsService.expireStalePendingBookings();
+    }
+
     /** Protected — only the authenticated DRIVER can see their own stats. */
     @UseGuards(JwtAuthGuard, RolesGuard)
     @Roles(Role.DRIVER)

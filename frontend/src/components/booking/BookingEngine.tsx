@@ -367,14 +367,11 @@ export function BookingEngine() {
           onClick={handleSearch}
           className="group/cta relative isolate w-full lg:w-auto"
         >
-          {/* Ambient Glow behind button */}
-          <div className="absolute -inset-4 bg-brand-gold/20 rounded-full blur-[20px] opacity-0 group-hover/cta:opacity-100 transition-opacity duration-700" />
-          
           <div className={cn(
-            "px-10 py-4 rounded-full text-[11px] font-black uppercase tracking-[0.2em] flex items-center justify-center gap-4 transition-all duration-500 overflow-hidden relative group-hover/cta:scale-105",
+            "px-10 py-4 rounded-full text-[11px] font-black uppercase tracking-[0.2em] flex items-center justify-center gap-4 transition-all duration-300 overflow-hidden relative group-hover/cta:scale-[1.01]",
             (origin && destination && date && time) 
-              ? "bg-brand-gold hover:bg-[#F0D680] text-black shadow-[0_10px_30px_-10px_rgba(212,175,55,0.4)]" 
-              : "bg-white/5 text-white/20 border border-white/10"
+              ? "bg-brand-gold hover:bg-[#F0D680] text-black shadow-[0_10px_24px_-14px_rgba(212,175,55,0.45)]" 
+              : "bg-white/5 text-white/40 border border-white/10"
           )}>
             <span className="relative z-10">{t("booking.viewPrices")}</span>
             <Search className="w-4 h-4 relative z-10 group-hover/cta:translate-x-2 transition-transform duration-500" />

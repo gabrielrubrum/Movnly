@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
 import { useStripe, useElements, PaymentElement } from "@stripe/react-stripe-js";
 import type { StripePaymentElementOptions } from "@stripe/stripe-js";
 import { Loader2, ChevronRight, AlertCircle, Globe, RefreshCw, Shield } from "lucide-react";
@@ -32,6 +33,7 @@ export function CheckoutForm({ loading: parentLoading, total, bookingId, custome
   const stripe   = useStripe();
   const elements = useElements();
   const { t }    = useI18n();
+  const router   = useRouter();
 
   const [errorMessage,   setErrorMessage]   = useState<string | null>(null);
   const [loading,        setLoading]        = useState(false);
@@ -44,7 +46,11 @@ export function CheckoutForm({ loading: parentLoading, total, bookingId, custome
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!stripe || !elements) return;
+    if (!stripe || !elements || loading || parentLoading) return;
+    if (!bookingId) {
+      setErrorMessage("A reserva ainda está a ser preparada. Aguarde alguns segundos e tente novamente.");
+      return;
+    }
 
     const name = cardholderName.trim();
     if (!name) { setErrorMessage(t("bookingFlow.payment.cardholderNameRequired")); return; }
@@ -55,6 +61,11 @@ export function CheckoutForm({ loading: parentLoading, total, bookingId, custome
     try {
       const { error: submitError } = await elements.submit();
       if (submitError) {
+        console.error("[MOVNLY][Stripe Elements submit failed]", {
+          code: submitError.code,
+          declineCode: submitError.decline_code,
+          message: submitError.message,
+        });
         setErrorMessage(translateStripeError(submitError.message, submitError.code, submitError.decline_code));
         setRetryCount((c) => c + 1);
         return;
@@ -63,19 +74,29 @@ export function CheckoutForm({ loading: parentLoading, total, bookingId, custome
       const { error } = await stripe.confirmPayment({
         elements,
         confirmParams: {
-          return_url: `${window.location.origin}/booking/confirmation/${bookingId || "processing"}`,
+          return_url: `${window.location.origin}/booking/success?bookingId=${bookingId}`,
           payment_method_data: {
             billing_details: { name, email: customerEmail || undefined, phone: customerPhone || undefined },
           },
         },
+        redirect: "if_required",
       });
 
       if (error) {
+        console.error("[MOVNLY][Stripe confirmPayment failed]", {
+          type: error.type,
+          code: error.code,
+          declineCode: error.decline_code,
+          message: error.message,
+        });
         setErrorMessage(translateStripeError(error.message, error.code, error.decline_code));
         setRetryCount((c) => c + 1);
+        return;
       }
+      router.push(`/booking/confirmation/${bookingId}?redirect_status=processing`);
     } catch (err: any) {
-      setErrorMessage(err?.message || "Ocorreu um erro ao processar o pagamento.");
+      console.error("[MOVNLY][Payment unexpected failure]", err);
+      setErrorMessage("Não conseguimos concluir o pagamento agora. Tente outro método ou fale com o suporte MOVNLY.");
       setRetryCount((c) => c + 1);
     } finally {
       setLoading(false);
@@ -166,8 +187,8 @@ export function CheckoutForm({ loading: parentLoading, total, bookingId, custome
           <button
             id="stripe-confirm-payment-btn"
             type="submit"
-            disabled={!stripe || isProcessing}
-            className="flex-1 lg:w-full py-4 md:py-6 bg-gradient-to-br from-brand-gold via-[#C5A028] to-brand-gold text-black text-[10px] md:text-sm font-black uppercase tracking-[0.15em] md:tracking-[0.3em] rounded-2xl md:rounded-full hover:scale-[1.02] active:scale-[0.98] transition-all duration-700 shadow-luxury-gold group disabled:opacity-50 relative overflow-hidden shrink-0"
+            disabled={!stripe || !elements || isProcessing || !bookingId}
+            className="flex-1 lg:w-full py-4 md:py-6 bg-brand-gold text-black text-[10px] md:text-sm font-black uppercase tracking-[0.15em] md:tracking-[0.24em] rounded-2xl md:rounded-xl hover:bg-[#e4c766] active:scale-[0.99] transition-all duration-300 shadow-[0_12px_28px_rgba(212,175,55,0.22)] group disabled:opacity-50 disabled:cursor-not-allowed relative overflow-hidden shrink-0"
           >
             <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/50 to-transparent -translate-x-[200%] group-hover:animate-shimmer" />
             {isProcessing ? (
@@ -177,7 +198,7 @@ export function CheckoutForm({ loading: parentLoading, total, bookingId, custome
               </span>
             ) : (
               <span className="flex items-center justify-center gap-2 md:gap-4 relative z-10 px-2">
-                <span className="truncate">Pagar e confirmar reserva</span>
+                <span className="truncate">Confirmar e pagar</span>
                 <div className="hidden md:flex w-10 h-10 md:w-12 md:h-12 rounded-full bg-black/10 items-center justify-center group-hover:bg-black/20 group-hover:translate-x-3 transition-all duration-700 shadow-xl shrink-0">
                   <ChevronRight className="w-5 h-5" />
                 </div>

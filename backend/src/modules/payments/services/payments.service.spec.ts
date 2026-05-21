@@ -37,6 +37,14 @@ describe('PaymentsService', () => {
                             findUnique: jest.fn(),
                             update: jest.fn(),
                         },
+                        stripeEvent: {
+                            findFirst: jest.fn(),
+                            create: jest.fn(),
+                            update: jest.fn(),
+                        },
+                        payment: {
+                            upsert: jest.fn(),
+                        },
                         transaction: {
                             create: jest.fn(),
                             findFirst: jest.fn(),
@@ -58,6 +66,7 @@ describe('PaymentsService', () => {
                     provide: EventsGateway,
                     useValue: {
                         emitPaymentStatus: jest.fn(),
+                        emitNewRideAvailable: jest.fn(),
                     },
                 },
                 {
@@ -84,11 +93,15 @@ describe('PaymentsService', () => {
             (service as any).stripe = {
                 webhooks: {
                     constructEvent: jest.fn().mockReturnValue({
+                        id: 'evt_123',
                         type: 'payment_intent.succeeded',
                         data: {
                             object: {
                                 id: 'pi_123',
                                 amount: 4550,
+                                currency: 'eur',
+                                latest_charge: 'ch_123',
+                                payment_method_types: ['card'],
                                 metadata: { bookingId: 'booking-123' }
                             }
                         }

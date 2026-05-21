@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import { useI18n } from "@/i18n/context";
 import { type BookingFormData } from "../BookingSteps";
-import { Lock, ArrowLeft, Loader2, ShieldCheck, CreditCard, Globe, Shield, RefreshCw, AlertCircle, Smartphone } from "lucide-react";
+import { Lock, ArrowLeft, Loader2, ShieldCheck, CreditCard, Globe, Shield, RefreshCw, AlertCircle, Smartphone, MapPin, CalendarClock, Users, Briefcase, Car } from "lucide-react";
 import { loadStripe } from "@stripe/stripe-js";
 import { Elements } from "@stripe/react-stripe-js";
 import { CheckoutForm } from "./CheckoutForm";
@@ -26,8 +26,8 @@ interface Props {
 }
 
 const TRUST_BADGES = [
-  { icon: Lock,        label: "Pagamento seguro via Stripe",       sub: "Encriptação SSL 256-bit" },
-  { icon: Globe,       label: "Cobrança internacional em EUR (€)",  sub: "Aceita cartões de todo o mundo" },
+  { icon: Lock,        label: "Pagamento seguro processado pela Stripe", sub: "Encriptação SSL 256-bit" },
+  { icon: Globe,       label: "Aceitamos cartões internacionais, Apple Pay e Google Pay", sub: "Cobrança em EUR (€)" },
   { icon: Shield,      label: "Proteção anti-fraude avançada",      sub: "Stripe Radar ativo" },
   { icon: RefreshCw,   label: "Cancelamento grátis",                sub: "Sem penalidade até 24h antes" },
 ];
@@ -35,9 +35,15 @@ const TRUST_BADGES = [
 const METHOD_BADGES = [
   { src: "https://upload.wikimedia.org/wikipedia/commons/d/d6/Visa_2021.svg",         alt: "Visa",        h: "h-3" },
   { src: "https://upload.wikimedia.org/wikipedia/commons/2/2a/Mastercard-logo.svg",   alt: "Mastercard",  h: "h-5" },
+  { src: "https://upload.wikimedia.org/wikipedia/commons/3/30/American_Express_logo.svg", alt: "Amex", h: "h-5" },
   { src: "https://upload.wikimedia.org/wikipedia/commons/b/b0/Apple_Pay_logo.svg",    alt: "Apple Pay",   h: "h-4" },
   { src: "https://upload.wikimedia.org/wikipedia/commons/f/f2/Google_Pay_Logo.svg",   alt: "Google Pay",  h: "h-5" },
 ];
+
+const formatPickup = (date: string, time: string) => {
+  if (!date && !time) return "Por definir";
+  return `${date || "Data por definir"} ${time ? `às ${time}` : ""}`.trim();
+};
 
 export function StepPayment({ form, onConfirm, onBack, loading, total, clientSecret: propClientSecret, initPaymentIntent, bookingId }: Props) {
   const { t } = useI18n();
@@ -112,12 +118,41 @@ export function StepPayment({ form, onConfirm, onBack, loading, total, clientSec
         ))}
       </div>
 
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-3 rounded-2xl border border-white/[0.06] bg-white/[0.025] p-4 sm:p-6">
+        {[
+          { icon: MapPin, label: "Origem", value: form.origin },
+          { icon: MapPin, label: "Destino", value: form.destination },
+          { icon: CalendarClock, label: "Data e hora", value: formatPickup(form.date, form.time) },
+          { icon: Car, label: "Veículo", value: form.category },
+          { icon: Users, label: "Passageiros", value: String(form.passengers) },
+          { icon: Briefcase, label: "Malas", value: String(form.luggage) },
+        ].map((item) => (
+          <div key={item.label} className="flex items-start gap-3 min-w-0">
+            <item.icon className="w-4 h-4 mt-0.5 text-brand-gold/70 shrink-0" />
+            <div className="min-w-0">
+              <p className="text-[9px] font-black uppercase tracking-[0.2em] text-white/45">{item.label}</p>
+              <p className="text-sm font-semibold text-white/85 truncate">{item.value || "Por definir"}</p>
+            </div>
+          </div>
+        ))}
+        <div className="md:col-span-2 flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-t border-white/[0.06] pt-4 mt-1">
+          <div>
+            <p className="text-[9px] font-black uppercase tracking-[0.2em] text-white/45">Cancelamento e suporte</p>
+            <p className="text-xs font-semibold text-white/70">Cancelamento grátis até 24h antes. Suporte MOVNLY 24/7.</p>
+          </div>
+          <div className="text-left sm:text-right">
+            <p className="text-[9px] font-black uppercase tracking-[0.2em] text-white/45">Preço total</p>
+            <p className="text-2xl font-black text-brand-gold">€{Math.round(total)} EUR</p>
+          </div>
+        </div>
+      </div>
+
       {/* Payment Card */}
       <div className="flex flex-col gap-8">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="flex flex-col rounded-[2rem] sm:rounded-[48px] overflow-hidden bg-[#0B0B11] border border-white/[0.05] shadow-luxury w-full"
+          className="flex flex-col rounded-2xl overflow-hidden bg-[#0B0B11] border border-white/[0.08] shadow-[0_18px_60px_rgba(0,0,0,0.28)] w-full"
         >
           {/* Card Header */}
           <div className="p-5 sm:p-10 border-b border-white/[0.05] flex flex-col md:flex-row md:items-center justify-between gap-5">
@@ -202,8 +237,8 @@ export function StepPayment({ form, onConfirm, onBack, loading, total, clientSec
                   initial={{ opacity: 0, scale: 0.98 }} animate={{ opacity: 1, scale: 1 }}
                   className="w-full max-w-4xl mx-auto space-y-10"
                 >
-                  <div className="p-1 bg-gradient-to-b from-white/[0.04] to-transparent rounded-[2rem] border border-white/[0.04]">
-                    <div className="p-5 sm:p-10 bg-[#0B0B11] rounded-[1.75rem]">
+                  <div className="rounded-2xl border border-white/[0.08] bg-[#101018]">
+                    <div className="p-5 sm:p-8">
                       <Elements
                         key={clientSecret}
                         stripe={stripePromise}
@@ -214,61 +249,12 @@ export function StepPayment({ form, onConfirm, onBack, loading, total, clientSec
                             theme: "night",
                             variables: {
                               colorPrimary:     "#D4AF37",
-                              colorBackground:  "#0B0B11",
+                              colorBackground:  "#101018",
                               colorText:        "#ffffff",
                               colorDanger:      "#df1b41",
-                              fontFamily:       "Outfit, sans-serif",
-                              spacingUnit:      "5px",
-                              borderRadius:     "16px",
-                            },
-                            rules: {
-                              ".Input": {
-                                border:          "1px solid rgba(255,255,255,0.05)",
-                                backgroundColor: "rgba(255,255,255,0.02)",
-                                padding:         "16px 18px",
-                                fontSize:        "15px",
-                                boxShadow:       "0 4px 20px rgba(0,0,0,0.2)",
-                                transition:      "all 0.3s ease",
-                              },
-                              ".Input:focus": {
-                                border:          "1px solid rgba(212,175,55,0.45)",
-                                backgroundColor: "rgba(212,175,55,0.02)",
-                                boxShadow:       "0 0 0 3px rgba(212,175,55,0.08), 0 8px 24px rgba(0,0,0,0.3)",
-                              },
-                              ".Label": {
-                                fontSize:      "9px",
-                                fontWeight:    "800",
-                                textTransform: "uppercase",
-                                letterSpacing: "0.25em",
-                                color:         "rgba(255,255,255,0.35)",
-                                marginBottom:  "8px",
-                                marginLeft:    "8px",
-                              },
-                              ".Tab": {
-                                border:          "1px solid rgba(255,255,255,0.06)",
-                                backgroundColor: "rgba(255,255,255,0.045)",
-                                borderRadius:    "12px",
-                                padding:         "12px 14px",
-                                minHeight:       "46px",
-                              },
-                              ".Tab:hover": {
-                                border:          "1px solid rgba(212,175,55,0.2)",
-                                backgroundColor: "rgba(212,175,55,0.06)",
-                              },
-                              ".Tab--selected": {
-                                border:          "1px solid rgba(212,175,55,0.62)",
-                                backgroundColor: "rgba(212,175,55,0.1)",
-                                boxShadow:       "0 0 0 1px rgba(212,175,55,0.2)",
-                              },
-                              ".TabLabel": {
-                                color:         "rgba(255,255,255,0.78)",
-                                fontSize:      "12px",
-                                fontWeight:    "800",
-                                letterSpacing: "0.01em",
-                              },
-                              ".TabIcon": {
-                                color: "rgba(255,255,255,0.74)",
-                              },
+                              fontFamily:       "Inter, system-ui, sans-serif",
+                              spacingUnit:      "4px",
+                              borderRadius:     "8px",
                             },
                           },
                         }}
