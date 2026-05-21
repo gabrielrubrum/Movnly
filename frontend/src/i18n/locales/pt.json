@@ -525,6 +525,8 @@
       "extra_wait": "Espera Prolongada"
     },
     "extrasDesc": {
+      "meet_greet": "Recepção no terminal com acompanhamento profissional.",
+      "name_board": "O motorista aguarda com uma placa com o seu nome.",
       "extra_wait": "Aguardamos o tempo adicional necessário para o seu conforto.",
       "extra_stop": "Adicione paragens ao longo do trajeto."
     },

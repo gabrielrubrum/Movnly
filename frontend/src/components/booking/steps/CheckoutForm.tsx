@@ -120,7 +120,7 @@ export function CheckoutForm({ loading: parentLoading, total, bookingId, custome
       </div>
 
       {/* Stripe Payment Element — all methods */}
-      <div className="rounded-2xl overflow-hidden">
+      <div className="rounded-[22px] border border-white/[0.08] bg-white/[0.025] p-3 shadow-[0_18px_50px_rgba(0,0,0,0.25)] overflow-hidden">
         <PaymentElement id="stripe-payment-element" options={PAYMENT_ELEMENT_OPTIONS} />
       </div>
 

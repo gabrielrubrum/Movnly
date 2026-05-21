@@ -241,18 +241,28 @@ export function StepPayment({ form, onConfirm, onBack, loading, total, clientSec
                               },
                               ".Tab": {
                                 border:          "1px solid rgba(255,255,255,0.06)",
-                                backgroundColor: "rgba(255,255,255,0.02)",
+                                backgroundColor: "rgba(255,255,255,0.045)",
                                 borderRadius:    "12px",
-                                padding:         "10px 14px",
+                                padding:         "12px 14px",
+                                minHeight:       "46px",
                               },
                               ".Tab:hover": {
                                 border:          "1px solid rgba(212,175,55,0.2)",
-                                backgroundColor: "rgba(212,175,55,0.03)",
+                                backgroundColor: "rgba(212,175,55,0.06)",
                               },
                               ".Tab--selected": {
-                                border:          "1px solid rgba(212,175,55,0.4)",
-                                backgroundColor: "rgba(212,175,55,0.05)",
+                                border:          "1px solid rgba(212,175,55,0.62)",
+                                backgroundColor: "rgba(212,175,55,0.1)",
                                 boxShadow:       "0 0 0 1px rgba(212,175,55,0.2)",
+                              },
+                              ".TabLabel": {
+                                color:         "rgba(255,255,255,0.78)",
+                                fontSize:      "12px",
+                                fontWeight:    "800",
+                                letterSpacing: "0.01em",
+                              },
+                              ".TabIcon": {
+                                color: "rgba(255,255,255,0.74)",
                               },
                             },
                           },

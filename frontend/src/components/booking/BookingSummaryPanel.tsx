@@ -177,7 +177,7 @@ export function BookingSummaryPanel({ form, total, extrasTotal, calculatedBasePr
                     <div key={extra.id} className="flex items-center justify-between py-2 px-3 rounded-xl bg-white/[0.02] border border-white/[0.04]">
                       <span className="text-[9px] font-bold text-white/50 uppercase tracking-[0.1em]">{extra.name}</span>
                       <span className="text-[9px] font-black text-brand-gold">
-                        {extra.price === 0 ? "Grátis" : `+${formatCurrency(extra.price)}`}
+                        {extra.price === 0 ? "Incluído" : `+${formatCurrency(extra.price)}`}
                       </span>
                     </div>
                   ))}

@@ -1,6 +1,5 @@
 "use client";
 
-import { useState } from "react";
 import { cn, formatCurrency } from "@/lib/utils";
 import { EXTRAS } from "@/lib/constants";
 import { type BookingFormData } from "../BookingSteps";
@@ -30,6 +29,8 @@ const EXTRA_ICONS: Record<string, string> = {
   baby_seat: "👶",
   booster: "🪑",
 };
+
+const getExtraPriceLabel = (price: number) => (price === 0 ? "Já incluído" : `+${formatCurrency(price)}`);
 
 function ExtraCard({ extra, selected, onToggle }: { extra: typeof EXTRAS[0]; selected: boolean; onToggle: () => void }) {
   const { t } = useI18n();
@@ -78,7 +79,7 @@ function ExtraCard({ extra, selected, onToggle }: { extra: typeof EXTRAS[0]; sel
           "font-black font-sans tracking-tighter",
           extra.price === 0 ? "text-sm text-emerald-400/80 uppercase tracking-widest" : "text-xl text-brand-gold"
         )}>
-          {extra.price === 0 ? "Grátis" : `+${formatCurrency(extra.price)}`}
+          {getExtraPriceLabel(extra.price)}
         </span>
         <div className={cn(
           "w-7 h-7 rounded-full border-2 flex items-center justify-center transition-all duration-400",
