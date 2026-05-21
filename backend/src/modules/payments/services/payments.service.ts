@@ -346,7 +346,7 @@ export class PaymentsService {
                 customer: stripeCustomerId || undefined,
                 receipt_email: passenger.email,
                 description: `MOVNLY — Reserva ${booking.id}`,
-                statement_descriptor: 'MOVNLY',
+                statement_descriptor_suffix: 'MOVNLY',
                 // Stripe BR will show eligible methods now; future EU/local methods can be enabled in Dashboard without a checkout rewrite.
                 automatic_payment_methods: {
                     enabled: true,

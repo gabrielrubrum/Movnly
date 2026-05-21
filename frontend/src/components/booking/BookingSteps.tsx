@@ -182,10 +182,14 @@ export function BookingSteps() {
     } catch (err: any) {
       console.error("Payment init failed:", err);
       const status = err?.response?.status;
-      const backendMessage = err?.response?.data?.message;
+      const backendMessage = Array.isArray(err?.response?.data?.message)
+        ? err.response.data.message.join(" ")
+        : err?.response?.data?.message;
       setPaymentInitError(
         status === 429 || String(backendMessage || "").toLowerCase().includes("too many")
           ? "Recebemos muitas tentativas em pouco tempo. Aguarde alguns instantes e tente novamente."
+          : backendMessage
+          ? `Não conseguimos preparar o pagamento: ${backendMessage}`
           : "Não conseguimos preparar o pagamento agora. Verifique os dados da reserva ou tente novamente."
       );
       setClientSecret(null);
