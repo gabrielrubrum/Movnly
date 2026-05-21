@@ -135,9 +135,14 @@ export function StepPayment({ form, onConfirm, onBack, loading, total, clientSec
               </div>
             </div>
             {/* Payment method logos */}
-            <div className="flex items-center gap-4 opacity-30 hover:opacity-60 transition-opacity flex-wrap">
+            <div className="flex items-center gap-2 sm:gap-3 flex-wrap justify-start md:justify-end">
               {METHOD_BADGES.map((b) => (
-                <img key={b.alt} src={b.src} alt={b.alt} className={b.h} />
+                <span
+                  key={b.alt}
+                  className="h-8 min-w-14 px-2.5 rounded-lg bg-white/95 border border-white/10 flex items-center justify-center shadow-[0_8px_24px_rgba(0,0,0,0.22)]"
+                >
+                  <img src={b.src} alt={b.alt} className={`${b.h} max-w-[64px] object-contain`} />
+                </span>
               ))}
             </div>
           </div>
