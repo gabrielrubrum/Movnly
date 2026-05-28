@@ -82,9 +82,7 @@ export function StepVehicle({ form, update, onNext, onBack }: Props) {
               <button
                 onClick={() => {
                   update({ category: cat.id as VehicleCategory });
-                  setTimeout(() => {
-                    window.scrollTo({ top: document.body.scrollHeight, behavior: "smooth" });
-                  }, 100);
+                  setTimeout(() => onNext(), 600);
                 }}
                 className={cn(
                   "w-full text-left relative overflow-hidden transition-all duration-700 rounded-[2.5rem] border isolate group/card",
