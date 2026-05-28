@@ -221,24 +221,24 @@ export function StepExtras({ form, update, onNext, onBack }: Props) {
       )}
 
       {/* CTAs */}
-      <div className="pt-12 hidden lg:flex gap-5">
+      <div className="pt-12 flex flex-col-reverse sm:flex-row gap-5">
         <button
           onClick={onBack}
-          className="flex-1 flex items-center justify-center gap-5 py-5 border border-white/10 text-white/35 rounded-[36px] hover:bg-white/[0.04] hover:text-white transition-all font-sans"
+          className="w-full sm:w-auto flex-1 flex items-center justify-center gap-5 py-5 border border-white/10 text-white/35 rounded-[36px] hover:bg-white/[0.04] hover:text-white transition-all font-sans"
         >
           <ArrowLeft className="w-5 h-5" />
           <span className="text-[11px] font-black uppercase tracking-[0.4em]">Voltar</span>
         </button>
         <button
           onClick={onNext}
-          className="flex-[2] flex items-center justify-center gap-6 py-7 bg-brand-gold text-black rounded-[36px] shadow-[0_20px_60px_-15px_rgba(212,175,55,0.45)] hover:shadow-[0_30px_80px_-15px_rgba(212,175,55,0.6)] hover:scale-[1.01] transition-all group overflow-hidden font-sans relative"
+          className="w-full sm:w-auto flex-[2] flex items-center justify-center gap-6 py-6 sm:py-7 bg-brand-gold text-black rounded-[36px] shadow-[0_20px_60px_-15px_rgba(212,175,55,0.45)] hover:shadow-[0_30px_80px_-15px_rgba(212,175,55,0.6)] hover:scale-[1.01] transition-all group overflow-hidden font-sans relative"
         >
           <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent -translate-x-[200%] group-hover:translate-x-[200%] transition-transform duration-[1200ms]" />
-          <span className="text-[12px] font-black uppercase tracking-[0.45em] relative z-10">
+          <span className="text-[11px] sm:text-[12px] font-black uppercase tracking-[0.45em] relative z-10 text-center px-4">
             {extrasTotal > 0 ? `Continuar · +${formatCurrency(extrasTotal)}` : "Continuar sem opcionais"}
           </span>
-          <div className="w-10 h-10 rounded-full bg-black/10 flex items-center justify-center group-hover:translate-x-2 transition-transform relative z-10">
-            <ChevronRight className="w-5 h-5" />
+          <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-black/10 flex items-center justify-center group-hover:translate-x-2 transition-transform relative z-10 shrink-0">
+            <ChevronRight className="w-4 h-4 sm:w-5 sm:h-5" />
           </div>
         </button>
       </div>

@@ -195,31 +195,37 @@ export function StepCustomer({ form, update, onNext, onBack }: Props) {
       </div>
 
       {/* Navigation */}
-      <div className="mt-16 pt-10 border-t border-white/[0.05] hidden lg:flex items-center justify-between gap-8">
-        <div>
+      <div className="mt-16 pt-10 border-t border-white/[0.05] flex flex-col md:flex-row items-center justify-between gap-8">
+        <div className="text-center md:text-left">
           <h4 className="text-base font-bold text-white font-sans uppercase tracking-[0.05em] mb-1">
             Tudo correto?
           </h4>
-          <p className="text-[10px] text-white/25 leading-relaxed uppercase tracking-widest font-sans font-bold max-w-xs">
+          <p className="text-[10px] text-white/25 leading-relaxed uppercase tracking-widest font-sans font-bold max-w-xs mx-auto md:mx-0">
             Verifique os dados antes de avançar para o pagamento seguro
           </p>
         </div>
 
-        <button
-          onClick={onNext}
-          disabled={!isComplete}
-          className={cn(
-            "relative overflow-hidden btn-editorial btn-editorial-primary !px-14 !py-7 font-sans font-black group shadow-[0_30px_80px_-20px_rgba(212,175,55,0.4)]",
-            !isComplete && "opacity-40 grayscale cursor-not-allowed"
-          )}
-        >
-          <span className="relative z-10 flex items-center gap-5 text-sm">
-            <span className="text-xs opacity-40 font-black tracking-tighter">04</span>
-            Ir para pagamento
-            <ChevronRight className="w-6 h-6 group-hover:translate-x-3 transition-transform duration-700 ease-in-out" />
-          </span>
-          <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-[200%] group-hover:translate-x-[200%] transition-transform duration-[1200ms] ease-in-out" />
-        </button>
+        <div className="flex flex-col-reverse sm:flex-row items-center gap-6 w-full md:w-auto font-sans">
+          <button onClick={onBack} className="w-full sm:w-auto text-[10px] font-black uppercase tracking-[0.5em] text-white/20 hover:text-white transition-all flex items-center justify-center gap-3 py-4 sm:py-0 group">
+            <div className="w-10 h-10 rounded-full border border-white/[0.07] flex items-center justify-center group-hover:bg-white/5 transition-all"><ArrowLeft className="w-4 h-4" /></div>
+            Voltar
+          </button>
+          <button
+            onClick={onNext}
+            disabled={!isComplete}
+            className={cn(
+              "w-full sm:w-auto relative overflow-hidden btn-editorial btn-editorial-primary !px-10 md:!px-14 !py-5 md:!py-7 font-sans font-black group shadow-[0_30px_80px_-20px_rgba(212,175,55,0.4)]",
+              !isComplete && "opacity-40 grayscale cursor-not-allowed"
+            )}
+          >
+            <span className="relative z-10 flex items-center justify-center gap-5 text-xs md:text-sm">
+              <span className="text-[10px] md:text-xs opacity-40 font-black tracking-tighter">04</span>
+              Ir para pagamento
+              <ChevronRight className="w-5 h-5 md:w-6 md:h-6 group-hover:translate-x-3 transition-transform duration-700 ease-in-out" />
+            </span>
+            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-[200%] group-hover:translate-x-[200%] transition-transform duration-[1200ms] ease-in-out" />
+          </button>
+        </div>
       </div>
     </div>
   );

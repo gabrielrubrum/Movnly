@@ -302,66 +302,6 @@ export function BookingSteps() {
         </div>
       </div>
 
-      {/* ─── Mobile Sticky Bottom Bar ─────────────────────────────────── */}
-      {step > 1 && step < 5 && (
-        <div className="fixed bottom-0 left-0 right-0 z-50 lg:hidden">
-          {/* Blur backdrop */}
-          <div className="absolute inset-0 bg-[#08080f]/90 backdrop-blur-2xl border-t border-white/[0.06]" />
-
-          <div className="relative px-5 py-4 flex items-center gap-4">
-            {/* Info left */}
-            <div className="flex-1 min-w-0">
-              {step > 1 && selectedCategory ? (
-                <p className="text-[9px] font-black uppercase tracking-[0.25em] text-white/40 truncate">
-                  {t(`categories_list.${selectedCategory.id}.name`)}
-                  {form.extras.length > 0 && ` · ${form.extras.length} opcional${form.extras.length !== 1 ? "is" : ""}`}
-                </p>
-              ) : (
-                <p className="text-[9px] font-black uppercase tracking-[0.25em] text-white/25">
-                  {step === 1 ? "Preencha os detalhes" : "Selecione um veículo"}
-                </p>
-              )}
-              {total > 0 ? (
-                <motion.p
-                  key={total}
-                  initial={{ scale: 1.05 }}
-                  animate={{ scale: 1 }}
-                  className="text-2xl font-black text-brand-gold tracking-tighter leading-none mt-1"
-                >
-                  €{Math.round(total)} EUR
-                </motion.p>
-              ) : (
-                <p className="text-sm font-black text-white/20 tracking-tighter mt-1">—</p>
-              )}
-            </div>
-
-            {/* CTA right */}
-            <button
-              onClick={nextStep}
-              disabled={
-                (step === 1 && (!form.origin || !form.destination || !form.date || !form.time)) ||
-                (step === 2 && !form.category)
-              }
-              className={cn(
-                "flex items-center gap-3 px-8 py-4 rounded-2xl font-sans font-black text-[11px] uppercase tracking-[0.3em] transition-all duration-400 shrink-0",
-                ((step === 1 && (!form.origin || !form.destination || !form.date || !form.time)) ||
-                 (step === 2 && !form.category))
-                  ? "bg-white/[0.04] text-white/20 border border-white/[0.06] cursor-not-allowed"
-                  : "bg-brand-gold text-black shadow-[0_8px_30px_rgba(212,175,55,0.35)] hover:shadow-[0_12px_40px_rgba(212,175,55,0.5)] hover:scale-[1.02] active:scale-[0.98]"
-              )}
-            >
-              {step === 1 ? "Ver opções disponíveis" :
-               step === 2 ? "Selecionar veículo" :
-               step === 3 ? "Continuar" :
-               "Ir para pagamento"}
-              <ChevronRight className="w-4 h-4" />
-            </button>
-          </div>
-
-          {/* Safe area padding */}
-          <div className="h-safe-area-inset-bottom bg-[#08080f]/90" />
-        </div>
-      )}
     </div>
   );
 }
