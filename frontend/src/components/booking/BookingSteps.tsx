@@ -303,7 +303,7 @@ export function BookingSteps() {
       </div>
 
       {/* ─── Mobile Sticky Bottom Bar ─────────────────────────────────── */}
-      {step < 5 && (
+      {step > 1 && step < 5 && (
         <div className="fixed bottom-0 left-0 right-0 z-50 lg:hidden">
           {/* Blur backdrop */}
           <div className="absolute inset-0 bg-[#08080f]/90 backdrop-blur-2xl border-t border-white/[0.06]" />
