@@ -80,7 +80,12 @@ export function StepVehicle({ form, update, onNext, onBack }: Props) {
           return (
             <motion.div key={cat.id} initial={{ opacity: 0, y: 40 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: idx * 0.1, duration: 0.7, ease: [0.22, 1, 0.36, 1] }} className="relative group">
               <button
-                onClick={() => update({ category: cat.id as VehicleCategory })}
+                onClick={() => {
+                  update({ category: cat.id as VehicleCategory });
+                  setTimeout(() => {
+                    window.scrollTo({ top: document.body.scrollHeight, behavior: "smooth" });
+                  }, 100);
+                }}
                 className={cn(
                   "w-full text-left relative overflow-hidden transition-all duration-700 rounded-[2.5rem] border isolate group/card",
                   selected

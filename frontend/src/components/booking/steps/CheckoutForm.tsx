@@ -74,7 +74,7 @@ export function CheckoutForm({ loading: parentLoading, total, bookingId, custome
       const { error } = await stripe.confirmPayment({
         elements,
         confirmParams: {
-          return_url: `${window.location.origin}/booking/success?bookingId=${bookingId}`,
+          return_url: `${window.location.origin}/booking/confirmation/${bookingId}`,
           payment_method_data: {
             billing_details: { name, email: customerEmail || undefined, phone: customerPhone || undefined },
           },
