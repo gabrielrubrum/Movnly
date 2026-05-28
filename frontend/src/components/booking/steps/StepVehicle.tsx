@@ -213,7 +213,7 @@ export function StepVehicle({ form, update, onNext, onBack }: Props) {
       </div>
 
       {/* Navigation */}
-      <div className="mt-20 pt-10 border-t border-white/[0.05] flex flex-col sm:flex-row items-center justify-between gap-8">
+      <div className="mt-20 pt-10 border-t border-white/[0.05] hidden lg:flex items-center justify-between gap-8">
         <div>
           <h4 className="text-base font-bold text-white font-sans uppercase tracking-[0.05em] mb-1">{t("categories.choiceTitle")}</h4>
           <p className="text-[10px] text-white/25 leading-relaxed uppercase tracking-widest font-sans font-bold max-w-xs">{t("categories.choiceDesc")}</p>

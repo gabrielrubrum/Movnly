@@ -221,7 +221,7 @@ export function StepExtras({ form, update, onNext, onBack }: Props) {
       )}
 
       {/* CTAs */}
-      <div className="pt-12 flex flex-col sm:flex-row gap-5">
+      <div className="pt-12 hidden lg:flex gap-5">
         <button
           onClick={onBack}
           className="flex-1 flex items-center justify-center gap-5 py-5 border border-white/10 text-white/35 rounded-[36px] hover:bg-white/[0.04] hover:text-white transition-all font-sans"

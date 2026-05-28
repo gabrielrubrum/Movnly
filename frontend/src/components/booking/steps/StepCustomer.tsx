@@ -195,7 +195,7 @@ export function StepCustomer({ form, update, onNext, onBack }: Props) {
       </div>
 
       {/* Navigation */}
-      <div className="mt-16 pt-10 border-t border-white/[0.05] flex flex-col sm:flex-row items-center justify-between gap-8">
+      <div className="mt-16 pt-10 border-t border-white/[0.05] hidden lg:flex items-center justify-between gap-8">
         <div>
           <h4 className="text-base font-bold text-white font-sans uppercase tracking-[0.05em] mb-1">
             Tudo correto?
