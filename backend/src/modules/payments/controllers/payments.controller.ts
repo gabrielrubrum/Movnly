@@ -1,5 +1,5 @@
 import {
-    Controller, Post, Headers, Req, UseGuards, Get,
+    Controller, Post, Headers, Req, UseGuards, Get, Body,
 } from '@nestjs/common';
 import { SkipThrottle, Throttle } from '@nestjs/throttler';
 import { PaymentsService }  from '../services/payments.service';
@@ -8,6 +8,7 @@ import { JwtAuthGuard }     from '../../auth/guards/jwt-auth.guard';
 import { RolesGuard }       from '../../auth/guards/roles.guard';
 import { Roles }            from '../../auth/decorators/roles.decorator';
 import { Role }             from '../../auth/decorators/roles.enum';
+import { CreatePaymentIntentDto } from '../dto/create-payment-intent.dto';
 
 @Controller('payments')
 export class PaymentsController {
@@ -27,9 +28,9 @@ export class PaymentsController {
 
     @Throttle({ default: { ttl: 60000, limit: 10 } })
     @Post('create-intent')
-    async createIntent(@Req() req: any) {
+    async createIntent(@Body() body: CreatePaymentIntentDto, @Req() req: any) {
         return this.paymentsService.createPaymentIntent(
-            req.body,
+            body,
             (req as any).fraudSignals,
         );
     }
