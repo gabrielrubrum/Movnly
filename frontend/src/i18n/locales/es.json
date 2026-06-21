@@ -390,11 +390,17 @@
       "water": "Set de Agua Extra",
       "wifi": "Hotspot Wi-Fi Dedicado",
       "extra_stop": "Parada en Tránsito",
-      "extra_wait": "Tiempo de Espera Extra"
+      "extra_wait": "Tiempo de Espera Extra",
+      "return_transfer": "Transfer de Regreso",
+      "private_tour": "Tour Privado",
+      "multilingual_driver": "Conductor Multilingüe"
     },
     "extrasDesc": {
       "extra_wait": "Esperamos el tiempo adicional necesario para su comodidad.",
-      "extra_stop": "Añada paradas durante el viaje."
+      "extra_stop": "Añada paradas durante el viaje.",
+      "return_transfer": "Reserve también el viaje de regreso.",
+      "private_tour": "Añada un tour privado personalizado.",
+      "multilingual_driver": "Conductor con soporte multilingüe."
     },
     "stepExtras": {
       "title": "Servicios Adicionales",

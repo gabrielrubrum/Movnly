@@ -104,17 +104,17 @@ export const MAIN_ROUTES = [
 ];
 
 export const EXTRAS = [
-  { id: "baby_seat", name: "Cadeira de bebé", price: 10, icon: "baby" },
-  { id: "booster", name: "Assento elevatório", price: 8, icon: "child" },
-  { id: "meet_greet", name: "Meet & Greet", price: 0, icon: "handshake" },
-  { id: "name_board", name: "Placa personalizada", price: 0, icon: "sign" },
-  { id: "water", name: "Água a bordo", price: 5, icon: "droplet" },
-  { id: "wifi", name: "Wi-Fi de Alta Velocidade", price: 8, icon: "wifi" },
-  { id: "extra_stop", name: "Paragem adicional", price: 20, icon: "map-pin" },
-  { id: "extra_wait", name: "Tempo extra de espera", price: 15, icon: "clock" },
-  { id: "return_transfer", name: "Transfer de retorno", price: 25, icon: "refresh-cw" },
-  { id: "private_tour", name: "Tour privado", price: 50, icon: "map" },
-  { id: "multilingual_driver", name: "Motorista multilíngue", price: 18, icon: "globe" },
+  { id: "baby_seat", name: "Cadeira de bebé", description: "Cadeira de segurança para crianças pequenas.", price: 10, icon: "baby" },
+  { id: "booster", name: "Assento elevatório", description: "Assento elevatório para crianças mais velhas.", price: 8, icon: "child" },
+  { id: "meet_greet", name: "Meet & Greet", description: "Recepção personalizada no terminal com placa nominal.", price: 0, icon: "handshake" },
+  { id: "name_board", name: "Placa personalizada", description: "O motorista aguarda com uma placa com o seu nome.", price: 0, icon: "sign" },
+  { id: "water", name: "Água a bordo", description: "Água engarrafada disponível durante a viagem.", price: 5, icon: "droplet" },
+  { id: "wifi", name: "Wi-Fi de Alta Velocidade", description: "Conexão Wi-Fi de alta velocidade a bordo.", price: 8, icon: "wifi" },
+  { id: "extra_stop", name: "Paragem adicional", description: "Adicione paragens ao longo do trajeto.", price: 20, icon: "map-pin" },
+  { id: "extra_wait", name: "Tempo extra de espera", description: "Aguardamos o tempo adicional necessário para o seu conforto.", price: 15, icon: "clock" },
+  { id: "return_transfer", name: "Transfer de Retorno", description: "Reserve também a viagem de volta.", price: 25, icon: "refresh-cw" },
+  { id: "private_tour", name: "Tour Privado", description: "Adicione um tour privado personalizado.", price: 50, icon: "map" },
+  { id: "multilingual_driver", name: "Motorista Multilíngue", description: "Motorista com suporte multilíngue.", price: 18, icon: "globe" },
 ];
 
 export const TESTIMONIALS = [

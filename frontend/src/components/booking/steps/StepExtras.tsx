@@ -37,13 +37,17 @@ const getExtraPriceLabel = (price: number) => (price === 0 ? "Já incluído" : `
 
 function ExtraCard({ extra, selected, onToggle }: { extra: typeof EXTRAS[0]; selected: boolean; onToggle: () => void }) {
   const { t } = useI18n();
+  
+  // Safe fallback for name
   const nameKey = `bookingFlow.extras.${extra.id}`;
   const nameText = t(nameKey);
-  const hasName = nameText !== nameKey && nameText !== "";
+  const displayName = (nameText && !nameText.startsWith('bookingFlow.')) ? nameText : extra.name;
   
+  // Safe fallback for description
   const descKey = `bookingFlow.extrasDesc.${extra.id}`;
   const descText = t(descKey);
-  const hasDesc = descText !== descKey && descText !== "";
+  const displayDesc = (descText && !descText.startsWith('bookingFlow.')) ? descText : (extra.description || "");
+  const hasDesc = displayDesc !== "";
 
   return (
     <motion.button
@@ -71,11 +75,11 @@ function ExtraCard({ extra, selected, onToggle }: { extra: typeof EXTRAS[0]; sel
       {/* Content */}
       <div className="flex-1 min-w-0">
         <p className={cn("text-[11px] font-black uppercase tracking-[0.2em] font-sans transition-colors", selected ? "text-white" : "text-white/70 group-hover:text-white")}>
-          {hasName ? nameText : extra.name}
+          {displayName}
         </p>
         {hasDesc && (
           <p className="text-[9px] tracking-[0.05em] text-white/30 mt-1.5 font-sans group-hover:text-white/45 transition-colors leading-relaxed">
-            {descText}
+            {displayDesc}
           </p>
         )}
       </div>
