@@ -112,6 +112,9 @@ export const EXTRAS = [
   { id: "wifi", name: "Wi-Fi de Alta Velocidade", price: 8, icon: "wifi" },
   { id: "extra_stop", name: "Paragem adicional", price: 20, icon: "map-pin" },
   { id: "extra_wait", name: "Tempo extra de espera", price: 15, icon: "clock" },
+  { id: "return_transfer", name: "Transfer de retorno", price: 25, icon: "refresh-cw" },
+  { id: "private_tour", name: "Tour privado", price: 50, icon: "map" },
+  { id: "multilingual_driver", name: "Motorista multilíngue", price: 18, icon: "globe" },
 ];
 
 export const TESTIMONIALS = [

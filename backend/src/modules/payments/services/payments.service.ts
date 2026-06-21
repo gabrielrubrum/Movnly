@@ -5,6 +5,11 @@ import { PrismaService } from '../../../prisma/prisma.service';
 import { EventsGateway } from '../../websocket/gateways/events.gateway';
 import { calculateBookingFinances } from '../../../common/utils/pricing.utils';
 import { MailService } from '../../mail/services/mail.service';
+import { NotificationsService } from '../../notifications/services/notifications.service';
+import { CurrencyService } from './currency.service';
+import { CurrencyDetectionService } from './currency-detection.service';
+import { ExchangeRateService } from './exchange-rate.service';
+import { getCustomerCountry, getCurrencyForCountry } from '../../../common/helpers/country.helper';
 
 // ─── In-memory rate limiting per IP/booking ──────────────────────────────────
 // In production, replace with Redis-backed store for multi-instance safety
@@ -62,6 +67,10 @@ export class PaymentsService {
         private prisma: PrismaService,
         private eventsGateway: EventsGateway,
         private mail: MailService,
+        private notifications: NotificationsService,
+        private currencyService: CurrencyService,
+        private currencyDetectionService: CurrencyDetectionService,
+        private exchangeRateService: ExchangeRateService,
     ) {
         const secretKey = this.configService.get<string>('STRIPE_SECRET_KEY');
         const isProduction = this.configService.get<string>('NODE_ENV') === 'production';
@@ -139,6 +148,7 @@ export class PaymentsService {
             flightNumber,
             phone,
             notes,
+            country: selectedCountry,
         } = data;
 
         const clientIp  = fraudSignals?.ip || 'unknown';
@@ -232,9 +242,37 @@ export class PaymentsService {
             booking.pickupTime,
         );
 
-        const finalPrice          = finances.totalPrice;
-        const driverAmountEuro    = finances.driverAmount;
-        const platformFeeEuro     = finances.platformFee;
+        const finalPriceEur        = finances.totalPrice;
+        const driverAmountEuro     = finances.driverAmount;
+        const platformFeeEuro      = finances.platformFee;
+
+        // ── Currency Detection & Conversion ───────────────────────────────────
+        const currencyDetection = this.currencyDetectionService.detectCurrency({
+            cardCountry: fraudSignals?.cardCountry,
+            billingCountry: fraudSignals?.billingCountry,
+            selectedCountry: selectedCountry,
+            ipCountry: fraudSignals?.country,
+            browserCountry: fraudSignals?.browserCountry,
+            browserLocale: fraudSignals?.browserLocale,
+        });
+
+        const currency = currencyDetection.currency;
+        const customerCountry = currencyDetection.country;
+        let finalPrice = finalPriceEur;
+        let exchangeRate: number | null = null;
+
+        // Convert from EUR to target currency if needed
+        if (currency !== 'EUR') {
+            exchangeRate = await this.exchangeRateService.getExchangeRate('EUR', currency);
+            finalPrice = await this.exchangeRateService.convertFromEur(finalPriceEur, currency);
+            this.logger.log(
+                `Currency detected: ${currency} (country: ${customerCountry}, method: ${currencyDetection.detectionMethod}). ` +
+                `Converting €${finalPriceEur} to ${finalPrice}${currency} (rate: ${exchangeRate})`,
+            );
+        } else {
+            this.logger.log(`Using EUR currency (country: ${customerCountry}, method: ${currencyDetection.detectionMethod})`);
+        }
+
         // Critical: the amount sent to Stripe is recalculated server-side and never trusted from the browser.
         const priceInCents        = Math.round(finalPrice * 100);
         const driverAmountInCents = Math.round(driverAmountEuro * 100);
@@ -242,7 +280,9 @@ export class PaymentsService {
 
         this.logger.log(
             `Booking ${booking.id}: [${finances.category}] [${finances.region}] ` +
-            `Total ${finalPrice}€ | Driver ${driverAmountEuro}€ | Platform ${platformFeeEuro}€ ` +
+            `Original €${finalPriceEur} | Final ${this.exchangeRateService.formatAmount(finalPrice, currency)} ` +
+            `| Driver €${driverAmountEuro} | Platform €${platformFeeEuro} ` +
+            `| Country: ${customerCountry} | Currency: ${currency} | Detection: ${currencyDetection.detectionMethod}` +
             `| Surges: ${finances.appliedSurges.join(', ')}`,
         );
 
@@ -251,12 +291,13 @@ export class PaymentsService {
             this.logger.warn(`MOCK FALLBACK for booking ${booking.id}`);
             setTimeout(async () => {
                 this.eventsGateway.emitNewRideAvailable(booking);
+                await this.notifyDriversNewRide(booking);
                 this.eventsGateway.emitPaymentStatus(booking.id, 'PAID');
                 if (booking.passenger?.email) {
                     await this.mail.sendReceiptEmail(
                         booking.passenger.email,
                         booking,
-                        { amount: finalPrice, id: 'pi_mock_' + booking.id },
+                        { amount: finalPrice, id: 'pi_mock_' + booking.id, currency },
                     );
                 }
             }, 2000);
@@ -265,7 +306,10 @@ export class PaymentsService {
                 paymentIntentId: 'pi_mock_' + booking.id,
                 bookingId: booking.id,
                 amount: finalPrice,
-                currency: 'eur',
+                currency: currency.toLowerCase(),
+                originalAmount: finalPriceEur,
+                originalCurrency: 'eur',
+                exchangeRate,
                 mock: true,
             };
         }
@@ -288,13 +332,13 @@ export class PaymentsService {
             try {
                 const existingPI = await this.stripe.paymentIntents.retrieve(existingPaymentIntentId);
                 if (existingPI && !['succeeded', 'canceled'].includes(existingPI.status)) {
-                    if (existingPI.amount !== priceInCents || existingPI.currency !== 'eur') {
+                    if (existingPI.amount !== priceInCents || existingPI.currency !== currency.toLowerCase()) {
                         await this.stripe.paymentIntents.cancel(existingPI.id, {
                             cancellation_reason: 'abandoned',
                         });
                         this.logger.log(
                             `Canceled stale PaymentIntent ${existingPI.id} for booking ${booking.id} ` +
-                            `(old ${existingPI.amount} ${existingPI.currency}, new ${priceInCents} eur)`,
+                            `(old ${existingPI.amount} ${existingPI.currency}, new ${priceInCents} ${currency.toLowerCase()})`,
                         );
                     } else {
                         this.logger.log(
@@ -305,8 +349,11 @@ export class PaymentsService {
                             clientSecret:    existingPI.client_secret,
                             paymentIntentId: existingPI.id,
                             bookingId:       booking.id,
-                            currency:        'eur',
+                            currency:        existingPI.currency,
                             amount:          existingPI.amount / 100,
+                            originalAmount:  finalPriceEur,
+                            originalCurrency: 'eur',
+                            exchangeRate,
                         };
                     }
                 }
@@ -323,7 +370,7 @@ export class PaymentsService {
         const paymentIntent = await this.stripe.paymentIntents.create(
             {
                 amount:   priceInCents,
-                currency: 'eur',
+                currency: currency.toLowerCase(),
                 customer: stripeCustomerId || undefined,
                 receipt_email: passenger.email,
                 description: `MOVNLY — Reserva ${booking.id}`,
@@ -348,9 +395,14 @@ export class PaymentsService {
                     passengerPhone:    toStripeMetadataValue(phone),
                     vehicleClass:      toStripeMetadataValue(booking.category || category || 'smart'),
                     totalAmount:       toStripeMetadataValue(finalPrice),
-                    currency:          'eur',
-                    platformFee:       toStripeMetadataValue(platformFeeInCents),
-                    driverAmount:      toStripeMetadataValue(driverAmountInCents),
+                    currency:          currency.toLowerCase(),
+                    originalAmount:    toStripeMetadataValue(finalPriceEur),
+                    originalCurrency:  'eur',
+                    driverAmount:      toStripeMetadataValue(driverAmountEuro),
+                    platformFee:       toStripeMetadataValue(platformFeeEuro),
+                    exchangeRate:      exchangeRate ? toStripeMetadataValue(exchangeRate) : '',
+                    detectionCountry:  toStripeMetadataValue(customerCountry),
+                    detectionMethod:   toStripeMetadataValue(currencyDetection.detectionMethod),
                     surgeReasons:      toStripeMetadataValue(finances.appliedSurges.join(', ')),
                     // Stripe Radar / anti-fraud signals
                     client_ip:         toStripeMetadataValue(clientIp),
@@ -358,12 +410,12 @@ export class PaymentsService {
                     browser_fingerprint: toStripeMetadataValue(fraudSignals?.fingerprint || 'none'),
                     risk_score:        String(fraudSignals?.riskScore || 0),
                     risk_signals:      toStripeMetadataValue((fraudSignals?.riskSignals || []).join(', ')),
-                    client_country:    toStripeMetadataValue(fraudSignals?.country || 'unknown'),
+                    client_country:    toStripeMetadataValue(customerCountry),
                 },
             },
             {
                 // ── Idempotency key prevents duplicate charges on retry ────────
-                idempotencyKey: `pi-create-${booking.id}-${priceInCents}-${existingPaymentIntentId || 'new'}`,
+                idempotencyKey: `pi-create-${booking.id}-${priceInCents}-${currency.toLowerCase()}-${existingPaymentIntentId || 'new'}`,
             },
         );
 
@@ -371,23 +423,37 @@ export class PaymentsService {
         await this.prisma.booking.update({
             where: { id: booking.id },
             data: {
-                price:          finalPrice,
-                paymentIntentId: paymentIntent.id,
-                paymentStatus:  BOOKING_STATUS.PENDING_PAYMENT,
-                status:         BOOKING_STATUS.PENDING_PAYMENT,
-                platformFee:    platformFeeInCents / 100,
-                driverAmount:   driverAmountInCents / 100,
+                price:            finalPrice,
+                originalAmountEUR: finalPriceEur,
+                driverAmountEUR:  driverAmountEuro,
+                platformFeeEUR:   platformFeeEuro,
+                chargedAmount:    finalPrice,
+                chargedCurrency:  currency.toLowerCase(),
+                exchangeRate:     exchangeRate,
+                detectionCountry: customerCountry,
+                detectionMethod:  currencyDetection.detectionMethod,
+                transferGroupId:  booking.id,
+                paymentIntentId:   paymentIntent.id,
+                paymentStatus:    BOOKING_STATUS.PENDING_PAYMENT,
+                status:           BOOKING_STATUS.PENDING_PAYMENT,
+                platformFee:      platformFeeInCents / 100,
+                driverAmount:     driverAmountInCents / 100,
             } as any,
         });
 
-        this.logger.log(`PaymentIntent ${paymentIntent.id} created for booking ${booking.id}`);
+        this.logger.log(`PaymentIntent ${paymentIntent.id} created for booking ${booking.id} (${currency})`);
 
         return {
             clientSecret:    paymentIntent.client_secret,
             paymentIntentId: paymentIntent.id,
             bookingId:       booking.id,
-            currency:        'eur',
+            currency:        currency.toLowerCase(),
             amount:          finalPrice,
+            originalAmount:  finalPriceEur,
+            originalCurrency: 'eur',
+            exchangeRate,
+            detectionCountry: customerCountry,
+            detectionMethod: currencyDetection.detectionMethod,
         };
     }
 
@@ -440,6 +506,11 @@ export class PaymentsService {
                     ? pi.payment_method_types.join(',')
                     : (typeof pi.payment_method === 'string' ? pi.payment_method : undefined);
 
+                const originalAmountEUR = parseFloat(pi.metadata?.originalAmount || '0');
+                const driverAmountEUR = parseFloat(pi.metadata?.driverAmount || '0');
+                const platformFeeEUR = parseFloat(pi.metadata?.platformFee || '0');
+                const exchangeRate = parseFloat(pi.metadata?.exchangeRate || '0');
+
                 await this.prisma.$transaction([
                     this.prisma.booking.update({
                         where: { id: bookingId },
@@ -448,6 +519,8 @@ export class PaymentsService {
                             status:        BOOKING_STATUS.CONFIRMED,
                             paymentIntentId: pi.id,
                             price: pi.amount / 100,
+                            chargedAmount: pi.amount / 100,
+                            chargedCurrency: pi.currency || 'eur',
                         } as any,
                     }),
                     this.prisma.transaction.create({
@@ -464,6 +537,10 @@ export class PaymentsService {
                             stripeChargeId: chargeId,
                             amount: pi.amount,
                             currency: pi.currency || 'eur',
+                            originalAmountEUR,
+                            driverAmountEUR,
+                            platformFeeEUR,
+                            exchangeRate: exchangeRate || null,
                             status: 'succeeded',
                             paymentMethod,
                         },
@@ -473,13 +550,22 @@ export class PaymentsService {
                             stripeChargeId: chargeId,
                             amount: pi.amount,
                             currency: pi.currency || 'eur',
+                            originalAmountEUR,
+                            driverAmountEUR,
+                            platformFeeEUR,
+                            exchangeRate: exchangeRate || null,
                             status: 'succeeded',
                             paymentMethod,
                         },
                     }),
                 ]);
 
-                this.logger.log(`[PAID] Booking ${bookingId} confirmed. PI: ${pi.id} | REF: ${buildBookingReference(bookingId)}`);
+                this.logger.log(
+                    `[PAID] Booking ${bookingId} confirmed. PI: ${pi.id} | ` +
+                    `Amount: ${pi.amount / 100} ${pi.currency} | ` +
+                    `Original EUR: ${originalAmountEUR} | ` +
+                    `Rate: ${exchangeRate || 'N/A'} | REF: ${buildBookingReference(bookingId)}`,
+                );
 
                 const booking = await this.prisma.booking.findUnique({
                     where: { id: bookingId },
@@ -502,6 +588,7 @@ export class PaymentsService {
                     }
                     this.eventsGateway.emitPaymentStatus(bookingId, 'PAID');
                     this.eventsGateway.emitNewRideAvailable(booking);
+                    await this.notifyDriversNewRide(booking);
                 }
                 break;
             }
@@ -517,6 +604,11 @@ export class PaymentsService {
                 const failureMsg   = lastError?.message;
                 const chargeId     = lastError?.charge;
 
+                const originalAmountEUR = parseFloat(pi.metadata?.originalAmount || '0');
+                const driverAmountEUR = parseFloat(pi.metadata?.driverAmount || '0');
+                const platformFeeEUR = parseFloat(pi.metadata?.platformFee || '0');
+                const exchangeRate = parseFloat(pi.metadata?.exchangeRate || '0');
+
                 await this.prisma.booking.update({
                     where: { id: bookingId },
                     data: { paymentStatus: BOOKING_STATUS.PAYMENT_FAILED, status: BOOKING_STATUS.PAYMENT_FAILED } as any,
@@ -528,6 +620,10 @@ export class PaymentsService {
                         stripeChargeId: chargeId,
                         amount: pi.amount,
                         currency: pi.currency || 'eur',
+                        originalAmountEUR,
+                        driverAmountEUR,
+                        platformFeeEUR,
+                        exchangeRate: exchangeRate || null,
                         status: 'failed',
                         failureCode,
                         failureMessage: failureMsg,
@@ -538,6 +634,10 @@ export class PaymentsService {
                         stripeChargeId: chargeId,
                         amount:   pi.amount,
                         currency: pi.currency || 'eur',
+                        originalAmountEUR,
+                        driverAmountEUR,
+                        platformFeeEUR,
+                        exchangeRate: exchangeRate || null,
                         status:   'failed',
                         failureCode,
                         failureMessage: failureMsg,
@@ -545,7 +645,7 @@ export class PaymentsService {
                 });
 
                 this.logger.warn(
-                    `[FAILED] Booking ${bookingId} — code: ${failureCode} | msg: ${failureMsg}`,
+                    `[FAILED] Booking ${bookingId} — code: ${failureCode} | msg: ${failureMsg} | currency: ${pi.currency}`,
                 );
                 this.eventsGateway.emitPaymentStatus(bookingId, 'payment_failed');
                 break;
@@ -556,6 +656,11 @@ export class PaymentsService {
                 const pi        = event.data.object;
                 const bookingId = pi.metadata?.bookingId;
                 if (!bookingId) break;
+
+                const originalAmountEUR = parseFloat(pi.metadata?.originalAmount || '0');
+                const driverAmountEUR = parseFloat(pi.metadata?.driverAmount || '0');
+                const platformFeeEUR = parseFloat(pi.metadata?.platformFee || '0');
+                const exchangeRate = parseFloat(pi.metadata?.exchangeRate || '0');
 
                 await this.prisma.booking.updateMany({
                     where: {
@@ -573,6 +678,10 @@ export class PaymentsService {
                     update: {
                         amount: pi.amount,
                         currency: pi.currency || 'eur',
+                        originalAmountEUR,
+                        driverAmountEUR,
+                        platformFeeEUR,
+                        exchangeRate: exchangeRate || null,
                         status: 'canceled',
                     },
                     create: {
@@ -580,11 +689,15 @@ export class PaymentsService {
                         stripePaymentIntentId: pi.id,
                         amount: pi.amount,
                         currency: pi.currency || 'eur',
+                        originalAmountEUR,
+                        driverAmountEUR,
+                        platformFeeEUR,
+                        exchangeRate: exchangeRate || null,
                         status: 'canceled',
                     },
                 });
 
-                this.logger.warn(`[CANCELED] Booking ${bookingId} — PI: ${pi.id}`);
+                this.logger.warn(`[CANCELED] Booking ${bookingId} — PI: ${pi.id} | currency: ${pi.currency}`);
                 this.eventsGateway.emitPaymentStatus(bookingId, 'payment_canceled');
                 break;
             }
@@ -752,5 +865,25 @@ export class PaymentsService {
             this.logger.error(`Transfer to driver failed: ${error.message}`);
             throw new BadRequestException(`Stripe Transfer Failed: ${error.message}`);
         }
+    }
+
+    getStripeConfig() {
+        const publishableKey = this.configService.get<string>('STRIPE_PUBLISHABLE_KEY') || '';
+        return {
+            publishableKey,
+            currency: 'eur',
+            merchantName: 'MOVNLY',
+        };
+    }
+
+    private async notifyDriversNewRide(booking: any) {
+        await this.notifications.notifyOnlineDrivers({
+            title: 'Nova viagem disponível',
+            body: `${booking.from} → ${booking.to} · €${booking.price || '—'}`,
+            data: {
+                type: 'new_ride_available',
+                bookingId: booking.id,
+            },
+        });
     }
 }

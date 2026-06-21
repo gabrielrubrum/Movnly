@@ -14,9 +14,9 @@ interface Props {
   onBack: () => void;
 }
 
-// Categorize extras into 3 groups
+// Categorize extras into 4 groups with new extras
 const RECOMMENDED_IDS = ["meet_greet", "name_board", "water"];
-const PREMIUM_IDS      = ["wifi", "extra_stop", "extra_wait"];
+const PREMIUM_IDS      = ["wifi", "extra_stop", "extra_wait", "return_transfer", "private_tour", "multilingual_driver"];
 const CONVENIENCE_IDS  = ["baby_seat", "booster"];
 
 const EXTRA_ICONS: Record<string, string> = {
@@ -28,6 +28,9 @@ const EXTRA_ICONS: Record<string, string> = {
   extra_wait: "⏱️",
   baby_seat: "👶",
   booster: "🪑",
+  return_transfer: "🔄",
+  private_tour: "🗺️",
+  multilingual_driver: "🌍",
 };
 
 const getExtraPriceLabel = (price: number) => (price === 0 ? "Já incluído" : `+${formatCurrency(price)}`);

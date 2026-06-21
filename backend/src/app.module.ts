@@ -16,6 +16,8 @@ import { PrismaModule } from './prisma/prisma.module';
 import { BookingsModule } from './modules/bookings/bookings.module';
 import { PaymentsModule } from './modules/payments/payments.module';
 import { FlightsModule } from './modules/flights/flights.module';
+import { PartnersModule } from './modules/partners/partners.module';
+import { NotificationsModule } from './modules/notifications/notifications.module';
 
 // Em dev, ignora rate limiting para não bloquear o painel admin
 @Injectable()
@@ -40,6 +42,8 @@ class DevAwareThrottlerGuard extends ThrottlerGuard {
     BookingsModule,
     PaymentsModule,
     FlightsModule,
+    PartnersModule,
+    NotificationsModule,
   ],
   controllers: [AppController],
   providers: [

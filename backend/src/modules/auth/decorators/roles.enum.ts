@@ -1,6 +1,7 @@
 export enum Role {
     PASSENGER = 'PASSENGER',
     DRIVER = 'DRIVER',
+    PARTNER = 'PARTNER',
     ADMIN = 'ADMIN',
     MANAGER = 'MANAGER',
     ACCOUNTANT = 'ACCOUNTANT',

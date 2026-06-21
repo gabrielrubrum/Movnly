@@ -4,12 +4,16 @@ import { JwtAuthGuard } from '../../auth/guards/jwt-auth.guard';
 import { RolesGuard } from '../../auth/guards/roles.guard';
 import { Roles } from '../../auth/decorators/roles.decorator';
 import { Role } from '../../auth/decorators/roles.enum';
+import { EventsGateway } from '../../websocket/gateways/events.gateway';
 
 @Controller('driver')
 @UseGuards(JwtAuthGuard, RolesGuard)
 @Roles(Role.DRIVER)
 export class DriverController {
-    constructor(private readonly authService: AuthService) { }
+    constructor(
+        private readonly authService: AuthService,
+        private readonly eventsGateway: EventsGateway,
+    ) { }
 
     @Get('profile')
     async getProfile(@Request() req) {
@@ -28,5 +32,22 @@ export class DriverController {
             return { error: 'Status inválido.' };
         }
         return this.authService.updateDriverStatus(req.user.userId, status);
+    }
+
+    @Patch('location')
+    async updateLocation(
+        @Request() req,
+        @Body() body: { lat: number; lng: number },
+    ) {
+        const profile = await this.authService.updateDriverLocation(
+            req.user.userId,
+            body.lat,
+            body.lng,
+        );
+        this.eventsGateway.emitDriverLocation(req.user.userId, {
+            lat: body.lat,
+            lng: body.lng,
+        });
+        return profile;
     }
 }

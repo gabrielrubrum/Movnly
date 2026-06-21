@@ -50,7 +50,12 @@ export default function NavegacaoPage() {
             {/* Map Placeholder Area */}
             <div className="relative aspect-[16/9] w-full rounded-[48px] overflow-hidden bg-white/[0.02] border border-white/5 group shadow-2xl">
                 {/* Simulated Map UI */}
-                <div className="absolute inset-0 opacity-20 bg-[url('https://www.google.com/maps/vt/pb=!1m4!1m3!1i12!2i1234!3i2456!2m3!1e0!2sm!3i123456789!3m8!2spt-PT!3sUS!5e1105!12m4!1e68!2m2!1sset!2sRoadmap!4e0!5m1!1f2')] bg-cover bg-center grayscale invert" />
+                <div
+                    className="absolute inset-0 opacity-20 bg-cover bg-center grayscale invert"
+                    style={{
+                        backgroundImage: "radial-gradient(circle at 20% 30%, rgba(255,255,255,0.08) 0%, transparent 50%), radial-gradient(circle at 80% 70%, rgba(255,255,255,0.06) 0%, transparent 50%), linear-gradient(135deg, #0a0a12 0%, #12121a 50%, #0a0a12 100%)",
+                    }}
+                />
 
                 <div className="absolute inset-0 bg-gradient-to-t from-[#08080f] via-transparent to-transparent opacity-80" />
 

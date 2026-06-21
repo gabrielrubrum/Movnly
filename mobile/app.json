@@ -1,0 +1,70 @@
+{
+  "expo": {
+    "name": "MOVNLY",
+    "slug": "movnly",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "scheme": "movnly",
+    "userInterfaceStyle": "dark",
+    "newArchEnabled": false,
+    "web": {
+      "bundler": "metro"
+    },
+    "splash": {
+      "resizeMode": "contain",
+      "backgroundColor": "#07070A"
+    },
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.movnly.app",
+      "infoPlist": {
+        "NSLocationWhenInUseUsageDescription": "MOVNLY precisa da sua localização para rastrear viagens e atribuir motoristas.",
+        "NSLocationAlwaysAndWhenInUseUsageDescription": "MOVNLY usa localização em segundo plano para motoristas em viagem ativa."
+      }
+    },
+    "android": {
+      "adaptiveIcon": {
+        "backgroundColor": "#07070A"
+      },
+      "package": "com.movnly.app",
+      "permissions": [
+        "ACCESS_FINE_LOCATION",
+        "ACCESS_COARSE_LOCATION"
+      ]
+    },
+    "plugins": [
+      "expo-router",
+      "expo-secure-store",
+      [
+        "expo-location",
+        {
+          "locationAlwaysAndWhenInUsePermission": "Permitir que MOVNLY aceda à sua localização para viagens ativas."
+        }
+      ],
+      [
+        "expo-notifications",
+        {
+          "color": "#D4AF37"
+        }
+      ],
+      [
+        "@stripe/stripe-react-native",
+        {
+          "merchantIdentifier": "merchant.com.movnly.app",
+          "enableGooglePay": true
+        }
+      ],
+      "expo-asset",
+      "expo-font"
+    ],
+    "experiments": {
+      "typedRoutes": true
+    },
+    "extra": {
+      "apiUrl": "http://localhost:3002",
+      "eas": {
+        "projectId": "movnly-mobile"
+      }
+    }
+  }
+}

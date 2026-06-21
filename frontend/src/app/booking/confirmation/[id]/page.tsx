@@ -204,12 +204,13 @@ export default function ConfirmationPage({ params }: { params: Promise<{ id: str
       <main className="pt-32 pb-32">
         <div className="nx-container max-w-5xl mx-auto px-6">
 
-          {/* Hero success */}
+          {/* Hero success - Enhanced */}
           <div className="text-center mb-20 animate-luxury-reveal">
-            <div className="inline-flex items-center justify-center w-36 h-36 rounded-full bg-brand-gold/5 border border-brand-gold/20 mb-8 shadow-[0_0_120px_rgba(212,175,55,0.15)] relative">
+            <div className="inline-flex items-center justify-center w-40 h-40 rounded-full bg-gradient-to-br from-brand-gold/[0.08] to-brand-gold/[0.02] border border-brand-gold/20 mb-8 shadow-[0_0_120px_rgba(212,175,55,0.15)] relative overflow-hidden">
               <div className="absolute inset-0 rounded-full border border-brand-gold/15 border-dashed animate-spin-slow opacity-30" />
               <div className="absolute inset-3 rounded-full border border-brand-gold/5" />
-              <CheckCircle className="w-16 h-16 text-brand-gold/90 drop-shadow-[0_0_20px_rgba(212,175,55,0.4)] animate-pulse" />
+              <div className="absolute inset-0 bg-brand-gold/10 blur-[60px] rounded-full animate-pulse" />
+              <CheckCircle className="w-20 h-20 text-brand-gold/90 drop-shadow-[0_0_30px_rgba(212,175,55,0.5)] animate-pulse relative z-10" />
             </div>
             <div className="flex flex-col items-center gap-4">
               <span className="text-[10px] font-black uppercase tracking-[0.6em] text-brand-gold/60">
@@ -224,15 +225,33 @@ export default function ConfirmationPage({ params }: { params: Promise<{ id: str
                   {passengerEmail || "o seu email"}
                 </span>
               </p>
-              {/* Payment method pill */}
+              {/* Payment method pill - Enhanced */}
               {paymentIntent && (
-                <div className="flex items-center gap-2 px-4 py-2 rounded-full bg-emerald-500/[0.04] border border-emerald-500/15 mt-2">
-                  <ShieldCheck className="w-3.5 h-3.5 text-emerald-400" />
-                  <span className="text-[9px] font-black uppercase tracking-[0.3em] text-emerald-400/80">
+                <div className="flex items-center gap-3 px-5 py-2.5 rounded-full bg-emerald-500/[0.06] border border-emerald-500/20 mt-3 backdrop-blur-md">
+                  <ShieldCheck className="w-4 h-4 text-emerald-400" />
+                  <span className="text-[9px] font-black uppercase tracking-[0.3em] text-emerald-400/90">
                     Pagamento verificado via Stripe
                   </span>
+                  <div className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
                 </div>
               )}
+              {/* Trust badges */}
+              <div className="flex items-center justify-center gap-6 mt-6">
+                <div className="flex items-center gap-2 text-white/30">
+                  <ShieldCheck className="w-3.5 h-3.5" />
+                  <span className="text-[8px] font-black uppercase tracking-wider">SSL 256-bit</span>
+                </div>
+                <div className="w-px h-3 bg-white/10" />
+                <div className="flex items-center gap-2 text-white/30">
+                  <ShieldCheck className="w-3.5 h-3.5" />
+                  <span className="text-[8px] font-black uppercase tracking-wider">PCI DSS</span>
+                </div>
+                <div className="w-px h-3 bg-white/10" />
+                <div className="flex items-center gap-2 text-white/30">
+                  <ShieldCheck className="w-3.5 h-3.5" />
+                  <span className="text-[8px] font-black uppercase tracking-wider">Anti-fraude</span>
+                </div>
+              </div>
             </div>
           </div>
 

@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useStripe, useElements, PaymentElement } from "@stripe/react-stripe-js";
 import type { StripePaymentElementOptions } from "@stripe/stripe-js";
-import { Loader2, ChevronRight, AlertCircle, Globe, RefreshCw, Shield } from "lucide-react";
+import { Loader2, ChevronRight, AlertCircle, Globe, RefreshCw, Shield, Lock as LockIcon } from "lucide-react";
 import { useI18n } from "@/i18n/context";
 import { translateStripeError } from "@/lib/stripe-errors";
 import { formatCurrency } from "@/lib/utils";
@@ -107,6 +107,40 @@ export function CheckoutForm({ loading: parentLoading, total, bookingId, custome
 
   return (
     <form onSubmit={handleSubmit} className="space-y-8 animate-luxury-reveal">
+      {/* Premium Payment Security Block */}
+      <div className="p-6 rounded-3xl bg-gradient-to-br from-brand-gold/[0.08] to-brand-gold/[0.02] border border-brand-gold/20 backdrop-blur-xl relative overflow-hidden">
+        <div className="absolute top-0 right-0 w-32 h-32 bg-brand-gold/10 rounded-full blur-[60px] -translate-y-1/2 translate-x-1/2" />
+        <div className="relative z-10">
+          <div className="flex items-center gap-4 mb-4">
+            <div className="w-12 h-12 rounded-2xl bg-brand-gold/20 border border-brand-gold/30 flex items-center justify-center">
+              <Shield className="w-6 h-6 text-brand-gold" />
+            </div>
+            <div>
+              <h3 className="text-sm font-black uppercase tracking-[0.3em] text-brand-gold font-sans">Pagamento Seguro</h3>
+              <p className="text-[10px] text-white/40 font-bold uppercase tracking-widest">Processado pela Stripe</p>
+            </div>
+          </div>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+            <div className="flex items-center gap-2 px-3 py-2 rounded-xl bg-white/[0.05] border border-white/[0.08]">
+              <LockIcon className="w-3 h-3 text-brand-gold/60" />
+              <span className="text-[9px] font-black uppercase tracking-[0.15em] text-white/50">SSL 256 Bits</span>
+            </div>
+            <div className="flex items-center gap-2 px-3 py-2 rounded-xl bg-white/[0.05] border border-white/[0.08]">
+              <Shield className="w-3 h-3 text-brand-gold/60" />
+              <span className="text-[9px] font-black uppercase tracking-[0.15em] text-white/50">PCI DSS</span>
+            </div>
+            <div className="flex items-center gap-2 px-3 py-2 rounded-xl bg-white/[0.05] border border-white/[0.08]">
+              <Shield className="w-3 h-3 text-brand-gold/60" />
+              <span className="text-[9px] font-black uppercase tracking-[0.15em] text-white/50">Antifraude</span>
+            </div>
+            <div className="flex items-center gap-2 px-3 py-2 rounded-xl bg-white/[0.05] border border-white/[0.08]">
+              <RefreshCw className="w-3 h-3 text-brand-gold/60" />
+              <span className="text-[9px] font-black uppercase tracking-[0.15em] text-white/50">3D Secure</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
       {/* Amount notice */}
       <div className="space-y-3">
         <p className="text-[10px] font-black uppercase tracking-[0.35em] text-brand-gold/70 text-center">
@@ -143,6 +177,25 @@ export function CheckoutForm({ loading: parentLoading, total, bookingId, custome
       {/* Stripe Payment Element — all methods */}
       <div className="rounded-[22px] border border-white/[0.08] bg-white/[0.025] p-3 shadow-[0_18px_50px_rgba(0,0,0,0.25)] overflow-hidden">
         <PaymentElement id="stripe-payment-element" options={PAYMENT_ELEMENT_OPTIONS} />
+      </div>
+
+      {/* Payment Methods Display */}
+      <div className="flex items-center justify-center gap-4 py-4">
+        <div className="text-[8px] font-black uppercase tracking-[0.2em] text-white/30 font-sans">Aceitamos:</div>
+        <div className="flex items-center gap-3">
+          <div className="w-8 h-5 bg-white/10 rounded flex items-center justify-center">
+            <span className="text-[8px] font-black text-white/50">VISA</span>
+          </div>
+          <div className="w-8 h-5 bg-white/10 rounded flex items-center justify-center">
+            <span className="text-[8px] font-black text-white/50">MC</span>
+          </div>
+          <div className="w-8 h-5 bg-white/10 rounded flex items-center justify-center">
+            <span className="text-[8px] font-black text-white/50">Apple</span>
+          </div>
+          <div className="w-8 h-5 bg-white/10 rounded flex items-center justify-center">
+            <span className="text-[8px] font-black text-white/50">Google</span>
+          </div>
+        </div>
       </div>
 
       {/* Error */}

@@ -1,7 +1,7 @@
 "use client";
 
 import { useI18n } from "@/i18n/context";
-import { MapPin, Calendar, Clock, Users, Briefcase, ArrowRight, PlaneTakeoff, ChevronDown, Route, Car } from "lucide-react";
+import { MapPin, Calendar, Clock, Users, Briefcase, ArrowRight, PlaneTakeoff, ChevronDown, Route, Car, Shield } from "lucide-react";
 import { type BookingFormData } from "../BookingSteps";
 import { cn } from "@/lib/utils";
 import { DatePicker } from "@/components/ui/DatePicker";
@@ -148,6 +148,42 @@ export function StepDetails({ form, update, onNext }: Props) {
             />
           </FieldWrapper>
         </div>
+
+        {/* Route Info - Distance & Time */}
+        {form.origin && form.destination && (
+          <div className="mt-8 pt-8 border-t border-white/[0.06]">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+              <div className="flex items-center gap-3">
+                <Route className="w-4 h-4 text-brand-gold/50" />
+                <div>
+                  <span className="text-[8px] font-black uppercase tracking-[0.3em] text-white/20 block">Distância</span>
+                  <p className="text-sm font-black text-white">{form.distance ? `${form.distance} km` : "Calculando..."}</p>
+                </div>
+              </div>
+              <div className="flex items-center gap-3">
+                <Clock className="w-4 h-4 text-brand-gold/50" />
+                <div>
+                  <span className="text-[8px] font-black uppercase tracking-[0.3em] text-white/20 block">Tempo</span>
+                  <p className="text-sm font-black text-white">{form.duration ? `${form.duration} min` : "Calculando..."}</p>
+                </div>
+              </div>
+              <div className="flex items-center gap-3">
+                <Car className="w-4 h-4 text-brand-gold/50" />
+                <div>
+                  <span className="text-[8px] font-black uppercase tracking-[0.3em] text-white/20 block">Tipo</span>
+                  <p className="text-sm font-black text-white">Transfer Privado</p>
+                </div>
+              </div>
+              <div className="flex items-center gap-3">
+                <Shield className="w-4 h-4 text-brand-gold/50" />
+                <div>
+                  <span className="text-[8px] font-black uppercase tracking-[0.3em] text-white/20 block">Monitoramento</span>
+                  <p className="text-sm font-black text-white">Voo em tempo real</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
       </div>
 
       {/* Flight Info — only shown if route includes an airport */}
@@ -197,6 +233,32 @@ export function StepDetails({ form, update, onNext }: Props) {
           </motion.div>
         )}
       </AnimatePresence>
+
+      {/* Service Features - Always visible */}
+      <div className="glass-bento-luxury p-8 md:p-12">
+        <div className="mb-6">
+          <h3 className="text-[11px] font-black uppercase tracking-[0.35em] text-brand-gold/60 mb-2 font-sans">Características do Serviço</h3>
+          <p className="text-[9px] text-white/25 leading-relaxed">Transfer Privado Premium · Monitorização em Tempo Real</p>
+        </div>
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+          <div className="flex items-center gap-3 p-4 rounded-2xl bg-white/[0.02] border border-white/[0.04]">
+            <Shield className="w-4 h-4 text-brand-gold/50" />
+            <span className="text-[9px] font-black uppercase tracking-[0.15em] text-white/40">Cancelamento Grátis</span>
+          </div>
+          <div className="flex items-center gap-3 p-4 rounded-2xl bg-white/[0.02] border border-white/[0.04]">
+            <Clock className="w-4 h-4 text-brand-gold/50" />
+            <span className="text-[9px] font-black uppercase tracking-[0.15em] text-white/40">Suporte 24/7</span>
+          </div>
+          <div className="flex items-center gap-3 p-4 rounded-2xl bg-white/[0.02] border border-white/[0.04]">
+            <PlaneTakeoff className="w-4 h-4 text-brand-gold/50" />
+            <span className="text-[9px] font-black uppercase tracking-[0.15em] text-white/40">Monitoramento Voo</span>
+          </div>
+          <div className="flex items-center gap-3 p-4 rounded-2xl bg-white/[0.02] border border-white/[0.04]">
+            <Route className="w-4 h-4 text-brand-gold/50" />
+            <span className="text-[9px] font-black uppercase tracking-[0.15em] text-white/40">Atualização Tempo Real</span>
+          </div>
+        </div>
+      </div>
 
       {/* DateTime & Specs Grid */}
       <div className="glass-bento-luxury p-8 md:p-12">

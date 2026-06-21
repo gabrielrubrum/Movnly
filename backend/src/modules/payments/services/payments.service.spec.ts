@@ -4,6 +4,7 @@ import { PrismaService } from '../../../prisma/prisma.service';
 import { ConfigService } from '@nestjs/config';
 import { EventsGateway } from '../../websocket/gateways/events.gateway';
 import { MailService } from '../../mail/services/mail.service';
+import { NotificationsService } from '../../notifications/services/notifications.service';
 import { BadRequestException } from '@nestjs/common';
 
 const mockBooking = {
@@ -74,6 +75,13 @@ describe('PaymentsService', () => {
                     useValue: {
                         sendReceiptEmail: jest.fn(),
                         sendPayoutScheduledEmail: jest.fn(),
+                    },
+                },
+                {
+                    provide: NotificationsService,
+                    useValue: {
+                        notifyOnlineDrivers: jest.fn(),
+                        sendToUser: jest.fn(),
                     },
                 },
             ],

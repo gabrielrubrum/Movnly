@@ -1,21 +1,24 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, lazy, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import { useAuthStore } from "@/lib/auth-store";
 import api from "@/lib/api";
 import { cn, formatCurrency, getPricingMultiplier } from "@/lib/utils";
 import { type VehicleCategory, type BookingExtra } from "@/lib/types";
 import { VEHICLE_CATEGORIES, EXTRAS, TOURS, getBasePrice } from "@/lib/constants";
-import { StepDetails } from "./steps/StepDetails";
-import { StepVehicle } from "./steps/StepVehicle";
-import { StepExtras } from "./steps/StepExtras";
-import { StepCustomer } from "./steps/StepCustomer";
-import { StepPayment } from "./steps/StepPayment";
-import { BookingSummaryPanel } from "./BookingSummaryPanel";
+import { detectCountryFromBrowser } from "@/lib/country-helper";
 import { Check, ChevronRight, Loader2 } from "lucide-react";
 import { useI18n } from "@/i18n/context";
 import { motion, AnimatePresence } from "framer-motion";
+
+// Lazy load heavy components for better performance
+const StepDetails = lazy(() => import("./steps/StepDetails").then(m => ({ default: m.StepDetails })));
+const StepVehicle = lazy(() => import("./steps/StepVehicle").then(m => ({ default: m.StepVehicle })));
+const StepExtras = lazy(() => import("./steps/StepExtras").then(m => ({ default: m.StepExtras })));
+const StepCustomer = lazy(() => import("./steps/StepCustomer").then(m => ({ default: m.StepCustomer })));
+const StepPayment = lazy(() => import("./steps/StepPayment").then(m => ({ default: m.StepPayment })));
+const BookingSummaryPanel = lazy(() => import("./BookingSummaryPanel").then(m => ({ default: m.BookingSummaryPanel })));
 
 export type BookingFormData = {
   tripType: "oneway" | "roundtrip";
@@ -35,8 +38,13 @@ export type BookingFormData = {
   email: string;
   phone: string;
   notes: string;
+  country?: string;
   distance?: number;
   duration?: string;
+  differentPassenger?: boolean;
+  passengerName?: string;
+  passengerPhone?: string;
+  specialRequest?: string;
 };
 
 export function BookingSteps() {
@@ -79,6 +87,7 @@ export function BookingSteps() {
     email: "",
     phone: "",
     notes: "",
+    country: detectCountryFromBrowser(),
   });
 
   const update = (patch: Partial<BookingFormData>) => {
@@ -173,6 +182,7 @@ export function BookingSteps() {
         amount: total,
         // Pass existing bookingId for idempotent retry — backend reuses existing PaymentIntent
         bookingId: lastBookingId || undefined,
+        country: form.country,
       }, { headers: getFraudHeaders(), suppressGlobalToast: true } as any);
 
       if (res.data.clientSecret) {
@@ -278,26 +288,38 @@ export function BookingSteps() {
                 exit={{ opacity: 0, x: -20 }}
                 transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
               >
-                {step === 1 && <StepDetails form={form} update={update} onNext={() => setStep(2)} />}
-                {step === 2 && <StepVehicle form={form} update={update} onNext={() => setStep(3)} onBack={() => setStep(1)} />}
-                {step === 3 && <StepExtras form={form} update={update} onNext={nextStep} onBack={() => setStep(2)} />}
-                {step === 4 && <StepCustomer form={form} update={update} onNext={() => setStep(5)} onBack={() => setStep(3)} />}
-                {step === 5 && <StepPayment form={form} update={update} onConfirm={handleConfirm} onBack={() => setStep(4)} loading={loading} total={total} clientSecret={clientSecret} initPaymentIntent={initPaymentIntent} bookingId={lastBookingId} paymentError={paymentInitError} paymentAttemptKey={paymentAttemptKey} />}
+                <Suspense fallback={
+                  <div className="flex items-center justify-center min-h-[400px]">
+                    <Loader2 className="w-10 h-10 text-brand-gold animate-spin" strokeWidth={1} />
+                  </div>
+                }>
+                  {step === 1 && <StepDetails form={form} update={update} onNext={() => setStep(2)} />}
+                  {step === 2 && <StepVehicle form={form} update={update} onNext={() => setStep(3)} onBack={() => setStep(1)} />}
+                  {step === 3 && <StepExtras form={form} update={update} onNext={nextStep} onBack={() => setStep(2)} />}
+                  {step === 4 && <StepCustomer form={form} update={update} onNext={() => setStep(5)} onBack={() => setStep(3)} />}
+                  {step === 5 && <StepPayment form={form} update={update} onConfirm={handleConfirm} onBack={() => setStep(4)} loading={loading} total={total} clientSecret={clientSecret} initPaymentIntent={initPaymentIntent} bookingId={lastBookingId} paymentError={paymentInitError} paymentAttemptKey={paymentAttemptKey} />}
+                </Suspense>
               </motion.div>
             </AnimatePresence>
           </div>
 
           {/* Summary sidebar */}
           <div className="sticky top-24 hidden lg:block">
-            <BookingSummaryPanel
-              form={form}
-              total={total}
-              extrasTotal={extrasTotal}
-              calculatedBasePrice={calculatedBasePrice}
-              step={step}
-              isTour={isTour}
-              tourData={tourData}
-            />
+            <Suspense fallback={
+              <div className="flex items-center justify-center min-h-[200px]">
+                <Loader2 className="w-8 h-8 text-brand-gold animate-spin" strokeWidth={1} />
+              </div>
+            }>
+              <BookingSummaryPanel
+                form={form}
+                total={total}
+                extrasTotal={extrasTotal}
+                calculatedBasePrice={calculatedBasePrice}
+                step={step}
+                isTour={isTour}
+                tourData={tourData}
+              />
+            </Suspense>
           </div>
         </div>
       </div>

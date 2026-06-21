@@ -25,13 +25,17 @@ model User {
   defaultCategory    String         @default("smart")
   notificationsPref  String         @default("email")
   silentRide         Boolean        @default(false)
+  pushToken          String?
+  pushPlatform       String?
   createdAt          DateTime       @default(now())
   updatedAt          DateTime       @updatedAt
   auditLogs          AuditLog[]
   assignedBookings   Booking[]      @relation("DriverBookings")
   bookings           Booking[]
+  partnerBookings    Booking[]      @relation("PartnerBookings")
   chatMessages       ChatMessage[]
   driverProfile      DriverProfile?
+  partnerProfile     PartnerProfile?
   driverPayouts      DriverPayout[]
 }
 
@@ -48,6 +52,9 @@ model DriverProfile {
   idDocument      String?
   drivingLicense  String?
   vehicleDocs     String?
+  lastLat         Float?
+  lastLng         Float?
+  lastLocationAt  DateTime?
   vehicle         Vehicle? @relation(fields: [vehicleId], references: [id])
   user            User     @relation(fields: [userId], references: [id])
 }
@@ -64,6 +71,7 @@ model Vehicle {
 model Booking {
   id              String        @id @default(uuid())
   passengerId     String
+  partnerId       String?
   from            String
   to              String
   pickupTime      DateTime
@@ -74,6 +82,7 @@ model Booking {
   paymentStatus   String        @default("UNPAID")
   platformFee     Float?
   driverAmount    Float?
+  partnerCommission Float?
   passengers      Int?
   luggage         Int?
   flightNumber    String?
@@ -82,9 +91,19 @@ model Booking {
   lockedUntil     DateTime?
   tripStartedAt   DateTime?
   driverId        String?
+  originalAmountEUR Float?       // Original total amount in EUR
+  driverAmountEUR  Float?       // Driver amount in EUR
+  platformFeeEUR  Float?       // Platform fee in EUR
+  chargedAmount   Float?       // Amount actually charged (converted if BRL)
+  chargedCurrency String?       // Currency actually charged (eur, brl, or usd)
+  exchangeRate    Float?       // Exchange rate used if converted
+  detectionCountry String?      // Country detected for currency selection
+  detectionMethod String?      // Method used for currency detection
+  transferGroupId  String?      // Stripe Connect transfer group ID
   createdAt       DateTime      @default(now())
   updatedAt       DateTime      @updatedAt
   driver          User?         @relation("DriverBookings", fields: [driverId], references: [id])
+  partner         User?         @relation("PartnerBookings", fields: [partnerId], references: [id])
   passenger       User          @relation(fields: [passengerId], references: [id])
   transactions    Transaction[]
   auditLogs       AuditLog[]
@@ -166,12 +185,23 @@ model Payment {
   stripePaymentIntentId String?  @unique
   stripeChargeId        String?  @unique
   amount                Int
-  currency              String   @default("eur")
+  currency              String   @default("eur") // eur, brl, or usd
+  originalAmountEUR     Float?   // Original amount in EUR before conversion
+  driverAmountEUR       Float?   // Driver amount in EUR
+  platformFeeEUR        Float?   // Platform fee in EUR
+  exchangeRate          Float?   // Exchange rate used if converted
   status                String   @default("pending") // pending, succeeded, failed
   paymentMethod         String?
+  paymentMethodType     String?  // card, apple_pay, google_pay, etc.
+  cardCountry           String?  // Country of the card used
+  cardBrand             String?  // visa, mastercard, etc.
   riskLevel             String?
+  riskScore             Int?
   failureCode           String?
   failureMessage        String?
+  transferId            String?  // Stripe Connect transfer ID
+  transferStatus        String?  // pending, paid, failed
+  threeDSecure          String?  // required, succeeded, failed
   createdAt             DateTime @default(now())
   updatedAt             DateTime @updatedAt
   booking               Booking  @relation(fields: [bookingId], references: [id])
@@ -183,9 +213,16 @@ model DriverPayout {
   driverId        String
   stripeAccountId String
   amount          Int
-  currency        String   @default("eur")
-  status          String   @default("pending")
+  currency        String   @default("eur") // eur, brl, or usd
+  originalAmountEUR Float?  // Original amount in EUR
+  exchangeRate    Float?   // Exchange rate used if converted
+  status          String   @default("pending") // pending, in_transit, paid, failed
   transferId      String?  @unique
+  transferGroupId String?  // Stripe Connect transfer group ID
+  failureCode     String?
+  failureMessage  String?
+  availableAt     DateTime?
+  paidAt          DateTime?
   createdAt       DateTime @default(now())
   updatedAt       DateTime @updatedAt
   booking         Booking  @relation(fields: [bookingId], references: [id])
@@ -239,4 +276,53 @@ model BookingPassenger {
   notes     String?
   createdAt DateTime @default(now())
   booking   Booking  @relation(fields: [bookingId], references: [id])
+}
+
+model PartnerProfile {
+  id              String   @id @default(uuid())
+  userId          String   @unique
+  organization    String
+  type            String   @default("hotel")
+  commissionRate  Float    @default(10)
+  address         String?
+  city            String   @default("Lisboa")
+  country         String   @default("Portugal")
+  contactPhone    String?
+  isVerified      Boolean  @default(false)
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+  user            User     @relation(fields: [userId], references: [id])
+  commissions     PartnerCommission[]
+}
+
+model PartnerCommission {
+  id          String   @id @default(uuid())
+  partnerId   String
+  bookingId   String   @unique
+  amount      Float
+  currency    String   @default("eur")
+  rate        Float
+  status      String   @default("pending")
+  paidAt      DateTime?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  partner     PartnerProfile @relation(fields: [partnerId], references: [id])
+}
+
+model ExchangeRate {
+  id          String   @id @default(uuid())
+  fromCurrency String   // EUR, BRL, USD
+  toCurrency   String   // EUR, BRL, USD
+  rate        Float
+  source      String   @default("api") // api, manual, stripe
+  validFrom   DateTime @default(now())
+  validTo     DateTime?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@unique([fromCurrency, toCurrency, validFrom])
+  @@index([fromCurrency])
+  @@index([toCurrency])
+  @@index([validFrom])
+  @@index([validTo])
 }

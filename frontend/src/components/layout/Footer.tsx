@@ -42,7 +42,12 @@ export function Footer() {
       <div className="absolute bottom-0 right-1/4 w-[600px] h-[400px] bg-blue-500/[0.02] blur-[140px] -z-10 rounded-full" />
 
       {/* Subtle Noise Texture Overlay */}
-      <div className="absolute inset-0 opacity-[0.15] mix-blend-overlay pointer-events-none -z-10 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')]" />
+      <div
+        className="absolute inset-0 opacity-[0.15] mix-blend-overlay pointer-events-none -z-10"
+        style={{
+          backgroundImage: "repeating-linear-gradient(45deg, rgba(255,255,255,0.03) 0px, rgba(255,255,255,0.03) 1px, transparent 1px, transparent 6px)",
+        }}
+      />
 
       <div className="nx-container relative z-10">
 

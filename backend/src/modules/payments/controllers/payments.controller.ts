@@ -20,6 +20,11 @@ export class PaymentsController {
      * Public — creates / retrieves a Stripe PaymentIntent.
      * Rate limited: max 10 calls per minute per IP (enforced in service as well).
      */
+    @Get('config')
+    getConfig() {
+        return this.paymentsService.getStripeConfig();
+    }
+
     @Throttle({ default: { ttl: 60000, limit: 10 } })
     @Post('create-intent')
     async createIntent(@Req() req: any) {

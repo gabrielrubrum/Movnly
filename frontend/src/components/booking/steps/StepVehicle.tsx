@@ -23,6 +23,20 @@ const CATEGORY_ACCENTS: Record<string, { glow: string; badge: string; text: stri
   executive: { glow: "rgba(212,175,55,0.4)",  badge: "bg-brand-gold text-black font-black", text: "text-brand-gold" },
 };
 
+const CATEGORY_BADGES: Record<string, { text: string; variant: "default" | "recommended" | "popular" | "premium" }> = {
+  smart:     { text: "Mais Reservado", variant: "default" },
+  comfort:   { text: "Mais Escolhido", variant: "popular" },
+  group:     { text: "Famílias e Grupos", variant: "recommended" },
+  executive: { text: "Premium Business", variant: "premium" },
+};
+
+const CATEGORY_COMFORT: Record<string, string> = {
+  smart:     "Conforto Standard",
+  comfort:   "Conforto Premium",
+  group:     "Espaço Generoso",
+  executive: "Luxo Supremo",
+};
+
 const CATEGORY_ICONS: Record<string, React.ReactNode> = {
   smart:     <Wifi className="w-3.5 h-3.5" />,
   comfort:   <Star className="w-3.5 h-3.5" />,
@@ -111,6 +125,8 @@ export function StepVehicle({ form, update, onNext, onBack }: Props) {
                     <div className="absolute bottom-6 left-1/2 -translate-x-1/2 w-[80%] h-6 bg-brand-gold/10 blur-[30px] rounded-full opacity-0 group-hover/card:opacity-100 transition-all duration-1000" />
                     <motion.img
                       src={cat.image} alt={cat.name}
+                      loading="lazy"
+                      decoding="async"
                       animate={selected ? { scale: 1.1, y: -6 } : { scale: 1, y: 0 }}
                       whileHover={{ scale: 1.06, y: -3 }}
                       transition={{ type: "spring", stiffness: 40, damping: 20 }}
@@ -124,7 +140,7 @@ export function StepVehicle({ form, update, onNext, onBack }: Props) {
                     <div className="absolute top-5 left-5 z-20 flex flex-col gap-2">
                       <div className={cn("inline-flex items-center gap-2 px-3 py-1.5 rounded-xl text-[9px] font-black uppercase tracking-[0.2em] shadow-xl backdrop-blur-md", accent.badge)}>
                         {CATEGORY_ICONS[cat.id]}
-                        {t(`categories_list.${cat.id}.badge`)}
+                        {CATEGORY_BADGES[cat.id].text}
                       </div>
                       {cat.id === "executive" && (
                         <div className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-brand-gold/10 border border-brand-gold/20 text-brand-gold text-[9px] font-black uppercase tracking-[0.25em] backdrop-blur-md">
@@ -140,9 +156,35 @@ export function StepVehicle({ form, update, onNext, onBack }: Props) {
                       <h3 className={cn("text-3xl font-black font-sans uppercase tracking-tighter leading-none mb-1.5 transition-colors duration-500", selected ? "text-white" : "text-white/75")}>
                         {t(`categories_list.${cat.id}.name`)}
                       </h3>
-                      <p className={cn("text-[10px] font-black uppercase tracking-[0.35em]", accent.text, !selected && "opacity-50")}>
-                        {t(`categories_list.${cat.id}.tagline`)}
-                      </p>
+                      <div className="flex items-center gap-3">
+                        <p className={cn("text-[10px] font-black uppercase tracking-[0.35em]", accent.text, !selected && "opacity-50")}>
+                          {CATEGORY_COMFORT[cat.id]}
+                        </p>
+                        <span className="text-white/10">•</span>
+                        <p className={cn("text-[10px] font-black uppercase tracking-[0.35em]", accent.text, !selected && "opacity-50")}>
+                          {t(`categories_list.${cat.id}.tagline`)}
+                        </p>
+                      </div>
+                    </div>
+
+                    {/* Specs - Enhanced */}
+                    <div className="flex flex-wrap items-center gap-4 mb-5">
+                      <div className="flex items-center gap-2 px-3 py-2 rounded-xl bg-white/[0.02] border border-white/[0.04]">
+                        <Users className="w-3.5 h-3.5 text-brand-gold/50" />
+                        <span className="text-[10px] font-black text-white/30 uppercase tracking-widest">{cat.passengers} pax</span>
+                      </div>
+                      <div className="flex items-center gap-2 px-3 py-2 rounded-xl bg-white/[0.02] border border-white/[0.04]">
+                        <Briefcase className="w-3.5 h-3.5 text-brand-gold/50" />
+                        <span className="text-[10px] font-black text-white/30 uppercase tracking-widest">{cat.luggage} malas</span>
+                      </div>
+                      <div className="flex items-center gap-2 px-3 py-2 rounded-xl bg-white/[0.02] border border-white/[0.04]">
+                        <Star className="w-3.5 h-3.5 fill-brand-gold/40 text-brand-gold/40" />
+                        <span className="text-[10px] font-black text-brand-gold/40">5.0</span>
+                      </div>
+                      <div className="flex items-center gap-2 px-3 py-2 rounded-xl bg-brand-gold/[0.05] border border-brand-gold/15">
+                        <Shield className="w-3.5 h-3.5 text-brand-gold/50" />
+                        <span className="text-[9px] font-black text-brand-gold/50 uppercase tracking-widest">{CATEGORY_BADGES[cat.id].text}</span>
+                      </div>
                     </div>
 
                     {/* Price Breakdown */}
@@ -179,15 +221,6 @@ export function StepVehicle({ form, update, onNext, onBack }: Props) {
                           {finalPrice}<span className="text-xs font-black text-white/20 ml-1">EUR</span>
                         </div>
                       </div>
-                    </div>
-
-                    {/* Specs */}
-                    <div className="flex flex-wrap items-center gap-4 mb-5">
-                      <div className="flex items-center gap-2"><Users className="w-3.5 h-3.5 text-white/20" /><span className="text-[10px] font-black text-white/30 uppercase tracking-widest">{cat.passengers} pax</span></div>
-                      <div className="w-px h-3 bg-white/10" />
-                      <div className="flex items-center gap-2"><Briefcase className="w-3.5 h-3.5 text-white/20" /><span className="text-[10px] font-black text-white/30 uppercase tracking-widest">{cat.luggage} malas</span></div>
-                      <div className="w-px h-3 bg-white/10" />
-                      <div className="flex items-center gap-2"><Star className="w-3.5 h-3.5 fill-brand-gold/40 text-brand-gold/40" /><span className="text-[10px] font-black text-brand-gold/40">5.0</span></div>
                     </div>
 
                     {/* Select CTA */}

@@ -1,10 +1,11 @@
 "use client";
 
+import { useState } from "react";
 import { useI18n } from "@/i18n/context";
 import { cn, formatCurrency, getPricingMultiplier } from "@/lib/utils";
 import { type BookingFormData } from "./BookingSteps";
 import { VEHICLE_CATEGORIES, EXTRAS } from "@/lib/constants";
-import { MapPin, Clock, ShieldCheck, Check, Users, Briefcase, Calendar, Lock, Sparkles } from "lucide-react";
+import { MapPin, Clock, ShieldCheck, Check, Users, Briefcase, Calendar, Lock, Sparkles, Route, Star, ChevronUp, ChevronDown } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
 interface Props {
@@ -19,6 +20,7 @@ interface Props {
 
 export function BookingSummaryPanel({ form, total, extrasTotal, calculatedBasePrice, step, isTour, tourData }: Props) {
   const { t } = useI18n();
+  const [isMobileExpanded, setIsMobileExpanded] = useState(false);
   const category = VEHICLE_CATEGORIES.find((c) => c.id === form.category);
   const selectedExtras = form.extras.map(id => EXTRAS.find(e => e.id === id)).filter(Boolean);
 
@@ -27,7 +29,100 @@ export function BookingSummaryPanel({ form, total, extrasTotal, calculatedBasePr
                     step >= 3  ? "Resumo da reserva" : "Prévia da viagem";
 
   return (
-    <aside className="relative lg:block">
+    <>
+      {/* Mobile Fixed Bottom Bar */}
+      <div className="lg:hidden fixed bottom-0 left-0 right-0 z-50 bg-[#080810]/95 backdrop-blur-xl border-t border-white/[0.08] px-4 py-3 safe-area-bottom">
+        <div className="flex items-center justify-between gap-4">
+          <div className="flex-1">
+            <p className="text-[8px] font-black uppercase tracking-[0.3em] text-white/30">Total</p>
+            <p className="text-xl font-black text-brand-gold tracking-tighter leading-none">€{total > 0 ? Math.round(total) : "—"}</p>
+          </div>
+          <button
+            onClick={() => setIsMobileExpanded(!isMobileExpanded)}
+            className="flex items-center gap-2 px-4 py-3 bg-brand-gold text-black rounded-xl text-[10px] font-black uppercase tracking-wider"
+          >
+            {isMobileExpanded ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}
+            {isMobileExpanded ? "Fechar" : "Detalhes"}
+          </button>
+        </div>
+      </div>
+
+      {/* Mobile Collapsible Summary */}
+      <AnimatePresence>
+        {isMobileExpanded && (
+          <motion.div
+            initial={{ opacity: 0, y: 100 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: 100 }}
+            className="lg:hidden fixed bottom-20 left-0 right-0 z-40 max-h-[60vh] overflow-y-auto bg-[#080810]/98 backdrop-blur-xl border-t border-white/[0.08] px-4 py-6"
+          >
+            <div className="space-y-6 pb-4">
+              {/* Route */}
+              <div className="space-y-3">
+                <div className="flex items-center gap-2 text-[9px] font-black uppercase tracking-wider text-white/30">
+                  <MapPin className="w-3.5 h-3.5" /> Rota
+                </div>
+                <div className="space-y-2">
+                  <p className="text-xs font-black text-white truncate">{form.origin || "—"}</p>
+                  <p className="text-xs font-black text-white truncate">{form.destination || "—"}</p>
+                </div>
+              </div>
+
+              {/* Date/Time/Pax/Luggage */}
+              <div className="grid grid-cols-2 gap-3">
+                {form.date && (
+                  <div className="flex items-center gap-2">
+                    <Calendar className="w-3 h-3 text-brand-gold/40" />
+                    <span className="text-[10px] font-black text-white/70">{form.date}</span>
+                  </div>
+                )}
+                {form.time && (
+                  <div className="flex items-center gap-2">
+                    <Clock className="w-3 h-3 text-brand-gold/40" />
+                    <span className="text-[10px] font-black text-white/70">{form.time}</span>
+                  </div>
+                )}
+                {form.passengers > 0 && (
+                  <div className="flex items-center gap-2">
+                    <Users className="w-3 h-3 text-brand-gold/40" />
+                    <span className="text-[10px] font-black text-white/70">{form.passengers} pax</span>
+                  </div>
+                )}
+                {form.luggage > 0 && (
+                  <div className="flex items-center gap-2">
+                    <Briefcase className="w-3 h-3 text-brand-gold/40" />
+                    <span className="text-[10px] font-black text-white/70">{form.luggage} malas</span>
+                  </div>
+                )}
+              </div>
+
+              {/* Vehicle */}
+              {category && (
+                <div className="p-4 rounded-xl bg-white/[0.02] border border-white/[0.04]">
+                  <p className="text-[9px] font-black uppercase tracking-wider text-brand-gold/40 mb-2">Veículo</p>
+                  <p className="text-sm font-black text-white">{t(`categories_list.${category.id}.name`)}</p>
+                </div>
+              )}
+
+              {/* Extras */}
+              {selectedExtras.length > 0 && (
+                <div className="space-y-2">
+                  <p className="text-[9px] font-black uppercase tracking-wider text-white/30">Opcionais</p>
+                  {selectedExtras.map((extra) => extra && (
+                    <div key={extra.id} className="flex justify-between text-[10px]">
+                      <span className="text-white/50">{extra.name}</span>
+                      <span className="text-brand-gold">{extra.price === 0 ? "Incluído" : `+${formatCurrency(extra.price)}`}</span>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* Desktop Sidebar */}
+      <aside className="relative lg:block hidden">
       <div className="sticky top-24 font-sans">
         <div className="glass-bento-luxury border-white/[0.06] overflow-hidden animate-luxury-reveal bg-[#080810]/70 backdrop-blur-[40px] shadow-[0_50px_120px_-30px_rgba(0,0,0,0.9)]">
 
@@ -37,7 +132,7 @@ export function BookingSummaryPanel({ form, total, extrasTotal, calculatedBasePr
               <div>
                 <p className="text-[9px] font-black uppercase tracking-[0.4em] text-brand-gold/50 mb-2">{stepLabel}</p>
                 <h3 className="text-2xl font-black text-white uppercase tracking-tighter leading-none">
-                  {step <= 1 ? "Detalhes" : "Resumo da viagem"}
+                  Resumo da Reserva
                 </h3>
               </div>
               <div className="w-12 h-12 rounded-2xl border border-brand-gold/15 flex items-center justify-center bg-brand-gold/[0.06] shadow-[0_0_30px_rgba(212,175,55,0.08)]">
@@ -62,6 +157,8 @@ export function BookingSummaryPanel({ form, total, extrasTotal, calculatedBasePr
                       <img
                         src={category.image}
                         alt={category.name}
+                        loading="lazy"
+                        decoding="async"
                         className="w-full h-full object-contain p-1.5 grayscale group-hover:grayscale-0 transition-all duration-700"
                       />
                     </div>
@@ -88,8 +185,8 @@ export function BookingSummaryPanel({ form, total, extrasTotal, calculatedBasePr
               )}
             </AnimatePresence>
 
-            {/* Route */}
-            <div className="space-y-7 px-2 relative">
+            {/* Route - Enhanced */}
+            <div className="space-y-6 px-2 relative">
               <div className="absolute left-[7px] top-3 bottom-3 w-[1px] bg-gradient-to-b from-brand-gold/60 via-brand-gold/15 to-emerald-500/30 z-0" />
 
               <div className="flex gap-6 relative z-10">
@@ -117,7 +214,31 @@ export function BookingSummaryPanel({ form, total, extrasTotal, calculatedBasePr
               </div>
             </div>
 
-            {/* Date / Time / Pax */}
+            {/* Distance & Time - New */}
+            {(form.distance || form.duration) && (
+              <div className="grid grid-cols-2 gap-3 border-t border-white/[0.04] pt-5">
+                {form.distance && (
+                  <div className="flex items-center gap-2.5">
+                    <Route className="w-3.5 h-3.5 text-brand-gold/40 mt-0.5 shrink-0" />
+                    <div>
+                      <label className="text-[8px] font-black uppercase tracking-[0.3em] text-white/20 block">Distância</label>
+                      <p className="text-[10px] font-black text-white uppercase tracking-wide">{form.distance} km</p>
+                    </div>
+                  </div>
+                )}
+                {form.duration && (
+                  <div className="flex items-center gap-2.5">
+                    <Clock className="w-3.5 h-3.5 text-brand-gold/40 mt-0.5 shrink-0" />
+                    <div>
+                      <label className="text-[8px] font-black uppercase tracking-[0.3em] text-white/20 block">Tempo</label>
+                      <p className="text-[10px] font-black text-white uppercase tracking-wide">{form.duration} min</p>
+                    </div>
+                  </div>
+                )}
+              </div>
+            )}
+
+            {/* Date / Time / Pax / Luggage - Enhanced */}
             <div className="grid grid-cols-2 gap-3 border-t border-white/[0.04] pt-6">
               {form.date && (
                 <div className="flex items-start gap-3">
@@ -254,11 +375,46 @@ export function BookingSummaryPanel({ form, total, extrasTotal, calculatedBasePr
                   </div>
                 </div>
               </div>
+
+              {/* Trust Elements */}
+              <div className="mt-6 pt-6 border-t border-white/[0.04]">
+                <div className="grid grid-cols-2 gap-3">
+                  <div className="flex items-center gap-2 px-3 py-2 rounded-xl bg-white/[0.02] border border-white/[0.04]">
+                    <Star className="w-3 h-3 text-brand-gold/50 fill-brand-gold/50" />
+                    <div>
+                      <span className="text-[9px] font-black text-white/70">4.9/5</span>
+                      <p className="text-[7px] text-white/30 uppercase tracking-wider">Avaliação</p>
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-2 px-3 py-2 rounded-xl bg-white/[0.02] border border-white/[0.04]">
+                    <ShieldCheck className="w-3 h-3 text-brand-gold/50" />
+                    <div>
+                      <span className="text-[9px] font-black text-white/70">Verificado</span>
+                      <p className="text-[7px] text-white/30 uppercase tracking-wider">Motoristas</p>
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-2 px-3 py-2 rounded-xl bg-white/[0.02] border border-white/[0.04]">
+                    <Clock className="w-3 h-3 text-brand-gold/50" />
+                    <div>
+                      <span className="text-[9px] font-black text-white/70">24/7</span>
+                      <p className="text-[7px] text-white/30 uppercase tracking-wider">Suporte</p>
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-2 px-3 py-2 rounded-xl bg-white/[0.02] border border-white/[0.04]">
+                    <Check className="w-3 h-3 text-brand-gold/50" />
+                    <div>
+                      <span className="text-[9px] font-black text-white/70">Grátis</span>
+                      <p className="text-[7px] text-white/30 uppercase tracking-wider">Cancelamento</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
 
           </div>
         </div>
       </div>
     </aside>
+    </>
   );
 }

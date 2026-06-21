@@ -50,6 +50,68 @@ export class BookingsService {
         return booking;
     }
 
+    async createForPartner(
+        data: any,
+        passengerId: string,
+        partnerUserId: string,
+        commissionRate: number,
+        partnerProfileId: string,
+    ) {
+        const pickupTime = new Date(data.pickupTime);
+        const finances = calculateBookingFinances(
+            data.category || 'smart',
+            data.from || '',
+            data.to || '',
+            pickupTime,
+        );
+
+        const pin = Math.floor(100000 + Math.random() * 900000).toString();
+        const partnerCommission = (finances.totalPrice * commissionRate) / 100;
+
+        const booking = await this.prisma.booking.create({
+            data: {
+                passengerId,
+                partnerId: partnerUserId,
+                from: data.from,
+                to: data.to,
+                pickupTime,
+                category: finances.category,
+                price: finances.totalPrice,
+                driverAmount: finances.driverAmount,
+                platformFee: finances.platformFee,
+                partnerCommission,
+                passengers: data.passengers || 1,
+                luggage: data.luggage || 0,
+                flightNumber: data.flightNumber || null,
+                status: 'PENDING',
+                paymentStatus: 'UNPAID',
+                pin,
+                passengerData: {
+                    create: {
+                        name: data.guestName,
+                        email: data.guestEmail,
+                        phone: data.guestPhone || null,
+                        notes: data.notes || null,
+                    },
+                },
+            },
+            include: { passengerData: true },
+        });
+
+        await this.prisma.partnerCommission.create({
+            data: {
+                partnerId: partnerProfileId,
+                bookingId: booking.id,
+                amount: partnerCommission,
+                rate: commissionRate,
+                status: 'pending',
+            },
+        });
+
+        this.eventsGateway.emitBookingUpdate(booking.id, 'PENDING', { passengerId, partnerId: partnerUserId });
+        return booking;
+    }
+
     private maskEmail(email: string): string {
         const [name, domain] = email.split('@');
         if (!name || !domain) return email;

@@ -143,4 +143,13 @@ export class AuthController {
     async logoutAll(@Req() req: any) {
         return this.authService.revokeAllSessions(req.user.userId);
     }
+
+    @UseGuards(JwtAuthGuard)
+    @Post('push-token')
+    async registerPushToken(
+        @Req() req: any,
+        @Body() body: { token: string; platform?: string },
+    ) {
+        return this.authService.registerPushToken(req.user.userId, body.token, body.platform);
+    }
 }

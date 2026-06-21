@@ -494,6 +494,27 @@ export class AuthService {
         });
     }
 
+    async updateDriverLocation(driverId: string, lat: number, lng: number) {
+        if (typeof lat !== 'number' || typeof lng !== 'number' || Number.isNaN(lat) || Number.isNaN(lng)) {
+            throw new BadRequestException('Coordenadas inválidas.');
+        }
+        return this.prisma.driverProfile.update({
+            where: { userId: driverId },
+            data: { lastLat: lat, lastLng: lng, lastLocationAt: new Date() },
+        });
+    }
+
+    async registerPushToken(userId: string, token: string, platform?: string) {
+        if (!token || token.length < 10) {
+            throw new BadRequestException('Token de push inválido.');
+        }
+        return this.prisma.user.update({
+            where: { id: userId },
+            data: { pushToken: token, pushPlatform: platform || 'unknown' },
+            select: { id: true, pushToken: true, pushPlatform: true },
+        });
+    }
+
     async getAllStaff() {
         return this.prisma.user.findMany({
             where: {

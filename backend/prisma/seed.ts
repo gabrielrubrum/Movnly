@@ -36,7 +36,22 @@ async function main() {
         },
     });
 
-    // 2.1. Test Client User (from screenshot)
+    // 2.1. Demo Passenger (mobile + web)
+    const passengerPass = await bcrypt.hash('Passenger2026_Elite!', 10);
+    const demoPassenger = await prisma.user.upsert({
+        where: { email: 'passageiro@movnly.com' },
+        update: { password: passengerPass, role: 'PASSENGER' },
+        create: {
+            email: 'passageiro@movnly.com',
+            name: 'Ana Costa',
+            password: passengerPass,
+            role: 'PASSENGER',
+            isEmailVerified: true,
+        },
+    });
+    console.log(`[SEED] Demo Passenger verified: ${demoPassenger.email}`);
+
+    // 2.2. Test Client User (from screenshot)
     const clientPass = await bcrypt.hash('Gabriel1512@#', 10);
     const testClient = await prisma.user.upsert({
         where: { email: 'gabrielflamengof50@gmail.com' },
@@ -76,6 +91,36 @@ async function main() {
         },
     });
     console.log(`[SEED] Elite Chauffeur verified: ${driver.email}`);
+
+    // 5. Partner account (Hotel demo)
+    const partnerPass = await bcrypt.hash('Partner2026_Elite!', 10);
+    const partner = await prisma.user.upsert({
+        where: { email: 'parceiro@movnly.com' },
+        update: { role: 'PARTNER', password: partnerPass },
+        create: {
+            email: 'parceiro@movnly.com',
+            name: 'Hotel Bairro Alto',
+            password: partnerPass,
+            role: 'PARTNER',
+            isEmailVerified: true,
+        },
+    });
+
+    await prisma.partnerProfile.upsert({
+        where: { userId: partner.id },
+        update: {},
+        create: {
+            userId: partner.id,
+            organization: 'Hotel Bairro Alto',
+            type: 'hotel',
+            commissionRate: 10,
+            address: 'Rua da Misericórdia 8, Lisboa',
+            city: 'Lisboa',
+            contactPhone: '+351 21 000 0000',
+            isVerified: true,
+        },
+    });
+    console.log(`[SEED] Partner account verified: ${partner.email}`);
 
     console.log('[SEED] Production strategy deployment complete.');
 }

@@ -30,6 +30,7 @@ export function RoleGuard({ children, allowedRoles, redirectTo = "/login" }: Rol
                 const roleRedirects: Record<string, string> = {
                     'DRIVER': '/motorista',
                     'PASSENGER': '/dashboard',
+                    'PARTNER': '/parceiros',
                     'ADMIN': '/admin',
                     'MANAGER': '/admin',
                     'OPERATOR': '/admin',

@@ -2,7 +2,7 @@
 
 import { useI18n } from "@/i18n/context";
 import { type BookingFormData } from "../BookingSteps";
-import { User, Mail, Phone, MessageSquare, ArrowLeft, ChevronRight, MapPin, Calendar, Clock, Check, Shield } from "lucide-react";
+import { User, Mail, Phone, MessageSquare, ArrowLeft, ChevronRight, MapPin, Calendar, Clock, Check, Shield, Sparkles } from "lucide-react";
 import { cn, formatCurrency } from "@/lib/utils";
 import { VEHICLE_CATEGORIES, EXTRAS } from "@/lib/constants";
 
@@ -92,7 +92,7 @@ export function StepCustomer({ form, update, onNext, onBack }: Props) {
             {/* Notes */}
             <div className="space-y-3">
               <label className="flex items-center gap-3 text-[9px] font-black uppercase tracking-[0.4em] text-white/30 ml-2 font-sans">
-                <MessageSquare className="w-3.5 h-3.5 text-brand-gold/40" /> Observações Especiais
+                <MessageSquare className="w-3.5 h-3.5 text-brand-gold/40" /> Observações ao Motorista
               </label>
               <textarea
                 rows={3}
@@ -101,6 +101,73 @@ export function StepCustomer({ form, update, onNext, onBack }: Props) {
                 className="w-full bg-white/[0.03] border border-white/[0.08] rounded-2xl py-4 px-5 text-white focus:border-brand-gold/40 focus:bg-brand-gold/[0.02] transition-all font-medium text-sm resize-none outline-none placeholder:text-white/15"
                 placeholder="Instruções para o motorista, necessidades especiais..."
               />
+            </div>
+
+            {/* Different Passenger Toggle */}
+            <div className="space-y-4 pt-4 border-t border-white/[0.05]">
+              <label className="flex items-center justify-between cursor-pointer group">
+                <div className="flex items-center gap-3">
+                  <div className="w-5 h-5 rounded border-2 border-white/20 group-hover:border-brand-gold/40 transition-colors flex items-center justify-center">
+                    {form.differentPassenger && <div className="w-2.5 h-2.5 rounded-full bg-brand-gold" />}
+                  </div>
+                  <span className="text-[10px] font-black uppercase tracking-[0.2em] text-white/40 group-hover:text-white/60 transition-colors font-sans">
+                    Passageiro diferente do pagador
+                  </span>
+                </div>
+                <input
+                  type="checkbox"
+                  checked={form.differentPassenger || false}
+                  onChange={(e) => update({ differentPassenger: e.target.checked })}
+                  className="sr-only"
+                />
+              </label>
+
+              {form.differentPassenger && (
+                <div className="space-y-4 pl-8 animate-luxury-reveal">
+                  <div className="space-y-3">
+                    <label className="text-[9px] font-black uppercase tracking-[0.3em] text-white/25 font-sans">Nome do Passageiro</label>
+                    <input
+                      type="text"
+                      value={form.passengerName || ""}
+                      onChange={(e) => update({ passengerName: e.target.value })}
+                      className="w-full bg-white/[0.02] border border-white/[0.06] rounded-xl py-3 px-4 text-white focus:border-brand-gold/30 transition-all text-sm outline-none placeholder:text-white/10"
+                      placeholder="Nome completo do passageiro"
+                    />
+                  </div>
+                  <div className="space-y-3">
+                    <label className="text-[9px] font-black uppercase tracking-[0.3em] text-white/25 font-sans">Telefone do Passageiro</label>
+                    <input
+                      type="tel"
+                      value={form.passengerPhone || ""}
+                      onChange={(e) => update({ passengerPhone: e.target.value })}
+                      className="w-full bg-white/[0.02] border border-white/[0.06] rounded-xl py-3 px-4 text-white focus:border-brand-gold/30 transition-all text-sm outline-none placeholder:text-white/10"
+                      placeholder="+351 912 345 678"
+                    />
+                  </div>
+                </div>
+              )}
+            </div>
+
+            {/* Special Request */}
+            <div className="space-y-3 pt-4 border-t border-white/[0.05]">
+              <label className="flex items-center gap-3 text-[9px] font-black uppercase tracking-[0.4em] text-white/30 ml-2 font-sans">
+                <Sparkles className="w-3.5 h-3.5 text-brand-gold/40" /> Pedido Especial
+              </label>
+              <select
+                value={form.specialRequest || ""}
+                onChange={(e) => update({ specialRequest: e.target.value })}
+                className="w-full bg-white/[0.03] border border-white/[0.08] rounded-2xl py-4 px-5 text-white focus:border-brand-gold/40 focus:bg-brand-gold/[0.02] transition-all font-medium text-sm outline-none"
+              >
+                <option value="">Nenhum pedido especial</option>
+                <option value="vegetarian">Vegetariano (comida)</option>
+                <option value="vegan">Vegan (comida)</option>
+                <option value="gluten_free">Sem glúten</option>
+                <option value="halal">Halal</option>
+                <option value="kosher">Kosher</option>
+                <option value="wheelchair">Acessibilidade cadeira de rodas</option>
+                <option value="pet">Animal de estimação a bordo</option>
+                <option value="other">Outro (especificar nas observações)</option>
+              </select>
             </div>
           </div>
 
