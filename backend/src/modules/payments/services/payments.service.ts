@@ -132,6 +132,16 @@ export class PaymentsService {
 
     // ─── Create / Retrieve PaymentIntent ─────────────────────────────────────
     async createPaymentIntent(data: any, fraudSignals?: any) {
+        this.logger.log('=== CREATE INTENT START ===');
+        this.logger.log('Request body:', JSON.stringify(data, null, 2));
+        this.logger.log('Fraud signals:', JSON.stringify(fraudSignals, null, 2));
+
+        const secretKey = this.configService.get<string>('STRIPE_SECRET_KEY');
+        this.logger.log('STRIPE_SECRET_KEY exists:', !!secretKey);
+        this.logger.log('STRIPE_SECRET_KEY starts with sk_:', secretKey?.startsWith('sk_'));
+        this.logger.log('STRIPE_SECRET_KEY is test key:', secretKey?.startsWith('sk_test_'));
+        this.logger.log('STRIPE_SECRET_KEY is live key:', secretKey?.startsWith('sk_live_'));
+
         this.logger.debug(`Create Intent — bookingId: ${data.bookingId || 'none'} | email: ${data.email}`);
 
         const {
@@ -263,8 +273,21 @@ export class PaymentsService {
 
         // Convert from EUR to target currency if needed
         if (currency !== 'EUR') {
-            exchangeRate = await this.exchangeRateService.getExchangeRate('EUR', currency);
-            finalPrice = await this.exchangeRateService.convertFromEur(finalPriceEur, currency);
+            this.logger.log(`Converting from EUR to ${currency}`);
+            try {
+                exchangeRate = await this.exchangeRateService.getExchangeRate('EUR', currency);
+                this.logger.log(`Exchange rate fetched: ${exchangeRate}`);
+            } catch (error) {
+                this.logger.error('Error fetching exchange rate:', error);
+                throw error;
+            }
+            try {
+                finalPrice = await this.exchangeRateService.convertFromEur(finalPriceEur, currency);
+                this.logger.log(`Converted price: ${finalPrice}${currency}`);
+            } catch (error) {
+                this.logger.error('Error converting price:', error);
+                throw error;
+            }
             this.logger.log(
                 `Currency detected: ${currency} (country: ${customerCountry}, method: ${currencyDetection.detectionMethod}). ` +
                 `Converting €${finalPriceEur} to ${finalPrice}${currency} (rate: ${exchangeRate})`,
@@ -277,6 +300,13 @@ export class PaymentsService {
         const priceInCents        = Math.round(finalPrice * 100);
         const driverAmountInCents = Math.round(driverAmountEuro * 100);
         const platformFeeInCents  = Math.round(platformFeeEuro * 100);
+
+        this.logger.log(`PaymentIntent parameters:`);
+        this.logger.log(`  amount: ${priceInCents} (${finalPrice} ${currency})`);
+        this.logger.log(`  currency: ${currency.toLowerCase()}`);
+        this.logger.log(`  driverAmountInCents: ${driverAmountInCents}`);
+        this.logger.log(`  platformFeeInCents: ${platformFeeInCents}`);
+        this.logger.log(`  customerEmail: ${email}`);
 
         this.logger.log(
             `Booking ${booking.id}: [${finances.category}] [${finances.region}] ` +
@@ -366,58 +396,73 @@ export class PaymentsService {
 
         // ── Create new PaymentIntent ──────────────────────────────────────────
         const stripeCustomerId = await this.getOrCreateStripeCustomer(passenger);
+        this.logger.log(`Stripe customer ID: ${stripeCustomerId || 'none'}`);
 
-        const paymentIntent = await this.stripe.paymentIntents.create(
-            {
-                amount:   priceInCents,
-                currency: currency.toLowerCase(),
-                customer: stripeCustomerId || undefined,
-                receipt_email: passenger.email,
-                description: `MOVNLY — Reserva ${booking.id}`,
-                statement_descriptor_suffix: 'MOVNLY',
-                // Stripe BR will show eligible methods now; future EU/local methods can be enabled in Dashboard without a checkout rewrite.
-                automatic_payment_methods: {
-                    enabled: true,
-                },
-                payment_method_options: {
-                    card: {
-                        request_three_d_secure: 'automatic',
-                    },
-                },
-                transfer_group: booking.id,
-                metadata: {
-                    bookingId:         toStripeMetadataValue(booking.id),
-                    route:             toStripeMetadataValue(`${booking.from} -> ${booking.to}`),
-                    origin:            toStripeMetadataValue(booking.from),
-                    destination:       toStripeMetadataValue(booking.to),
-                    passengerName:     toStripeMetadataValue(passenger.name),
-                    passengerEmail:    toStripeMetadataValue(passenger.email),
-                    passengerPhone:    toStripeMetadataValue(phone),
-                    vehicleClass:      toStripeMetadataValue(booking.category || category || 'smart'),
-                    totalAmount:       toStripeMetadataValue(finalPrice),
-                    currency:          currency.toLowerCase(),
-                    originalAmount:    toStripeMetadataValue(finalPriceEur),
-                    originalCurrency:  'eur',
-                    driverAmount:      toStripeMetadataValue(driverAmountEuro),
-                    platformFee:       toStripeMetadataValue(platformFeeEuro),
-                    exchangeRate:      exchangeRate ? toStripeMetadataValue(exchangeRate) : '',
-                    detectionCountry:  toStripeMetadataValue(customerCountry),
-                    detectionMethod:   toStripeMetadataValue(currencyDetection.detectionMethod),
-                    surgeReasons:      toStripeMetadataValue(finances.appliedSurges.join(', ')),
-                    // Stripe Radar / anti-fraud signals
-                    client_ip:         toStripeMetadataValue(clientIp),
-                    user_agent:        toStripeMetadataValue((fraudSignals?.userAgent || '').substring(0, 200)),
-                    browser_fingerprint: toStripeMetadataValue(fraudSignals?.fingerprint || 'none'),
-                    risk_score:        String(fraudSignals?.riskScore || 0),
-                    risk_signals:      toStripeMetadataValue((fraudSignals?.riskSignals || []).join(', ')),
-                    client_country:    toStripeMetadataValue(customerCountry),
+        this.logger.log('=== CREATING STRIPE PAYMENT INTENT ===');
+        const paymentIntentData = {
+            amount:   priceInCents,
+            currency: currency.toLowerCase(),
+            customer: stripeCustomerId || undefined,
+            receipt_email: passenger.email,
+            description: `MOVNLY — Reserva ${booking.id}`,
+            statement_descriptor_suffix: 'MOVNLY',
+            automatic_payment_methods: {
+                enabled: true,
+            },
+            payment_method_options: {
+                card: {
+                    request_three_d_secure: 'automatic',
                 },
             },
-            {
-                // ── Idempotency key prevents duplicate charges on retry ────────
-                idempotencyKey: `pi-create-${booking.id}-${priceInCents}-${currency.toLowerCase()}-${existingPaymentIntentId || 'new'}`,
+            transfer_group: booking.id,
+            metadata: {
+                bookingId:         toStripeMetadataValue(booking.id),
+                route:             toStripeMetadataValue(`${booking.from} -> ${booking.to}`),
+                origin:            toStripeMetadataValue(booking.from),
+                destination:       toStripeMetadataValue(booking.to),
+                passengerName:     toStripeMetadataValue(passenger.name),
+                passengerEmail:    toStripeMetadataValue(passenger.email),
+                passengerPhone:    toStripeMetadataValue(phone),
+                vehicleClass:      toStripeMetadataValue(booking.category || category || 'smart'),
+                totalAmount:       toStripeMetadataValue(finalPrice),
+                currency:          currency.toLowerCase(),
+                originalAmount:    toStripeMetadataValue(finalPriceEur),
+                originalCurrency:  'eur',
+                driverAmount:      toStripeMetadataValue(driverAmountEuro),
+                platformFee:       toStripeMetadataValue(platformFeeEuro),
+                exchangeRate:      exchangeRate ? toStripeMetadataValue(exchangeRate) : '',
+                detectionCountry:  toStripeMetadataValue(customerCountry),
+                detectionMethod:   toStripeMetadataValue(currencyDetection.detectionMethod),
+                surgeReasons:      toStripeMetadataValue(finances.appliedSurges.join(', ')),
+                client_ip:         toStripeMetadataValue(clientIp),
+                user_agent:        toStripeMetadataValue((fraudSignals?.userAgent || '').substring(0, 200)),
+                browser_fingerprint: toStripeMetadataValue(fraudSignals?.fingerprint || 'none'),
+                risk_score:        String(fraudSignals?.riskScore || 0),
+                risk_signals:      toStripeMetadataValue((fraudSignals?.riskSignals || []).join(', ')),
+                client_country:    toStripeMetadataValue(customerCountry),
             },
-        );
+        };
+        this.logger.log('PaymentIntent data:', JSON.stringify(paymentIntentData, null, 2));
+
+        let paymentIntent;
+        try {
+            paymentIntent = await this.stripe.paymentIntents.create(
+                paymentIntentData,
+                {
+                    idempotencyKey: `pi-create-${booking.id}-${priceInCents}-${currency.toLowerCase()}-${existingPaymentIntentId || 'new'}`,
+                },
+            );
+            this.logger.log(`PaymentIntent created successfully: ${paymentIntent.id}`);
+        } catch (error) {
+            this.logger.error('=== STRIPE PAYMENT INTENT CREATION ERROR ===');
+            this.logger.error('Error:', error);
+            this.logger.error('Error message:', error.message);
+            this.logger.error('Error stack:', error.stack);
+            this.logger.error('Error type:', error.type);
+            this.logger.error('Error code:', error.code);
+            this.logger.error('Error param:', error.param);
+            throw error;
+        }
 
         // ── Persist PaymentIntent reference ───────────────────────────────────
         await this.prisma.booking.update({
