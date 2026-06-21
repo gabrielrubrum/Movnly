@@ -1,11 +1,11 @@
 "use client";
 
+import { useState, useRef, useEffect } from "react";
 import { useI18n } from "@/i18n/context";
 import { type BookingFormData } from "../BookingSteps";
-import { User, Mail, Phone, MessageSquare, ArrowLeft, ChevronRight, MapPin, Calendar, Clock, Check, Shield, Sparkles } from "lucide-react";
+import { User, Mail, Phone, MessageSquare, ArrowLeft, ChevronRight, MapPin, Calendar, Clock, Check, Shield, Sparkles, ChevronDown } from "lucide-react";
 import { cn, formatCurrency } from "@/lib/utils";
 import { VEHICLE_CATEGORIES, EXTRAS } from "@/lib/constants";
-import { CustomSelect } from "@/components/ui/CustomSelect";
 
 interface Props {
   form: BookingFormData;
@@ -20,14 +20,35 @@ export function StepCustomer({ form, update, onNext, onBack }: Props) {
   const category = VEHICLE_CATEGORIES.find(c => c.id === form.category);
   const selectedExtras = form.extras.map(id => EXTRAS.find(e => e.id === id)).filter(Boolean);
 
-  const specialRequestOptions = [
+  const [specialDropdownOpen, setSpecialDropdownOpen] = useState(false);
+  const dropdownRef = useRef<HTMLDivElement>(null);
+
+  const specialRequests = [
     { value: "", label: "Nenhum pedido especial" },
     { value: "child", label: "Viagem com criança" },
     { value: "pet", label: "Animal de estimação" },
-    { value: "wheelchair", label: "Acessibilidade / mobilidade reduzida" },
+    { value: "accessibility", label: "Acessibilidade / mobilidade reduzida" },
     { value: "extra_luggage", label: "Bagagem adicional" },
     { value: "other", label: "Outro pedido" },
   ];
+
+  const selectedRequest = specialRequests.find(r => r.value === form.specialRequest);
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+        setSpecialDropdownOpen(false);
+      }
+    };
+
+    if (specialDropdownOpen) {
+      document.addEventListener("mousedown", handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [specialDropdownOpen]);
 
   return (
     <div className="animate-luxury-reveal min-h-screen pb-40">
@@ -163,12 +184,50 @@ export function StepCustomer({ form, update, onNext, onBack }: Props) {
               <label className="flex items-center gap-3 text-[9px] font-black uppercase tracking-[0.4em] text-white/30 ml-2 font-sans">
                 <Sparkles className="w-3.5 h-3.5 text-brand-gold/40" /> Pedido Especial
               </label>
-              <CustomSelect
-                value={form.specialRequest || ""}
-                onChange={(value) => update({ specialRequest: value })}
-                options={specialRequestOptions}
-                placeholder="Nenhum pedido especial"
-              />
+              <div ref={dropdownRef} className="relative">
+                {/* Trigger Button */}
+                <button
+                  type="button"
+                  onClick={() => setSpecialDropdownOpen(!specialDropdownOpen)}
+                  className="w-full bg-white/[0.03] border border-white/[0.08] rounded-2xl py-4 px-5 text-left focus:border-brand-gold/40 focus:bg-brand-gold/[0.02] transition-all font-medium text-sm outline-none flex items-center justify-between hover:border-white/[0.12]"
+                >
+                  <span className={!selectedRequest ? "text-white/15" : "text-white"}>
+                    {selectedRequest ? selectedRequest.label : "Nenhum pedido especial"}
+                  </span>
+                  <ChevronDown className={cn("w-4 h-4 text-white/40 transition-transform duration-200", specialDropdownOpen && "rotate-180")} />
+                </button>
+
+                {/* Dropdown Menu */}
+                {specialDropdownOpen && (
+                  <div className="absolute z-[9999] mt-2 w-full rounded-2xl border border-brand-gold/20 bg-[#08080c] shadow-2xl overflow-hidden">
+                    {specialRequests.map((item) => (
+                      <button
+                        key={item.value}
+                        type="button"
+                        onClick={() => {
+                          update({ specialRequest: item.value });
+                          setSpecialDropdownOpen(false);
+                        }}
+                        className={cn(
+                          "w-full px-5 py-3.5 text-left transition-all flex items-center justify-between",
+                          "hover:bg-brand-gold/[0.08] focus:bg-brand-gold/[0.08] focus:outline-none",
+                          form.specialRequest === item.value ? "bg-brand-gold/[0.05]" : "bg-transparent"
+                        )}
+                      >
+                        <span className={cn(
+                          "text-sm font-medium",
+                          form.specialRequest === item.value ? "text-brand-gold" : "text-white/70 hover:text-white"
+                        )}>
+                          {item.label}
+                        </span>
+                        {form.specialRequest === item.value && (
+                          <Check className="w-4 h-4 text-brand-gold" strokeWidth={3} />
+                        )}
+                      </button>
+                    ))}
+                  </div>
+                )}
+              </div>
             </div>
           </div>
 
