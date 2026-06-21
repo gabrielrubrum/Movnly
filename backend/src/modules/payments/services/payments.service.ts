@@ -1,4 +1,4 @@
-import { Injectable, Logger, BadRequestException, NotFoundException } from '@nestjs/common';
+import { Injectable, Logger, BadRequestException, NotFoundException, InternalServerErrorException } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 const Stripe = require('stripe');
 import { PrismaService } from '../../../prisma/prisma.service';
@@ -132,17 +132,18 @@ export class PaymentsService {
 
     // ─── Create / Retrieve PaymentIntent ─────────────────────────────────────
     async createPaymentIntent(data: any, fraudSignals?: any) {
-        this.logger.log('=== CREATE INTENT START ===');
-        this.logger.log('Request body:', JSON.stringify(data, null, 2));
-        this.logger.log('Fraud signals:', JSON.stringify(fraudSignals, null, 2));
+        try {
+            this.logger.log('=== CREATE INTENT START ===');
+            this.logger.log('Request body:', JSON.stringify(data, null, 2));
+            this.logger.log('Fraud signals:', JSON.stringify(fraudSignals, null, 2));
 
-        const secretKey = this.configService.get<string>('STRIPE_SECRET_KEY');
-        this.logger.log('STRIPE_SECRET_KEY exists:', !!secretKey);
-        this.logger.log('STRIPE_SECRET_KEY starts with sk_:', secretKey?.startsWith('sk_'));
-        this.logger.log('STRIPE_SECRET_KEY is test key:', secretKey?.startsWith('sk_test_'));
-        this.logger.log('STRIPE_SECRET_KEY is live key:', secretKey?.startsWith('sk_live_'));
+            const secretKey = this.configService.get<string>('STRIPE_SECRET_KEY');
+            this.logger.log('STRIPE_SECRET_KEY exists:', !!secretKey);
+            this.logger.log('STRIPE_SECRET_KEY starts with sk_:', secretKey?.startsWith('sk_'));
+            this.logger.log('STRIPE_SECRET_KEY is test key:', secretKey?.startsWith('sk_test_'));
+            this.logger.log('STRIPE_SECRET_KEY is live key:', secretKey?.startsWith('sk_live_'));
 
-        this.logger.debug(`Create Intent — bookingId: ${data.bookingId || 'none'} | email: ${data.email}`);
+            this.logger.debug(`Create Intent — bookingId: ${data.bookingId || 'none'} | email: ${data.email}`);
 
         const {
             bookingId: incomingBookingId,
@@ -500,6 +501,23 @@ export class PaymentsService {
             detectionCountry: customerCountry,
             detectionMethod: currencyDetection.detectionMethod,
         };
+        } catch (error) {
+            this.logger.error('=== PAYMENT_INTENT_ERROR ===');
+            this.logger.error('Error:', error);
+            this.logger.error('Error message:', error.message);
+            this.logger.error('Error stack:', error.stack);
+            this.logger.error('Error type:', error.type);
+            this.logger.error('Error code:', error.code);
+            this.logger.error('Error param:', error.param);
+            this.logger.error('Error raw:', error.raw);
+
+            throw new InternalServerErrorException({
+                message: 'Erro ao criar intenção de pagamento',
+                details: error.message,
+                code: error.code,
+                type: error.type,
+            });
+        }
     }
 
     // ─── Webhook Handler ──────────────────────────────────────────────────────
