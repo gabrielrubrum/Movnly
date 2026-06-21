@@ -2,6 +2,55 @@ import { IsString, IsEmail, IsOptional, IsDateString, IsNumber, Min, Max, IsIn, 
 import { Transform, Type } from 'class-transformer';
 
 /**
+ * Fraud Signals DTO
+ * Contains anti-fraud detection signals from client
+ */
+export class FraudSignalsDto {
+    @IsOptional()
+    @IsString()
+    ip?: string;
+
+    @IsOptional()
+    @IsString()
+    userAgent?: string;
+
+    @IsOptional()
+    @IsString()
+    fingerprint?: string;
+
+    @IsOptional()
+    @IsNumber()
+    @Min(0)
+    @Max(100)
+    @Type(() => Number)
+    riskScore?: number;
+
+    @IsOptional()
+    @IsArray()
+    riskSignals?: string[];
+
+    @IsOptional()
+    @IsString()
+    country?: string;
+
+    @IsOptional()
+    @IsString()
+    billingCountry?: string;
+
+    @IsOptional()
+    @IsString()
+    cardCountry?: string;
+
+    @IsOptional()
+    @IsString()
+    browserCountry?: string;
+
+    @IsOptional()
+    @IsString()
+    browserLocale?: string;
+}
+
+/**
  * Create PaymentIntent DTO
  * Validates and sanitizes payment intent creation requests
  */
@@ -91,53 +140,4 @@ export class CreatePaymentIntentDto {
     @IsOptional()
     @IsObject()
     fraudSignals?: FraudSignalsDto;
-}
-
-/**
- * Fraud Signals DTO
- * Contains anti-fraud detection signals from client
- */
-export class FraudSignalsDto {
-    @IsOptional()
-    @IsString()
-    ip?: string;
-
-    @IsOptional()
-    @IsString()
-    userAgent?: string;
-
-    @IsOptional()
-    @IsString()
-    fingerprint?: string;
-
-    @IsOptional()
-    @IsNumber()
-    @Min(0)
-    @Max(100)
-    @Type(() => Number)
-    riskScore?: number;
-
-    @IsOptional()
-    @IsArray()
-    riskSignals?: string[];
-
-    @IsOptional()
-    @IsString()
-    country?: string;
-
-    @IsOptional()
-    @IsString()
-    billingCountry?: string;
-
-    @IsOptional()
-    @IsString()
-    cardCountry?: string;
-
-    @IsOptional()
-    @IsString()
-    browserCountry?: string;
-
-    @IsOptional()
-    @IsString()
-    browserLocale?: string;
 }
