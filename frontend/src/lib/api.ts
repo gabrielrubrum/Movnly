@@ -3,7 +3,7 @@ import { toast } from "sonner";
 import { useAuthStore } from "./auth-store";
 
 const api = axios.create({
-  baseURL: process.env.NEXT_PUBLIC_API_URL || "http://localhost:3002",
+  baseURL: process.env.NEXT_PUBLIC_API_URL || (process.env.NODE_ENV === 'production' ? 'https://api.movnly.com' : 'http://localhost:3002'),
   headers: {
     "Content-Type": "application/json",
   },
