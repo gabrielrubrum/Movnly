@@ -5,6 +5,7 @@ import { type BookingFormData } from "../BookingSteps";
 import { User, Mail, Phone, MessageSquare, ArrowLeft, ChevronRight, MapPin, Calendar, Clock, Check, Shield, Sparkles } from "lucide-react";
 import { cn, formatCurrency } from "@/lib/utils";
 import { VEHICLE_CATEGORIES, EXTRAS } from "@/lib/constants";
+import { CustomSelect } from "@/components/ui/CustomSelect";
 
 interface Props {
   form: BookingFormData;
@@ -18,6 +19,15 @@ export function StepCustomer({ form, update, onNext, onBack }: Props) {
   const isComplete = form.name && form.email && form.phone;
   const category = VEHICLE_CATEGORIES.find(c => c.id === form.category);
   const selectedExtras = form.extras.map(id => EXTRAS.find(e => e.id === id)).filter(Boolean);
+
+  const specialRequestOptions = [
+    { value: "", label: "Nenhum pedido especial" },
+    { value: "child", label: "Viagem com criança" },
+    { value: "pet", label: "Animal de estimação" },
+    { value: "wheelchair", label: "Acessibilidade / mobilidade reduzida" },
+    { value: "extra_luggage", label: "Bagagem adicional" },
+    { value: "other", label: "Outro pedido" },
+  ];
 
   return (
     <div className="animate-luxury-reveal min-h-screen pb-40">
@@ -153,21 +163,12 @@ export function StepCustomer({ form, update, onNext, onBack }: Props) {
               <label className="flex items-center gap-3 text-[9px] font-black uppercase tracking-[0.4em] text-white/30 ml-2 font-sans">
                 <Sparkles className="w-3.5 h-3.5 text-brand-gold/40" /> Pedido Especial
               </label>
-              <select
+              <CustomSelect
                 value={form.specialRequest || ""}
-                onChange={(e) => update({ specialRequest: e.target.value })}
-                className="w-full bg-white/[0.03] border border-white/[0.08] rounded-2xl py-4 px-5 text-white focus:border-brand-gold/40 focus:bg-brand-gold/[0.02] transition-all font-medium text-sm outline-none"
-              >
-                <option value="">Nenhum pedido especial</option>
-                <option value="vegetarian">Vegetariano (comida)</option>
-                <option value="vegan">Vegan (comida)</option>
-                <option value="gluten_free">Sem glúten</option>
-                <option value="halal">Halal</option>
-                <option value="kosher">Kosher</option>
-                <option value="wheelchair">Acessibilidade cadeira de rodas</option>
-                <option value="pet">Animal de estimação a bordo</option>
-                <option value="other">Outro (especificar nas observações)</option>
-              </select>
+                onChange={(value) => update({ specialRequest: value })}
+                options={specialRequestOptions}
+                placeholder="Nenhum pedido especial"
+              />
             </div>
           </div>
 
