@@ -37,6 +37,10 @@ const getExtraPriceLabel = (price: number) => (price === 0 ? "Já incluído" : `
 
 function ExtraCard({ extra, selected, onToggle }: { extra: typeof EXTRAS[0]; selected: boolean; onToggle: () => void }) {
   const { t } = useI18n();
+  const nameKey = `bookingFlow.extras.${extra.id}`;
+  const nameText = t(nameKey);
+  const hasName = nameText !== nameKey && nameText !== "";
+  
   const descKey = `bookingFlow.extrasDesc.${extra.id}`;
   const descText = t(descKey);
   const hasDesc = descText !== descKey && descText !== "";
@@ -67,7 +71,7 @@ function ExtraCard({ extra, selected, onToggle }: { extra: typeof EXTRAS[0]; sel
       {/* Content */}
       <div className="flex-1 min-w-0">
         <p className={cn("text-[11px] font-black uppercase tracking-[0.2em] font-sans transition-colors", selected ? "text-white" : "text-white/70 group-hover:text-white")}>
-          {t(`bookingFlow.extras.${extra.id}`)}
+          {hasName ? nameText : extra.name}
         </p>
         {hasDesc && (
           <p className="text-[9px] tracking-[0.05em] text-white/30 mt-1.5 font-sans group-hover:text-white/45 transition-colors leading-relaxed">

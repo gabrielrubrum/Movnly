@@ -522,11 +522,17 @@
       "water": "Extra Water",
       "wifi": "On-board Wi-Fi",
       "extra_stop": "Extra Stop",
-      "extra_wait": "Extended Wait"
+      "extra_wait": "Extended Wait",
+      "return_transfer": "Return Transfer",
+      "private_tour": "Private Tour",
+      "multilingual_driver": "Multilingual Driver"
     },
     "extrasDesc": {
       "extra_wait": "We wait the additional time needed for your comfort.",
-      "extra_stop": "Add stops along the way."
+      "extra_stop": "Add stops along the way.",
+      "return_transfer": "Also book your return trip.",
+      "private_tour": "Add a personalized private tour.",
+      "multilingual_driver": "Driver with multilingual support."
     },
     "stepExtras": {
       "title": "Would you like to add anything?",

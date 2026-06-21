@@ -522,13 +522,19 @@
       "water": "Águas Extra",
       "wifi": "Wi-Fi a Bordo",
       "extra_stop": "Paragem Extra",
-      "extra_wait": "Espera Prolongada"
+      "extra_wait": "Espera Prolongada",
+      "return_transfer": "Transfer de Retorno",
+      "private_tour": "Tour Privado",
+      "multilingual_driver": "Motorista Multilíngue"
     },
     "extrasDesc": {
       "meet_greet": "Recepção no terminal com acompanhamento profissional.",
       "name_board": "O motorista aguarda com uma placa com o seu nome.",
       "extra_wait": "Aguardamos o tempo adicional necessário para o seu conforto.",
-      "extra_stop": "Adicione paragens ao longo do trajeto."
+      "extra_stop": "Adicione paragens ao longo do trajeto.",
+      "return_transfer": "Reserve também a viagem de volta.",
+      "private_tour": "Adicione um tour privado personalizado.",
+      "multilingual_driver": "Motorista com suporte multilíngue."
     },
     "stepExtras": {
       "title": "Deseja adicionar algo?",
