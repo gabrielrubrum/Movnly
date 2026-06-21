@@ -195,13 +195,22 @@ export function BookingSteps() {
       const backendMessage = Array.isArray(err?.response?.data?.message)
         ? err.response.data.message.join(" ")
         : err?.response?.data?.message;
-      setPaymentInitError(
-        status === 429 || String(backendMessage || "").toLowerCase().includes("too many")
-          ? "Recebemos muitas tentativas em pouco tempo. Aguarde alguns instantes e tente novamente."
-          : backendMessage
-          ? `Não conseguimos preparar o pagamento: ${backendMessage}`
-          : "Não conseguimos preparar o pagamento agora. Verifique os dados da reserva ou tente novamente."
-      );
+      
+      // Improved error messages based on error type
+      let errorMessage = backendMessage;
+      if (err?.code === 'ECONNABORTED' || err?.message?.includes('timeout')) {
+        errorMessage = 'Tempo limite excedido. Verifique sua conexão e tente novamente.';
+      } else if (err?.code === 'ERR_NETWORK' || !err?.response) {
+        errorMessage = 'Não conseguimos conectar ao servidor. Verifique sua conexão ou tente novamente em alguns instantes.';
+      } else if (status === 429 || String(backendMessage || "").toLowerCase().includes("too many")) {
+        errorMessage = 'Recebemos muitas tentativas em pouco tempo. Aguarde alguns instantes e tente novamente.';
+      } else if (status === 401 || status === 403) {
+        errorMessage = 'Sessão expirada. Atualize a página e tente novamente.';
+      } else if (status >= 500) {
+        errorMessage = 'Erro no servidor de pagamentos. Tente novamente em alguns instantes.';
+      }
+      
+      setPaymentInitError(errorMessage || backendMessage || "Não conseguimos preparar o pagamento agora. Verifique os dados da reserva ou tente novamente.");
       setClientSecret(null);
     } finally {
       setLoading(false);

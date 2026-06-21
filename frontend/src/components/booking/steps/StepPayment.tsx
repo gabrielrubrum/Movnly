@@ -233,8 +233,12 @@ export function StepPayment({ form, onConfirm, onBack, loading, total, clientSec
                 >
                   <AlertCircle className="w-10 h-10 text-amber-400/70" />
                   <div>
-                    <p className="text-white/70 text-sm font-black uppercase tracking-widest mb-2">Pagamento não inicializado</p>
-                    <p className="text-white/45 text-xs font-bold max-w-md leading-relaxed">{paymentError}</p>
+                    <p className="text-white/70 text-sm font-black uppercase tracking-widest mb-2">Não conseguimos conectar ao servidor de pagamentos</p>
+                    <p className="text-white/45 text-xs font-bold max-w-md leading-relaxed">
+                      {paymentError.includes('CORS') || paymentError.includes('Network') || paymentError.includes('fetch')
+                        ? 'Tente novamente em alguns instantes. Se o problema persistir, contacte o suporte MOVNLY.'
+                        : paymentError}
+                    </p>
                   </div>
                   <button
                     type="button"

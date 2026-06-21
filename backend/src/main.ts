@@ -86,15 +86,59 @@ async function bootstrap() {
         'https://admin.movnly.com',
         'https://driver.movnly.com',
         'https://parceiros.movnly.com',
+        'https://api.movnly.com',
       ]
-    : true;
+    : [
+        'http://localhost:3000',
+        'http://localhost:3001',
+        'http://localhost:3002',
+        'http://localhost:19006', // Expo
+        'http://localhost:8081', // Android
+        'http://localhost:19000', // iOS
+      ];
 
   app.enableCors({
-    origin: allowedOrigins,
-    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
+    origin: (origin, callback) => {
+      // Allow requests with no origin (mobile apps, Postman, etc.)
+      if (!origin) {
+        return callback(null, true);
+      }
+
+      // Remove trailing slash for comparison
+      const normalizedOrigin = origin.replace(/\/$/, '');
+
+      if (isProd) {
+        // In production, check against allowed origins
+        const isAllowed = allowedOrigins.some(allowed => {
+          const normalizedAllowed = allowed.replace(/\/$/, '');
+          return normalizedOrigin === normalizedAllowed;
+        });
+
+        if (isAllowed) {
+          callback(null, true);
+        } else {
+          console.error(`[CORS] Blocked origin: ${normalizedOrigin}`);
+          callback(new Error(`CORS blocked for origin: ${normalizedOrigin}`));
+        }
+      } else {
+        // In development, allow all origins
+        callback(null, true);
+      }
+    },
+    methods: ['GET', 'HEAD', 'PUT', 'PATCH', 'POST', 'DELETE', 'OPTIONS'],
     credentials: true,
-    allowedHeaders: ['Content-Type', 'Authorization', 'stripe-signature', 'x-browser-fingerprint', 'x-client-ip'],
+    allowedHeaders: [
+      'Content-Type',
+      'Authorization',
+      'Stripe-Signature',
+      'stripe-signature',
+      'x-browser-fingerprint',
+      'x-client-ip',
+      'x-user-agent',
+      'X-Requested-With',
+    ],
     exposedHeaders: ['set-cookie'],
+    maxAge: 86400, // 24 hours
   });
 
   const port = process.env.PORT ?? 3002;

@@ -342,7 +342,14 @@ export function BookingSummaryPanel({ form, total, extrasTotal, calculatedBasePr
 
               {/* Total */}
               <div className="pt-6 mt-2 flex justify-between items-center border-t border-brand-gold/20 relative overflow-hidden group/price">
-                <span className="text-[9px] font-black uppercase tracking-[0.45em] text-white/20">Total estimado</span>
+                <div className="flex flex-col">
+                  <span className="text-[9px] font-black uppercase tracking-[0.45em] text-white/20">Total estimado</span>
+                  {form.distance && form.distance > 0 && (
+                    <span className="text-[8px] text-white/30 mt-1">
+                      {form.distance} km · {form.duration || '~30'} min
+                    </span>
+                  )}
+                </div>
                 <div className="text-right">
                   <div className="flex items-baseline gap-2">
                     <motion.p
@@ -355,7 +362,7 @@ export function BookingSummaryPanel({ form, total, extrasTotal, calculatedBasePr
                     </motion.p>
                     <span className="text-xl font-black text-brand-gold/30 tracking-widest">EUR</span>
                   </div>
-                  <p className="text-[7px] font-black tracking-[0.4em] text-white/10 mt-2 uppercase">IVA incluído</p>
+                  <p className="text-[7px] font-black tracking-[0.4em] text-white/10 mt-2 uppercase">IVA incluído · Processado em EUR/BRL</p>
                 </div>
                 <div className="absolute inset-0 bg-gradient-to-r from-transparent via-brand-gold/[0.04] to-transparent -translate-x-full group-hover/price:translate-x-full transition-transform duration-[2000ms] ease-in-out" />
               </div>
