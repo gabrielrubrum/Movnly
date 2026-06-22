@@ -73,10 +73,18 @@ async function bootstrap() {
     whitelist: true,
     forbidNonWhitelisted: false,
     transform: true,
-    disableErrorMessages: isProd,
+    disableErrorMessages: false, // Enable detailed error messages in production for debugging
     exceptionFactory: (errors) => {
       console.error('VALIDATION ERRORS:', JSON.stringify(errors, null, 2));
-      return new BadRequestException(errors);
+      const formattedErrors = errors.map(error => ({
+        property: error.property,
+        constraints: error.constraints,
+        value: error.value,
+      }));
+      return new BadRequestException({
+        message: 'Validation failed',
+        errors: formattedErrors,
+      });
     }
   }));
 

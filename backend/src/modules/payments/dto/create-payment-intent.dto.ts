@@ -1,5 +1,35 @@
-import { IsString, IsEmail, IsOptional, IsDateString, IsNumber, Min, Max, IsIn, Matches, IsObject, IsArray, MaxLength, IsNotEmpty } from 'class-validator';
+import { IsString, IsEmail, IsOptional, IsDateString, IsNumber, Min, Max, IsIn, Matches, IsObject, IsArray, MaxLength, IsNotEmpty, ValidatorConstraint, ValidatorConstraintInterface, ValidationArguments, validate, Validate } from 'class-validator';
 import { Transform, Type } from 'class-transformer';
+
+/**
+ * Custom validator to ensure at least one of origin/from is present
+ */
+@ValidatorConstraint({ name: 'hasOrigin', async: false })
+export class HasOriginConstraint implements ValidatorConstraintInterface {
+    validate(value: any, args: ValidationArguments) {
+        const object = args.object as any;
+        return !!(object.origin || object.from);
+    }
+
+    defaultMessage(args: ValidationArguments) {
+        return 'Either origin or from must be provided';
+    }
+}
+
+/**
+ * Custom validator to ensure at least one of destination/to is present
+ */
+@ValidatorConstraint({ name: 'hasDestination', async: false })
+export class HasDestinationConstraint implements ValidatorConstraintInterface {
+    validate(value: any, args: ValidationArguments) {
+        const object = args.object as any;
+        return !!(object.destination || object.to);
+    }
+
+    defaultMessage(args: ValidationArguments) {
+        return 'Either destination or to must be provided';
+    }
+}
 
 /**
  * Fraud Signals DTO
@@ -55,6 +85,8 @@ export class FraudSignalsDto {
  * Validates and sanitizes payment intent creation requests
  */
 export class CreatePaymentIntentDto {
+    @Validate(HasOriginConstraint)
+    @Validate(HasDestinationConstraint)
     @IsOptional()
     @IsString()
     bookingId?: string;
@@ -72,22 +104,22 @@ export class CreatePaymentIntentDto {
 
     @IsString()
     @Transform(({ value }) => value?.trim())
-    @IsNotEmpty()
+    @IsOptional()
     from?: string;
 
     @IsString()
     @Transform(({ value }) => value?.trim())
-    @IsNotEmpty()
+    @IsOptional()
     to?: string;
 
     @IsString()
     @Transform(({ value }) => value?.trim())
-    @IsNotEmpty()
+    @IsOptional()
     origin?: string;
 
     @IsString()
     @Transform(({ value }) => value?.trim())
-    @IsNotEmpty()
+    @IsOptional()
     destination?: string;
 
     @IsDateString()
@@ -120,9 +152,6 @@ export class CreatePaymentIntentDto {
     @IsOptional()
     @IsString()
     @Transform(({ value }) => value?.trim().toUpperCase())
-    @Matches(/^[A-Z]{2}\d{3,4}$/, {
-        message: 'Flight number must be in format like TP1234'
-    })
     flightNumber?: string;
 
     @IsOptional()
