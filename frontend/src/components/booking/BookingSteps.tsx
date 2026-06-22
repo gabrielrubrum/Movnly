@@ -173,6 +173,7 @@ export function BookingSteps() {
   const initPaymentIntent = async (forceEmail?: string, forceName?: string) => {
     setPaymentInitError(null);
     setLoading(true);
+    console.log('[MOVNLY][Payment Intent] Request started');
     try {
       const { getFraudHeaders } = await import('@/lib/fraud-signals');
       const res = await api.post(`/payments/create-intent`, {
@@ -185,12 +186,19 @@ export function BookingSteps() {
         country: form.country,
       }, { headers: getFraudHeaders(), suppressGlobalToast: true } as any);
 
+      console.log('[MOVNLY][Payment Intent] Success', {
+        paymentIntentId: res.data.paymentIntentId,
+        bookingId: res.data.bookingId,
+        currency: res.data.currency,
+        amount: res.data.amount,
+      });
+
       if (res.data.clientSecret) {
         setClientSecret(res.data.clientSecret);
         if (res.data.bookingId) setLastBookingId(res.data.bookingId);
       }
     } catch (err: any) {
-      console.error("Payment init failed:", err);
+      console.error("[MOVNLY][Payment Intent] Failed", err);
       const status = err?.response?.status;
       const backendMessage = Array.isArray(err?.response?.data?.message)
         ? err.response.data.message.join(" ")

@@ -57,8 +57,10 @@ export function CheckoutForm({ loading: parentLoading, total, bookingId, custome
 
     setLoading(true);
     setErrorMessage(null);
+    console.log('[MOVNLY][Stripe Confirm Payment] Started', { bookingId });
 
     try {
+      console.log('[MOVNLY][Stripe Elements] Submit started');
       const { error: submitError } = await elements.submit();
       if (submitError) {
         console.error("[MOVNLY][Stripe Elements submit failed]", {
@@ -70,7 +72,9 @@ export function CheckoutForm({ loading: parentLoading, total, bookingId, custome
         setRetryCount((c) => c + 1);
         return;
       }
+      console.log('[MOVNLY][Stripe Elements] Submit successful');
 
+      console.log('[MOVNLY][Stripe confirmPayment] Calling confirmPayment');
       const { error } = await stripe.confirmPayment({
         elements,
         confirmParams: {
@@ -93,10 +97,18 @@ export function CheckoutForm({ loading: parentLoading, total, bookingId, custome
         setRetryCount((c) => c + 1);
         return;
       }
+
+      console.log('[MOVNLY][Stripe confirmPayment] Success');
       router.push(`/booking/confirmation/${bookingId}?redirect_status=processing`);
     } catch (err: any) {
       console.error("[MOVNLY][Payment unexpected failure]", err);
-      setErrorMessage("Não conseguimos concluir o pagamento agora. Tente outro método ou fale com o suporte MOVNLY.");
+      // Check if it's a network error from m.stripe.com telemetry
+      if (err?.message?.includes('m.stripe.com') || err?.message?.includes('ERR_NAME_NOT_RESOLVED')) {
+        console.warn('[MOVNLY][Stripe] m.stripe.com telemetry error - ignoring');
+        setErrorMessage("Não foi possível conectar à Stripe. Tente outro navegador ou rede.");
+      } else {
+        setErrorMessage("Não conseguimos concluir o pagamento agora. Tente outro método ou fale com o suporte MOVNLY.");
+      }
       setRetryCount((c) => c + 1);
     } finally {
       setLoading(false);
