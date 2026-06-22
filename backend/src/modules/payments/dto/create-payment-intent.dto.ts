@@ -71,20 +71,24 @@ export class CreatePaymentIntentDto {
     name: string;
 
     @IsString()
-    @Transform(({ value, obj }) => {
-        const val = (value || obj?.origin)?.trim();
-        return val;
-    })
+    @Transform(({ value }) => value?.trim())
     @IsNotEmpty()
-    from: string;
+    from?: string;
 
     @IsString()
-    @Transform(({ value, obj }) => {
-        const val = (value || obj?.destination)?.trim();
-        return val;
-    })
+    @Transform(({ value }) => value?.trim())
     @IsNotEmpty()
-    to: string;
+    to?: string;
+
+    @IsString()
+    @Transform(({ value }) => value?.trim())
+    @IsNotEmpty()
+    origin?: string;
+
+    @IsString()
+    @Transform(({ value }) => value?.trim())
+    @IsNotEmpty()
+    destination?: string;
 
     @IsDateString()
     date: string;

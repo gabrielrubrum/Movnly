@@ -151,6 +151,8 @@ export class PaymentsService {
             name: rawName,
             from,
             to,
+            origin,
+            destination,
             date,
             time,
             category,
@@ -160,7 +162,33 @@ export class PaymentsService {
             phone,
             notes,
             country: selectedCountry,
+            amount: amountFromFrontend,
+            tripType,
+            extras,
+            airline,
+            differentPassenger,
+            passengerName,
+            passengerPhone,
+            specialRequest,
         } = data;
+
+        // Normalize location fields
+        const pickup = origin || from;
+        const dropoff = destination || to;
+
+        if (!pickup) {
+            throw new BadRequestException({
+                message: 'Origin is required',
+                field: 'origin',
+            });
+        }
+
+        if (!dropoff) {
+            throw new BadRequestException({
+                message: 'Destination is required',
+                field: 'destination',
+            });
+        }
 
         const clientIp  = fraudSignals?.ip || 'unknown';
         const email = (typeof rawEmail === 'string' && rawEmail.trim().length > 0)
@@ -209,8 +237,8 @@ export class PaymentsService {
             booking = await this.prisma.booking.create({
                 data: {
                     passengerId: passenger.id,
-                    from: from || data.origin,
-                    to: to || data.destination,
+                    from: pickup,
+                    to: dropoff,
                     pickupTime: isNaN(pickupDateTime.getTime()) ? new Date() : pickupDateTime,
                     category: category || 'smart',
                     passengers: Number.isFinite(Number(passengers)) ? Number(passengers) : undefined,
@@ -227,8 +255,8 @@ export class PaymentsService {
             booking = await this.prisma.booking.update({
                 where: { id: booking.id },
                 data: {
-                    from: from || data.origin || booking.from,
-                    to: to || data.destination || booking.to,
+                    from: pickup || booking.from,
+                    to: dropoff || booking.to,
                     pickupTime: nextPickupDateTime,
                     category: category || booking.category || 'smart',
                     passengers: Number.isFinite(Number(passengers)) ? Number(passengers) : booking.passengers,
