@@ -186,16 +186,21 @@ export function BookingSteps() {
         country: form.country,
       }, { headers: getFraudHeaders(), suppressGlobalToast: true } as any);
 
+      console.log('[MOVNLY][Payment Intent] Full response data', res.data);
       console.log('[MOVNLY][Payment Intent] Success', {
         paymentIntentId: res.data.paymentIntentId,
         bookingId: res.data.bookingId,
         currency: res.data.currency,
         amount: res.data.amount,
+        clientSecret: res.data.clientSecret ? 'present' : 'missing',
       });
 
       if (res.data.clientSecret) {
+        console.log('[MOVNLY][Payment Intent] Setting clientSecret in state');
         setClientSecret(res.data.clientSecret);
         if (res.data.bookingId) setLastBookingId(res.data.bookingId);
+      } else {
+        console.error('[MOVNLY][Payment Intent] ERROR: clientSecret missing from response');
       }
     } catch (err: any) {
       console.error("[MOVNLY][Payment Intent] Failed", err);

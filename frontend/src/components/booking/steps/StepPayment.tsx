@@ -54,6 +54,7 @@ export function StepPayment({ form, onConfirm, onBack, loading, total, clientSec
   const attemptedPaymentKeyRef = useRef<string | null>(null);
 
   useEffect(() => {
+    console.log('[MOVNLY][StepPayment] propClientSecret changed', { propClientSecret });
     setClientSecret(propClientSecret);
     setPaymentConfigError(null);
   }, [propClientSecret]);
