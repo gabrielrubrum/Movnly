@@ -20,27 +20,29 @@ export default function ParceiroDashboard() {
   const recentBookings = bookings.slice(0, 5);
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-10">
       <div className="flex items-start justify-between">
         <div>
-          <div className="flex items-center gap-2.5 mb-2">
-            <div className="w-9 h-9 rounded-[9px] bg-gradient-to-br from-brand-gold to-gold-600 flex items-center justify-center shadow-brand-sm">
-              <Building2 className="w-4 h-4 text-black" />
+          <div className="flex items-center gap-3 mb-3">
+            <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-brand-gold to-gold-600 flex items-center justify-center shadow-lg shadow-brand-gold/20">
+              <Building2 className="w-5 h-5 text-black" />
             </div>
-            <span className="nx-badge nx-badge-purple">Parceiro</span>
+            <span className="px-3 py-1 rounded-full text-[0.65rem] font-bold uppercase tracking-wider bg-brand-gold/10 text-brand-gold border border-brand-gold/20">
+              Parceiro
+            </span>
           </div>
-          <h1 className="text-2xl font-black text-white tracking-tight">Painel de Parceiros</h1>
-          <p className="text-white/40 text-sm mt-1">
+          <h1 className="text-3xl font-black text-white tracking-tight">Painel de Parceiros</h1>
+          <p className="text-white/40 text-sm mt-2">
             {dashboard?.organization || "MOVNLY Partner"} · {new Date().toLocaleDateString("pt-PT", { month: "long", year: "numeric" })}
           </p>
         </div>
-        <Link href="/parceiros/reservas/nova" className="nx-btn nx-btn-primary nx-btn-sm flex items-center gap-1.5">
-          <Plus className="w-3.5 h-3.5" />
+        <Link href="/parceiros/reservas/nova" className="px-6 py-3 bg-brand-gold text-black text-xs font-bold uppercase tracking-[0.2em] rounded-full hover:shadow-[0_20px_50px_-10px_rgba(212,175,55,0.3)] hover:scale-[1.02] transition-all duration-500 flex items-center gap-2">
+          <Plus className="w-4 h-4" />
           Nova reserva
         </Link>
       </div>
 
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
         {[
           { label: "Reservas este mês", value: loading ? "—" : String(dashboard?.bookingsThisMonth ?? 0), icon: Calendar, color: "brand" },
           { label: "Receita gerada", value: loading ? "—" : formatCurrency(dashboard?.revenueGenerated ?? 0), icon: TrendingUp, color: "emerald" },
@@ -48,56 +50,56 @@ export default function ParceiroDashboard() {
           { label: "Convidados servidos", value: loading ? "—" : String(dashboard?.guestsServed ?? 0), icon: Users, color: "purple" },
         ].map(({ label, value, icon: Icon, color }) => {
           const cls = {
-            brand: "bg-brand-gold/10 text-brand-gold border-brand-gold/15",
-            emerald: "bg-emerald-500/10 text-emerald-400 border-emerald-500/15",
-            amber: "bg-amber-500/10 text-amber-400 border-amber-500/15",
-            purple: "bg-purple-500/10 text-purple-400 border-purple-500/15",
-          }[color]!.split(" ");
+            brand: "bg-brand-gold/10 text-brand-gold border-brand-gold/20",
+            emerald: "bg-emerald-500/10 text-emerald-400 border-emerald-500/20",
+            amber: "bg-amber-500/10 text-amber-400 border-amber-500/20",
+            purple: "bg-purple-500/10 text-purple-400 border-purple-500/20",
+          }[color]!;
           return (
-            <div key={label} className="nx-card p-5">
-              <div className={`w-9 h-9 rounded-xl ${cls[0]} border ${cls[2]} flex items-center justify-center mb-3`}>
-                <Icon className={`w-4 h-4 ${cls[1]}`} />
+            <div key={label} className="p-6 rounded-2xl bg-white/[0.02] border border-white/5 hover:border-white/10 transition-all duration-300">
+              <div className={`w-12 h-12 rounded-xl ${cls} flex items-center justify-center mb-4 shadow-lg`}>
+                <Icon className="w-5 h-5" />
               </div>
-              <div className="text-2xl font-black text-white">{value}</div>
-              <div className="text-xs text-white/35 mt-0.5">{label}</div>
+              <div className="text-3xl font-black text-white">{value}</div>
+              <div className="text-xs text-white/40 mt-1 uppercase tracking-wider">{label}</div>
             </div>
           );
         })}
       </div>
 
-      <div className="p-5 rounded-2xl border border-yellow-500/15"
-        style={{ background: "linear-gradient(135deg, rgba(201,162,39,0.08) 0%, rgba(201,162,39,0.02) 100%)" }}
-      >
+      <div className="p-6 rounded-2xl border border-brand-gold/20 bg-gradient-to-br from-brand-gold/5 to-transparent">
         <div className="flex items-center justify-between">
           <div>
-            <p className="text-sm font-semibold text-white">Comissão mensal</p>
-            <p className="text-xs text-white/40 mt-0.5">
+            <p className="text-base font-bold text-white">Comissão mensal</p>
+            <p className="text-sm text-white/40 mt-1">
               Taxa: {dashboard?.commissionRate ?? 10}% por reserva
             </p>
           </div>
           <div className="text-right">
-            <p className="text-3xl font-black text-white">{formatCurrency(dashboard?.commissionsEarned ?? 0)}</p>
-            <span className="nx-badge nx-badge-amber mt-1 inline-flex">Em processamento</span>
+            <p className="text-4xl font-black text-white">{formatCurrency(dashboard?.commissionsEarned ?? 0)}</p>
+            <span className="px-3 py-1 rounded-full text-[0.65rem] font-bold uppercase tracking-wider bg-amber-500/10 text-amber-400 border border-amber-500/20 mt-2 inline-block">
+              Em processamento
+            </span>
           </div>
         </div>
       </div>
 
       <div>
-        <div className="flex items-center justify-between mb-4">
-          <h2 className="text-lg font-bold text-white">Reservas recentes</h2>
-          <Link href="/parceiros/reservas" className="text-xs text-brand-gold hover:text-gold-300 flex items-center gap-1 font-medium">
-            Ver todas <ArrowRight className="w-3.5 h-3.5" />
+        <div className="flex items-center justify-between mb-5">
+          <h2 className="text-xl font-bold text-white">Reservas recentes</h2>
+          <Link href="/parceiros/reservas" className="text-xs text-brand-gold hover:text-white flex items-center gap-2 font-medium uppercase tracking-wider transition-colors">
+            Ver todas <ArrowRight className="w-4 h-4" />
           </Link>
         </div>
-        <div className="nx-card overflow-hidden">
+        <div className="rounded-2xl bg-white/[0.02] border border-white/5 overflow-hidden">
           {recentBookings.length === 0 ? (
-            <p className="p-8 text-white/40 text-sm text-center">Nenhuma reserva ainda. Crie a primeira para um convidado.</p>
+            <p className="p-12 text-white/40 text-sm text-center">Nenhuma reserva ainda. Crie a primeira para um convidado.</p>
           ) : (
             <table className="w-full">
               <thead>
-                <tr className="border-b border-white/[0.05]">
+                <tr className="border-b border-white/5">
                   {["Convidado", "Rota", "Data", "Categoria", "Valor", "Comissão", "Estado"].map((h) => (
-                    <th key={h} className="text-left text-[0.65rem] font-bold text-white/25 uppercase px-4 py-3 first:pl-5 last:pr-5" style={{ letterSpacing: "0.08em" }}>
+                    <th key={h} className="text-left text-[0.7rem] font-bold text-white/30 uppercase px-5 py-4 first:pl-6 last:pr-6" style={{ letterSpacing: "0.1em" }}>
                       {h}
                     </th>
                   ))}
@@ -106,18 +108,18 @@ export default function ParceiroDashboard() {
               <tbody className="divide-y divide-white/[0.03]">
                 {recentBookings.map((b) => (
                   <tr key={b.id} className="hover:bg-white/[0.02] transition-colors">
-                    <td className="px-4 py-3.5 pl-5">
+                    <td className="px-5 py-4 pl-6">
                       <p className="text-sm font-medium text-white">{b.passengerData?.name || "Convidado"}</p>
                       <p className="text-xs text-white/30 font-mono">{b.id.slice(0, 8)}</p>
                     </td>
-                    <td className="px-4 py-3.5 text-sm text-white/60">{b.from} → {b.to}</td>
-                    <td className="px-4 py-3.5 text-sm text-white/50">{formatDate(b.pickupTime)}</td>
-                    <td className="px-4 py-3.5">
-                      <span className="nx-badge nx-badge-brand capitalize">{b.category}</span>
+                    <td className="px-5 py-4 text-sm text-white/60">{b.from} → {b.to}</td>
+                    <td className="px-5 py-4 text-sm text-white/50">{formatDate(b.pickupTime)}</td>
+                    <td className="px-5 py-4">
+                      <span className="px-2 py-1 rounded-full text-[0.65rem] font-bold uppercase tracking-wider bg-brand-gold/10 text-brand-gold border border-brand-gold/20">{b.category}</span>
                     </td>
-                    <td className="px-4 py-3.5 text-sm font-semibold text-white">{formatCurrency(b.price || 0)}</td>
-                    <td className="px-4 py-3.5 text-sm font-semibold text-yellow-400">{formatCurrency(b.partnerCommission || 0)}</td>
-                    <td className="px-4 py-3.5 pr-5">
+                    <td className="px-5 py-4 text-sm font-semibold text-white">{formatCurrency(b.price || 0)}</td>
+                    <td className="px-5 py-4 text-sm font-semibold text-yellow-400">{formatCurrency(b.partnerCommission || 0)}</td>
+                    <td className="px-5 py-4 pr-6">
                       <BookingStatusBadge status={b.status.toLowerCase() as any} />
                     </td>
                   </tr>

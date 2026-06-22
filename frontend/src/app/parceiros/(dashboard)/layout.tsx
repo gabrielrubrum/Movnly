@@ -2,11 +2,15 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { LayoutDashboard, Calendar, DollarSign, Users, BarChart3, Settings, LogOut, Building2, Menu, X } from "lucide-react";
+import { LanguageSwitcher } from "@/components/ui/LanguageSwitcher";
+import { cn } from "@/lib/utils";
+import {
+  LayoutDashboard, Calendar, DollarSign, Users, BarChart3, Settings, LogOut, Building2, Menu, X, ChevronRight, Plus
+} from "lucide-react";
 import { useState, useEffect } from "react";
 import { useAuthStore } from "@/lib/auth-store";
+import { motion, AnimatePresence } from "framer-motion";
 import { RoleGuard } from "@/components/auth/RoleGuard";
-import { cn } from "@/lib/utils";
 import api from "@/lib/api";
 
 const navItems = [
@@ -20,13 +24,13 @@ const navItems = [
 
 export default function ParceirosLayout({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
-  const [mobileOpen, setMobileOpen] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [org, setOrg] = useState("Parceiro MOVNLY");
-  const logout = useAuthStore((s) => s.logout);
-  const user = useAuthStore((s) => s.user);
+  const user = useAuthStore(s => s.user);
+  const logout = useAuthStore(s => s.logout);
 
   useEffect(() => {
-    setMobileOpen(false);
+    setIsMobileMenuOpen(false);
   }, [pathname]);
 
   useEffect(() => {
@@ -37,89 +41,165 @@ export default function ParceirosLayout({ children }: { children: React.ReactNod
 
   return (
     <RoleGuard allowedRoles={["PARTNER", "ADMIN"]} redirectTo="/login">
-      <div className="min-h-screen bg-surface-0 flex">
-        <aside className="hidden lg:flex flex-col w-60 border-r border-white/06 bg-surface-1 fixed top-0 bottom-0 left-0 z-30">
-          <div className="p-6 border-b border-white/06">
-            <Link href="/">
-              <img src="/logoMov.png" alt="MOVNLY" className="h-12 w-auto" />
-            </Link>
-          </div>
+      <div className="min-h-screen bg-[#030303] text-white selection:bg-brand-gold/20 selection:text-brand-gold overflow-hidden">
+      
+      {/* Background Ambience */}
+      <div className="fixed inset-0 pointer-events-none z-0">
+        <div className="absolute top-0 right-0 w-[50%] h-[50%] bg-brand-gold/5 rounded-full blur-[120px] opacity-10" />
+        <div className="absolute bottom-0 left-0 w-[40%] h-[40%] bg-white/5 rounded-full blur-[100px] opacity-5" />
+      </div>
 
-          <div className="p-4 border-b border-white/06">
-            <div className="flex items-center gap-3 p-3 rounded-xl bg-white/04">
-              <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-purple-500 to-purple-700 flex items-center justify-center flex-shrink-0">
-                <Building2 className="w-4 h-4 text-white" />
+      {/* Sidebar - Desktop */}
+      <aside className="hidden lg:flex flex-col w-72 border-r border-white/5 bg-[#07070A]/80 backdrop-blur-3xl fixed top-0 bottom-0 left-0 z-50">
+        {/* Branding */}
+        <div className="p-8 border-b border-white/5">
+          <Link href="/" className="flex items-center group">
+            <div className="relative">
+              <img 
+                src="/logoMov.png" 
+                alt="MOVNLY" 
+                className="h-16 md:h-20 w-auto transition-all duration-700 group-hover:scale-105" 
+              />
+              <div className="absolute inset-0 bg-brand-gold/20 blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
+            </div>
+          </Link>
+        </div>
+
+        {/* User Intel */}
+        {user && (
+          <div className="p-6 border-b border-white/5 flex items-center gap-4">
+            <div className="flex items-center gap-4 p-4 rounded-3xl bg-white/[0.02] border border-white/5 hover:bg-white/[0.04] transition-all group flex-1 min-w-0">
+              <div className="w-12 h-12 rounded-2xl bg-brand-gold/10 border border-brand-gold/20 flex items-center justify-center text-brand-gold font-black text-lg shadow-[0_0_20px_-5px_rgba(212,175,55,0.3)] shrink-0 group-hover:scale-105 transition-transform">
+                <Building2 className="w-5 h-5" />
               </div>
               <div className="flex-1 min-w-0">
-                <p className="text-sm font-semibold text-white truncate">{org}</p>
-                <Badge>Parceiro</Badge>
+                <p className="text-sm font-bold text-white truncate">{org}</p>
+                <div className="flex items-center gap-1.5 mt-0.5">
+                  <span className="w-1.5 h-1.5 rounded-full bg-brand-gold animate-pulse" />
+                  <span className="text-[9px] font-black text-brand-gold uppercase tracking-widest truncate">Parceiro</span>
+                </div>
               </div>
             </div>
           </div>
+        )}
 
-          <nav className="flex-1 p-3 space-y-0.5">
-            {navItems.map((item) => {
-              const Icon = item.icon;
-              const active = pathname === item.href || (item.href !== "/parceiros" && pathname.startsWith(item.href));
-              return (
-                <Link
-                  key={item.href}
-                  href={item.href}
-                  className={cn(
-                    "flex items-center gap-2.5 px-3 py-2.5 rounded-lg transition-all text-sm font-medium",
-                    active ? "text-brand-gold bg-brand-gold/10" : "text-slate-400 hover:text-white hover:bg-white/06"
-                  )}
-                >
-                  <Icon className="w-4 h-4 flex-shrink-0" />
-                  {item.label}
-                </Link>
-              );
-            })}
-          </nav>
-
-          <div className="p-3 border-t border-white/06">
-            <button onClick={logout} className="flex items-center gap-2 px-3 py-2 w-full rounded-lg text-slate-500 hover:text-red-400 hover:bg-red-500/08 transition-all text-sm">
-              <LogOut className="w-4 h-4" />
-              Terminar sessão
-            </button>
+        {/* Navegação */}
+        <nav className="flex-1 p-6 space-y-2 overflow-y-auto custom-scrollbar">
+          <div className="text-[10px] font-black text-white/20 uppercase tracking-[0.4em] mb-8 px-4 flex items-center gap-4">
+            Navegação
+            <div className="flex-1 h-px bg-gradient-to-r from-white/10 to-transparent" />
           </div>
-        </aside>
+          {navItems.map(({ href, label, icon: Icon }) => {
+            const active = href === '/parceiros'
+              ? pathname === '/parceiros'
+              : pathname === href || pathname.startsWith(href + "/");
+            return (
+              <Link
+                key={href}
+                href={href}
+                className={cn(
+                  "flex items-center gap-4 px-4 py-3.5 rounded-2xl text-[11px] font-black uppercase tracking-[0.15em] transition-all duration-300 relative group overflow-hidden",
+                  active
+                    ? "bg-brand-gold text-black shadow-[0_0_30px_-5px_rgba(212,175,55,0.4)]"
+                    : "bg-transparent border border-transparent text-white/40 hover:text-white hover:bg-white/[0.04] hover:translate-x-1"
+                )}
+              >
+                {active && (
+                    <div className="absolute inset-0 bg-gradient-to-r from-white/20 to-transparent opacity-30" />
+                )}
+                <div className={cn(
+                  "w-9 h-9 rounded-[12px] flex items-center justify-center flex-shrink-0 transition-all duration-300 relative z-10",
+                  active
+                    ? "bg-black/10 text-black shadow-inner"
+                    : "bg-white/5 text-white/30 group-hover:bg-brand-gold/10 group-hover:text-brand-gold group-hover:scale-110"
+                )}>
+                  <Icon className="w-4 h-4" />
+                </div>
+                <span className="relative z-10 flex-1 whitespace-nowrap">{label}</span>
+                {active && <div className="absolute right-4 w-1.5 h-1.5 rounded-full bg-black/40 relative z-10" />}
+                {!active && <ChevronRight className="w-4 h-4 text-white/10 opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300" />}
+              </Link>
+            );
+          })}
+        </nav>
 
-        <div className="flex-1 lg:ml-60">
-          <header className="lg:hidden sticky top-0 z-40 flex items-center justify-between p-4 border-b border-white/06 bg-surface-0/95 backdrop-blur-xl">
-            <img src="/logoMov.png" alt="MOVNLY" className="h-8" />
-            <button onClick={() => setMobileOpen(!mobileOpen)} className="p-2 text-white/60">
-              {mobileOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
-            </button>
-          </header>
-
-          {mobileOpen && (
-            <nav className="lg:hidden fixed inset-x-0 top-14 z-30 bg-surface-1 border-b border-white/06 p-4 space-y-1">
-              {navItems.map((item) => {
-                const Icon = item.icon;
-                return (
-                  <Link key={item.href} href={item.href} className="flex items-center gap-2 px-3 py-2.5 rounded-lg text-sm text-white/70 hover:bg-white/06">
-                    <Icon className="w-4 h-4" /> {item.label}
-                  </Link>
-                );
-              })}
-              <button onClick={logout} className="flex items-center gap-2 px-3 py-2.5 w-full text-sm text-red-400">
-                <LogOut className="w-4 h-4" /> Sair ({user?.name})
-              </button>
-            </nav>
-          )}
-
-          <div className="p-5 lg:p-8">{children}</div>
+        {/* Footer Sidebar */}
+        <div className="p-6 border-t border-white/5 space-y-4">
+          <LanguageSwitcher variant="sidebar" />
+          <Link href="/parceiros/reservas/nova" className="flex items-center justify-center gap-3 w-full py-4 bg-white/5 border border-white/10 rounded-2xl text-[10px] font-black uppercase tracking-[0.3em] text-white hover:bg-brand-gold hover:text-black hover:border-brand-gold transition-all duration-300 group">
+            <Plus className="w-4 h-4 group-hover:rotate-90 transition-transform duration-300" /> Nova Reserva
+          </Link>
+          <button 
+            onClick={() => logout()}
+            className="flex items-center gap-3 w-full px-5 py-3 rounded-2xl text-[10px] font-black uppercase tracking-[0.3em] text-white/20 hover:text-red-400 hover:bg-red-500/5 transition-all group"
+          >
+            <LogOut className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-300" /> Sair
+          </button>
         </div>
-      </div>
-    </RoleGuard>
-  );
-}
+      </aside>
 
-function Badge({ children }: { children: React.ReactNode }) {
-  return (
-    <span className="inline-flex items-center px-2 py-0.5 rounded-full text-[0.65rem] font-semibold uppercase tracking-wide bg-purple-500/15 text-purple-300 border border-purple-500/20">
-      {children}
-    </span>
+      {/* Main Content Arena */}
+      <div className="flex-1 lg:ml-72 min-h-screen relative z-10">
+        
+        {/* Mobile Nav HUD */}
+        <header className="lg:hidden flex items-center justify-between px-6 h-20 border-b border-white/5 bg-[#07070A]/90 backdrop-blur-xl sticky top-0 z-[60]">
+          <Link href="/" className="flex items-center">
+            <img 
+              src="/logoMov.png" 
+              alt="MOVNLY" 
+              className="h-12 md:h-14 w-auto grayscale-0" 
+            />
+          </Link>
+          <button 
+            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+            className="w-12 h-12 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center text-white"
+          >
+            {isMobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+          </button>
+        </header>
+
+        {/* Mobile Menu Overlay */}
+        <AnimatePresence>
+          {isMobileMenuOpen && (
+            <motion.div
+              initial={{ opacity: 0, x: "100%" }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: "100%" }}
+              transition={{ type: "spring", damping: 25, stiffness: 200 }}
+              className="fixed inset-0 z-50 bg-[#07070A] p-8 pt-24 lg:hidden"
+            >
+              <div className="space-y-4">
+                {navItems.map(({ href, label, icon: Icon }) => (
+                  <Link
+                    key={href}
+                    href={href}
+                    className={cn(
+                      "flex items-center gap-6 p-6 rounded-[32px] text-lg font-light italic tracking-tight transition-all",
+                      pathname === href ? "bg-brand-gold text-black" : "text-white/40 border border-white/5"
+                    )}
+                  >
+                    <Icon className="w-6 h-6" />
+                    {label}
+                  </Link>
+                ))}
+              </div>
+              <div className="mt-12 pt-12 border-t border-white/5 space-y-6">
+                <Link href="/parceiros/reservas/nova" className="w-full py-6 bg-brand-gold text-black text-[11px] font-black uppercase tracking-[0.4em] rounded-[24px] flex items-center justify-center gap-4">
+                  <Plus className="w-5 h-5" /> Nova Reserva
+                </Link>
+                <div className="flex justify-center">
+                  <LanguageSwitcher variant="navbar" />
+                </div>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+
+        <main className="p-6 md:p-10 lg:p-16">
+          {children}
+        </main>
+      </div>
+    </div>
+    </RoleGuard>
   );
 }

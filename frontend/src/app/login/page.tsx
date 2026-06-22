@@ -5,7 +5,7 @@ import Link from "next/link";
 import {
   Eye, EyeOff, Lock, Mail, ArrowLeft,
   Loader2, User, ShieldCheck, ChevronRight,
-  Fingerprint, Sparkles
+  Fingerprint, Sparkles, Building2
 } from "lucide-react";
 import { useAuthStore } from "@/lib/auth-store";
 import { useRouter, useSearchParams } from "next/navigation";
@@ -316,10 +316,10 @@ function LoginForm() {
           </p>
         )}
 
-        <div className="flex w-full gap-4 pt-4 border-t border-white/5">
-          <button 
-            onClick={() => handleSocialAuth("Google")} 
-            className="flex-1 flex items-center justify-center gap-3 h-12 rounded-full bg-white text-black hover:scale-[1.02] transition-all duration-300 shadow-lg" 
+        <div className="flex flex-col gap-4 pt-4 border-t border-white/5">
+          <button
+            onClick={() => handleSocialAuth("Google")}
+            className="w-full flex items-center justify-center gap-3 h-12 rounded-full bg-white text-black hover:scale-[1.02] transition-all duration-300 shadow-lg"
             type="button"
           >
             <svg className="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24">
@@ -330,14 +330,24 @@ function LoginForm() {
             </svg>
             <span className="text-[9px] font-bold uppercase tracking-[0.2em]">Google</span>
           </button>
-          
-          <Link
-            href="/driver/login" 
-            className="flex-1 flex items-center justify-center gap-3 h-12 rounded-full border border-white/10 text-white/60 hover:bg-white hover:text-black hover:border-transparent transition-all duration-300"
-          >
-            <Fingerprint className="w-4 h-4 text-brand-gold transition-colors" />
-            <span className="text-[9px] font-bold uppercase tracking-[0.2em]">Motorista</span>
-          </Link>
+
+          <div className="grid grid-cols-2 gap-3">
+            <Link
+              href="/driver/login"
+              className="flex items-center justify-center gap-1.5 px-3 h-12 rounded-full border border-white/20 text-white/80 hover:bg-white/10 hover:border-white/40 transition-all duration-300"
+            >
+              <Fingerprint className="w-3.5 h-3.5 text-brand-gold flex-shrink-0" />
+              <span className="text-[8px] font-bold uppercase tracking-[0.1em] whitespace-nowrap">Motorista</span>
+            </Link>
+
+            <Link
+              href="/parceiros/login"
+              className="flex items-center justify-center gap-1.5 px-3 h-12 rounded-full border border-white/20 text-white/80 hover:bg-white/10 hover:border-white/40 transition-all duration-300"
+            >
+              <Building2 className="w-3.5 h-3.5 text-brand-gold flex-shrink-0" />
+              <span className="text-[8px] font-bold uppercase tracking-[0.1em] whitespace-nowrap">Parceiro</span>
+            </Link>
+          </div>
         </div>
       </div>
     </motion.div>
