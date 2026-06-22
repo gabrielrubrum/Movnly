@@ -29,11 +29,13 @@ export class PaymentsController {
     @Throttle({ default: { ttl: 60000, limit: 10 } })
     @Post('create-intent')
     async createIntent(@Body() body: CreatePaymentIntentDto, @Req() req: any) {
-        console.log('[CREATE_INTENT] Received body:', JSON.stringify(body, null, 2));
-        console.log('[CREATE_INTENT] Request headers:', {
+        console.log('===== CREATE INTENT RECEBIDO =====');
+        console.log('Body:', JSON.stringify(body, null, 2));
+        console.log('Headers:', {
             'content-type': req.headers['content-type'],
             'user-agent': req.headers['user-agent'],
         });
+        console.log('=====================================');
         return this.paymentsService.createPaymentIntent(
             body,
             (req as any).fraudSignals,

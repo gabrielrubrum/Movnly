@@ -133,6 +133,10 @@ export class PaymentsService {
     // ─── Create / Retrieve PaymentIntent ─────────────────────────────────────
     async createPaymentIntent(data: any, fraudSignals?: any) {
         try {
+            console.log('===== DTO PROCESSADO =====');
+            console.log('DTO:', JSON.stringify(data, null, 2));
+            console.log('=========================');
+
             this.logger.log('=== CREATE INTENT START ===');
             this.logger.log('Request body:', JSON.stringify(data, null, 2));
             this.logger.log('Fraud signals:', JSON.stringify(fraudSignals, null, 2));
@@ -177,6 +181,8 @@ export class PaymentsService {
         const dropoff = destination || to;
 
         if (!pickup) {
+            console.error('BAD REQUEST DETECTADO: Origin is required');
+            console.error('DTO:', JSON.stringify(data, null, 2));
             throw new BadRequestException({
                 message: 'Origin is required',
                 field: 'origin',
@@ -184,6 +190,8 @@ export class PaymentsService {
         }
 
         if (!dropoff) {
+            console.error('BAD REQUEST DETECTADO: Destination is required');
+            console.error('DTO:', JSON.stringify(data, null, 2));
             throw new BadRequestException({
                 message: 'Destination is required',
                 field: 'destination',

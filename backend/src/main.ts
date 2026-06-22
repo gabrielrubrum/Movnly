@@ -1,5 +1,5 @@
 import { NestFactory } from '@nestjs/core';
-import { ValidationPipe } from '@nestjs/common';
+import { ValidationPipe, BadRequestException } from '@nestjs/common';
 import helmet from 'helmet';
 import * as Sentry from '@sentry/nestjs';
 import { AppModule } from './app.module';
@@ -71,9 +71,13 @@ async function bootstrap() {
   // ── Validação Global de Input ──────────────────────────────────
   app.useGlobalPipes(new ValidationPipe({
     whitelist: true,
-    forbidNonWhitelisted: true,
+    forbidNonWhitelisted: false,
     transform: true,
     disableErrorMessages: isProd,
+    exceptionFactory: (errors) => {
+      console.error('VALIDATION ERRORS:', JSON.stringify(errors, null, 2));
+      return new BadRequestException(errors);
+    }
   }));
 
   // ── CORS ───────────────────────────────────────────────────────
