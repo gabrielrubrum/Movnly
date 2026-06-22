@@ -104,6 +104,13 @@ export class PaymentsService {
     }) {
         if (!this.stripe) return null;
 
+        // Validate email before creating customer
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(passenger.email)) {
+            console.error('INVALID EMAIL FOR STRIPE CUSTOMER', { email: passenger.email });
+            throw new BadRequestException('Invalid email address');
+        }
+
         if (passenger.stripeCustomerId) {
             try {
                 await this.stripe.customers.update(passenger.stripeCustomerId, {
@@ -338,6 +345,12 @@ export class PaymentsService {
         const driverAmountInCents = Math.round(driverAmountEuro * 100);
         const platformFeeInCents  = Math.round(platformFeeEuro * 100);
 
+        // Validate amount is a positive integer
+        if (!Number.isInteger(priceInCents) || priceInCents <= 0) {
+            console.error('INVALID AMOUNT', { priceInCents, finalPrice, currency });
+            throw new BadRequestException('Invalid payment amount');
+        }
+
         this.logger.log(`PaymentIntent parameters:`);
         this.logger.log(`  amount: ${priceInCents} (${finalPrice} ${currency})`);
         this.logger.log(`  currency: ${currency.toLowerCase()}`);
@@ -491,6 +504,14 @@ export class PaymentsService {
             );
             this.logger.log(`PaymentIntent created successfully: ${paymentIntent.id}`);
         } catch (error) {
+            console.error('STRIPE PAYMENT INTENT ERROR', {
+                message: error.message,
+                type: error.type,
+                code: error.code,
+                param: error.param,
+                raw: error.raw,
+                stack: error.stack,
+            });
             this.logger.error('=== STRIPE PAYMENT INTENT CREATION ERROR ===');
             this.logger.error('Error:', error);
             this.logger.error('Error message:', error.message);
@@ -498,7 +519,7 @@ export class PaymentsService {
             this.logger.error('Error type:', error.type);
             this.logger.error('Error code:', error.code);
             this.logger.error('Error param:', error.param);
-            throw error;
+            throw new InternalServerErrorException('Erro ao criar pagamento no Stripe');
         }
 
         // ── Persist PaymentIntent reference ───────────────────────────────────
